@@ -1,0 +1,46 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	  background:#f0f0f0;
+}
+.wrapper{
+      box-sizing:border-box;
+      width:100%;
+      font-size:0.3rem;
+      background:#f0f0f0;
+      padding-left:0.24rem;
+      padding-right:0.24rem;
+      padding-bottom:0.24rem;	
+}
+.systemMessage_time{
+    width:100%;
+    margin:0 auto;
+    text-align:center;
+    background-size:0.4rem 0.4rem;
+}
+.systemMessage_time div:nth-child(1){
+  width:65%;
+  margin-left:10%;
+  padding:0.2rem 0.2rem 0.2rem 0.2rem;
+  margin-top:0.2rem;
+}
+.systemMessage_time .time{
+    background-color: #ccc;
+    color: #fff;
+  	border-radius:0.1rem;
+}
+
+.systemMessage{
+    width:100%;
+    background:url(../img/icons/systemMes.png) no-repeat top left;
+    margin:0 auto;
+    background-size:0.4rem 0.4rem;
+}
+.systemMessage div:nth-child(1){
+  width:65%;
+  margin-left:10%;
+  background:white;
+  padding:0.2rem 0.2rem 0.2rem 0.2rem;
+  border-radius:0.1rem;
+  margin-top:0.2rem;
+}

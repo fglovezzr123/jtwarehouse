@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.console.dao.DeptDao">
+    
+    <select id="selectAllDeptsMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT 
+			id,dept_name deptName,super_id superId
+		FROM sy_dept t order by dept_sort asc
+	</select>
+	
+	
+    <select id="selectByDeptName" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT *
+		FROM sy_dept t 
+ 		WHERE 1=1
+    	<if test="deptName != null and deptName != ''">
+			AND	dept_name like CONCAT('%',#{deptName,jdbcType=VARCHAR},'%')
+		</if>
+	</select>
+</mapper>

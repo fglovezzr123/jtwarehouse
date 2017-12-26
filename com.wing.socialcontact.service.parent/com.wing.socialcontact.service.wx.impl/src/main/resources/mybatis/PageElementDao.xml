@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-06-28 16:39:29
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.PageElementDao">
+
+	<resultMap id="pageElement" type="com.wing.socialcontact.service.wx.bean.PageElement">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titleOne" column="title_one" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titleTwo" column="title_two" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentTypeId" column="content_type_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentId" column="content_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentName" column="content_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="detailUrl" column="detail_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="jumpType" column="jump_type" javaType="String" jdbcType="CHAR"></result>
+		<result property="columnId" column="column_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="pageElementGlobal" type="com.wing.socialcontact.service.wx.bean.PageElement">
+		<result property="id" column="PE_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titleOne" column="PE_title_one" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titleTwo" column="PE_title_two" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="PE_img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentTypeId" column="PE_content_type_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentId" column="PE_content_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentName" column="PE_content_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="detailUrl" column="PE_detail_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="jumpType" column="jump_type" javaType="String" jdbcType="CHAR"></result>
+		<result property="columnId" column="PE_column_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="PE_order_num" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		PE.id, PE.title_one, PE.title_two, PE.img_url, PE.jump_type,
+		PE.content_type_id, PE.content_id, PE.detail_url, PE.column_id, PE.order_num, PE.content_name
+	</sql>
+
+	<sql id="fieldGlobal">
+		PE.id PE_id, PE.title_one PE_title_one, PE.jump_type,
+		PE.title_two PE_title_two, PE.img_url PE_img_url, 
+		PE.content_type_id PE_content_type_id, PE.content_id PE_content_id, 
+		PE.column_id PE_column_id, PE.order_num PE_order_num, PE.detail_url PE_detail_url, PE.order_num PE_content_name,PE.content_name PE_content_name
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		PE.id id, PE.title_one titleOne, PE.jump_type jumpType
+		PE.title_two titleTwo, PE.img_url imgUrl, 
+		PE.content_type_id contentTypeId, PE.content_id contentId, 
+		PE.column_id columnId, PE.order_num orderNum, PE.detail_url detailUrl,PE.order_num,PE.content_name contentName
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND PE.id=#{id}
+		</if>
+		<if test="titleOne!=null and titleOne!=''">
+			AND PE.title_one=#{titleOne}
+		</if>
+		<if test="titleTwo!=null and titleTwo!=''">
+			AND PE.title_two=#{titleTwo}
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			AND PE.img_url=#{imgUrl}
+		</if>
+		<if test="contentTypeId!=null and contentTypeId!=''">
+			AND PE.content_type_id=#{contentTypeId}
+		</if>
+		<if test="detailUrl!=null and detailUrl!=''">
+			AND PE.detail_url=#{detailUrl}
+		</if>
+		<if test="contentId!=null and contentId!=''">
+			AND PE.content_id=#{contentId}
+		</if>
+		<if test="contentName!=null and contentName!=''">
+			AND PE.content_name=#{contentName}
+		</if>
+		<if test="columnId!=null and columnId!=''">
+			AND PE.column_id=#{columnId}
+		</if>
+		<if test="orderNum!=null">
+			AND PE.order_num=#{orderNum}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND PE.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="titleOne!=null and titleOne!=''">
+				AND PE.title_one LIKE CONCAT('%', #{titleOne}, '%')
+			</if>
+			<if test="titleTwo!=null and titleTwo!=''">
+				AND PE.title_two LIKE CONCAT('%', #{titleTwo}, '%')
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND PE.img_url LIKE CONCAT('%', #{imgUrl}, '%')
+			</if>
+			<if test="contentTypeId!=null and contentTypeId!=''">
+				AND PE.content_type_id LIKE CONCAT('%', #{contentTypeId}, '%')
+			</if>
+			<if test="contentId!=null and contentId!=''">
+				AND PE.content_id LIKE CONCAT('%', #{contentId}, '%')
+			</if>
+			<if test="contentName!=null and contentName!=''">
+				AND PE.content_name=#{contentName}
+			</if>
+			<if test="detailUrl!=null and detailUrl!=''">
+				AND PE.detail_url=#{detailUrl}
+			</if>
+			<if test="columnId!=null and columnId!=''">
+				AND PE.column_id LIKE CONCAT('%', #{columnId}, '%')
+			</if>
+			<if test="orderNum!=null">
+				AND PE.order_num=#{orderNum}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				PE.id=#{id}, 
+		   </if>
+           <if test="titleOne!=null">
+				PE.title_one=#{titleOne}, 
+		   </if>
+           <if test="titleTwo!=null">
+				PE.title_two=#{titleTwo}, 
+		   </if>
+           <if test="imgUrl!=null">
+				PE.img_url=#{imgUrl}, 
+		   </if>
+           <if test="contentTypeId!=null">
+				PE.content_type_id=#{contentTypeId}, 
+		   </if>
+           <if test="contentId!=null">
+				PE.content_id=#{contentId}, 
+		   </if>
+		   <if test="contentName!=null and contentName!=''">
+				PE.content_name=#{contentName},
+			</if>
+		   <if test="detailUrl!=null and detailUrl!=''">
+				PE.detail_url=#{detailUrl}
+		   </if>
+           <if test="columnId!=null">
+				PE.column_id=#{columnId}, 
+		   </if>
+           <if test="orderNum!=null">
+				PE.order_num=#{orderNum}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE PE FROM TJY_PAGE_ELEMENT PE WHERE PE.ID = #{id} 
+	</delete>
+	
+	<delete id="deleteByColumnId">
+		DELETE PE FROM TJY_PAGE_ELEMENT PE WHERE PE.column_id = #{columnId} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_PAGE_ELEMENT PE
+		SET 
+		PE.STATUS = -1
+		WHERE PE.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_PAGE_ELEMENT PE
+		<include refid="dynamicSet" /> 
+	    WHERE PE.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="pageElement">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_ELEMENT PE
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_PAGE_ELEMENT PE
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="pageElement">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_ELEMENT PE
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="pageElement">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_ELEMENT PE
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="pageElement">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_ELEMENT PE
+		WHERE PE.ID = #{id}
+	</select>
+	
+</mapper>

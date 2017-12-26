@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.LibraryDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+	    <result column="status" property="updateTime" jdbcType="VARCHAR" />
+	    <result column="update_time" property="updateTime" jdbcType="DATE" />
+	    <result column="title" property="title" jdbcType="VARCHAR" />
+	    <result column="class_id" property="classId" jdbcType="VARCHAR" />
+	    <result column="recommend" property="recommend" jdbcType="INTEGER" />
+	    <result column="sort" property="sort" jdbcType="INTEGER" />
+	    <result column="readtimes" property="readtimes" jdbcType="INTEGER" />
+	    <result column="imgpath" property="imgpath" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="tag" property="tag" jdbcType="VARCHAR" />
+	    <result column="webinar_id" property="webinarId" jdbcType="VARCHAR" />
+	    <result property="webinarSubject" column="webinar_subject" javaType="String" jdbcType="VARCHAR"></result>
+	    <result column="file_id" property="fileId" jdbcType="VARCHAR" />
+	    <result column="oneclass" property="oneclass" jdbcType="VARCHAR" />
+	    
+		<result column="thumbup" property="thumbup" jdbcType="INTEGER" />
+	    <result column="comment" property="comment" jdbcType="INTEGER" />
+	    <result column="reward" property="reward" jdbcType="INTEGER" />
+	    <result column="reward_user" property="rewardUser" jdbcType="VARCHAR" />
+	    <result column="audio_file" property="audioFile" jdbcType="VARCHAR" />
+		<result column="audio_time" property="audioTime" jdbcType="VARCHAR" />
+	    
+	</resultMap>
+	
+	<select id="getMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.*,c.name,d.name onename
+		FROM tjy_library t  
+		left join tjy_library_class c  on t.class_id = c.id
+		left join tjy_library_class d  on t.oneclass = d.id
+ 		WHERE 1=1  and t.deleted=0
+ 		<if test="title != null and title != ''">
+			AND	title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+		</if>
+ 		<if test="classId != null and classId != ''">
+			AND	t.class_id = #{classId,jdbcType=VARCHAR}
+		</if>
+ 		<if test="oneclass != null and oneclass != ''">
+			AND	t.oneclass = #{oneclass,jdbcType=VARCHAR}
+		</if>
+		<if test="stime != null ">
+			and   t.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{stime,jdbcType=DATE},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+		</if>
+		<if test="etime != null ">
+			and   t.create_time &lt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{etime,jdbcType=DATE},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+		</if>
+		order by t.sort desc,t.create_time desc
+	</select>
+	<select id="getTjyLibraryByclassid" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.* ,c.name twoname,d.name onename
+		FROM tjy_library t 
+		left join tjy_library_class c  on t.class_id = c.id
+		left join tjy_library_class d  on t.oneclass = d.id
+ 		WHERE t.deleted = 0  and t.class_id = #{classid,jdbcType=VARCHAR}  and  t.create_time &lt; SYSDATE()
+		order by t.sort desc,t.create_time desc
+	</select>
+	<select id="selbyonelevelid" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.* ,c.name twoname,d.name onename
+		FROM tjy_library t 
+		left join tjy_library_class c  on t.class_id = c.id
+		left join tjy_library_class d  on t.oneclass = d.id 
+		where  t.deleted='0' and  t.create_time &lt; SYSDATE() and t.class_id in 
+		(select id from tjy_library_class c where c.parent_id = #{classid,jdbcType=VARCHAR} order by c.recommend desc,c.sort asc )
+		order by t.recommend desc,t.sort desc,t.create_time desc 
+		limit  0,5
+	</select>
+	<select id="getTjyLibraryByTerm" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.* ,c.name twoname,d.name onename
+		FROM tjy_library t 
+		left join tjy_library_class c  on t.class_id = c.id
+		left join tjy_library_class d  on t.oneclass = d.id 
+ 		WHERE  t.deleted='0'  and  t.create_time &lt; SYSDATE()
+		<if test="title != null and title != ''">
+			AND	t.title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+		</if>
+ 		<if test="classId != null and classId != ''">
+			AND	t.class_id = #{classId,jdbcType=VARCHAR}
+		</if>
+ 		<if test="today > 0 ">
+			AND	t.create_time >= CURDATE()
+		</if>
+ 		<if test="readtimes != 1 ">
+			order by t.recommend desc,t.sort desc, t.create_time desc, t.readtimes desc
+		</if>
+ 		<if test="readtimes == 1 ">
+			order by t.readtimes desc,t.create_time desc
+		</if>
+		limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	<select id="getLibraryByoneLevel" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.* ,c.name twoname,d.name onename
+		FROM tjy_library t 
+		left join tjy_library_class c  on t.class_id = c.id
+		left join tjy_library_class d  on t.oneclass = d.id  
+ 		WHERE  1=1   and t.deleted=0  and  t.create_time &lt; SYSDATE()
+		<if test="title != null and title != ''">
+			AND	t.title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+		</if>
+ 		<if test="classId != null and classId != ''">
+			AND	t.class_id in (select id from tjy_library_class where parent_id  = #{classId,jdbcType=VARCHAR} )
+		</if>
+ 		<if test="today > 0 ">
+			AND	t.create_time >= CURDATE()
+		</if>
+ 		<if test="readtimes != 1 ">
+			order by t.recommend desc,t.sort desc, t.create_time desc, t.readtimes desc
+		</if>
+ 		<if test="readtimes == 1 ">
+			order by t.readtimes desc,t.sort desc,t.create_time desc
+		</if>
+		limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	<select id="getLibraryByid" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.*,a.path,a.new_name filename,c.name twoname,d.name onename
+		FROM tjy_library t 
+		left join tjy_library_class c  on t.class_id = c.id
+		left join tjy_library_class d  on t.oneclass = d.id
+		left join tjy_accessory a on t.file_id = a.id
+ 		WHERE  t.id = #{libraryid,jdbcType=VARCHAR} 
+	</select>
+</mapper>

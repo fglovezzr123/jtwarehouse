@@ -1,0 +1,72 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 
+    overflow:scroll;
+    background:#f3f4f6;
+    height:100%;
+}
+.wrapper{
+       
+      width:100%;
+      font-size:0.2rem;
+       font-family:"微软雅黑";
+}
+
+#edit{
+
+       height:0.96rem;
+       line-height:0.96rem;
+       width:90%;
+       margin:0 auto;
+       font-size:0.33rem;  
+}
+#edit a{
+       display:inline-block;
+       height:100%;
+       color:#ff7f1a;
+      
+
+}
+#edit a img{
+           height:0.33rem;
+           width:0.33rem;
+}
+.companyInfo{
+  width:100%;
+  line-height:0.6rem;
+  text-align:left;
+  box-sizing:border-box; 
+  background:url(../img/icons/arrow.png) no-repeat center right;
+  padding-top:0.2rem;
+  padding-bottom:0.2rem;
+
+  margin:0 auto;
+  border-bottom:1px solid #e6e6e6;
+  padding-left:0.4rem;
+  padding-right:0.4rem;
+  background-position-x:95%;
+}
+.comName{
+       font-size:0.36rem;
+       color:#3b3b3b;
+}
+.comAdd{
+      color:#8a8685;
+      font-size:0.25rem;
+      color:#808080;
+}
+.infos{
+     background:white;
+}
+.addCom{
+      height:0.92rem;
+      line-height:0.92rem;
+      text-align:center;
+      color:white;
+      font-size:0.35rem;
+      width:100%;
+      background:#ff821b;
+      position:fixed;
+      bottom:0;
+    }

@@ -1,0 +1,250 @@
+@charset "utf-8";
+/*content*/
+.h_2{
+	width: 100%;
+	height: .73rem;
+	font-size: .30rem;
+	line-height: .73rem;
+	padding: 0 0 0 .40rem;
+	box-sizing: border-box;
+}
+.hDetail{
+	width: 100%;
+	background: #fff;
+}
+.hDetail .jSh{
+	width: 100%;
+	height: .73rem;
+	font-size: .30rem;
+	padding:0 0 0 .50rem;
+	display: flex;
+	line-height: .73rem;
+	box-sizing: border-box;
+}
+.hDetail .jSh span{
+	margin-left: .20rem;
+}
+.btnW-span{
+	background:white;
+	width: 100%;
+	height: 1.1rem;
+	line-height: 1.1rem;
+	padding: .20rem;
+	box-sizing: border-box;
+}
+.btnW-span .bc{
+	display: block;
+	width: 1.10rem;
+	height: .66rem;
+	background: #0f88eb;
+	font-size: .30rem;
+	color:#fff;
+	text-align: center;
+	line-height: .66rem;
+	margin: 0 0 0 5.13rem;
+	border-radius: .2rem;	
+}
+.btnW-span .nobc{
+	display: block;
+	width: 1.10rem;
+	height: .66rem;
+	font-size: .30rem;
+	background:#ececec;
+	color: #fff;
+	text-align: center;
+	line-height: .66rem;
+	margin: 0 0 0 5.13rem;
+	border-radius: .2rem;	
+}
+.jSh-s{
+	width: 1.2rem;
+	height: .66rem;
+	background: #f2f3f4;
+	text-align: center;
+}
+.cont-object {
+	font-size: .30rem;
+	height: 2rem;
+}
+.cont-object h3{
+	width:1.90rem;
+	font-size: .30rem;
+	float: left;
+	background: #fff;
+	box-sizing: border-box;
+	padding-left:.50rem ;
+}
+.cont-object .cont{
+	float: left;
+	width:5.6rem;
+	background: #fff;
+	
+}
+.cont-icon {
+	height: 0.7rem;
+	line-height: 0.7rem;
+	font-size: .20rem;
+}
+.cont-icon .cont-left{
+	float: left;
+	width:50%;
+	background: #fff;
+	box-sizing: border-box;
+	padding-left:.50rem ;
+	
+}
+.cont-icon .cont-right{
+	float: right;
+	width:50%;
+	text-align: end;
+	background: #fff;
+	box-sizing: border-box;
+	padding-right:.50rem ;
+}
+.cont-icon .cont-right b{
+	color: #ff9900;
+	background: #fff;
+}
+
+
+
+.c-footer{
+	width: 100%;
+	height: 1rem;
+	background-color: #fff;
+	display: flex;
+	align-items: center;
+	font-size: .30rem;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+}
+.c-footer .fF{
+	width: 2.14rem;
+	height: .50rem;
+	color: #000000;
+	text-align: center;
+	line-height: .50rem;
+	box-sizing: border-box;
+}
+.c-footer .fF1{
+	border-right:1px #8b8b8b solid;
+}
+.c-footer .foucs,.meg{
+	height: 1rem;
+	display: flex;
+	align-items: center;
+}
+.iconfont{
+	font-size: .30rem;
+}
+.c-footer .talk{
+	width: 3.22rem;
+	height: 1rem;
+	text-align: center;
+	line-height: 1rem;
+	background: #ff811b;
+	color: #fff;
+}
+.msgBox{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: .20rem .30rem 0 .30rem;
+	box-sizing: border-box;
+	margin-top: .08rem;
+	background: #fff;
+	margin-bottom: 1rem;
+}
+.msgBox .msg-l{
+	width: .72rem;
+	height: .73rem;
+	background-image: url(../img/images/好友信息_03.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.msgBox .msg-r{
+	width: 6.07rem;
+}
+.msgBox .msg-r .t{
+	width: 100%;
+	height: .42rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.msgBox .msg-r .t h2{
+	font-size: .30rem;
+	font-weight: 700;
+}
+.msgBox .msg-r .t span{
+	font-size: .24rem;
+	color: #999;
+}
+
+.msgBox .msg-r .ph{
+	font-size: .24rem;
+	color: #666;
+	line-height: .44rem;
+}
+.msgBox .msg-r h3{
+	font-size: .28rem;
+	line-height: .50rem;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.msgBox .msg-r .imgBox_1 img{
+	width: 100%;
+	height: 3rem;
+	margin-top: .26rem;
+	margin-bottom: .20rem;
+}
+.msgBox .msg-r .imgBox_3{
+	width: 100%;
+	height: 2rem;
+	margin-top: .26rem;
+	display: flex;
+	justify-content: space-between;
+}
+.msgBox .msg-r .imgBox_3 img{
+	width: 1.96rem;
+	height: 2rem;
+}
+.msgBox .msg-r .tubiao{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: .30rem;
+	color: #666;
+	height: .42rem;
+}
+.tubiao .mri{
+	margin-right: .1rem;
+}
+.msgBox .msg-r .tubiao .iconfont1{
+	font-size: .24rem;
+}
+.msgBox .msg-r .tubiao .tb+.tb{
+	margin-left: .20rem;
+}
+.msgBox .msg-r .pl{
+	width: 100%;
+	background: #f3f7fa;
+	padding-left:.1rem;
+	box-sizing: border-box;
+	padding-top: .20rem;
+	padding-bottom: .20rem;
+}
+.msgBox .msg-r .pl p{
+	font-size: .24rem;
+	line-height: .36rem;
+}
+.msgBox .msg-r .pl .c b{
+	font-style: normal;
+	color: #52a1c0;
+}
+.msgBox .msg-r .pl .more{
+	color: #52a1c0;
+}

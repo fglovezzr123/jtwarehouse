@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-17 09:54:06
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.DynamicPicDao">
+
+	<resultMap id="dynamicPic" type="com.wing.socialcontact.service.wx.bean.DynamicPic">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="dynamicId" column="dynamic_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="picUrl" column="pic_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortNum" column="sort_num" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		DP.id, DP.dynamic_id, DP.user_id, DP.pic_url, 
+		DP.sort_num, DP.create_time
+	</sql>
+	<delete id="deleteById">
+		DELETE DP FROM TJY_DYNAMIC_PIC DP WHERE DP.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="dynamicPic">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_PIC DP
+		WHERE DP.ID = #{id}
+	</select>
+	
+	<!-- 获取动态图片列表 -->
+	<select id="findDynamicPicListByDynamicId" resultMap="dynamicPic" parameterType="string">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_PIC DP
+		WHERE DP.dynamic_id = #{dynamicId} order by DP.sort_num
+	</select>
+	
+	<delete id="delAllDynamicPicList"  parameterType="string">
+		DELETE DP FROM TJY_DYNAMIC_PIC DP WHERE DP.dynamic_id = #{dynamicId} 
+	</delete>
+	
+</mapper>

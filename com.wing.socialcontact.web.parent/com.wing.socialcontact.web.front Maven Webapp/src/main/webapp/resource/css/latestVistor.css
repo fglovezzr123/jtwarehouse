@@ -1,0 +1,82 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	  background:#f0f0f0;
+}
+.wrapper{
+
+      width:100%;
+      font-size:0.3rem;
+      background:#f0f0f0;
+    
+
+
+}
+
+.content{
+      box-sizing:border-box;
+	    width:100%;
+	    background:white;
+	    margin-top:0.13rem;
+	    margin-bottom:0.3rem;
+	    
+}
+.content .content-item{
+        height:1.22rem;
+        line-height:1.22rem;
+        position:relative;
+
+}
+
+
+
+
+.content-item .con-l{
+     box-sizing:border-box;
+     padding-left:0.4rem;
+     padding-right:0.4rem;
+     width:100%;
+     float:left;
+     text-align:left;
+     background:url(../img/icons/arrow.png) no-repeat center right;
+     text-align:left;
+}
+.content-item img{
+      width:0.9rem;
+      height:0.9rem;
+
+}
+.lineer{
+       display:inline-block;
+}
+.sign{
+           
+          font-size:0.24rem;
+          color:#ff811b;
+
+}
+.bottom-border{
+	border-bottom:1px solid #efeef4
+}
+.clear{
+	 clear:both;
+}
+.sysMes{
+       font-size:0.24rem;
+       float:left;
+       margin-left:0.05rem;
+       line-height:0.3rem;
+}
+.sign-text{
+      display:block;height:50%;margin-top:0.2rem;
+      color:#949494;
+      font-size:0.26rem;
+}
+.textDate{
+    float:right;
+    font-size:0.24rem;
+    color:#a9a9a9;
+}
+.nickname{
+      font-size:14px;display:block;height:50%;margin-top:0.225rem
+}

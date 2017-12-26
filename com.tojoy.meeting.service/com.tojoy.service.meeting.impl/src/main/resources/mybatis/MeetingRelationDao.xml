@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-04-04 00:05:28
+	version	:	1.0
+-->
+<mapper namespace="com.tojoy.service.wx.dao.MeetingRelationDao">
+
+	<resultMap id="meetingRelation" type="com.tojoy.service.wx.bean.MeetingRelation">
+		<result property="id" column="id" javaType="long" jdbcType="BIGINT"></result>
+		<result property="meetingId" column="meeting_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="webinarId" column="webinar_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="webinarSubject" column="webinar_subject" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="webinarStatus" column="webinar_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="webinarThumb" column="webinar_thumb" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="webinarStartTime" column="webinar_start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="creatTime" column="creat_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+
+	<select id="queryMeetingRelationByMeetingId" resultMap="meetingRelation" parameterType="java.lang.String">
+		SELECT
+		id,meeting_id,webinar_id,webinar_subject,webinar_status,webinar_thumb,webinar_start_time,creat_time
+		FROM tjy_meeting_relation r
+	    where r.meeting_id = #{meetingId}
+	    order by creat_time asc
+	</select>
+
+	<insert id="addRecordBatch"  parameterType="java.util.List">
+		insert into tjy_meeting_relation (meeting_id,webinar_id,webinar_subject,webinar_status,webinar_thumb,webinar_start_time,creat_time)
+		values
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.meetingId},#{item.webinarId},#{item.webinarSubject},#{item.webinarStatus}
+			,#{item.webinarThumb},#{item.webinarStartTime},now())
+		</foreach>
+	</insert>
+
+	<delete id="deleteByMeetingId" parameterType="java.lang.String">
+		DELETE FROM tjy_meeting_relation WHERE meeting_id = #{meetingId}
+	</delete>
+
+</mapper>

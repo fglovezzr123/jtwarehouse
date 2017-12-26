@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-06-14 06:47:31
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.RewardAnswerDao">
+
+	<resultMap id="rewardAnswer" type="com.wing.socialcontact.service.wx.bean.RewardAnswer">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isShow" column="is_show" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isAccept" column="is_accept" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="parentId" column="parent_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		t.id id, t.fk_id fkId, 
+		t.is_show isShow, t.content content, 
+		t.is_accept isAccept, t.parent_id parentId, 
+		t.status status, t.create_time createTime, 
+		t.create_user_id createUserId, t.create_user_name createUserName, 
+		t.deleted deleted
+	</sql>
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,r.question,tu.nickname fbUserName,tu.mobile fbMobile,
+		u.nickname userName,u.mobile  
+		FROM tjy_reward_answer t left join tjy_reward r on t.fk_id = r.id 
+		left join  tjy_user u on t.create_user_id = u.id  
+		left join tjy_user tu on r.create_user_id = tu.id 
+ 		WHERE 1=1
+ 		<if test="fkId != null and fkId != ''">
+			AND	t.fk_id = #{fkId,jdbcType=VARCHAR}
+		</if>
+    	<if test="question != null and question != ''">
+			AND	r.question like CONCAT('%',#{question,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="fbUserName != null and fbUserName != ''">
+			AND	r.create_user_name like CONCAT('%',#{fbUserName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="content != null and content != ''">
+			AND	t.content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="ydUserName != null and ydUserName != ''">
+			AND	u.true_name like CONCAT('%',#{ydUserName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="isAccept != null and isAccept != 0">
+			AND	t.is_accept = #{isAccept}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        order by t.create_time desc
+	</select>
+	<select id="selectRAByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,u.id userId,u.nickname nickname,u.head_portrait headPortrait,
+		IFNULL(u.honor_title, '') AS honor_title,
+		IFNULL(u.honor_flag, '') AS honor_flag,
+		u.com_name comName,(select lv.list_value from list_values lv where lv.id=u.job) job
+		FROM tjy_reward_answer t left JOIN tjy_user u on t.create_user_id = u.mall_user 
+ 		WHERE t.is_show = 1 
+		<if test="fkId != null and fkId != ''">
+			AND	t.fk_id = #{fkId,jdbcType=VARCHAR}
+		</if>
+		<if test="isAccept != null and isAccept != ''">
+			AND	t.is_accept = #{isAccept}
+		</if>
+        order by t.create_time desc
+	</select>
+	
+	<select id="selectRAById" resultType="java.util.HashMap" parameterType="java.util.Map">
+	  SELECT <include refid="field"/>,b.question,b.create_user_name fbUserName,
+	    b.create_time fbcreateTime,  c.class_name className,b.reward,b.start_time startTime, 
+		b.end_time endTime  
+		FROM tjy_reward_answer t left join tjy_reward b on t.fk_id = b.id 
+		left join tjy_reward_class c on b.vo_type = c.id 
+		where t.id = #{id,jdbcType=VARCHAR}
+	</select>
+</mapper>

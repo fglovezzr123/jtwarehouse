@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-04-04 00:05:28
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.MeetingGuestDao">
+
+	<resultMap id="meetingGuest" type="com.wing.socialcontact.service.wx.bean.MeetingGuest">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="meetingId" column="meeting_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="sort" column="sort" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		MG.id, MG.meeting_id, MG.img_url, MG.name, 
+		MG.create_time
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND MG.id=#{id}
+			</if>
+			<if test="meetingId!=null and meetingId!=''">
+				AND MG.meeting_id=#{meetingId}
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND MG.img_url=#{imgUrl}
+			</if>
+			<if test="name!=null and name!=''">
+				AND MG.name=#{name}
+			</if>
+			<if test="createTime!=null">
+				AND MG.create_time=#{createTime}
+			</if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="meetingGuest" parameterType="java.util.Map">
+		SELECT 
+			<include refid="field"/>
+		FROM tjy_meeting_guest MG
+ 		<include refid="dynamicWhere"/>
+	</select>
+	<select id="selectByMeetingId" resultMap="meetingGuest" parameterType="java.lang.String">
+		SELECT 
+			<include refid="field"/>
+		FROM tjy_meeting_guest MG
+ 		WHERE MG.meeting_id=#{meetingId}
+ 		ORDER by MG.sort ASC
+	</select>
+	<select id="deleteByMeetingId" parameterType="java.lang.String">
+		delete mg from tjy_meeting_guest mg where mg.meeting_id=#{meetingid}
+	</select>
+</mapper>

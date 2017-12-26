@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-07-04 15:30:55
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserIntegralEmpiricalDao">
+
+	<resultMap id="userIntegralEmpirical" type="com.wing.socialcontact.service.wx.bean.UserIntegralEmpirical">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ieType" column="ie_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ruleExplain" column="rule_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="ieStatus" column="ie_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="userIntegralEmpiricalGlobal" type="com.wing.socialcontact.service.wx.bean.UserIntegralEmpirical">
+		<result property="id" column="UIE_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ieType" column="UIE_ie_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ruleExplain" column="UIE_rule_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="UIE_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="UIE_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="UIE_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="UIE_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="UIE_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="UIE_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="UIE_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="UIE_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="ieStatus" column="UIE_ie_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UIE.id, UIE.ie_type, UIE.rule_explain, UIE.remark, 
+		UIE.create_time, UIE.create_user_id, UIE.create_user_name, UIE.update_time, 
+		UIE.update_user_id, UIE.update_user_name, UIE.deleted, UIE.ie_status
+	</sql>
+
+	<sql id="fieldGlobal">
+		UIE.id UIE_id, UIE.ie_type UIE_ie_type, 
+		UIE.rule_explain UIE_rule_explain, UIE.remark UIE_remark, 
+		UIE.create_time UIE_create_time, UIE.create_user_id UIE_create_user_id, 
+		UIE.create_user_name UIE_create_user_name, UIE.update_time UIE_update_time, 
+		UIE.update_user_id UIE_update_user_id, UIE.update_user_name UIE_update_user_name, 
+		UIE.deleted UIE_deleted, UIE.ie_status UIE_ie_status
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UIE.id id, UIE.ie_type ieType, 
+		UIE.rule_explain ruleExplain, UIE.remark remark, 
+		UIE.create_time createTime, UIE.create_user_id createUserId, 
+		UIE.create_user_name createUserName, UIE.update_time updateTime, 
+		UIE.update_user_id updateUserId, UIE.update_user_name updateUserName, 
+		UIE.deleted deleted, UIE.ie_status ieStatus
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UIE.id=#{id}
+		</if>
+		<if test="ieType!=null and ieType!=''">
+			AND UIE.ie_type=#{ieType}
+		</if>
+		<if test="ruleExplain!=null and ruleExplain!=''">
+			AND UIE.rule_explain=#{ruleExplain}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND UIE.remark=#{remark}
+		</if>
+		<if test="createTime!=null">
+			AND UIE.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UIE.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND UIE.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND UIE.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND UIE.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND UIE.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND UIE.deleted=#{deleted}
+		</if>
+		<if test="ieStatus!=null and ieStatus!=''">
+			AND UIE.ie_status=#{ieStatus}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UIE.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="ieType!=null and ieType!=''">
+				AND UIE.ie_type LIKE CONCAT('%', #{ieType}, '%')
+			</if>
+			<if test="ruleExplain!=null and ruleExplain!=''">
+				AND UIE.rule_explain LIKE CONCAT('%', #{ruleExplain}, '%')
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND UIE.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND UIE.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND UIE.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND UIE.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND UIE.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND UIE.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND UIE.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND UIE.deleted=#{deleted}
+			</if>
+			<if test="ieStatus!=null and ieStatus!=''">
+				AND UIE.ie_status LIKE CONCAT('%', #{ieStatus}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UIE.id=#{id}, 
+		   </if>
+           <if test="ieType!=null">
+				UIE.ie_type=#{ieType}, 
+		   </if>
+           <if test="ruleExplain!=null">
+				UIE.rule_explain=#{ruleExplain}, 
+		   </if>
+           <if test="remark!=null">
+				UIE.remark=#{remark}, 
+		   </if>
+           <if test="createTime!=null">
+				UIE.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				UIE.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				UIE.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				UIE.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				UIE.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				UIE.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				UIE.deleted=#{deleted}, 
+		   </if>
+           <if test="ieStatus!=null">
+				UIE.ie_status=#{ieStatus}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+	<select id="selectByParam" resultMap="userIntegralEmpirical" parameterType="java.util.Map">
+		SELECT *
+		FROM TJY_USER_INTEGRAL_EMPIRICAL UIE
+    	<include refid="dynamicWhere" />
+		order by UIE.create_time desc
+	</select>
+	
+	<select id="selectByIeType" resultMap="userIntegralEmpirical">
+		SELECT <include refid="field"/>
+		FROM  TJY_USER_INTEGRAL_EMPIRICAL UIE
+		WHERE UIE.ie_type=#{ieType}
+	</select>
+	
+</mapper>

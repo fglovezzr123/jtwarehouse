@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+	<context:property-placeholder location="classpath:sysconfig.properties" />
+
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="enterprise.web.front" />
+	<dubbo:consumer retries="0" timeout="12000" check="false"/>
+
+	<!-- 使用zookeeper注册中心暴露发现服务地址 -->
+	<dubbo:registry protocol="${dubbo.consumer.registry.protocol}"
+		address="${dubbo.consumer.registry.address}" />
+
+	<dubbo:annotation />
+	<!-- 服务消费者配置 -->
+	<dubbo:reference id="wxUserService" interface="com.wing.socialcontact.service.wx.api.IWxUserService" />
+	<dubbo:reference id="tjyUserService" interface="com.wing.socialcontact.service.wx.api.ITjyUserService" />
+	<dubbo:reference id="messageInfoService" interface="com.wing.socialcontact.service.wx.api.IMessageInfoService" />
+	<dubbo:reference id="entryDescConfigService" interface="org.com.wing.enterprise.service.IEntryDescConfigService" />
+	<dubbo:reference id="entryPriseService" interface="org.com.wing.enterprise.service.IEntryPriseService" />
+	<dubbo:reference id="entryQuickDoorService" interface="org.com.wing.enterprise.service.IEntryQuickDoorService" />
+	<dubbo:reference id="entryServiceClassService" interface="org.com.wing.enterprise.service.IEntryServiceClassService" />
+	<dubbo:reference id="entryClassService" interface="org.com.wing.enterprise.service.IEntryClassService" />
+	<dubbo:reference id="entryCustomerService" interface="org.com.wing.enterprise.service.IEntryCustomerService" />
+	<dubbo:reference id="entryImgsService" interface="org.com.wing.enterprise.service.IEntryImgsService" />
+	<dubbo:reference id="entryQuickDetailBannerService" interface="org.com.wing.enterprise.service.IEntryQuickDetailBannerService" />
+	<dubbo:reference id="entryQuickDetailClassService" interface="org.com.wing.enterprise.service.IEntryQuickDetailClassService" />
+	<dubbo:reference id="entryServiceTagService" interface="org.com.wing.enterprise.service.IEntryServiceTagService" />
+	<dubbo:reference id="entryTagService" interface="org.com.wing.enterprise.service.IEntryTagService" />
+	<dubbo:reference id="shareConfigService" interface="org.com.wing.enterprise.service.IShareConfigService" />
+	<dubbo:reference id="entryPhoneAddressService" interface="org.com.wing.enterprise.service.IEntryPhoneAddressService" />
+	<dubbo:reference id="mySysMessageService" interface="org.com.wing.enterprise.service.IMySysMessageService" />
+	<dubbo:reference id="entryStaticClickService" interface="org.com.wing.enterprise.service.IEntryStaticClickService" />
+	<dubbo:reference id="qfyConfigService" interface="org.com.wing.enterprise.service.IQfyConfigService" />
+	<dubbo:reference id="phoneAddressStaticService" interface="org.com.wing.enterprise.service.IPhoneAddressStaticService" />
+	
+	<!-- 字典 -->
+	<dubbo:reference id="listValuesService" interface="com.wing.socialcontact.sys.service.IListValuesService" />
+	<dubbo:reference id="bannerService" interface="com.wing.socialcontact.service.wx.api.IBannerService" />
+	<!-- 客服留言 -->
+	<dubbo:reference id="leaveMsgService" interface="com.wing.socialcontact.service.wx.api.ILeaveMsgService" />
+	
+	<!-- 系统基本配置 -->
+	<dubbo:reference id="sysconfigService" interface="com.wing.socialcontact.service.wx.api.ISysconfigService"/>
+	<dubbo:reference id="districtService" interface="com.wing.socialcontact.sys.service.IDistrictService"/>
+	<dubbo:reference id="configService" interface="com.wing.socialcontact.service.wx.api.IConfigService"/>
+	
+</beans>

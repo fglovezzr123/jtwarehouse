@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title id="title">诸葛解惑</title>
+        <link rel="stylesheet" type="text/css" href="../../css/libs/public.css"/>
+        <link rel="stylesheet" type="text/css" href="../../css/libs/swiper-3.3.1.min.css" />
+        <script src="../../js/libs/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+        	body{
+        		background: #F3F4F5;
+        	}
+        	#banner{
+				height: 3rem;
+			}
+			.nav{
+				width: 100%;
+				padding: 0 0.3rem;
+				height: 3.05rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				background: #fff;
+				flex-wrap: wrap;
+			}
+			.nav a{
+				font-size: .24rem;
+				display: flex;
+                flex-direction: column;	
+                align-items: center;
+                width: 25%;	
+             	}
+             	.nav a img{
+             		width: .53rem;
+             		height: .56rem;
+             		margin-bottom: .13rem;
+             	}
+        	ul.title{
+        		width: 100%;
+        		padding: 0 0.3rem;
+        		height: .62rem;
+        		box-sizing: border-box;
+        		display: flex;
+        		justify-content: space-around;
+        		align-items: center;
+        		font-size: .28rem;
+        		background: #fff;
+        		margin-top: 1px;
+        	}
+        	.title li{
+        		width: 2.05rem;
+        		box-sizing: border-box;
+        		line-height: 0.62rem;
+        		text-align: center;
+        	}
+        	li.tit-bor{
+        		border-bottom: #0F88EB solid 0.04rem;
+        		color: #0F88EB;
+        	}
+        	.zg-item{
+        		margin-top: 1px;
+        		padding-bottom: .9rem;
+        	}
+        	.items{
+        		width: 100%;
+        		background: #fff;
+        		padding-top: .25rem;
+        		border-bottom:1px #F2F3F4 solid ;
+        	}
+        	.items .i-top{
+        		width: 100%;
+        		height: .54rem;
+        		box-sizing: border-box;
+        		padding: 0 0.3rem;
+        		display: flex;
+        		align-items: center;
+        		justify-content: space-between;
+        	}
+        	.items .i-top img{
+        		width: .54rem;
+        		height: .54rem;
+        		border-radius: 100%;
+        	}
+        	.items .i-top p:nth-of-type(1){
+        		width: 5rem;
+        		line-height: .54rem;
+        		font-size: .20rem;
+        		color: #6d6761;
+        		overflow: hidden;
+              white-space: nowrap;
+               text-overflow: ellipsis;
+        	}
+        	.items .i-top p:nth-of-type(1) b{
+        		font-size: .28rem;
+        		color: #535353;
+        		-webkit-transform:scale(1);
+        	}
+        	.items .i-top p:nth-of-type(2){
+        		line-height: .54rem;
+        		font-size: .24rem;
+        		color: #B8B8B8;
+        	}
+        	.items h2{
+        		width: 100%;
+        		box-sizing: border-box;
+        		padding: 0.2rem 0.3rem;
+        		line-height: .50rem;
+        		/*text-align: center;*/
+        		font-size: .28rem;
+        	}
+        	.items .icon{
+        		width: 100%;
+        		height: .70rem;
+        		font-size: .24rem;
+        		display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				box-sizing: border-box;
+        		padding: 0 0.3rem;
+        	}
+        	.items .icon span+span{
+        		margin-left: .50rem;
+        	}
+        	.items .icon span:nth-of-type(1){
+        		background: url(../../img/icons/zhuge-a8.png) no-repeat left center;
+        		background-size: 0.33rem;
+        		color: #f8ce61;
+        		padding-left: .40rem;
+        	}
+        	.items .icon span:nth-of-type(2){
+        		background: url(../../img/icons/zhuge-a9.png) no-repeat left center;
+        		background-size: 0.26rem;
+        		padding-left: .40rem;
+        	}
+        	.items .icon span:nth-of-type(3){
+        		background: url(../../img/icons/zhuge-a10.png) no-repeat left center;
+        		background-size: 0.27rem .21rem;
+        		padding-left: .40rem;
+        	}
+        	.btms{
+		     height:0.9rem;
+		     line-height:0.9rem;
+		     text-align:center;
+		     font-size:0.30rem;
+		     position:fixed;
+		     width:100%;
+		     bottom:-1px;
+		     left:0;
+		}
+		.btms div:nth-child(1){
+		     width:50%;
+		     float:left;
+		     background:white;
+		}
+		.btms div:nth-child(2){
+		     width:50%;
+		     float:right;
+		     background:#0F88EB;
+		     color:white;
+		}
+        </style>
+    </head>
+    
+  
+    <body>
+    	 <div class="search-box">
+				<div id="search">搜索动态</div>
+	     </div> 
+		<div class="swiper-container banner" id="banner">
+			<ul class="swiper-wrapper banner_ul">
+				<li class="swiper-slide"><img src="../../img/icons/qhbanner.png"" /></li>
+				<li class="swiper-slide"><img src="../../img/images/banner/bannerPk_02.png"" /></li>
+				<li class="swiper-slide"><img src="../../img/icons/qhbanner.png"" /></li>
+				<li class="swiper-slide"><img src="../../img/images/banner/bannerPk_02.png"" /></li>
+			</ul>
+			<div class="swiper-pagination"></div>
+		</div>
+		
+		<div class="nav">
+			<a href="#" class="active_A">
+				<img src="../../img/icons/zhuge-a1.png"/>
+				<span>人力资源</span>
+			</a>
+			<a href="#" class="active_A">
+				<img src="../../img/icons/zhuge-a2.png"/>
+				<span>投资管理</span>
+			</a>
+			<a href="#" class="active_A">
+				<img src="../../img/icons/zhuge-a3.png"/>
+				<span>合同法咨询</span>
+			</a>
+			<a href="#" class="active_A">
+				<img src="../../img/icons/zhuge-a4.png"/>
+				<span>会计咨询</span>
+			</a>
+			<a href="#" class="active_A">
+				<img src="../../img/icons/zhuge-a6.png"/>
+				<span>财务纠纷咨询</span>
+			</a>
+			<a href="#" class="active_A">
+				<img src="../../img/icons/zhuge-a5.png"/>
+				<span>企业管理咨询</span>
+			</a>
+			<a href="#" class="active_A">
+				<img src="../../img/icons/zhuge-a7.png"/>
+				<span>哲学问题</span>
+			</a>
+			<a href="#" class="active_A">
+				<img src="../../img/icons/boss5.png"/>
+				<span>更多</span>
+			</a>
+			       
+		</div>
+    	<ul class="title">
+    		<li class="tit-bor">最新</li>
+    		<li>高悬榜</li>
+    		<li>最热</li>
+    	</ul>
+    	<div class="zg-item">
+    		<div class="items">
+    		<div class="i-top">
+    			<img src="../../img/icons/zxt_03.png"/>
+    			<p><b>金福星</b>&nbsp;&nbsp;法人/b北京鸟巢科技有限公司</p>
+    			<p class="time">30分钟以前</p>
+    		</div>
+    		<h2>你们在意好帅？你们在意好帅？你们在意好帅？你们在意好帅？</h2>
+    		<div class="icon">
+    			<span>2001</span>
+    			<span>200</span>
+    			<span>200</span>
+    		</div>
+    	</div>
+    	<div class="items">
+    		<div class="i-top">
+    			<img src="../../img/icons/zxt_03.png"/>
+    			<p><b>金福星</b>&nbsp;&nbsp;法人/b北京鸟巢科技有限公司</p>
+    			<p class="time">30分钟以前</p>
+    		</div>
+    		<h2>你们在意好帅？你们在意好帅？你们在意好帅？你们在意好帅？</h2>
+    		<div class="icon">
+    			<span>2001</span>
+    			<span>200</span>
+    			<span>200</span>
+    		</div>
+    	</div>
+    	<div class="items">
+    		<div class="i-top">
+    			<img src="../../img/icons/zxt_03.png"/>
+    			<p><b>金福星</b>&nbsp;&nbsp;法人/b北京鸟巢科技有限公司</p>
+    			<p class="time">30分钟以前</p>
+    		</div>
+    		<h2>你们在意好帅？你们在意好帅？你们在意好帅？你们在意好帅？</h2>
+    		<div class="icon">
+    			<span>2001</span>
+    			<span>200</span>
+    			<span>200</span>
+    		</div>
+    	</div>
+    	</div>
+    	
+
+    <div class="btms">
+        <div class="active_A">我的提问</div>
+        <div class="active_A">发布悬赏</div>
+        <br class="clear"/>
+    </div>
+    <script src="../../js/libs/swiper-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+			
+				 var swiper = new Swiper('.swiper-container', {
+		        pagination: '.swiper-pagination',
+		        autoplay:4000,
+		         });
+	
+		</script>
+        
+    </body>
+</html>

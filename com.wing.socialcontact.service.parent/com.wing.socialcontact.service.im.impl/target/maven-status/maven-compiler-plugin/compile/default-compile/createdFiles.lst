@@ -1,0 +1,17 @@
+com/wing/socialcontact/im/dao/ImFriendrequestDao.class
+com/wing/socialcontact/service/im/impl/ImFollowServiceImpl.class
+com/wing/socialcontact/im/dao/ImGroupfavDao.class
+com/wing/socialcontact/service/im/impl/ImGroupinfoServiceImpl.class
+com/wing/socialcontact/im/dao/ImGroupusersDao.class
+com/wing/socialcontact/im/dao/ImGroupinfoDao.class
+com/wing/socialcontact/service/im/impl/ImGroupfavServiceImpl.class
+com/wing/socialcontact/service/im/impl/ImGroupusersServiceImpl.class
+com/wing/socialcontact/im/dao/ImFollowDao.class
+com/wing/socialcontact/service/im/impl/App.class
+com/wing/socialcontact/service/im/impl/ImGrouprequestServiceImpl.class
+com/wing/socialcontact/service/im/impl/ImToprelatServiceImpl.class
+com/wing/socialcontact/im/dao/ImFriendDao.class
+com/wing/socialcontact/im/dao/ImToprelatDao.class
+com/wing/socialcontact/im/dao/ImGrouprequestDao.class
+com/wing/socialcontact/service/im/impl/ImFriendrequestServiceImpl.class
+com/wing/socialcontact/service/im/impl/ImFriendServiceImpl.class

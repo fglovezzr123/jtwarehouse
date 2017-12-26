@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-04-07 01:41:07
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.TjyUserDao">
+
+	<resultMap id="user" type="com.wing.socialcontact.service.wx.bean.TjyUser">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mallUser" column="mall_user" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="openId" column="open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comName" column="com_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comProfile" column="com_profile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="job" column="job" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wechart" column="wechart" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userProfile" column="user_profile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="province" column="province" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="city" column="city" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="county" column="county" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="region" column="region" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="industry" column="industry" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="headPortrait" column="head_portrait" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="leaveMsg" column="leave_msg" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="visitQuantity" column="visit_quantity" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="homepagePic" column="homepage_pic" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isRealname" column="is_realname" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="trueName" column="true_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="address" column="address" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userSignature" column="user_signature" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isdk" column="isdk" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="dkDate" column="dk_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="reconStatus" column="recon_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="reconUserId" column="recon_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconDate" column="recon_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="tjReconDate" column="tj_recon_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="firstBindTime" column="first_bind_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastBindTime" column="last_bind_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="wxUniqueId" column="wx_unique_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="appSynMsgTime" column="app_syn_msg_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="appSynMsgToTjy" column="app_syn_msg_to_tjy" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="kfTelephone" column="kf_telephone" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconMobile" column="recon_mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconCapital" column="recon_capital" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="regDate" column="reg_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastVisitDate" column="last_visit_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="sort" column="sort" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isztdh" column="isztdh" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isdisturb" column="isdisturb" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="tjName" column="tj_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="tjMobile" column="tj_mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="tjId" column="tj_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="lastRegDate" column="last_reg_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="honorTitle" column="honor_title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="honorFlag" column="honor_flag" javaType="String" jdbcType="VARCHAR"></result>
+		
+	</resultMap>
+	
+	<resultMap id="userGlobal" type="com.wing.socialcontact.service.wx.bean.TjyUser">
+		<result property="id" column="U_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mallUser" column="U_mall_user" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="openId" column="U_open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comName" column="U_com_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comProfile" column="U_com_profile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="job" column="U_job" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wechart" column="U_wechart" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userProfile" column="U_user_profile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="province" column="U_province" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="city" column="U_city" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="county" column="U_county" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="region" column="U_region" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="industry" column="U_industry" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="nickname" column="U_nickname" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="headPortrait" column="U_head_portrait" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="leaveMsg" column="U_leave_msg" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="visitQuantity" column="U_visit_quantity" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="homepagePic" column="U_homepage_pic" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isRealname" column="U_is_realname" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="U_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="trueName" column="U_true_name" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="address" column="U_address" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="U_mobile" javaType="String" jdbcType="VARCHAR"></result>
+	    <result property="userSignature" column="U_user_signature" javaType="String" jdbcType="VARCHAR"></result>
+	    <result property="reconStatus" column="U_recon_status" javaType="Integer" jdbcType="INTEGER"></result>
+	    <result property="reconUserId" column="U_recon_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="tjReconDate" column="U_tj_recon_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="reconDate" column="U_recon_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="appSynMsgTime" column="U_app_syn_msg_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="appSynMsgToTjy" column="U_app_syn_msg_to_tjy" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="firstBindTime" column="U_first_bind_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastBindTime" column="U_last_bind_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="kfTelephone" column="U_kf_telephone" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconMobile" column="U_recon_mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconCapital" column="U_recon_capital" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="regDate" column="U_reg_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastVisitDate" column="U_last_visit_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="sort" column="sort" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isztdh" column="isztdh" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isdisturb" column="isdisturb" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="ztdhsort" column="ztdhsort" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="tjMobile" column="U_tj_mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="tjName" column="U_tj_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="tjId" column="U_tj_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="lastRegDate" column="U_last_reg_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="honorTitle" column="U_honor_title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="honorFlag" column="U_honor_flag" javaType="String" jdbcType="VARCHAR"></result>
+	
+	</resultMap>
+	
+	<sql id="field">
+		U.id, U.mall_user, U.open_id, U.com_name, U.wx_unique_id wxUniqueId,
+		U.com_profile, U.job, U.wechart, U.user_profile,u.sort,u.isztdh, 
+		U.province, U.city, U.county, U.region, 
+		U.industry, U.nickname, U.head_portrait, U.leave_msg, 
+		U.visit_quantity, U.homepage_pic, U.is_realname, U.status, U.true_name, U.address, U.mobile,
+		U.user_signature,U.isdk,U.dk_date,U.recon_status,U.recon_user_id,U.tj_recon_date,U.recon_date,
+		u.app_syn_msg_to_tjy,u.app_syn_msg_time,U.kf_telephone,U.recon_mobile,U.recon_capital,U.reg_date,U.last_visit_date,u.ztdhsort,U.isdisturb,
+		U.tj_name,U.tj_mobile,U.tj_id,U.honor_title,U.honor_flag
+	</sql>
+
+	<sql id="fieldGlobal">
+		U.id U_id, U.mall_user U_mall_user, 
+		U.open_id U_open_id, U.com_name U_com_name, 
+		U.com_profile U_com_profile, U.job U_job, 
+		U.wechart U_wechart, U.user_profile U_user_profile,u.sort, u.isztdh,
+		U.province U_province, U.city U_city, 
+		U.county U_county, U.region U_region, 
+		U.industry U_industry, U.nickname U_nickname, 
+		U.head_portrait U_head_portrait, U.leave_msg U_leave_msg, 
+		U.visit_quantity U_visit_quantity, U.homepage_pic U_homepage_pic, 
+		U.is_realname U_is_realname, U.status U_status, U.true_name U_true_name, U.address U_address, 
+		U.mobile U_mobile, U.user_signature U_user_signature,U.recon_status U_recon_status,
+		U.recon_user_id U_recon_user_id,U.tj_recon_date U_tj_recon_date,U.recon_date U_recon_date,,U.isdisturb U_isdisturb
+		u.app_syn_msg_to_tjy,u.app_syn_msg_time,U.kf_telephone U_kf_telephone,U.recon_mobile U_recon_mobile,U.recon_capital U_recon_capital,U.reg_date U_reg_date,U.last_visit_date U_last_visit_date,
+		U.tj_name U_tj_name,U.tj_mobile U_tj_mobile,U.tj_id U_tj_id,U.last_reg_date U_last_reg_date,U.honor_title U_honor_title,U.honor_flag U_honor_flag
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		U.id id, U.mall_user mallUser, 
+		U.open_id openId, U.com_name comName, 
+		U.com_profile comProfile, U.job job, 
+		U.wechart wechart, U.user_profile userProfile,u.sort, u.isztdh,
+		U.province province, U.city city, 
+		U.county county, U.region region, 
+		U.industry industry, U.nickname nickname, 
+		U.head_portrait headPortrait, U.leave_msg leaveMsg, 
+		U.visit_quantity visitQuantity, U.homepage_pic homepagePic, 
+		U.is_realname isRealname, U.status status, U.true_name trueName, U.address U_address, 
+		U.mobile U_mobile, U.user_signature userSignature,U.recon_status reconStatus,U.recon_user_id reconUserId,
+		U.tj_recon_date tjReconDate,U.recon_date U_reconDate,u.app_syn_msg_to_tjy appSynMsgToTjy,u.app_syn_msg_time appSynMsgTime,U.kf_telephone kfTelephone,
+		U.recon_mobile reconMobile,U.recon_capital reconCapital,U.reg_date regDate,U.last_visit_date lastVisitDate,
+		U.tj_name tjName,U.tj_mobile tjMobile,U.tj_id tjId,U.last_reg_date lastRegDate  ,U.honor_title honorTitle  ,U.honor_flag honorFlag
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND U.id=#{id}
+		</if>
+		<if test="mallUser!=null">
+			AND U.mall_user=#{mallUser}
+		</if>
+		<if test="openId!=null and openId!=''">
+			AND U.open_id=#{openId}
+		</if>
+		<if test="comName!=null and comName!=''">
+			AND U.com_name=#{comName}
+		</if>
+		<if test="comProfile!=null and comProfile!=''">
+			AND U.com_profile=#{comProfile}
+		</if>
+		<if test="job!=null and job!=''">
+			AND U.job=#{job}
+		</if>
+		<if test="wechart!=null and wechart!=''">
+			AND U.wechart=#{wechart}
+		</if>
+		<if test="userProfile!=null and userProfile!=''">
+			AND U.user_profile=#{userProfile}
+		</if>
+		<if test="province!=null and province!=''">
+			AND U.province=#{province}
+		</if>
+		<if test="city!=null and city!=''">
+			AND U.city=#{city}
+		</if>
+		<if test="county!=null and county!=''">
+			AND U.county=#{county}
+		</if>
+		<if test="region!=null and region!=''">
+			AND U.region=#{region}
+		</if>
+		<if test="industry!=null and industry!=''">
+			AND U.industry=#{industry}
+		</if>
+		<if test="nickname!=null and nickname!=''">
+			AND U.nickname=#{nickname}
+		</if>
+		<if test="headPortrait!=null and headPortrait!=''">
+			AND U.head_portrait=#{headPortrait}
+		</if>
+		<if test="leaveMsg!=null and leaveMsg!=''">
+			AND U.leave_msg=#{leaveMsg}
+		</if>
+		<if test="visitQuantity!=null">
+			AND U.visit_quantity=#{visitQuantity}
+		</if>
+		<if test="homepagePic!=null and homepagePic!=''">
+			AND U.homepage_pic=#{homepagePic}
+		</if>
+		<if test="isRealname!=null">
+			AND U.is_realname=#{isRealname}
+		</if>
+		<if test="status!=null">
+			AND U.status=#{status}
+		</if>
+		<if test="trueName!=null">
+			AND U.true_name=#{trueName}
+		</if>
+		<if test="address!=null">
+			AND U.address=#{address}
+		</if>
+		<if test="mobile!=null">
+			AND U.mobile=#{mobile}
+		</if>
+		<if test="userSignature!=null and userSignature!=''">
+			AND U.user_signature=#{userSignature}
+		</if>
+		<if test="reconStatus!=null and reconStatus!=''">
+			AND U.recon_status=#{reconStatus}
+		</if>
+		<if test="reconUserId!=null and reconUserId!=''">
+			AND U.recon_user_id=#{reconUserId}
+		</if>
+		<if test="tjReconDate!=null">
+			AND U.tj_recon_date=#{tjReconDate}
+		</if>
+		<if test="wxUniqueId!=null and wxUniqueId!=''">
+			AND U.wx_unique_id=#{wxUniqueId}
+		</if>
+		<if test="appSynMsgToTjy !=null">
+			AND U.app_syn_msg_to_tjy=#{appSynMsgToTjy}
+		</if>
+		<if test="kfTelephone !=null">
+			AND U.kf_telephone=#{kfTelephone}
+		</if>
+		<if test="reconMobile !=null">
+			AND U.recon_mobile=#{reconMobile}
+		</if>
+		<if test="reconCapital !=null">
+			AND U.recon_capital=#{reconCapital}
+		</if>
+		<if test="regDate!=null">
+			AND U.reg_date=#{regDate}
+		</if>
+		<if test="lastVisitDate!=null">
+			AND U.last_visit_date=#{lastVisitDate}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND U.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="mallUser!=null">
+				AND U.mall_user=#{mallUser}
+			</if>
+			<if test="openId!=null and openId!=''">
+				AND U.open_id LIKE CONCAT('%', #{openId}, '%')
+			</if>
+			<if test="comName!=null and comName!=''">
+				AND U.com_name LIKE CONCAT('%', #{comName}, '%')
+			</if>
+			<if test="comProfile!=null and comProfile!=''">
+				AND U.com_profile LIKE CONCAT('%', #{comProfile}, '%')
+			</if>
+			<if test="job!=null and job!=''">
+				AND U.job LIKE CONCAT('%', #{job}, '%')
+			</if>
+			<if test="wechart!=null and wechart!=''">
+				AND U.wechart LIKE CONCAT('%', #{wechart}, '%')
+			</if>
+			<if test="userProfile!=null and userProfile!=''">
+				AND U.user_profile LIKE CONCAT('%', #{userProfile}, '%')
+			</if>
+			<if test="province!=null and province!=''">
+				AND U.province LIKE CONCAT('%', #{province}, '%')
+			</if>
+			<if test="city!=null and city!=''">
+				AND U.city LIKE CONCAT('%', #{city}, '%')
+			</if>
+			<if test="county!=null and county!=''">
+				AND U.county LIKE CONCAT('%', #{county}, '%')
+			</if>
+			<if test="region!=null and region!=''">
+				AND U.region LIKE CONCAT('%', #{region}, '%')
+			</if>
+			<if test="industry!=null and industry!=''">
+				AND U.industry LIKE CONCAT('%', #{industry}, '%')
+			</if>
+			<if test="nickname!=null and nickname!=''">
+				AND U.nickname LIKE CONCAT('%', #{nickname}, '%')
+			</if>
+			<if test="headPortrait!=null and headPortrait!=''">
+				AND U.head_portrait LIKE CONCAT('%', #{headPortrait}, '%')
+			</if>
+			<if test="leaveMsg!=null and leaveMsg!=''">
+				AND U.leave_msg LIKE CONCAT('%', #{leaveMsg}, '%')
+			</if>
+			<if test="visitQuantity!=null">
+				AND U.visit_quantity=#{visitQuantity}
+			</if>
+			<if test="homepagePic!=null and homepagePic!=''">
+				AND U.homepage_pic LIKE CONCAT('%', #{homepagePic}, '%')
+			</if>
+			<if test="isRealname!=null">
+				AND U.is_realname=#{isRealname}
+			</if>
+			<if test="status!=null">
+				AND U.status=#{status}
+			</if>
+			<if test="trueName!=null and trueName!=''">
+				AND U.true_name LIKE CONCAT('%', #{trueName}, '%')
+			</if>
+			<if test="address!=null and address!=''">
+				AND U.address=#{address}
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND U.mobile LIKE CONCAT('%', #{mobile}, '%')
+			</if>
+			<if test="userSignature!=null and userSignature!=''">
+				AND U.user_signature LIKE CONCAT('%', #{userSignature}, '%')
+			</if>
+			<if test="reconStatus!=null and reconStatus!=''">
+				AND U.recon_status=#{reconStatus}
+			</if>
+			<if test="reconUserId!=null and reconUserId!=''">
+				AND U.recon_user_id=#{reconUserId}
+			</if>
+			<if test="tjReconDate!=null">
+				AND U.tj_recon_date=#{tjReconDate}
+			</if>
+			<if test="reconDate!=null">
+				AND U.recon_date=#{reconDate}
+			</if>
+			<if test="appSynMsgToTjy !=null">
+				AND U.app_syn_msg_to_tjy=#{appSynMsgToTjy}
+			</if>
+			<if test="kfTelephone !=null">
+				AND U.kf_telephone=#{kfTelephone}
+			</if>
+			<if test="reconMobile !=null">
+				AND U.recon_mobile=#{reconMobile}
+			</if>
+			<if test="reconCapital !=null">
+				AND U.recon_capital=#{reconCapital}
+			</if>
+			<if test="regDate!=null">
+				AND U.reg_date=#{regDate}
+			</if>
+			<if test="lastVisitDate!=null">
+				AND U.last_visit_date=#{lastVisitDate}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				U.id=#{id}, 
+		   </if>
+           <if test="mallUser!=null">
+				U.mall_user=#{mallUser}, 
+		   </if>
+           <if test="openId!=null">
+				U.open_id=#{openId}, 
+		   </if>
+           <if test="comName!=null">
+				U.com_name=#{comName}, 
+		   </if>
+           <if test="comProfile!=null">
+				U.com_profile=#{comProfile}, 
+		   </if>
+           <if test="job!=null">
+				U.job=#{job}, 
+		   </if>
+           <if test="wechart!=null">
+				U.wechart=#{wechart}, 
+		   </if>
+           <if test="userProfile!=null">
+				U.user_profile=#{userProfile}, 
+		   </if>
+           <if test="province!=null">
+				U.province=#{province}, 
+		   </if>
+           <if test="city!=null">
+				U.city=#{city}, 
+		   </if>
+           <if test="county!=null">
+				U.county=#{county}, 
+		   </if>
+           <if test="region!=null">
+				U.region=#{region}, 
+		   </if>
+           <if test="industry!=null">
+				U.industry=#{industry}, 
+		   </if>
+           <if test="nickname!=null and nickname!=''">
+				U.nickname=#{nickname}, 
+		   </if>
+           <if test="headPortrait!=null">
+				U.head_portrait=#{headPortrait}, 
+		   </if>
+           <if test="leaveMsg!=null">
+				U.leave_msg=#{leaveMsg}, 
+		   </if>
+           <if test="visitQuantity!=null">
+				U.visit_quantity=#{visitQuantity}, 
+		   </if>
+           <if test="homepagePic!=null">
+				U.homepage_pic=#{homepagePic}, 
+		   </if>
+           <if test="isRealname!=null">
+				U.is_realname=#{isRealname}, 
+		   </if>
+           <if test="status!=null">
+				U.status=#{status}, 
+		   </if>
+		   <if test="trueName!=null">
+				U.true_name=#{trueName}, 
+		   </if>
+		   <if test="address!=null">
+				U.address=#{address}, 
+		   </if>
+		   <if test="mobile!=null">
+				U.mobile=#{mobile},
+			</if>
+			 <if test="userSignature!=null">
+				U.user_signature=#{userSignature}, 
+		   </if>
+		    <if test="isdk!=null">
+				U.isdk=#{isdk}, 
+		   </if>
+		    <if test="dkDate!=null">
+				U.dk_date=#{dkDate}, 
+		   </if>
+		   <if test="reconStatus!=null and reconStatus!=''">
+				U.recon_status=#{reconStatus},
+			</if>
+			<if test="reconUserId!=null and reconUserId!=''">
+				U.recon_user_id=#{reconUserId},
+			</if>
+			<if test="tjReconDate!=null">
+				U.tj_recon_date=#{tjReconDate},
+			</if>
+			<if test="reconDate!=null">
+				U.recon_date=#{reconDate},
+			</if>
+			<if test="appSynMsgToTjy !=null">
+				U.app_syn_msg_to_tjy=#{appSynMsgToTjy},
+			</if>
+			<if test="kfTelephone !=null">
+				U.kf_telephone=#{kfTelephone},
+			</if>
+			<if test="reconMobile !=null">
+				U.recon_mobile=#{reconMobile},
+			</if>
+			<if test="reconCapital !=null">
+				U.recon_capital=#{reconCapital},
+			</if>
+			<if test="regDate!=null">
+				 U.reg_date=#{regDate},
+			</if>
+			<if test="lastVisitDate!=null">
+				 U.last_visit_date=#{lastVisitDate},
+			</if>
+			<if test="sort!=null">
+				 U.sort=#{sort},
+			</if>
+			<if test="isztdh!=null">
+				 U.isztdh=#{isztdh},
+			</if>
+			<if test="ztdhsort!=null">
+				 U.ztdhsort=#{ztdhsort},
+			</if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE U FROM TJY_USER U WHERE U.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_USER U
+		SET 
+		U.STATUS = -1
+		WHERE U.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_USER U
+		<include refid="dynamicSet" /> 
+	    WHERE U.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM TJY_USER U
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_USER U
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM TJY_USER U
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM TJY_USER U
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM TJY_USER U
+		WHERE U.ID = #{id}
+	</select>
+	
+	<!-- 根据条件获取大咖或非大咖列表 --><!-- 根据条件获取志同道合或非志同道合 -->
+	<select id="getUserListByParam" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.id,
+			t.com_name,
+			t.nickname,
+			t.job,
+			t1.list_value AS job_name,
+			t.industry,
+			t2.list_value AS industry_name,
+			t.province,
+			t3.dis_name AS province_name,
+			t.city,
+			t4.dis_name AS city_name,
+			t.dk_date,
+			t.sort,
+			t6.level,
+			t6.integral,
+			t.ztdhsort,
+			t.mobile,
+			concat(concat(ifnull(t3.dis_name,''),' '),concat(ifnull(t4.dis_name,''),' '),concat(ifnull(t5.dis_name,''),' ')) as region
+		FROM
+			tjy_user t
+		LEFT JOIN list_values t1 ON t.job = t1.id
+		LEFT JOIN list_values t2 ON t.industry = t2.id
+		LEFT JOIN sy_district t3 ON t.province = t3.id
+		LEFT JOIN sy_district t4 ON t.city = t4.id
+		LEFT JOIN sy_district t5 ON t.county = t5.id
+		LEFT JOIN user t6 ON t.mall_user = t6.id
+		WHERE
+		 <if test="isDk==1">
+			t.isdk = 1 and is_realname=1
+	   	 </if>
+	   	 <if test="isDk==0">
+			t.isdk != 1  and is_realname=1
+	   	 </if>
+		 <if test="isztdh==1">
+			t.isztdh = 1  and is_realname=1
+	   	 </if>
+	   	 <if test="isztdh==0">
+			t.isztdh != 1  and is_realname=1
+	   	 </if>
+	   	 <if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	   	 </if>
+	   	 <if test="level!=null and level!=''">
+			and t6.level LIKE CONCAT('%', #{level}, '%')
+	   	 </if>
+	   	 <if test="place!=null and place!=''">
+			and 
+					concat(
+						ifnull(t3.dis_name, ''),
+						ifnull(t4.dis_name, ''),
+						ifnull(t5.dis_name, '')
+					) 	
+			 LIKE CONCAT('%', #{place}, '%')
+	   	 </if>
+	   	 <if test="comname!=null and comname!=''">
+			and t.com_name LIKE CONCAT('%', #{comname}, '%')
+	   	 </if>
+	   	 <if test="job!=null and job!=''">
+			and t.job =  #{job}
+	   	 </if>
+	   	 <if test="industry!=null and industry!=''">
+			and t.industry  = #{industry}
+	   	 </if>
+	   	 <if test="isDk==1">
+			ORDER BY t.sort desc , dk_date DESC
+	   	 </if>
+	   	 <if test="isztdh==1">
+			ORDER BY t.ztdhsort desc 
+	   	 </if>
+	</select>
+	
+	<!-- 根据条件获取用户列表 -->
+	<select id="getUserListByParam2" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.*,u.*,
+			t1.list_value AS job_name,
+			t2.list_value AS industry_name,
+			t3.dis_name AS province_name,
+			t4.dis_name AS city_name,
+			t5.dis_name AS county_name
+		FROM
+			tjy_user t
+		left JOIN user u ON t.id = u.id
+		left JOIN list_values t1 ON t.job = t1.id
+		left JOIN list_values t2 ON t.industry = t2.id
+		left JOIN sy_district t3 ON t.province = t3.id
+	    left JOIN sy_district t4 ON t.city = t4.id
+	    left JOIN sy_district t5 ON t.county = t5.id
+		WHERE 1=1 
+	   	 <if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	   	 </if>
+	   	 <if test="true_name!=null and true_name!=''">
+			and t.true_name LIKE CONCAT('%', #{true_name}, '%')
+	   	 </if>
+	   	 <if test="job!=null and job!=''">
+			and t.job =  #{job}
+	   	 </if>
+	   	 <if test="industry!=null and industry!=''">
+			and t.industry  = #{industry}
+	   	 </if>
+	   	 <if test="mobile!=null and mobile!=''">
+			and t.mobile  LIKE CONCAT('%', #{mobile}, '%')
+	   	 </if>
+	   	  <if test="recon_mobile!=null and recon_mobile!=''">
+			and t.recon_mobile  LIKE CONCAT('%', #{recon_mobile}, '%')
+	   	 </if>
+	   	  <if test="bind_phone!=null and bind_phone!=''">
+			and t.bind_phone  LIKE CONCAT('%', #{bind_phone}, '%')
+	   	 </if>
+	   	  <if test="level!=null and level!=''">
+			and u.level  LIKE CONCAT('%', #{level}, '%')
+	   	 </if>
+	   	  <if test="address!=null and address!=''">
+			and t.address  LIKE CONCAT('%', #{address}, '%')
+	   	 </if>
+	   	 <if test="id!=null and id!=''">
+			and t.id =  #{id}
+	   	 </if>
+	   	 <if test="orderBy==1">
+			ORDER BY u.addTime DESC
+	   	 </if>
+		<if test="orderBy==2">
+			ORDER BY u.addTime asc
+	   	 </if>	</select>
+	<!-- 根据条件获取用户列表 -->
+	<select id="getUserListByParam_select" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.id,u.mobile,t.nickname as userName,u.sex,t.true_name as trueName,t.com_name,t.address,
+			t1.list_value AS job_name,
+			t2.list_value AS industry_name,
+			t3.dis_name AS province_name,
+			t4.dis_name AS city_name,
+			t5.dis_name AS county_name
+		FROM
+			tjy_user t
+		left JOIN user u ON t.id = u.id
+		left JOIN list_values t1 ON t.job = t1.id
+		left JOIN list_values t2 ON t.industry = t2.id
+		left JOIN sy_district t3 ON t.province = t3.id
+	    left JOIN sy_district t4 ON t.city = t4.id
+	    left JOIN sy_district t5 ON t.county = t5.id
+		WHERE 1=1 
+	   	 <if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	   	 </if>
+	   	 <if test="true_name!=null and true_name!=''">
+			and t.true_name LIKE CONCAT('%', #{true_name}, '%')
+	   	 </if>
+	   	 <if test="job!=null and job!=''">
+			and t.job =  #{job}
+	   	 </if>
+	   	 <if test="industry!=null and industry!=''">
+			and t.industry  = #{industry}
+	   	 </if>
+	   	 <if test="mobile!=null and mobile!=''">
+			and t.mobile  LIKE CONCAT('%', #{mobile}, '%')
+	   	 </if>
+	   	  <if test="recon_mobile!=null and recon_mobile!=''">
+			and t.recon_mobile  LIKE CONCAT('%', #{recon_mobile}, '%')
+	   	 </if>
+	   	  <if test="bind_phone!=null and bind_phone!=''">
+			and t.bind_phone  LIKE CONCAT('%', #{bind_phone}, '%')
+	   	 </if>
+	   	 <if test="id!=null and id!=''">
+			and t.id =  #{id}
+	   	 </if>
+			ORDER BY t.id DESC
+	</select>
+	
+	<!-- 根据id获取用户 -->
+	<select id="getUserListById" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.*,
+			t1.list_value AS job_name,
+			t2.list_value AS industry_name,
+			t3.dis_name AS province_name,
+			t4.dis_name AS city_name
+		FROM
+			tjy_user t
+		left JOIN list_values t1 ON t.job = t1.id
+		AND t1.list_type = '12'
+		left JOIN list_values t2 ON t.industry = t2.id
+		AND t2.list_type = '8001'
+		left JOIN sy_district t3 ON t.province = t3.id
+		left JOIN sy_district t4 ON t.city = t4.id
+		WHERE 1=1
+	   	 <if test="id!=null and id!=''">
+			and t.id =  #{id}
+	   	 </if>
+			ORDER BY dk_date DESC
+	</select>
+	<select id="selAllUserForApp" resultType="java.util.HashMap" parameterType="String">
+		SELECT
+			u.id,
+			u.head_portrait headPath,
+			CASE
+		WHEN c.customer_name IS NOT NULL THEN
+			c.customer_name
+		ELSE
+			u.nickname
+		END userName
+		FROM
+			tjy_user u
+		LEFT JOIN qfy_entry_customer c ON u.mobile = c.customer_phone_num
+		WHERE
+			(
+				u.id IS NOT NULL
+				AND u.id != 'null'
+			)
+		 <if test="uids !=null and uids!=''">
+			and u.id in (${uids})
+	   	 </if>
+	   	 GROUP BY u.id
+	</select>
+	
+	<select id="getShUserListByParam" resultType="java.util.HashMap" parameterType="String">
+		SELECT
+			t.*,u.*,
+			t1.list_value AS job_name,
+			t2.list_value AS industry_name,
+			t3.dis_name AS province_name,
+			t4.dis_name AS city_name,
+			t5.dis_name AS county_name
+		FROM
+			tjy_user t
+		left JOIN user u ON t.id = u.id
+		left JOIN list_values t1 ON t.job = t1.id
+		left JOIN list_values t2 ON t.industry = t2.id
+		left JOIN sy_district t3 ON t.province = t3.id
+	    left JOIN sy_district t4 ON t.city = t4.id
+	    left JOIN sy_district t5 ON t.county = t5.id
+		WHERE 1=1 and t1.list_type = '12' and  t2.list_type = '8001'
+	   	 <if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	   	 </if>
+	   	 <if test="true_name!=null and true_name!=''">
+			and t.true_name LIKE CONCAT('%', #{true_name}, '%')
+	   	 </if>
+	   	 <if test="job!=null and job!=''">
+			and t.job =  #{job}
+	   	 </if>
+	   	 <if test="industry!=null and industry!=''">
+			and t.industry  = #{industry}
+	   	 </if>
+	   	 <if test="mobile!=null and mobile!=''">
+			and t.mobile  LIKE CONCAT('%', #{mobile}, '%')
+	   	 </if>
+	   	 <if test="recon_mobile!=null and recon_mobile!=''">
+			and t.recon_mobile  LIKE CONCAT('%', #{recon_mobile}, '%')
+	   	 </if>
+	   	   <if test="bind_phone!=null and bind_phone!=''">
+			and t.bind_phone  LIKE CONCAT('%', #{bind_phone}, '%')
+	   	 </if>
+	   	 <if test="id!=null and id!=''">
+			and t.id = #{id}
+	   	 </if>
+	   	 <if test="reconStatus!=null and reconStatus!=''">
+			and t.recon_status = #{reconStatus}
+	   	 </if>
+	   	    and t.recon_status >=  1
+		 order by t.tj_recon_date desc
+	</select>
+	
+	
+	
+	<select id="selUserBySendType" resultType="java.util.HashMap" parameterType="String">
+		SELECT
+			u.*
+		FROM
+			tjy_user u
+		WHERE
+			1=1 
+		 <if test="sendType==0">
+			and u.status !=0
+	   	 </if>
+		 <if test="sendType==1">
+			and u.is_realname =1
+	   	 </if>
+		 <if test="sendType==2">
+			and (u.is_realname !=1 or u.is_realname is null)  and u.status !=0 
+	   	 </if>
+		 <if test="sendType==3">
+			and u.status =2
+	   	 </if>
+	</select>
+	
+	<select id="selAllUserForQFY" resultType="java.util.HashMap" parameterType="String">
+		SELECT
+			u.id,
+			u.head_portrait headPortrait,
+			c.customer_name  nickname
+		FROM
+			qfy_entry_customer c 
+		 JOIN  tjy_user u ON u.mobile = c.customer_phone_num  GROUP BY u.id
+	</select>
+	
+	<select id="selAllUserList" resultType="java.util.HashMap" parameterType="String">
+	  SELECT t.id,t.head_portrait headPortrait,
+	  IFNULL(t.honor_title, '') AS honor_title,
+      IFNULL(t.honor_flag, '') AS honor_flag,
+	  t.nickname 
+		FROM TJY_USER t order by t.id 
+	  <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+	  </if>
+	</select>
+	
+	<select id="selectTaskRecon" resultType="java.util.HashMap" >
+	  SELECT  U.*
+		FROM TJY_USER U
+	    where 1=1 and U.recon_status = 2 and U.last_reg_date is not null
+	</select>
+	<select id="selectByMobile" resultType="java.util.HashMap">
+	SELECT
+		t.id as friend_user,
+		t.nickname,
+		t.head_portrait,
+		IFNULL(t.honor_title, '') AS honor_title,
+		IFNULL(t.honor_flag, '') AS honor_flag,
+		t.com_name,
+		t.job,
+		t3.list_value AS job_name,
+		t.industry,
+		t4.list_value AS industry_name
+	FROM
+		tjy_user t
+	JOIN list_values t3 ON t.job = t3.id
+	AND t3.list_type = '12'
+	JOIN list_values t4 ON t.industry = t4.id
+	AND t4.list_type = '8001'
+	where mobile = #{mobile}
+	</select>
+</mapper>

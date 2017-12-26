@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-03-29 15:33:12
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImGroupusersDao">
+
+	<resultMap id="imGroupusers" type="com.wing.socialcontact.service.im.bean.ImGroupusers">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="groupId" column="group_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="affiliations" column="affiliations" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="msgDisturb" column="msg_disturb" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		IG.id, IG.group_id, IG.user_id, IG.nickname, 
+		IG.affiliations, IG.msg_disturb, IG.create_time, IG.update_time
+	</sql>
+	<delete id="deleteById">
+		DELETE IG FROM TJY_IM_GROUPUSERS IG WHERE IG.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imGroupusers">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPUSERS IG
+		WHERE IG.ID = #{id}
+	</select>
+	<!--  根据用户id获取天九用户信息-->
+	<select id="findTjyUsersByUserIds" resultType="java.util.HashMap">
+		SELECT
+			id,
+			mall_user,
+			open_id,
+			com_name,
+			com_profile,
+			job,
+			wechart,
+			user_profile,
+			province,
+			city,
+			county,
+			region,
+			industry,
+			nickname,
+			head_portrait,
+			leave_msg,
+			visit_quantity,
+			homepage_pic,
+			is_realname,
+			`status`
+		FROM
+			tjy_user
+		WHERE 
+			id in
+		<foreach collection="array" item="userIds" index="index"
+            open="(" close=")" separator=",">
+            #{userIds}
+        </foreach>
+	</select>
+	
+	<select id="findByGroupAndUser" resultMap="imGroupusers" parameterType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPUSERS IG
+		WHERE IG.group_id = #{groupId} and IG.user_id = #{userId}
+	</select>
+	<!-- 根据组和用户删除组成员 -->
+	<delete id="deleteByGroupAndUser" parameterType="java.util.HashMap">
+		DELETE IG FROM TJY_IM_GROUPUSERS IG WHERE 
+		IG.group_id = #{groupId}  and IG.affiliations !='owner'
+		 <if test="userId!=null and userId!=''">
+				and IG.user_id = #{userId}
+		 </if>
+		
+	</delete>
+	<!-- 获取组成员列表-->
+	<select id="findUsersByGroupId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.group_id,
+			t.user_id,
+			t1.nickname,
+			t.affiliations,
+			t.msg_disturb,
+			t.create_time,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.job,
+			t1.mobile,
+			t2.list_value AS jobName,
+			CASE
+		WHEN t3.id IS NULL THEN
+			0
+		ELSE
+			1
+		END AS top_flag
+		FROM
+			tjy_im_groupusers t
+		JOIN tjy_user t1 ON t.user_id = t1.id
+		JOIN list_values t2 ON t1.job = t2.id
+		LEFT JOIN tjy_im_toprelat t3 ON t.group_id = t3.subject_id
+		AND t3.subject_type = 2
+		AND t.user_id = t3.relat_user
+		WHERE
+			t.group_id = #{groupId}
+		ORDER BY
+			t.create_time DESC
+	</select>
+	<!-- 获取组成员列表-->
+	<select id="findUsersByGroupIdNoOwner" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.group_id,
+			t.user_id,
+			t1.nickname,
+			t.affiliations,
+			t.msg_disturb,
+			t.create_time,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.job,
+			t1.mobile,
+			t2.list_value AS jobName,
+			CASE
+		WHEN t3.id IS NULL THEN
+			0
+		ELSE
+			1
+		END AS top_flag
+		FROM
+			tjy_im_groupusers t
+		JOIN tjy_user t1 ON t.user_id = t1.id
+		JOIN list_values t2 ON t1.job = t2.id
+		LEFT JOIN tjy_im_toprelat t3 ON t.group_id = t3.subject_id
+		AND t3.subject_type = 2
+		AND t.user_id = t3.relat_user
+		WHERE
+			t.group_id = #{groupId} and t.affiliations !='owner'
+		ORDER BY
+			t.create_time DESC
+	</select>
+	
+	<!-- 获取组成员列表-->
+	<select id="findUserListByGroupIdHasOwner" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.group_id,
+			t.user_id,
+			t1.nickname,
+			t.affiliations,
+			t.msg_disturb,
+			t.create_time,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.job,
+			t1.mobile,
+			t2.list_value AS jobName,
+			CASE
+		WHEN t3.id IS NULL THEN
+			0
+		ELSE
+			1
+		END AS top_flag
+		FROM
+			tjy_im_groupusers t
+		JOIN tjy_user t1 ON t.user_id = t1.id
+		JOIN list_values t2 ON t1.job = t2.id
+		LEFT JOIN tjy_im_toprelat t3 ON t.group_id = t3.subject_id
+		AND t3.subject_type = 2
+		AND t.user_id = t3.relat_user
+		WHERE
+			t.group_id = #{groupId} 
+		ORDER BY
+			t.create_time DESC
+	</select>
+	<!-- 获取组成员列表-->
+	<select id="findUsersByGroupId2" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT * from (SELECT
+				t.user_id as id,
+				t.group_id,
+				t.user_id,
+				t1.nickname as userName,
+				t1.nickname as trueName,
+				t1.nickname ,
+				t.affiliations,
+				t.msg_disturb,
+				t.create_time,
+				t1.head_portrait,
+				IFNULL(t1.honor_title, '') AS honor_title,
+			    IFNULL(t1.honor_flag, '') AS honor_flag,
+				t1.com_name,
+				t1.job,
+	      t1.mobile,
+	      t0.availableBalance,
+	      t0.jb_amount,
+	      t0.hzb_amount,
+	      t0.level,
+	      t0.integral_total,      
+				t2.list_value AS jobName,
+				CASE
+			WHEN t3.id IS NULL THEN
+				0
+			ELSE
+				1
+			END AS top_flag
+			FROM
+				tjy_im_groupusers t
+	        JOIN user t0 ON t.user_id = t0.id
+			JOIN tjy_user t1 ON t.user_id = t1.id  
+			JOIN list_values t2 ON t1.job = t2.id
+			LEFT JOIN tjy_im_toprelat t3 ON t.group_id = t3.subject_id
+			AND t3.subject_type = 2
+			AND t.user_id = t3.relat_user)tt
+	        where 1=1 and tt.group_id = #{groupId}
+	        <if test="comName!=null and comName!=''">
+				and tt.com_name LIKE CONCAT('%', #{comName}, '%')
+		   	 </if>
+	        <if test="nickname!=null and nickname!=''">
+				and tt.nickname LIKE CONCAT('%', #{nickname}, '%')
+		   	 </if>
+	        <if test="level!=null and level!=''">
+				and tt.level LIKE CONCAT('%', #{level}, '%')
+		   	 </if>
+	        
+		   	 <if test="job!=null and job!=''">
+				and tt.job =  #{job}
+		   	 </if>
+		   	 <if test="affiliations!=null and affiliations!=''">
+				and tt.affiliations =  #{affiliations}
+		   	 </if>
+		   	 <if test="industry!=null and industry!=''">
+				and tt.industry  = #{industry}
+		   	 </if>
+		   	 <if test="mobile!=null and mobile!=''">
+				and tt.mobile  LIKE CONCAT('%', #{mobile}, '%')
+		   	 </if>
+			ORDER BY 
+				tt.create_time DESC
+	</select>
+	
+	<!-- 获取组成员数量-->
+	<select id="findCountByGroupId" resultType="java.lang.Integer" parameterType="string">
+		SELECT count(*)
+		FROM TJY_IM_GROUPUSERS IG
+		WHERE IG.group_id = #{groupId}
+	</select>
+	
+	<!-- 获取组成员-->
+	<select id="findListByGroupId" resultType="java.util.HashMap"  parameterType="string">
+		SELECT t.user_id userId 
+		FROM TJY_IM_GROUPUSERS t
+		WHERE t.group_id = #{groupId}
+	</select>
+</mapper>

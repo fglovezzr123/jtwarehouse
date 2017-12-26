@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-03-27 11:22:42
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.TemplateDao">
+
+	<resultMap id="template" type="com.wing.socialcontact.service.wx.bean.Template">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="info" column="info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mark" column="mark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="title" column="title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isOpen" column="is_open" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="templateGlobal" type="com.wing.socialcontact.service.wx.bean.Template">
+		<result property="id" column="T_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="T_content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="info" column="T_info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mark" column="T_mark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="title" column="T_title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isOpen" column="T_is_open" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="T_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="T_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="T_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="T_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="T_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="T_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="T_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="T_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		T.id, T.content, T.info, T.mark, 
+		T.title, T.is_open, T.type, T.create_time, 
+		T.create_user_id, T.create_user_name, T.update_time, T.update_user_id, 
+		T.update_user_name, T.deleted
+	</sql>
+
+	<sql id="fieldGlobal">
+		T.id T_id, T.content T_content, 
+		T.info T_info, T.mark T_mark, 
+		T.title T_title, T.is_open T_is_open, 
+		T.type T_type, T.create_time T_create_time, 
+		T.create_user_id T_create_user_id, T.create_user_name T_create_user_name, 
+		T.update_time T_update_time, T.update_user_id T_update_user_id, 
+		T.update_user_name T_update_user_name, T.deleted T_deleted
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		T.id id, T.content content, 
+		T.info info, T.mark mark, 
+		T.title title, T.is_open isOpen, 
+		T.type type, T.create_time createTime, 
+		T.create_user_id createUserId, T.create_user_name createUserName, 
+		T.update_time updateTime, T.update_user_id updateUserId, 
+		T.update_user_name updateUserName, T.deleted deleted
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND T.id=#{id}
+		</if>
+		<if test="content!=null and content!=''">
+			AND T.content=#{content}
+		</if>
+		<if test="info!=null and info!=''">
+			AND T.info=#{info}
+		</if>
+		<if test="mark!=null and mark!=''">
+			AND T.mark=#{mark}
+		</if>
+		<if test="title!=null and title!=''">
+			AND T.title=#{title}
+		</if>
+		<if test="isOpen!=null">
+			AND T.is_open=#{isOpen}
+		</if>
+		<if test="type!=null">
+			AND T.type=#{type}
+		</if>
+		<if test="createTime!=null">
+			AND T.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND T.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND T.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND T.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND T.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND T.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND T.deleted=#{deleted}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND T.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="content!=null and content!=''">
+				AND T.content LIKE CONCAT('%', #{content}, '%')
+			</if>
+			<if test="info!=null and info!=''">
+				AND T.info LIKE CONCAT('%', #{info}, '%')
+			</if>
+			<if test="mark!=null and mark!=''">
+				AND T.mark LIKE CONCAT('%', #{mark}, '%')
+			</if>
+			<if test="title!=null and title!=''">
+				AND T.title LIKE CONCAT('%', #{title}, '%')
+			</if>
+			<if test="isOpen!=null">
+				AND T.is_open=#{isOpen}
+			</if>
+			<if test="type!=null">
+				AND T.type=#{type}
+			</if>
+			<if test="createTime!=null">
+				AND T.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND T.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND T.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND T.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND T.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND T.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND T.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				T.id=#{id}, 
+		   </if>
+           <if test="content!=null">
+				T.content=#{content}, 
+		   </if>
+           <if test="info!=null">
+				T.info=#{info}, 
+		   </if>
+           <if test="mark!=null">
+				T.mark=#{mark}, 
+		   </if>
+           <if test="title!=null">
+				T.title=#{title}, 
+		   </if>
+           <if test="isOpen!=null">
+				T.is_open=#{isOpen}, 
+		   </if>
+           <if test="type!=null">
+				T.type=#{type}, 
+		   </if>
+           <if test="createTime!=null">
+				T.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				T.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				T.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				T.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				T.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				T.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				T.deleted=#{deleted}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+
+	<select id="load" resultMap="template">
+		SELECT <include refid="field"/>
+		FROM TJY_TEMPLATE T
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_TEMPLATE T
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="template">
+		SELECT <include refid="field"/>
+		FROM TJY_TEMPLATE T
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="template">
+		SELECT <include refid="field"/>
+		FROM TJY_TEMPLATE T
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="selectAllTemplateMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM tjy_template t order by t.create_time  
+	</select>
+	<select id="selectByParam" resultMap="template" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_template t 
+ 		WHERE 1=1
+    	<include refid="queryWhere" />
+	</select>
+	
+
+</mapper>

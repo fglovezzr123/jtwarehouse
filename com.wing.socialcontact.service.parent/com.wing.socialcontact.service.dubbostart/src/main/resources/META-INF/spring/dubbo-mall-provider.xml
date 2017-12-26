@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Copyright 1999-2011 Alibaba Group. - - Licensed under the Apache License, 
+	Version 2.0 (the "License"); - you may not use this file except in compliance 
+	with the License. - You may obtain a copy of the License at - - http://www.apache.org/licenses/LICENSE-2.0 
+	- - Unless required by applicable law or agreed to in writing, software - 
+	distributed under the License is distributed on an "AS IS" BASIS, - WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. - See the 
+	License for the specific language governing permissions and - limitations 
+	under the License. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="location" value="classpath:dubbo.properties"/>
+    </bean>
+    
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="${dubbo.application.name}"/>
+	<dubbo:registry address="${dubbo.registry.address}" check="${dubbo.registry.check}" protocol="zookeeper"/>
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+<!-- 	serialization="${dubbo.protocol.serialization}" -->
+<!-- 	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" host="${dubbo.protocol.host}"/> -->
+
+	<!-- dispatcher all所有请求都发到线程池处理，threadpool fixed固定线程池大小，初始化后不进行伸缩，threads 线程池内线程个数 -->
+	<!-- <dubbo:protocol accesslog="true" />开启访问日志记录 -->
+	<!-- <dubbo:protocol accesslog="http://10.20.160.198/wiki/display/dubbo/foo/bar.log" />规定访问日志的路径 -->
+	<!-- <dubbo:protocol name="dubbo" connections="2" accepts="1000"/> dubbo协议使用长连接和nio，这里connections=2表示同时建立两个长连接（要在provier和consumer同时写上）
+		accepts=1000  表示为了防止同时过来大量连接而被干掉，限制最大为1000-->
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" host="${dubbo.protocol.host}" dispatcher="all" threadpool="fixed" threads="300" />
+	<!-- deplay=”-1”使Dubbo在Spring容器初始化完后，再暴露服务有错 -->
+	<!-- timeout="1000" 1秒超时 -->
+	<dubbo:provider  timeout="3000" retries="0"/>
+	
+	<!-- 使用注解方式暴露接口 -->
+<!-- 	<dubbo:annotation package="com.mall.foundation.service.impl"/> -->
+	<!-- 加入spring注解扫描 -->
+	<context:component-scan base-package="com.wing.socialcontact.sys.service.impl"/>
+	<context:component-scan base-package="com.wing.socialcontact.service.wx.impl"/>
+	<context:component-scan base-package="com.wing.socialcontact.service.im.impl"/>
+	<context:component-scan base-package="com.wing.socialcontact.util.redis"/>
+	
+	<!-- 企服云 -->
+	<context:component-scan base-package="com.wing.enterprise.service.impl"/>
+	<!-- 
+	<context:component-scan base-package="com.wing.socialcontact.event"/>
+	-->
+	<!-- mybatis 相关 -->
+	<import resource="../../applicationContext.xml"/>
+	<!-- redis缓存配置 -->
+	<import resource="../../applicationContext-cache-redis.xml"/>
+	
+	<!-- 线程池配置 -->
+	<import resource="../../applicationContext-threadpool.xml"/>
+	
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="org.com.wing.enterprise.service.FinanceProductService" ref="financeProductServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.FinanceProductStockService" ref="financeProductStockServiceImpl" timeout="${dubbo.service.timeout}"/>
+
+
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IDataPermissionsService" ref="dataPermissionsServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IRoleService" ref="roleServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IDeptService" ref="deptServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IDistrictService" ref="districtServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IListValuesService" ref="listValuesServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.ILoginService" ref="loginServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IMainService" ref="mainServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IMenuService" ref="menuServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.ISystemLogService" ref="systemLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.ITableCustomService" ref="tableCustomServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IUserService" ref="userServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!-- 微信-文库 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ILibraryService" ref="libraryServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ILibraryClassService" ref="libraryClassServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 微信-投资 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IInvestmentService" ref="investmentServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IInvestmentClassService" ref="investmentClassServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IInvestmentIntentionService" ref="investmentIntentionServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 微信-会所 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IClubService" ref="clubServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IClubClassService" ref="clubClassServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 微信-新闻 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.INewsClassService" ref="newsClassServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.INewsService" ref="newsServiceImpl" timeout="${dubbo.service.timeout}"/>
+    <dubbo:service interface="com.wing.socialcontact.service.wx.api.INewsPayLogService" ref="newsPayLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+    <!-- 微信-评论 -->
+    <dubbo:service interface="com.wing.socialcontact.service.wx.api.ICommentService" ref="commentServiceImpl" timeout="${dubbo.service.timeout}"/>
+    <dubbo:service interface="com.wing.socialcontact.service.wx.api.ICommentThumbupService" ref="commentThumbupServiceImpl" timeout="${dubbo.service.timeout}"/>
+    <!--附件 -->
+    <dubbo:service interface="com.wing.socialcontact.service.wx.api.IAccessoryService" ref="accessoryServiceImpl" timeout="${dubbo.service.timeout}"/>
+    <!--消息 -->
+    <dubbo:service interface="com.wing.socialcontact.service.wx.api.ITemplateService" ref="templateServiceImpl" timeout="${dubbo.service.timeout}"/>
+    <dubbo:service interface="com.wing.socialcontact.service.wx.api.IMessageInfoService" ref="messageInfoServiceImpl" timeout="${dubbo.service.timeout}"/>
+    <dubbo:service interface="com.wing.socialcontact.service.wx.api.IMessageBulkService" ref="messageBulkServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!--微信-话题pk -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ITopicService" ref="topicServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IReportService" ref="reportServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IVoteService" ref="voteServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!--微信-banner -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IBannerService" ref="bannerServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!--商城-用户 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IWxUserService" ref="wxUserServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!--商城-个人喜好 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserFavService" ref="userFavServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!-- 天九云用户 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ITjyUserService" ref="tjyUserServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 用户认证图片表 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IReconPhotosService" ref="reconPhotosServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 【后台管理】会议管理 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IMeetingService" ref="meetingServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IMeetingGuestService" ref="meetingGuestServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IMeetingProjectService" ref="meetingProjectServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IMeetingSignupService" ref="meetingSignupServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 【后台管理】项目管理 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IProjectService" ref="projectServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IProjectImagesService" ref="projectImagesServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IProjectWillService" ref="projectWillServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IProjectRecommendService" ref="projectRecommendServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 【微信前台】项目自荐 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IProjectRecommendService" ref="projectRecommendServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 字典 -->
+	<dubbo:service interface="com.wing.socialcontact.sys.service.IListValuesService" ref="listValuesServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- im -->
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImFriendService" ref="imFriendServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImFriendrequestService" ref="imFriendrequestServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImFollowService" ref="imFollowServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImGroupinfoService" ref="imGroupinfoServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImGrouprequestService" ref="imGrouprequestServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImGroupusersService" ref="imGroupusersServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImGroupfavService" ref="imGroupfavServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.im.api.IImToprelatService" ref="imToprelatServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 【后台管理】项目管理 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IDaKaService" ref="dakaServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 微信钱包记录 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IWalletLogService" ref="walletLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 收藏 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IMyCollectionService" ref="myCollectionServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 关注 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IAttentionService" ref="attentionServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 用户勋章 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IHonorService" ref="honorServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserHonorService" ref="userHonorServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 用户印象-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserFriendimpressService" ref="userFriendimpressServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 打招呼-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserGreetingsService" ref="userGreetingsServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 最近访客 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserLatestvistorService" ref="userLatestvistorServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 系统基本配置 --> 
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ISysconfigService" ref="sysconfigServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 聚合页配置 --> 
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPageContentTypeService" ref="pageContentTypeServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPageAggregateService" ref="pageAggregateServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPageColumnService" ref="pageColumnServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPageElementService" ref="pageElementServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPageQuickEntryService" ref="pageQuickEntryServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!-- 积分经验值 --> 
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserEmpiricalService" ref="userEmpiricalServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserEmpiricalLogService" ref="userEmpiricalLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserIntegralEmpiricalService" ref="userIntegralEmpiricalServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserIntegralService" ref="userIntegralServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserIntegralLogService" ref="userIntegralLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!-- 合作 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IBusinessService" ref="businessServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IBusinessClassService" ref="businessClassServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IBusinessDisscussService" ref="businessDisscussServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 活动管理 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IActivityService" ref="activityServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 活动管标签-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IActivityTagService" ref="activityTagServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 活动报名管理-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IActivityUserService" ref="activityUserServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 活动取消管理-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IActivityCancelService" ref="activityCancelServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 活动延期管理-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IActivityDelayService" ref="activityDelayServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!-- 动态相关-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IDynamicService" ref="dynamicServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IDynamicPicService" ref="dynamicPicServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IDynamicPayLogService" ref="dynamicPayLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IDynamicGratuityLogService" ref="dynamicGratuityLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IDynamicOpLogService" ref="dynamicOpLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 客服留言 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ILeaveMsgService" ref="leaveMsgServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 钱包提现 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IWalletTxService" ref="walletTxServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 企服云 -->
+	<!-- 分类管理 -->
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryServiceClassService" ref="entryServiceClassImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryServiceTagService" ref="entryServiceTagImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryDescConfigService" ref="entryDescConfigImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryHotService" ref="entryHotServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryQuickDetailBannerService" ref="entryQuickDetailBannerImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryQuickDetailClassService" ref="entryQuickDetailClassImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryQuickDoorService" ref="entryQuickDoorImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryImgsService" ref="entryImgsServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryPriseService" ref="entryPriseServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryClassService" ref="entryClassesServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryTagService" ref="entryTagsServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryCustomerService" ref="entryCustomerServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.ISysMessageService" ref="sysMessageServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IShareConfigService" ref="shareConfigServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryPhoneAddressService" ref="entryPhoneAddressServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IMySysMessageService" ref="mySysMessageServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IEntryStaticClickService" ref="entryStaticClickServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IQfyConfigService" ref="qfyConfigServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="org.com.wing.enterprise.service.IPhoneAddressStaticService" ref="phoneAddressStaticServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!-- 关键词搜索-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IKeywordsService" ref="keywordsServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 任务 活动退款记录-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IActivityRefundService" ref="activityRefundServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 退款说明设置-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IRefundInstructionService" ref="refundInstructionServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 全局白名单设置 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IGlobalWhitelistService" ref="globalWhitelistServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!--微信-诸葛解惑 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IRewardClassService" ref="rewardClassServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IRewardService" ref="rewardServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IRewardAnswerService" ref="rewardAnswerServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IRewardSetService" ref="rewardSetServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 文章直播秀 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ILibraryLiveService" ref="libraryLiveServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IliveSignupService" ref="liveSignupServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 首页弹出框管理 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IIndexAdService" ref="indexAdServiceImpl" timeout="${dubbo.service.timeout}"/>
+
+	<!-- 邀请好友记录 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IInviteRecordService" ref="inviteRecordServiceImpl" timeout="${dubbo.service.timeout}"/>
+
+	<!-- 优惠券-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ICouponService" ref="couponServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ICouponGenerateService" ref="couponGenerateServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ICouponLogService" ref="couponLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<!-- 互助宝相关 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IOpenHzbOrderService" ref="openHzbOrderServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IOpenHzbPayLogService" ref="openHzbPayLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IHzbManagerLogService" ref="hzbManagerLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+
+	<!--交易会相关-->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IIntegralGoodsService" ref="integralGoodsService" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IGoodsService" ref="goodsService" timeout="${dubbo.service.timeout}"/>
+
+	<!-- 系统黑名单 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ISysBlacklistService" ref="sysBlacklistServiceImpl" timeout="${dubbo.service.timeout}"/>
+	
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IConfigService" ref="configServiceImpl" timeout="${dubbo.service.timeout}"/>
+
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ILibraryOpLogService" ref="libraryOpLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 约见 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IAppointmentService" ref="appointmentServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IAppointmentDetailsService" ref="appointmentDetailsServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPaymentAppointmentService" ref="paymentAppointmentServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.SysIAppointmentService" ref="sysAppointmentServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 个性定制 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPersonalCustomizationService"  ref="personalCustomizationServiceImpl"  timeout="${dubbo.service.timeout}"/>
+	<!-- 个性定制意向客户 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IPersonalCustomizationCustomerService" ref="personalCustomizationCustomerServiceImpl" timeout="${dubbo.service.timeout}"/>
+
+	<!-- 通讯录 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ITjyContactsService" ref="tjyContactsServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- app邀请记录 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IAppInviteLogService" ref="appInviteLogServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 项目超市 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IProjectSupermarketService"  ref="projectSupermarketServiceImpl"  timeout="${dubbo.service.timeout}"/>
+	<!-- 项目超市意向客户 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IProjectSupermarketCustomerService" ref="projectSupermarketCustomerServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<!-- 用户拍照 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IUserPhotoService"  ref="userPhotoServiceImpl"  timeout="${dubbo.service.timeout}"/>
+	<!-- 表数据变更日志 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.ITbLogService"  ref="tbLogServiceImpl"  timeout="${dubbo.service.timeout}"/>
+	<!-- 三维码 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IThreeDimensionalCodeService"  ref="threeDimensionalCodeServiceImpl"  timeout="${dubbo.service.timeout}"/>
+	<!-- 开屏广告 -->
+	<dubbo:service interface="com.wing.socialcontact.service.wx.api.IOpenScreenAdvertisService"  ref="openScreenAdvertisServiceImpl"  timeout="${dubbo.service.timeout}"/>
+</beans>

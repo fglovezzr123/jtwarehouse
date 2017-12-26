@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.GoodsDao">
+	<resultMap id="BaseResultMap" type="com.wing.socialcontact.service.wx.bean.Goods">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="addTime" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="deleteStatus" jdbcType="BIT" property="deleteStatus" />
+		<result column="goods_click" jdbcType="INTEGER" property="goods_click" />
+		<result column="goods_details" jdbcType="LONGVARCHAR" property="goods_details" />
+		<result column="goods_fee" jdbcType="VARCHAR" property="goods_fee" />
+		<result column="goods_inventory" jdbcType="INTEGER" property="goods_inventory" />
+		<result column="goods_main_photo_id" jdbcType="INTEGER" property="goods_main_photo_id" />
+	</resultMap>
+
+	<select id="selectList" parameterType="Map" resultMap="BaseResultMap">
+		SELECT
+		a.*,
+		b.name AS imgName,
+		b.path AS imgPath
+		FROM
+		goods a
+		LEFT JOIN accessory b ON a.goods_main_photo_id = b.id
+		WHERE 1=1
+		<if test="goods_name!=null">
+			and a.goods_name like #{goods_name}
+		</if>
+		<if test="goods_brand_id!=null">
+			and a.goods_brand_id =#{goods_brand_id}
+		</if>
+		<if test="gc_id!=null">
+			and a.gc_id in (select id from goodsclass where id = #{gc_id} or parent_id = #{gc_id})
+		</if>
+		<if test="store_recommend!=null">
+			and a.store_recommend=#{store_recommend}
+		</if>
+		<if test="index_recommend!=null">
+			and a.index_recommend=#{index_recommend}
+		</if>
+		<if test="hzb_index_recommend!=null">
+			and a.hzb_index_recommend=#{hzb_index_recommend}
+		</if>
+		<if test="hzb_flag !=null">
+			<choose>
+				<when test="hzb_flag == 0">
+					and a.hzb_flag != #{hzb_flag}
+				</when>
+				<otherwise>
+					and a.hzb_flag != #{hzb_flag}
+				</otherwise>
+			</choose>
+		</if>
+
+		<choose>
+			<when test="goodStatus != 0">
+				and a.goods_status>#{goodStatus}
+			</when>
+			<otherwise>
+				and a.goods_status = #{goodStatus}
+			</otherwise>
+		</choose>
+		ORDER BY a.store_recommend_time DESC
+	</select>
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-07-20 11:03:44
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.CouponLogDao">
+
+	<resultMap id="couponLog" type="com.wing.socialcontact.service.wx.bean.CouponLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="couponCode" column="coupon_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="receiveTime" column="receive_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="useTime" column="use_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="useStatus" column="use_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="orderId" column="order_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		t.id id, t.fk_id fkId, 
+		t.coupon_code couponCode, t.user_id userId, 
+		t.receive_time receiveTime, t.use_time useTime, 
+		t.use_status useStatus, t.order_id orderId, 
+		t.create_time createTime, t.create_user_id createUserId, 
+		t.create_user_name createUserName, t.deleted deleted
+	</sql>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT  <include refid="field"/>,c.coupon_name cgName,c.coupon_amount couponAmount,
+		c.order_min_buy orderMinBuy,c.use_range useRange,  u.true_name userName,u.mobile  mobile ,g.start_time startTime,g.end_time endTime
+		FROM tjy_coupon_log t left join tjy_coupon_generate g on t.fk_id = g.id 
+		left join tjy_coupon c on g.fk_id = c.id
+		left join  tjy_user u on t.user_id = u.id
+ 		WHERE 1=1 
+ 		<if test="fkId!=null and fkId!=''">
+			AND t.fk_id=#{fkId}
+		</if>
+ 		<if test="id!=null and id!=''">
+			AND t.id=#{id}
+		</if>
+ 		<if test="couponCode!=null and couponCode!=''">
+				AND t.coupon_code LIKE CONCAT('%', #{couponCode}, '%')
+		</if>
+		<if test="useStatus!=null">
+			AND t.use_status=#{useStatus}
+		</if>
+		<if test="couponName!=null and couponName!=''">
+				AND c.coupon_name LIKE CONCAT('%', #{couponName}, '%')
+		</if>
+		<if test="keyword!=null and keyword!=''">
+				AND (u.true_name LIKE CONCAT('%', #{keyword}, '%') or  u.mobile LIKE CONCAT('%', #{keyword}, '%'))
+		</if>
+		<if test="curruserId != null and curruserId != '' ">
+		  AND  t.user_id = #{curruserId,jdbcType=VARCHAR}
+		</if>
+		<if test="useStatus == 2 ">
+		  AND  t.use_status = 2  and g.start_time&lt;= date_format(now(),'%Y-%m-%d') and g.end_time&gt;= date_format(now(),'%Y-%m-%d')
+		</if>
+		<if test="useRange != null and useRange != '' ">
+		  AND  (c.use_range = 1 or c.use_range = #{useRange,jdbcType=VARCHAR})
+		</if>
+		<if test="couponCoinType != null ">
+		  AND  c.coupon_coin_type = #{couponCoinType,jdbcType=VARCHAR}
+		</if>
+		<if test="orderMinBuy != null and orderMinBuy != '' ">
+		  AND  c.order_min_buy &lt;= #{orderMinBuy}
+		</if>
+        order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="selectFrontByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT  c.id id, c.coupon_name couponName, 
+		c.coupon_type couponType, c.coupon_coin_type couponCoinType, 
+		c.coupon_amount couponAmount, c.order_min_buy orderMinBuy, 
+		c.use_range useRange, c.use_store useStore,g.start_time startTime, g.end_time endTime 
+		FROM tjy_coupon_log t left join tjy_coupon_generate g on t.fk_id = g.id 
+		left join tjy_coupon c on g.fk_id = c.id
+ 		WHERE c.coupon_type !=3 
+ 		<if test="curruserId != null and curruserId != '' ">
+		  AND  t.user_id = #{curruserId,jdbcType=VARCHAR}
+		</if>
+ 		<if test="type == 1">
+			AND  t.use_status = 2 and  g.end_time &gt;= date_format(now(),'%Y-%m-%d') 
+		</if>
+		<if test="type == 2">
+			AND  t.use_status = 1
+		</if>
+        <if test="type == 3">
+          AND  t.use_status = 2 and g.end_time &lt; date_format(now(),'%Y-%m-%d')
+        </if>
+        order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,64 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+}
+.wrapper{
+ 
+     width:100%;
+   
+      font-size:0.3rem;
+     
+}
+.mycomment-box{
+   box-sizing:border-box;
+     width:100%;
+     padding-left:0.3rem;
+     padding-right:0.3rem;
+     width:100%;
+     padding-top:0.2rem;
+     padding-bottom:0.2rem;
+     border-top:0.14rem solid #f0f0f0;
+      background:white;
+}
+.mycomment-box div:nth-child(1){
+    width:24%;
+    float:left;
+   
+    height:1.81rem;
+    text-align:left;
+}
+.mycomment-box img{
+    height:1.81rem;
+    width:1.41rem;
+}
+.mycomment-box div:nth-child(2){
+     width:76%;
+     float:right;
+}
+.clear{
+   clear:both;
+}
+.mycomment-box h1{
+    font-size:0.3rem;
+    margin-bottom:0.1rem;
+}
+.mycomment-box p span{
+     color:#808080;
+}
+.mycomment-box p{
+    color:#3b3b3b;
+    font-size:0.24rem;
+    line-height:0.4rem;
+}
+.mycomment-box .timestamp{
+     padding-left:0.4rem;
+     height:0.4rem;
+     background:url(../img/icons/booo1.png) no-repeat left center;
+     background-size:0.3rem 0.3rem;
+     font-size:0.24rem;
+     margin-top:0.1rem;
+     color:#808080;
+}

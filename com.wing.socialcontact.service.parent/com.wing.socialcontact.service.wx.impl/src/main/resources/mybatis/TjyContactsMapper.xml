@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.TjyContactsDao">
+
+	<resultMap id="BaseResultMap" type="com.wing.socialcontact.service.wx.bean.TjyContacts">
+		<result property="id" column="id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="userId" column="user_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+
+	<insert id="ignoreInsertContacts" parameterType="java.util.Map">
+		insert ignore into
+		${table}
+		(id,user_id,mobile,status,create_time,update_time)
+		values
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.id},#{item.userId},#{item.mobile},#{item.status},SYSDATE(),SYSDATE())
+		</foreach>
+	</insert>
+
+	<select id="getContacts" parameterType="java.util.Map" resultMap="BaseResultMap">
+		<if test="randomFlag == null or randomFlag == FALSE">
+			SELECT
+			id,user_id,mobile,status,create_time,update_time
+			FROM
+			${table}
+			WHERE 1=1
+			<if test="userId != null">
+				AND	user_id = #{userId,jdbcType=BIGINT}
+			</if>
+			<if test="status != null">
+				AND	status = #{status,jdbcType=VARCHAR}
+			</if>
+		</if>
+		<if test="randomFlag != null and randomFlag == true">
+			SELECT
+			t1.id,t1.user_id,t1.mobile,t1.status,t1.create_time,t1.update_time
+			FROM
+			${table} AS t1
+			JOIN (
+			SELECT
+				ROUND(
+					RAND( ) * ( ( SELECT MAX( id ) FROM ${table} ) - ( SELECT MIN( id ) FROM ${table} ) ) + ( SELECT MIN( id ) FROM ${table} )
+				) AS id
+			) AS t2
+			WHERE 1=1
+			<if test="userId != null">
+				AND	t1.user_id = #{userId,jdbcType=BIGINT}
+			</if>
+			<if test="status != null">
+				AND	t1.status = #{status,jdbcType=VARCHAR}
+			</if>
+			ORDER BY t1.id
+		</if>
+	</select>
+
+</mapper>

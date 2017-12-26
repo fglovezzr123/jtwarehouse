@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-03-26 19:21:38
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImFriendrequestDao">
+
+	<resultMap id="imFriendrequest" type="com.wing.socialcontact.service.im.bean.ImFriendrequest">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="friendUser" column="friend_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="askmessage" column="askmessage" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		id, user_id, friend_user, askmessage, 
+		status, create_time, update_time
+	</sql>
+	
+	<delete id="deleteById" parameterType="string">
+		DELETE FROM TJY_IM_FRIENDREQUEST  WHERE ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imFriendrequest" parameterType="string">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_FRIENDREQUEST
+		WHERE ID = #{id}
+	</select>
+	
+	<!--  根据用户id查询新好友待添加列表 -->
+	<select id="findMyNewFriendListByUserId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.id,
+			t.user_id,
+			t.friend_user,
+			t1.nickname,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.job,
+			t2.list_value AS job_name,
+			t.askmessage,
+			t.`status`,
+			t.create_time,
+			t.update_time
+		FROM
+			tjy_im_friendrequest t
+		JOIN tjy_user t1 on t.user_id = t1.id
+		left JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.friend_user =  #{userId}
+		order by t.`status` asc , t.create_time desc
+	</select>
+	
+	<!--  获取新好友数量 -->
+	<select id="findMyNewfriendCountByUserId"  parameterType="string" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tjy_im_friendrequest t
+		JOIN tjy_user t1 on t.user_id = t1.id
+		left JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.friend_user =  #{userId} and t.`status` = 1
+		order by t.create_time desc
+	</select>
+	
+	<!--  根据用户id查询新好友待添加列表 -->
+	<select id="findUserMapByUserId" resultType="java.util.HashMap" parameterType="string">
+			SELECT
+			t.id,
+			t.mall_user,
+			t.open_id,
+			t.com_name,
+			t.com_profile,
+			t.job,
+			t1.list_value AS job_name,
+			t.wechart,
+			t.user_profile,
+			t.province,
+			t2.dis_name AS province_name,
+			t.city,
+			t3.dis_name AS city_name,
+			t.county,
+			t4.dis_name AS county_name,
+			t.region,
+			t.industry,
+			t5.list_value AS industry_name,
+			t.nickname,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.leave_msg,
+			t.visit_quantity,
+			t.homepage_pic,
+			t.is_realname,
+			t.user_signature,
+			u.level
+		FROM
+			tjy_user t
+		LEFT JOIN list_values t1 ON t.job = t1.id
+		LEFT JOIN user u ON t.mall_user = u.id
+		LEFT JOIN sy_district t2 ON t.province = t2.id
+		LEFT JOIN sy_district t3 ON t.city = t3.id
+		LEFT JOIN sy_district t4 ON t.county = t4.id
+		LEFT JOIN list_values t5 on t.industry = t5.id
+		WHERE
+			t.id = #{userId}
+	</select>
+	
+	<!--  根据用户id查询好友爱好-->
+	<select id="findUserFavListByUserId" resultType="java.util.HashMap" parameterType="string">
+			SELECT
+				t.id,
+				t.user_id,
+				t.fav_id,
+				t1.list_value as fav_name,
+				t.sortno
+			FROM
+				tjy_user_fav t
+				JOIN list_values t1 on t.fav_id = t1.id
+			WHERE
+				t.user_id =  #{userId}
+			ORDER BY
+				t.sortno
+	</select>
+	
+	<!--  根据用户id非好友列表 -->
+	<select id="findNofriendUsersByUserId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+			SELECT
+			t.id,
+			t.mall_user,
+			t.open_id,
+			t.com_name,
+			t.com_profile,
+			t.job,
+			t1.list_value AS job_name,
+			t.wechart,
+			t.user_profile,
+			t.province,
+			t2.dis_name AS province_name,
+			t.city,
+			t3.dis_name AS city_name,
+			t.county,
+			t4.dis_name AS county_name,
+			t.region,
+			t.industry,
+			t5.list_value AS industry_name,
+			t.nickname,
+			t.true_name,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.leave_msg,
+			t.visit_quantity,
+			t.homepage_pic,
+			t.is_realname,
+			t.user_signature
+		FROM
+			tjy_user t
+			join user t7 on t.mall_user = t7.id
+		LEFT JOIN list_values t1 ON t.job = t1.id
+		LEFT JOIN sy_district t2 ON t.province = t2.id
+		LEFT JOIN sy_district t3 ON t.city = t3.id
+		LEFT JOIN sy_district t4 ON t.county = t4.id
+		LEFT JOIN list_values t5 ON t.industry = t5.id 
+		WHERE
+			t.id !=  #{userId}
+			<if test="trueName!=null and trueName!=''">
+				and t.nickname like CONCAT('%', #{trueName}, '%')
+			</if>
+			<if test="cityId!=null and cityId!=''">
+				and t.city = #{cityId}
+			</if>
+			<if test="industryId!=null and industryId!=''">
+				and t.industry = #{industryId}
+			</if>
+			and t.is_realname = 1
+		AND NOT EXISTS (
+			SELECT
+				1
+			FROM
+				tjy_im_friend t6
+			WHERE
+				t6.user_id =  #{userId}
+			AND t6.friend_user = t.id
+		)
+		order by t7.addTime desc
+	</select>
+	
+	<!--  根据用户id查询新好友待添加列表 -->
+	<select id="findRequestByParam" resultMap="imFriendrequest" parameterType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_FRIENDREQUEST
+		WHERE user_id = #{userId} and friend_user = #{friendUser}
+	</select>
+	
+	<select id="selectOneDaySendSum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT IFNULL(count(o.id),0) as integral
+		FROM TJY_IM_FRIENDREQUEST o
+		WHERE 1=1
+		<if test="userId!=null and userId!=''">
+			and o.user_id=#{userId}
+	    </if>
+		and  to_days(o.create_time) = to_days(now()) 
+	</select>
+	
+	<select id="selectOneDayGetSum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT IFNULL(count(o.id),0) as integral
+		FROM TJY_IM_FRIENDREQUEST o
+		WHERE 1=1
+		<if test="friendUser!=null and friendUser!=''">
+			and o.friend_user=#{friendUser}
+	    </if>
+		and  to_days(o.create_time) = to_days(now()) 
+	</select>
+	
+</mapper>

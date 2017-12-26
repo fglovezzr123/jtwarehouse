@@ -1,0 +1,303 @@
+/**  
+ * @Project: tjy
+ * @Title: BaseAction.java
+ * @Package com.wing.socialcontact.commons.base
+ * @date 2016-3-28 下午2:53:27
+ * @Copyright: 2016 
+ */
+package com.wing.socialcontact.sys.action;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.alibaba.fastjson.JSON;
+import com.wing.socialcontact.config.MsgConfig;
+import com.wing.socialcontact.config.OssConfig;
+import com.wing.socialcontact.service.wx.bean.UploadResultVo;
+import com.wing.socialcontact.util.FileUploadUtil;
+import com.wing.socialcontact.util.SpringContextUtil;
+import com.wing.socialcontact.util.StringUtil;
+
+
+/**
+ * 
+ * 类名：BaseAction
+ * 功能：action 父类
+ * 详细：所有action类的父类 一些常用方法
+ * 作者：dijuli
+ * 版本：1.0
+ * 日期：2016-3-28 下午2:53:27
+ *
+ */
+public abstract class BaseAction { 
+	
+	public static final String NODATA="nodata"; 
+	public static final String NOPOWER="nopower";
+	/**
+	 * 自定义状态码 和自定义提示信息，
+	 * @param statusCode
+	 * @param message
+	 * @return
+	 */
+	protected ModelAndView ajaxDoneText(int statusCode, String message) {
+		ModelAndView mav = new ModelAndView(MsgConfig.PAGE_AJAXDONE);
+		mav.addObject(MsgConfig.STATUSCODE, statusCode);
+		mav.addObject(MsgConfig.MESSAGE,message);
+	
+		return mav;
+	}
+	/**
+	 * 操作失败，直接传入提示的错误信息
+	 * @param message
+	 * @return
+	 */
+	protected ModelAndView ajaxDoneTextError(String message) {
+		
+		return ajaxDoneText(MsgConfig.CODE_FAIL,message);
+	}
+	/**
+	 * 自定义状态码 和提示信息， message为国际化资源key
+	 * @param statusCode
+	 * @param message
+	 * @return
+	 */
+	protected ModelAndView ajaxDone(int statusCode, String messageKey) {
+		ModelAndView mav = new ModelAndView(MsgConfig.PAGE_AJAXMESSAGE);
+		mav.addObject(MsgConfig.STATUSCODE, statusCode);
+		mav.addObject(MsgConfig.MESSAGE,messageKey);
+		
+		return mav;
+	}
+	/**
+	 * 传入boolean 返回操作成功 或者失败  使用默认提示信息
+	 * @param f
+	 * @return
+	 */
+	protected ModelAndView ajaxDone(boolean f){
+		if(f){
+			return ajaxDoneSuccess();
+		}else{
+			return ajaxDoneError();
+		}
+	}
+	/**
+	 * 传入反馈的信息  使用默认提示信息
+	 * @param f
+	 * @return
+	 */
+	protected ModelAndView ajaxDone(String messageKey){
+		if(MsgConfig.MSG_KEY_SUCCESS.equals(messageKey)){
+			return ajaxDoneSuccess();
+		}else{
+			return ajaxDoneError(messageKey);
+		}
+	}
+	/**
+	 * 操作成功 使用默认提示信息
+	 * @return
+	 */
+	protected ModelAndView ajaxDoneSuccess() {
+		return ajaxDone(MsgConfig.CODE_SUCCESS, MsgConfig.MSG_KEY_SUCCESS);//默认信息 操作成功
+	}
+	/**
+	 * 操作成功，自定义提示信息，
+	 * @param messageKey
+	 * @return
+	 */
+	protected ModelAndView ajaxDoneSuccess(String messageKey) {
+		return ajaxDone(MsgConfig.CODE_SUCCESS, messageKey);
+	}
+	
+	/**
+	 * 操作成功 使用默认提示信息
+	 * @return
+	 */
+	protected String ajaxDoneSuccess(ModelMap map) {
+		
+		map.addAttribute(MsgConfig.STATUSCODE, MsgConfig.CODE_SUCCESS);
+		map.addAttribute(MsgConfig.MESSAGE,MsgConfig.MSG_KEY_SUCCESS);
+		return MsgConfig.PAGE_AJAXMESSAGE;	
+	}
+	
+	/**
+	 * 操作失败，使用默认提示信息
+	 * @return
+	 */
+	protected ModelAndView ajaxDoneError() {
+		return ajaxDone(MsgConfig.CODE_FAIL, MsgConfig.MSG_KEY_FAIL);//默认信息  操作失败
+	}
+	/**
+	 * 操作失败，自定义提示信息
+	 * @param messageKey
+	 * @return
+	 */
+	protected ModelAndView ajaxDoneError(String messageKey) {
+		return ajaxDone(MsgConfig.CODE_FAIL, messageKey);
+	}
+	/**
+	 * 操作成功 使用默认提示信息
+	 * @return
+	 */
+	protected String ajaxDoneError(ModelMap map) {
+		
+		map.addAttribute(MsgConfig.STATUSCODE, MsgConfig.CODE_FAIL);
+		map.addAttribute(MsgConfig.MESSAGE,MsgConfig.MSG_KEY_FAIL);
+		return MsgConfig.PAGE_AJAXMESSAGE;	
+	}
+	
+	/**
+	 * 操作失败，使用默认提示信息
+	 * @return
+	 */
+	protected ModelAndView ajaxDoneNoData() {
+		return ajaxDone(MsgConfig.CODE_FAIL, MsgConfig.MSG_KEY_NODATA);//默认信息  操作失败
+	}
+	
+	
+	/**
+	 * 直接输出信息
+	 * @param message
+	 * @return
+	 */
+	protected ModelAndView ajaxText(String message) {
+		ModelAndView mav = new ModelAndView(MsgConfig.PAGE_AJAXJSON);
+		mav.addObject(MsgConfig.MSGINFO, message);
+		return mav;
+	}
+	
+	/**
+	 * 将信息格式化成json输出
+	 * @param message
+	 * @return
+	 */
+	protected ModelAndView ajaxJson(Object message) {
+		ModelAndView mav = new ModelAndView(MsgConfig.PAGE_AJAXJSON);
+		mav.addObject(MsgConfig.MSGINFO, JSON.toJSONString(message));
+		
+		return mav;
+	}
+	/**
+	 * 将信息格式化成json输出 并将 <script 脚本标签转义
+	 * @param message
+	 * @return
+	 */
+	protected ModelAndView ajaxJsonEscape(Object message) {
+		ModelAndView mav = new ModelAndView(MsgConfig.PAGE_AJAXJSON);
+		//String test= StringUtil.filterJson(JSON.toJSONString(message));
+		//System.out.println("##"+JSON.toJSONString(message));
+		//System.out.println("##"+test);
+		///mav.addObject(MsgConfig.MSGINFO, StringUtil.filterJson(JSON.toJSONString(message)));
+		mav.addObject(MsgConfig.MSGINFO, JSON.toJSONString(message).replaceAll("<script", "&lt;script").replaceAll("</script", "&lt;/script"));
+		
+		return mav;
+	}
+	
+
+	
+	/**
+	 * 返回数据校验失败视图
+	 * @param errors 数据校验错误信息
+	 * @param excludeField 排除验证的 属性(可变参)
+	 * @return
+	 */
+	protected ModelAndView getValidationMessage(Errors errors,String...excludeField) {
+		
+		System.out.println("错误数量"+errors.getErrorCount());
+		
+		List<FieldError> fes=errors.getFieldErrors();
+		List<String> errorMessages=new ArrayList<String>();
+		
+		//遍历所有错误信息
+		c:for(FieldError e:fes){
+			System.out.println("f=="+e.getField());
+			System.out.println("code=="+e.getCode());
+			System.out.println("msg=="+e.getDefaultMessage());
+			String fileName=e.getField();
+			for(String ef:excludeField){
+				if(fileName.equals(ef)){
+					//如果是不需要验证的属性，直接继续遍历下面的错误信息
+					System.out.println(ef+"不需要验证");
+					continue c;
+				}
+			}
+			
+			errorMessages.add(e.getDefaultMessage());
+		}
+		
+		if(errorMessages.isEmpty()){
+			//排除不需要验证的信息之后没有错误信息
+			return null;
+		}
+	
+		ModelAndView mav = new ModelAndView("ajaxValidationMessage");
+		mav.addObject(MsgConfig.STATUSCODE,MsgConfig.CODE_FAIL);
+		mav.addObject("errorCount",errorMessages.size());
+		mav.addObject(MsgConfig.MESSAGE,errorMessages);
+		return mav;
+		
+	}
+	
+	/**
+	 * 图片上传
+	 * @param request
+	 * @param jsonp
+	 * @param pic
+	 * @return
+	 */
+	public Map<String,Object> uploadImage(HttpServletRequest request,String jsonp,MultipartFile file,String ysStyle,String moduleName) {
+		try {
+			UploadResultVo resultVo = new UploadResultVo(1,"系统异常,请稍后再试");
+			OssConfig ossConfig = (OssConfig) SpringContextUtil.getBean("ossConfig");
+			String ossurl = ossConfig.getOss_getUrl();
+			if (null == file) {
+				resultVo.setMsg("请重新选择上传图片");
+				return getAjaxResult("-1", "请重新选择上传图片", resultVo);
+			}
+			try {
+				if(file.getSize() > 2097152){
+					resultVo.setMsg("请重新选择上传图片:图片最大支持2M大小");
+					return getAjaxResult("-1", "请重新选择上传图片:图片最大支持2M大小", resultVo);
+				}
+				InputStream io = file.getInputStream();
+				String ext = FilenameUtils.getExtension(file.getOriginalFilename());
+				String picPath = FileUploadUtil.uploadFileInputStream(io, ext, moduleName);
+				if(ysStyle!=null && !"".equals(ysStyle))
+					picPath += "?x-oss-process=style/"+ysStyle;
+				if (picPath!=""&&!"".equals(picPath)) {
+					resultVo.setReturnCode(1);
+					resultVo.setPicPath(picPath);
+					resultVo.setMsg(picPath);
+					resultVo.setImg_url(ossurl+picPath);
+					return getAjaxResult("0", "", resultVo);
+				}else{
+					resultVo.setMsg("上传图片信息失败");
+					return getAjaxResult("-1", "上传图片信息失败", resultVo);
+				}
+			} catch (Exception e) {
+				resultVo.setMsg("上传图片信息失败");
+				return getAjaxResult("-1", "上传图片信息失败", resultVo);
+			}
+		} catch (Throwable e) {
+			return getAjaxResult("-1", "上传图片信息失败", null);
+		}
+	}
+	protected Map<String,Object> getAjaxResult(String code,String msg,Object dataobj) {
+		Map<String,Object> res = new HashMap<String,Object>();
+		res.put("code", code);
+		res.put("msg", msg);
+		res.put("dataobj", dataobj);
+		return res;
+	}
+}

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-03-26
+	version	:	1.0
+-->
+<mapper namespace="com.tojoy.service.wx.dao.ProjectRecommendDao">
+
+	<resultMap id="projectRecommend" type="com.tojoy.service.wx.bean.ProjectRecommend">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjName" column="prj_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjType" column="prj_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjTypeName" column="prj_type_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comName" column="com_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="registeredCapital" column="registered_capital" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="authCom" column="auth_com" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjDesc" column="prj_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjProfile" column="prj_profile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="showEnable" column="show_enable" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		rp.id, rp.prj_name, rp.img_url, rp.prj_type,rp.prj_type_name, rp.com_name, rp.registered_capital, 
+		rp.prj_profile, rp.user_id, rp.create_time, rp.status, 
+		rp.deleted,rp.show_enable,rp.auth_com,rp.prj_desc
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND rp.id=#{id}
+			</if>
+			<if test="prjType!=null and prjType!=''">
+				AND rp.prj_type   like concat('%',#{prjType},'%')
+			</if>
+			<if test="prjTypeName!=null and prjTypeName!=''">
+				AND rp.prj_type_name like concat('%',#{prjTypeName},'%')
+			</if>
+			<if test="comName!=null and comName!=''">
+				AND rp.com_name=#{comName}
+			</if>
+			<if test="registeredCapital!=null">
+				AND rp.registered_capital=#{registeredCapital}
+			</if>
+			<if test="prjProfile!=null and prjProfile!=''">
+				AND rp.prj_profile=#{prjProfile}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND rp.user_id=#{userId}
+			</if>
+			<if test="createTime!=null">
+				AND rp.create_time=#{createTime}
+			</if>
+			<if test="status!=null">
+				AND rp.status=#{status}
+			</if>
+			<if test="deleted!=null">
+				AND rp.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectByParam" resultMap="projectRecommend" parameterType="java.util.Map">
+		select 
+			u.nickname as userName,
+			lv.list_value as prjTypeName,
+		  	u.mobile as mobile,
+		  	u.com_name as ucomName,
+			<include refid="field"/>
+		from 
+				tjy_project_recommend rp 
+			left join tjy_user u on rp.user_id = u.id
+			left join list_values lv on lv.id = rp.prj_type
+		where 1=1
+			<if test="prjName !=null and prjName !=''">
+				AND rp.prj_name like concat('%',#{prjName},'%')
+			</if>
+			<if test="prjType !=null and prjType !=''">
+				AND rp.prj_type like concat('%',#{prjType},'%')
+			</if>
+			<if test="userName !=null and userName !=''">
+				AND u.nickname like concat('%',#{userName},'%')
+			</if>
+			
+			<if test="status !=null">
+				AND rp.status=#{status}
+			</if>
+			
+			<if test="createTime !=null and createTime !=''">
+				AND rp.create_time &gt;= STR_TO_DATE(concat(#{createTime},' 00:00:00'),'%Y-%m-%d %H:%i:%s')
+				AND rp.create_time &lt;= STR_TO_DATE(concat(#{createTime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')
+			</if>
+			
+			<if test="deleted!=null">
+				AND rp.deleted=#{deleted}
+			</if>
+			
+			<if test="showEnable!=null">
+				AND rp.show_enable=#{showEnable}
+			</if>
+			
+			<if test="userId !=null and userId !=''">
+				AND rp.user_id=#{userId}
+			</if>
+		 order by rp.create_time desc
+	</select>
+	<select id="getById" resultMap="projectRecommend">
+		select 
+			u.nickname as userName,
+			<!-- lv.list_value as prjTypeName, -->
+		  	u.mobile as mobile,
+		  	u.com_name as ucomName,
+			<include refid="field"/>
+		from 
+				tjy_project_recommend rp 
+			left join tjy_user u on rp.user_id = u.id
+			<!-- left join list_values lv on lv.id = rp.prj_type -->
+		where rp.id = #{id}
+	</select>
+	
+	<select id="selectDistinctUserCount" resultType="java.lang.Integer">
+		select 
+			count(distinct rp.user_id)
+		from tjy_project_recommend rp
+ 		<include refid="dynamicWhere"/>
+	</select>
+	<update id="updateProjectRecommendByMap"  parameterType="java.util.Map">
+		update tjy_project_recommend
+ 			set id=#{id}
+ 			<if test="showEnable !=null">
+				,show_enable = #{showEnable}
+			</if>
+ 			<if test="status !=null">
+				,status = #{status}
+			</if>
+		where id=#{id}
+	</update>
+</mapper>

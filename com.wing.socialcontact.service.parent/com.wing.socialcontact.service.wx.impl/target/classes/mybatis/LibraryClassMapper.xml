@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.LibraryClassDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+	    <result column="update_time" property="updateTime" jdbcType="DATE" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="recommend" property="recommend" jdbcType="INTEGER" />
+	    <result column="sort" property="sort" jdbcType="INTEGER" />
+	    <result column="position" property="position" jdbcType="INTEGER" />
+	    <result column="level" property="level" jdbcType="INTEGER" />
+	    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+	    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	</resultMap>
+	 <select id="getclassMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select *   from tjy_library_class  where 1=1 
+    	<if test="name != null and name != ''">
+			AND	name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+			AND	level = #{level,jdbcType=VARCHAR}
+		order by recommend desc, sort asc
+	</select>
+	 <select id="selectAllclassMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT 
+			id,content,parent_id parentId,level
+		FROM tjy_library_class  order by sort asc
+	</select>
+	 <select id="selectByName" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_library_class
+ 		WHERE 1=1
+    	<if test="name != null and name != ''">
+			AND	name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+		order by sort asc
+	</select>
+	<select id="recommendclass" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT  id,name,COUNT(id1) count,image_path
+		FROM ( SELECT c.*, l.id id1
+				FROM  tjy_library_class c
+				LEFT JOIN tjy_library l ON c.id = l.class_id
+				WHERE c.parent_id IS NOT NULL and c.parent_id !='' AND c.recommend = '1' ) tbl
+		GROUP BY id  ORDER BY  sort ASC 
+	</select>
+	 <select id="selectonelevelclass" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_library_class
+ 		WHERE 1=1
+			AND	 parent_id  is null or parent_id =''  order by recommend desc,sort asc
+	</select>
+	 <select id="onelevelclass" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_library_class
+ 		WHERE 	 level = 1 
+ 		<if test="position != null and position != ''">
+ 		 and position = #{position,jdbcType=INTEGER}  
+		</if>
+ 		 order by recommend desc, sort asc
+	</select>
+	 <select id="selectByparent" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT  id,name,COUNT(id1) count,parent_id
+		FROM ( SELECT c.*, l.id id1
+				FROM  tjy_library_class c
+				LEFT JOIN tjy_library l ON c.id = l.class_id
+				WHERE c.parent_id  =  #{id,jdbcType=VARCHAR}  ) tbl
+		GROUP BY id  ORDER BY  sort ASC
+	</select>
+	 <select id="selbyonelevelid" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select * from tjy_library where class_id in 
+		(select id from tjy_library_class c where c.parent_id = #{classid,jdbcType=VARCHAR} order by c.recommend desc,c.sort asc )
+		order by recommend desc,create_time desc
+		limit  0,5
+	</select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.sys.dao.TableCustomDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="tb_type" property="tbType" jdbcType="VARCHAR" />
+	    <result column="field_sort" property="fieldSort" jdbcType="SMALLINT" />
+	    <result column="field_name" property="fieldName" jdbcType="VARCHAR" />
+	    <result column="field_title" property="fieldTitle" jdbcType="VARCHAR" />
+	    <result column="field_another_title" property="fieldAnotherTitle" jdbcType="VARCHAR" />
+	    <result column="is_export" property="isExport" jdbcType="SMALLINT" />
+	    <result column="is_print" property="isPrint" jdbcType="SMALLINT" />
+	    <result column="is_show" property="isShow" jdbcType="SMALLINT" />
+	</resultMap>
+	
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM sy_table_custom t 
+ 		WHERE 1=1
+    	<if test="tbType != null and tbType != ''">
+			AND	t.tb_type = #{tbType,jdbcType=SMALLINT}
+		</if>
+    	<if test="fieldName != null and fieldName != ''">
+			AND	t.field_name like CONCAT('%',#{fieldName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="fieldTitle != null and fieldTitle != ''">
+			AND	t.field_title like CONCAT('%',#{fieldTitle,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="fieldAnotherTitle != null and fieldAnotherTitle != ''">
+			AND	t.field_anotherTitle like CONCAT('%',#{fieldAnotherTitle,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+    	<if test="orderStr == null or orderStr == ''">
+			order by t.fieldSort asc
+		</if>
+		
+	</select>
+	
+	
+</mapper>

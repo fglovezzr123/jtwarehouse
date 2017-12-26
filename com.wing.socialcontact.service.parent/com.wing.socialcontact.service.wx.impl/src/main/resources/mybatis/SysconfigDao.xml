@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-04-17 15:04:05
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.SysconfigDao">
+
+	<resultMap id="sysconfig" type="com.wing.socialcontact.service.wx.bean.Sysconfig">
+		<result property="id" column="id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="addtime" column="addTime" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deletestatus" column="deleteStatus" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="address" column="address" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="bigheight" column="bigHeight" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="bigwidth" column="bigWidth" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="closereason" column="closeReason" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="codestat" column="codeStat" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="complaintTime" column="complaint_time" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="consumptionratio" column="consumptionRatio" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="copyright" column="copyRight" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="creditrule" column="creditrule" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deposit" column="deposit" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="description" column="description" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="emailenable" column="emailEnable" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="emailhost" column="emailHost" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="emailport" column="emailPort" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="emailpws" column="emailPws" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="emailtest" column="emailTest" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="emailuser" column="emailUser" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="emailusername" column="emailUserName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="everyindentlimit" column="everyIndentLimit" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="gold" column="gold" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="goldmarketvalue" column="goldMarketValue" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="groupbuy" column="groupBuy" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="hotsearch" column="hotSearch" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imagefilesize" column="imageFilesize" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="imagesavetype" column="imageSaveType" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imagesuffix" column="imageSuffix" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="indentcomment" column="indentComment" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integral" column="integral" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="integralrate" column="integralRate" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralstore" column="integralStore" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="keywords" column="keywords" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="memberdaylogin" column="memberDayLogin" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="memberregister" column="memberRegister" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="middleheight" column="middleHeight" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="middlewidth" column="middleWidth" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="securitycodeconsult" column="securityCodeConsult" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="securitycodelogin" column="securityCodeLogin" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="securitycoderegister" column="securityCodeRegister" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="securitycodetype" column="securityCodeType" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="shareCode" column="share_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="smallheight" column="smallHeight" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="smallwidth" column="smallWidth" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="smsenbale" column="smsEnbale" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="smspassword" column="smsPassword" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="smstest" column="smsTest" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="smsurl" column="smsURL" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="smsusername" column="smsUserName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="storeAllow" column="store_allow" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="storePayment" column="store_payment" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="syslanguage" column="sysLanguage" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="templates" column="templates" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="title" column="title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="uploadfilepath" column="uploadFilePath" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userCreditrule" column="user_creditrule" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="visitorconsult" column="visitorConsult" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="voucher" column="voucher" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="websitename" column="websiteName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="websitestate" column="websiteState" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="ztcPrice" column="ztc_price" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="ztcStatus" column="ztc_status" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="goodsimageId" column="goodsImage_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="membericonId" column="memberIcon_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="storeimageId" column="storeImage_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="websitelogoId" column="websiteLogo_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="applogoId" column="appLogo_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="domainAllowCount" column="domain_allow_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="secondDomainOpen" column="second_domain_open" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="sysDomain" column="sys_domain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="qqLogin" column="qq_login" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="qqLoginId" column="qq_login_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="qqLoginKey" column="qq_login_key" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="qqDomainCode" column="qq_domain_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sinaDomainCode" column="sina_domain_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sinaLogin" column="sina_login" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="sinaLoginId" column="sina_login_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sinaLoginKey" column="sina_login_key" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imagewebserver" column="imageWebServer" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="luceneUpdate" column="lucene_update" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="alipayFenrun" column="alipay_fenrun" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="balanceFenrun" column="balance_fenrun" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="autoOrderConfirm" column="auto_order_confirm" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="autoOrderNotice" column="auto_order_notice" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="bargainMaximum" column="bargain_maximum" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="bargainRebate" column="bargain_rebate" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="bargainState" column="bargain_state" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="bargainStatus" column="bargain_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="bargainTitle" column="bargain_title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="serviceQqList" column="service_qq_list" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="serviceTelphoneList" column="service_telphone_list" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sysDeliveryMaximum" column="sys_delivery_maximum" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="ucBbs" column="uc_bbs" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="kuaidiId" column="kuaidi_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucApi" column="uc_api" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucAppid" column="uc_appid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucDatabase" column="uc_database" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucDatabasePort" column="uc_database_port" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucDatabasePws" column="uc_database_pws" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucDatabaseUrl" column="uc_database_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucDatabaseUsername" column="uc_database_username" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucIp" column="uc_ip" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucKey" column="uc_key" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ucTablePreffix" column="uc_table_preffix" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="currencyCode" column="currency_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="bargainValidity" column="bargain_validity" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="deliveryAmount" column="delivery_amount" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="deliveryStatus" column="delivery_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="deliveryTitle" column="delivery_title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="websitecss" column="websiteCss" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="combinAmount" column="combin_amount" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="combinCount" column="combin_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="ztcGoodsView" column="ztc_goods_view" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="autoOrderEvaluate" column="auto_order_evaluate" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="autoOrderReturn" column="auto_order_return" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="weixinStore" column="weixin_store" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="weixinAmount" column="weixin_amount" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="configPaymentType" column="config_payment_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="weixinAccount" column="weixin_account" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="weixinAppid" column="weixin_appId" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="weixinAppsecret" column="weixin_appSecret" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="weixinToken" column="weixin_token" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="weixinWelecomeContent" column="weixin_welecome_content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="storeWeixinLogoId" column="store_weixin_logo_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="weixinQrImgId" column="weixin_qr_img_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="vipIntegral" column="vip_integral" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="taxRateValue" column="tax_rate_value" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="addTaxRateTime" column="add_tax_rate_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="oneRates" column="one_rates" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="twoRates" column="two_rates" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="threeRates" column="three_rates" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="pointsServants" column="points_servants" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="returnRates" column="return_rates" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="centCommission" column="cent_commission" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="commissionswitch" column="commissionswitch" javaType="Byte" jdbcType="TINYINT"></result>
+		<result property="commissionrate" column="commissionrate" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="iosgoldrechargeswitch" column="IOSGoldRechargeSwitch" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="integralBeginTime" column="integral_begin_time" javaType="Date" jdbcType="DATE"></result>
+		<result property="integralEndTime" column="integral_end_time" javaType="Date" jdbcType="DATE"></result>
+		<result property="integralMultiple" column="integral_multiple" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="autoOrderCancel" column="auto_order_cancel" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="autoOrderReceipttocompleted" column="auto_order_receiptToCompleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="platformToBusinessFee" column="platform_to_business_fee" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="revpayToPlatformFee" column="revPay_to_platform_fee" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="revpayToPlatformFeeBank" column="revPay_to_platform_fee_bank" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="sellerFreight" column="seller_freight" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="offlineswitch" column="offlineswitch" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="revpayToPlatformFeeOnline" column="revPay_to_platform_fee_online" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="freightRate" column="freight_rate" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="isStorePayTaxes" column="is_store_pay_taxes" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="commissionTaxes" column="commission_taxes" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="payTaxes" column="pay_taxes" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="revpayToPlatformFeeBankLimit" column="revPay_to_platform_fee_bank_limit" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="pushenale" column="pushEnale" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="msgswitch" column="msgSwitch" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="webSite" column="web_site" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="weixinAppidQyh" column="weixin_appId_qyh" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="weixinAppsecretQyh" column="weixin_appSecret_qyh" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="weixinAppno" column="weixin_appNo" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		SC.id, SC.addTime, SC.deleteStatus, SC.address, 
+		SC.bigHeight, SC.bigWidth, SC.closeReason, SC.codeStat, 
+		SC.complaint_time, SC.consumptionRatio, SC.copyRight, SC.creditrule, 
+		SC.deposit, SC.description, SC.emailEnable, SC.emailHost, 
+		SC.emailPort, SC.emailPws, SC.emailTest, SC.emailUser, 
+		SC.emailUserName, SC.everyIndentLimit, SC.gold, SC.goldMarketValue, 
+		SC.groupBuy, SC.hotSearch, SC.imageFilesize, SC.imageSaveType, 
+		SC.imageSuffix, SC.indentComment, SC.integral, SC.integralRate, 
+		SC.integralStore, SC.keywords, SC.memberDayLogin, SC.memberRegister, 
+		SC.middleHeight, SC.middleWidth, SC.securityCodeConsult, SC.securityCodeLogin, 
+		SC.securityCodeRegister, SC.securityCodeType, SC.share_code, SC.smallHeight, 
+		SC.smallWidth, SC.smsEnbale, SC.smsPassword, SC.smsTest, 
+		SC.smsURL, SC.smsUserName, SC.store_allow, SC.store_payment, 
+		SC.sysLanguage, SC.templates, SC.title, SC.uploadFilePath, 
+		SC.user_creditrule, SC.visitorConsult, SC.voucher, SC.websiteName, 
+		SC.websiteState, SC.ztc_price, SC.ztc_status, SC.goodsImage_id, 
+		SC.memberIcon_id, SC.storeImage_id, SC.websiteLogo_id, SC.appLogo_id, 
+		SC.domain_allow_count, SC.second_domain_open, SC.sys_domain, SC.qq_login, 
+		SC.qq_login_id, SC.qq_login_key, SC.qq_domain_code, SC.sina_domain_code, 
+		SC.sina_login, SC.sina_login_id, SC.sina_login_key, SC.imageWebServer, 
+		SC.lucene_update, SC.alipay_fenrun, SC.balance_fenrun, SC.auto_order_confirm, 
+		SC.auto_order_notice, SC.bargain_maximum, SC.bargain_rebate, SC.bargain_state, 
+		SC.bargain_status, SC.bargain_title, SC.service_qq_list, SC.service_telphone_list, 
+		SC.sys_delivery_maximum, SC.uc_bbs, SC.kuaidi_id, SC.uc_api, 
+		SC.uc_appid, SC.uc_database, SC.uc_database_port, SC.uc_database_pws, 
+		SC.uc_database_url, SC.uc_database_username, SC.uc_ip, SC.uc_key, 
+		SC.uc_table_preffix, SC.currency_code, SC.bargain_validity, SC.delivery_amount, 
+		SC.delivery_status, SC.delivery_title, SC.websiteCss, SC.combin_amount, 
+		SC.combin_count, SC.ztc_goods_view, SC.auto_order_evaluate, SC.auto_order_return, 
+		SC.weixin_store, SC.weixin_amount, SC.config_payment_type, SC.weixin_account, 
+		SC.weixin_appId, SC.weixin_appSecret, SC.weixin_token, SC.weixin_welecome_content, 
+		SC.store_weixin_logo_id, SC.weixin_qr_img_id, SC.vip_integral, SC.tax_rate_value, 
+		SC.add_tax_rate_time, SC.one_rates, SC.two_rates, SC.three_rates, 
+		SC.points_servants, SC.return_rates, SC.cent_commission, SC.commissionswitch, 
+		SC.commissionrate, SC.IOSGoldRechargeSwitch, SC.integral_begin_time, SC.integral_end_time, 
+		SC.integral_multiple, SC.auto_order_cancel, SC.auto_order_receiptToCompleted, SC.platform_to_business_fee, 
+		SC.revPay_to_platform_fee, SC.revPay_to_platform_fee_bank, SC.seller_freight, SC.offlineswitch, 
+		SC.revPay_to_platform_fee_online, SC.freight_rate, SC.is_store_pay_taxes, SC.commission_taxes, 
+		SC.pay_taxes, SC.revPay_to_platform_fee_bank_limit, SC.pushEnale, SC.msgSwitch,SC.web_site,SC.weixin_appId_qyh,SC.weixin_appSecret_qyh,SC.weixin_appNo
+	</sql>
+
+	<select id="loadById" resultMap="sysconfig">
+		SELECT <include refid="field"/>
+		FROM SYSCONFIG SC
+		WHERE SC.ID = #{id}
+	</select>
+	
+	<select id="remoteEnable" resultType="java.lang.Integer">
+		select remote_erp_switch from sysconfig where id = 1
+	</select>
+	
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.InvestmentDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+	    <result column="update_time" property="updateTime" jdbcType="DATE" />
+	    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+	    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+	    <result column="feature" property="feature" jdbcType="VARCHAR" />
+	    <result column="class_id" property="classId" jdbcType="VARCHAR" />
+	</resultMap>
+	 <select id="getMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select *   from tjy_investment i  
+		order by i.create_time desc
+	</select>
+	 <select id="getInvestmentByClassId" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select *   from tjy_investment i  where class_id=#{classid,jdbcType=VARCHAR}
+		order by i.create_time desc
+	</select>
+	 <select id="getinvestmentList" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select *   from tjy_investment i  where  1=1 
+		<if test="classId !=null and classId !=''">
+		  and class_id=#{classId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	 
+</mapper>

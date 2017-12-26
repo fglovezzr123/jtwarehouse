@@ -1,0 +1,132 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+}
+.wrapper{
+ 
+     width:100%;
+      padding-bottom:1.5rem;
+      font-size:0.3rem;
+     
+}
+.clear{
+      clear:both;
+}
+.meeting-poster{
+      width:100%;
+      margin-bottom:0.1rem;
+}
+.modify-box{
+     box-sizing:border-box;
+     width:100%;
+     padding-left:0.3rem;
+     padding-right:0.3rem;
+     background:white;
+     font-size:0.24rem;
+     margin-bottom:0.1rem;
+ }
+ .modify-head{
+      width:100%;
+      height:0.72rem;
+      line-height:0.72rem;
+      border-bottom:1px solid #e6e6e6;
+
+ }
+ .modify-box p{
+      line-height:0.35rem;
+      margin-top:0.14rem;
+ }
+ .modify-photo{
+      width:100%;
+      padding-top:0.24rem;
+      padding-bottom:0.24rem;
+      border-bottom:1px solid #e6e6e6;
+ }
+ .modify-photo div{
+    float:left;
+ }
+ .modify-photo div:nth-child(1){
+    width:1.30rem;
+    height:1.30rem;
+    background:#e0e0e0;    
+    text-align:center;
+    line-height:1.3rem;
+    margin-right:0.62rem; 
+ }
+ .modify-photo div:nth-child(2){
+    width:1.30rem;
+    height:1.30rem;
+  
+    text-align:center;
+    line-height:1.3rem;
+    background:url(../img/images/addphoto.png) no-repeat center;
+    background-size:1.3rem 1.3rem;
+ }
+ .word-num{
+    width:100%;
+    height:0.5rem;
+    line-height:0.5rem;
+    font-size:0.2rem;
+    color:#808080;
+    text-align:right;
+ }
+ .modify-option{
+      box-sizing:border-box;
+      width:100%;
+    
+      background:white;
+ }
+ .modify-option>div{
+    box-sizing:border-box;
+     width:100%;
+     height:0.74rem;
+     line-height:0.74rem;
+     border-bottom:1px solid #e6e6e6;
+       padding-left:0.3rem;
+      padding-right:0.3rem;
+ }
+  .modify-option>div>div:nth-child(1){
+     width:33%;
+     float:left;
+ }
+   .modify-option>div>div:nth-child(2){
+     width:67%;
+     float:left;
+     background:url(../img/icons/arrow.png) no-repeat right center;
+ }
+
+ 
+ .modify-option .modifing .modify-yeah{
+    color:white;
+     background:url(../img/icons/check-box-on.png) no-repeat center right;
+      background-size:0.28rem 0.28rem;
+ }
+ .modify-option .modifing .modify-no{
+    color:white;
+     background:url(../img/icons/check-box-off.png) no-repeat center right;
+      background-size:0.28rem 0.28rem;
+ }
+ .modify-btn{
+      width:100%;
+      height:1rem;
+      line-height:1rem;
+      text-align:center;
+      background:white;
+       font-size:0.3rem;
+       position:fixed;
+       bottom:0;
+       left:0;
+ }
+  .modify-btn div:nth-child(1){
+      float:left;
+      width:50%;
+  }
+   .modify-btn div:nth-child(2){
+      float:right;
+       width:50%;
+      color:white;
+      background:#ff8d06;
+  }

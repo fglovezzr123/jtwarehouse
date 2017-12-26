@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ActivityUserDao">
+
+	<resultMap id="BaseResultMap" type="java.util.HashMap">
+		<result property="id" column="id"  jdbcType="VARCHAR"></result>
+		<result property="activityId" column="activity_id"  jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time"  jdbcType="DATE"></result>
+		<result property="userId" column="user_id"  jdbcType="VARCHAR"></result>
+		<result property="userName" column="user_name"  jdbcType="VARCHAR"></result>
+		<result property="phone" column="phone"  jdbcType="VARCHAR"></result>
+		<result property="status" column="status"  jdbcType="INTEGER"></result>
+		<result property="balance" column="balance"  jdbcType="INTEGER"></result>
+		<result property="orderId" column="order_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderStatus" column="order_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="payTime" column="pay_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="payPrice" column="pay_price" javaType="Double" jdbcType="DOUBLE"></result>
+		<result property="coupon" column="coupon" javaType="double" jdbcType="DOUBLE"></result>
+		<result property="transactionId" column="transaction_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	<select id="getclassMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.status ,t.create_time createTime ,t.user_name userName,t.phone ,t.id,t.order_status,
+			a.titles,a.ticket_price price ,a.class_id classId ,u.com_name company
+		
+		FROM tjy_activity_user t  left join tjy_activity a on t.activity_id =a.id   left join tjy_user u on t.user_id = u.id
+ 		
+ 		WHERE  1=1  and t.order_status > 1
+    	<if test="activityId != null and activityId != ''">
+			 AND	t.activity_id =#{activityId,jdbcType=VARCHAR}
+		</if>
+    	<if test="userName != null and userName != ''">
+			AND	t.user_name like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="payStatus == 2">
+			AND	t.order_status =#{payStatus,jdbcType=VARCHAR}
+		</if>
+    		<if test="userId != null and userId != ''">
+			AND	t.user_id =#{userId,jdbcType=VARCHAR}
+		</if>
+    	<if test="phone != null and phone != ''">
+			AND	t.phone like CONCAT('%',#{phone,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="createTime!=null">
+				AND t.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime,jdbcType=DATE},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND t.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime,jdbcType=DATE},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+		</if>
+    	
+    	order by t.status asc
+	</select>
+	<select id="getclassMap1" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.status ,t.create_time createTime ,t.user_name userName,t.phone ,t.id,t.order_status,
+			a.titles,a.ticket_price price ,a.class_id classId ,u.com_name company,a.status actstatus
+		
+		FROM tjy_activity_user t  left join tjy_activity a on t.activity_id =a.id   left join tjy_user u on t.user_id = u.id
+ 		
+ 		WHERE  balance=0   AND	t.activity_id =#{activityId,jdbcType=VARCHAR} and t.status = #{status,jdbcType=INTEGER} and t.order_status > 1
+    	
+    	order by t.create_time desc
+    	limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+    	
+	</select>
+	<select id="getcount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT count(t.id)
+		 
+		FROM tjy_activity_user t  left join tjy_activity a on t.activity_id =a.id   left join tjy_user u on t.user_id = u.id
+ 		
+ 		WHERE  1=1   AND	t.activity_id =#{activityId,jdbcType=VARCHAR} and t.status = #{status,jdbcType=INTEGER}  and t.order_status > 1
+    	
+	</select>
+	<select id="getmysignupbyid" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.id  signupid ,t.status ,t.create_time createTime ,t.user_name userName,t.phone ,t.order_status,
+			a.* ,b.name tagName,dp.dis_name proName,dc.dis_name cityName,da.dis_name couName
+		
+		FROM tjy_activity_user t  
+		left join tjy_activity a on t.activity_id =a.id   
+ 		left join tjy_activity_tag b on a.tag = b.id 
+		left join sy_district dp on a.province = dp.id 
+		left join sy_district dc on a.city = dc.id
+		left join sy_district da on a.county = da.id
+ 		WHERE  1=1  AND	t.user_id = #{userId,jdbcType=VARCHAR}  and order_status!='1'
+    	order by t.create_time desc  
+    	limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	<update id="updatesignupstatus"  parameterType="java.util.Map">
+		update  tjy_activity_user t  set t.status =  #{status,jdbcType=VARCHAR}
+ 		
+ 		WHERE  	t.activity_id = #{activityId,jdbcType=VARCHAR} and  t.status!= 2  and t.status !=5 
+	</update>
+	<update id="updatestatusbyid"  parameterType="java.util.Map">
+		update  tjy_activity_user  t set t.status =  #{status,jdbcType=VARCHAR}
+ 		
+ 		WHERE  	t.id = #{id,jdbcType=VARCHAR}
+	</update>
+	<select   id="getusersbyactivityid" resultMap="BaseResultMap" parameterType="java.util.Map" >
+		select * from tjy_activity_user  
+		where  activity_id = #{activityId,jdbcType=VARCHAR}  and  status!= 2  and status !=5 
+	</select>
+	<select   id="getsignupusers" resultMap="BaseResultMap" parameterType="java.util.Map" >
+		select * from tjy_activity_user  
+		where  activity_id = #{activityId,jdbcType=VARCHAR}  and  user_id = #{userid,jdbcType=VARCHAR}  and 
+		 status!= 2  and status !=5  and status!=3 and order_status=#{orderStatus,jdbcType=VARCHAR}
+	</select>
+</mapper>

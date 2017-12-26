@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ClubClassDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+	    <result column="update_time" property="updateTime" jdbcType="DATE" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="recommend" property="recommend" jdbcType="INTEGER" />
+	    <result column="sort" property="sort" jdbcType="INTEGER" />
+	    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectAllclassMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT 
+			id,name name,parent_id parentId
+		FROM tjy_club_class  order by sort asc
+	</select>
+	 <select id="selectByName" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_club_class
+ 		WHERE 1=1
+    	<if test="name != null and name != ''">
+			AND	name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+	</select>
+	<select id="selectonelevelclass" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_club_class
+ 		WHERE 1=1
+			AND	 parent_id  is null or  parent_id =''  order by sort asc
+	</select>
+	<select id="querybyparent" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT c.*
+				FROM  tjy_club_class c
+				WHERE c.parent_id  =  #{id,jdbcType=VARCHAR}  
+	</select>
+</mapper>

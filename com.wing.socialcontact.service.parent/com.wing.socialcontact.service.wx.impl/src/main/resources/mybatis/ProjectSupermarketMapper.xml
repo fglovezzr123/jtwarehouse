@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ProjectSupermarketDao">
+    <resultMap id="ResultMap" type="com.wing.socialcontact.service.wx.bean.ProjectSupermarket">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="cooperative_mode" property="cooperativeMode" jdbcType="CHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="county" property="county" jdbcType="VARCHAR"/>
+        <result column="industry" property="industry" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="is_show" property="isShow" jdbcType="INTEGER"/>
+        <result column="is_top" property="isTop" jdbcType="INTEGER"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="introduce" property="introduce" jdbcType="VARCHAR"/>
+        <result column="highlights" property="highlights" jdbcType="VARCHAR"/>
+        <result column="illustration" property="illustration" jdbcType="VARCHAR"/>
+        <result column="team_presentation" property="teamPresentation" jdbcType="VARCHAR"/>
+        <result column="cooperativeModeName" property="cooperativeModeName" jdbcType="VARCHAR"/>
+        <result column="industryName" property="industryName" jdbcType="VARCHAR"/>
+        <result column="provinceName" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="cityName" property="cityName" jdbcType="VARCHAR"/>
+        <result column="countyName" property="countyName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="field">
+    p.id, p.user_id,p.name,p.cooperative_mode,p.province,p.city,p.county,p.industry,p.sort,p.is_show,
+    p.is_top,p.is_delete,p.create_time,p.create_user_id,p.update_time,p.update_user_id,
+    p.introduce,p.highlights,p.illustration,p.team_presentation,la.list_value as cooperativeModeName,
+    lb.list_value as industryName,sa.dis_name as provinceName,sb.dis_name as cityName ,sc.dis_name as countyName
+  </sql>
+
+    <sql id="dynamicWhere">
+        <where>
+            p.is_delete = 0
+            <if test="id!=null and id!=''">
+                AND p.id=#{id}
+            </if>
+            <if test="cooperativeMode!=null and cooperativeMode!=''">
+                AND p.cooperative_mode=#{cooperativeMode}
+            </if>
+            <if test="province!=null and province!=''">
+                AND p.province=#{province}
+            </if>
+            <if test="industry!=null and industry!=''">
+                AND p.industry=#{industry}
+            </if>
+            <if test="isTop!=null and isTop!=''">
+                AND p.is_top=#{isTop}
+            </if>
+            <if test="name!=null and name!=''">
+                AND p.name like concat('%',#{name},'%')
+            </if>
+            <if test="isShow!=null">
+                AND p.is_show=#{isShow}
+            </if>
+            <if test="createTime!=null">
+                AND p.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+                AND p.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByParam" resultMap="ResultMap" parameterType="java.util.Map">
+        select
+        <include refid="field"/>
+        from tjy_project_supermarket p
+        LEFT JOIN list_values la ON la.id = p.cooperative_mode
+        LEFT JOIN list_values lb ON lb.id = p.industry
+        LEFT JOIN sy_district sa ON sa.id = p.province
+        LEFT JOIN sy_district sb ON sb.id = p.city
+        LEFT JOIN sy_district sc ON sc.id = p.county
+        <include refid="dynamicWhere"/>
+        order by p.sort desc,p.create_time desc
+    </select>
+
+    <select id="selectImagesByParam" resultType="java.util.Map" parameterType="java.util.Map">
+        select id AS id, project_id AS projectId, image_url AS imageUrl, create_time AS createTime, sort AS sort
+        from tjy_project_supermarket_images
+        WHERE 1=1
+        <if test="projectId != null and projectId != ''">
+            AND project_id = #{projectId}
+        </if>
+    </select>
+
+</mapper>

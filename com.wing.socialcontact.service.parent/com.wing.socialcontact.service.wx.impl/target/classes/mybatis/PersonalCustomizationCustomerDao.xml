@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	wangyansheng
+	date	:	2017-11-01
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.PersonalCustomizationCustomerDao">
+
+	<resultMap id="personalCustomizationCustomer" type="com.wing.socialcontact.service.wx.bean.PersonalCustomizationCustomer">
+		<result property="id" column="id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isHandle" column="is_handle" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="create_user_id" column="createUserId" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="title" column="title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="trueName" column="true_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comName" column="com_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="kfTelephone" column="kf_telephone" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<sql id="field">
+         c.id,p.title,u.true_name,u.mobile,u.com_name,u.kf_telephone,c.is_handle,c.fk_id,c.user_id,c.create_time
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<if test="fkId!=null and fkId!=''">
+				AND c.fk_id = #{fkId}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND c.user_id = #{userId}
+			</if>
+			<if test="title!=null and title!=''">
+				AND p.title like concat('%',#{title},'%')
+			</if>
+			<if test="trueName!=null and trueName!=''">
+				AND u.true_name like concat('%',#{trueName},'%')
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND u.mobile like concat('%',#{mobile},'%')
+			</if>
+			<if test="isHandle!=null">
+				AND c.is_handle=#{isHandle}
+			</if>
+			<if test="createTime!=null">
+				AND c.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND c.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+			</if>
+			<if test="deleted!=null">
+				AND c.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectByParam" resultMap="personalCustomizationCustomer" parameterType="java.util.Map">
+		select 
+			<include refid="field"/>
+		from tjy_personal_customization_customer c
+		LEFT JOIN tjy_personal_customization p ON c.fk_id = p.id
+		LEFT JOIN tjy_user u ON  c.user_id = u.id
+ 		<include refid="dynamicWhere"/>
+		order by c.create_time desc
+	</select>
+
+</mapper>

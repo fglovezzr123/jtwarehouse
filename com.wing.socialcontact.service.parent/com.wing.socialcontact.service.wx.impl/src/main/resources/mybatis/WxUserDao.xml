@@ -1,0 +1,908 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-04-03 23:44:43
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.WxUserDao">
+
+	<resultMap id="user" type="com.wing.socialcontact.service.wx.bean.WxUser">
+		<result property="id" column="id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="addtime" column="addTime" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deletestatus" column="deleteStatus" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="msn" column="MSN" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="qq" column="QQ" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ww" column="WW" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="address" column="address" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="availablebalance" column="availableBalance" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="birthday" column="birthday" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="email" column="email" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="freezeblance" column="freezeBlance" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="gold" column="gold" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integral" column="integral" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="lastlogindate" column="lastLoginDate" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastloginip" column="lastLoginIp" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="logincount" column="loginCount" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="logindate" column="loginDate" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="loginip" column="loginIp" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="password" column="password" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="report" column="report" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="sex" column="sex" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="telephone" column="telephone" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="truename" column="trueName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="username" column="userName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userrole" column="userRole" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userCredit" column="user_credit" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="photoId" column="photo_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="storeId" column="store_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="qqOpenid" column="qq_openid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sinaOpenid" column="sina_openid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="storeQuickMenu" column="store_quick_menu" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="parentId" column="parent_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="years" column="years" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="areaId" column="area_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="usertype" column="userType" javaType="Byte" jdbcType="TINYINT"></result>
+		<result property="rebateTotal" column="rebate_total" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="subcommission" column="subcommission" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="thirdPartyUser" column="third_party_user" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="pushuserid" column="pushUserID" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="integralTotal" column="integral_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="inviterUserId" column="inviter_user_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="cartSessionId" column="cart_session_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="areaInfo" column="area_info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="addressInfo" column="address_info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wxUserId" column="wx_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="nickName" column="nick_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="jbAmount" column="jb_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="hzbAmount" column="hzb_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="hzbOpenTime" column="hzb_open_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="hzbOpenFlag" column="hzb_open_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="hzbLevel" column="hzb_level" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="hzbOpenShUserId" column="hzb_open_sh_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isAppLogin" column="is_app_login" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalTotal" column="empirical_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="level" column="level" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="hdticket" column="hdticket" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="userGlobal" type="com.wing.socialcontact.service.wx.bean.WxUser">
+		<result property="id" column="U_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="addtime" column="U_addTime" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deletestatus" column="U_deleteStatus" javaType="Boolean" jdbcType="BOOLEAN"></result>
+		<result property="msn" column="U_MSN" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="qq" column="U_QQ" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ww" column="U_WW" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="address" column="U_address" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="availablebalance" column="U_availableBalance" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="birthday" column="U_birthday" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="email" column="U_email" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="freezeblance" column="U_freezeBlance" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="gold" column="U_gold" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integral" column="U_integral" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="lastlogindate" column="U_lastLoginDate" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastloginip" column="U_lastLoginIp" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="logincount" column="U_loginCount" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="logindate" column="U_loginDate" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="loginip" column="U_loginIp" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="U_mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="password" column="U_password" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="report" column="U_report" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="sex" column="U_sex" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="U_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="telephone" column="U_telephone" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="truename" column="U_trueName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="username" column="U_userName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userrole" column="U_userRole" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userCredit" column="U_user_credit" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="photoId" column="U_photo_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="storeId" column="U_store_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="qqOpenid" column="U_qq_openid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sinaOpenid" column="U_sina_openid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="storeQuickMenu" column="U_store_quick_menu" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="parentId" column="U_parent_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="years" column="U_years" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="areaId" column="U_area_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="usertype" column="U_userType" javaType="Byte" jdbcType="TINYINT"></result>
+		<result property="rebateTotal" column="U_rebate_total" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="subcommission" column="U_subcommission" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="thirdPartyUser" column="U_third_party_user" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="pushuserid" column="U_pushUserID" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="integralTotal" column="U_integral_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="inviterUserId" column="U_inviter_user_id" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="cartSessionId" column="U_cart_session_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="areaInfo" column="U_area_info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="addressInfo" column="U_address_info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wxUserId" column="U_wx_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="U_img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="nickName" column="U_nick_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="jbAmount" column="U_jb_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="hzbAmount" column="U_hzb_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="hzbOpenTime" column="U_hzb_open_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="hzbOpenFlag" column="U_hzb_open_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="hzbLevel" column="U_hzb_level" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="hzbOpenShUserId" column="U_hzb_open_sh_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isAppLogin" column="U_is_app_login" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalTotal" column="U_empirical_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="level" column="U_level" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="hdticket" column="U_hdticket" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		U.id, U.addTime, U.deleteStatus, U.MSN, 
+		U.QQ, U.WW, U.address, U.availableBalance, 
+		U.birthday, U.email, U.freezeBlance, U.gold, 
+		U.integral, U.lastLoginDate, U.lastLoginIp, U.loginCount, 
+		U.loginDate, U.loginIp, U.mobile, U.password, 
+		U.report, U.sex, U.status, U.telephone, 
+		U.trueName, U.userName, U.userRole, U.user_credit, 
+		U.photo_id, U.store_id, U.qq_openid, U.sina_openid, 
+		U.store_quick_menu, U.parent_id, U.years, U.area_id, 
+		U.userType, U.rebate_total, U.subcommission, U.third_party_user, 
+		U.pushUserID, U.integral_total, U.inviter_user_id, U.cart_session_id, 
+		U.area_info, U.address_info, U.wx_user_id, U.img_url, U.nick_name, U.jb_amount, U.hzb_amount,U.is_app_login,U.empirical_total,U.level,U.hdticket,
+		U.hzb_open_flag,U.hzb_open_time,U.hzb_level,U.hzb_open_sh_user_id
+	</sql>
+
+	<sql id="fieldGlobal">
+		U.id U_id, U.addTime U_addTime, 
+		U.deleteStatus U_deleteStatus, U.MSN U_MSN, 
+		U.QQ U_QQ, U.WW U_WW, 
+		U.address U_address, U.availableBalance U_availableBalance, 
+		U.birthday U_birthday, U.email U_email, 
+		U.freezeBlance U_freezeBlance, U.gold U_gold, 
+		U.integral U_integral, U.lastLoginDate U_lastLoginDate, 
+		U.lastLoginIp U_lastLoginIp, U.loginCount U_loginCount, 
+		U.loginDate U_loginDate, U.loginIp U_loginIp, 
+		U.mobile U_mobile, U.password U_password, 
+		U.report U_report, U.sex U_sex, 
+		U.status U_status, U.telephone U_telephone, 
+		U.trueName U_trueName, U.userName U_userName, 
+		U.userRole U_userRole, U.user_credit U_user_credit, 
+		U.photo_id U_photo_id, U.store_id U_store_id, 
+		U.qq_openid U_qq_openid, U.sina_openid U_sina_openid, 
+		U.store_quick_menu U_store_quick_menu, U.parent_id U_parent_id, 
+		U.years U_years, U.area_id U_area_id, 
+		U.userType U_userType, U.rebate_total U_rebate_total, 
+		U.subcommission U_subcommission, U.third_party_user U_third_party_user, 
+		U.pushUserID U_pushUserID, U.integral_total U_integral_total, 
+		U.inviter_user_id U_inviter_user_id, U.cart_session_id U_cart_session_id, 
+		U.area_info U_area_info, U.address_info U_address_info, 
+		U.wx_user_id U_wx_user_id, U.img_url U_img_url, U.nick_name U_nick_name,
+		U.jb_amount U_jb_amount, U.hzb_amount U_hzb_amount,U.is_app_login U_is_app_login,U.empirical_total U_empirical_total,U.level U_level,U.hdticket U_hdticket,
+		U.hzb_open_flag U_hzb_open_flag,U.hzb_open_time U_hzb_open_time,U.hzb_level U_hzb_level,U.hzb_open_sh_user_id U_hzb_open_sh_user_id
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		U.id id, U.addTime addtime, 
+		U.deleteStatus deletestatus, U.MSN msn, 
+		U.QQ qq, U.WW ww, 
+		U.address address, U.availableBalance availablebalance, 
+		U.birthday birthday, U.email email, 
+		U.freezeBlance freezeblance, U.gold gold, 
+		U.integral integral, U.lastLoginDate lastlogindate, 
+		U.lastLoginIp lastloginip, U.loginCount logincount, 
+		U.loginDate logindate, U.loginIp loginip, 
+		U.mobile mobile, U.password password, 
+		U.report report, U.sex sex, 
+		U.status status, U.telephone telephone, 
+		U.trueName truename, U.userName username, 
+		U.userRole userrole, U.user_credit userCredit, 
+		U.photo_id photoId, U.store_id storeId, 
+		U.qq_openid qqOpenid, U.sina_openid sinaOpenid, 
+		U.store_quick_menu storeQuickMenu, U.parent_id parentId, 
+		U.years years, U.area_id areaId, 
+		U.userType usertype, U.rebate_total rebateTotal, 
+		U.subcommission subcommission, U.third_party_user thirdPartyUser, 
+		U.pushUserID pushuserid, U.integral_total integralTotal, 
+		U.inviter_user_id inviterUserId, U.cart_session_id cartSessionId, 
+		U.area_info areaInfo, U.address_info addressInfo, 
+		U.wx_user_id wxUserId,
+		U.img_url imgUrl,
+		U.nick_name nickName, U.jb_amount jbAmount, 
+		U.hzb_amount hzbAmount,
+		U.is_app_login isAppLogin,
+		U.empirical_total empiricalTotal,U.level level,U.hdticket hdticket,
+		U.hzb_open_flag hzbOpenFlag,U.hzb_open_time hzbOpenTime,U.hzb_level hzbLevel,U.hzb_open_sh_user_id hzbOpenShUserId
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null">
+			AND U.id=#{id}
+		</if>
+		<if test="addtime!=null">
+			AND U.addTime=#{addtime}
+		</if>
+		<if test="deletestatus!=null">
+			AND U.deleteStatus=#{deletestatus}
+		</if>
+		<if test="msn!=null and msn!=''">
+			AND U.MSN=#{msn}
+		</if>
+		<if test="qq!=null and qq!=''">
+			AND U.QQ=#{qq}
+		</if>
+		<if test="ww!=null and ww!=''">
+			AND U.WW=#{ww}
+		</if>
+		<if test="address!=null and address!=''">
+			AND U.address=#{address}
+		</if>
+		<if test="availablebalance!=null">
+			AND U.availableBalance=#{availablebalance}
+		</if>
+		<if test="birthday!=null">
+			AND U.birthday=#{birthday}
+		</if>
+		<if test="email!=null and email!=''">
+			AND U.email=#{email}
+		</if>
+		<if test="freezeblance!=null">
+			AND U.freezeBlance=#{freezeblance}
+		</if>
+		<if test="gold!=null">
+			AND U.gold=#{gold}
+		</if>
+		<if test="integral!=null">
+			AND U.integral=#{integral}
+		</if>
+		<if test="lastlogindate!=null">
+			AND U.lastLoginDate=#{lastlogindate}
+		</if>
+		<if test="lastloginip!=null and lastloginip!=''">
+			AND U.lastLoginIp=#{lastloginip}
+		</if>
+		<if test="logincount!=null">
+			AND U.loginCount=#{logincount}
+		</if>
+		<if test="logindate!=null">
+			AND U.loginDate=#{logindate}
+		</if>
+		<if test="loginip!=null and loginip!=''">
+			AND U.loginIp=#{loginip}
+		</if>
+		<if test="mobile!=null and mobile!=''">
+			AND U.mobile=#{mobile}
+		</if>
+		<if test="password!=null and password!=''">
+			AND U.password=#{password}
+		</if>
+		<if test="report!=null">
+			AND U.report=#{report}
+		</if>
+		<if test="sex!=null">
+			AND U.sex=#{sex}
+		</if>
+		<if test="status!=null">
+			AND U.status=#{status}
+		</if>
+		<if test="telephone!=null and telephone!=''">
+			AND U.telephone=#{telephone}
+		</if>
+		<if test="truename!=null and truename!=''">
+			AND U.trueName=#{truename}
+		</if>
+		<if test="username!=null and username!=''">
+			AND U.userName=#{username}
+		</if>
+		<if test="userrole!=null and userrole!=''">
+			AND U.userRole=#{userrole}
+		</if>
+		<if test="userCredit!=null">
+			AND U.user_credit=#{userCredit}
+		</if>
+		<if test="photoId!=null">
+			AND U.photo_id=#{photoId}
+		</if>
+		<if test="storeId!=null">
+			AND U.store_id=#{storeId}
+		</if>
+		<if test="qqOpenid!=null and qqOpenid!=''">
+			AND U.qq_openid=#{qqOpenid}
+		</if>
+		<if test="sinaOpenid!=null and sinaOpenid!=''">
+			AND U.sina_openid=#{sinaOpenid}
+		</if>
+		<if test="storeQuickMenu!=null and storeQuickMenu!=''">
+			AND U.store_quick_menu=#{storeQuickMenu}
+		</if>
+		<if test="parentId!=null">
+			AND U.parent_id=#{parentId}
+		</if>
+		<if test="years!=null">
+			AND U.years=#{years}
+		</if>
+		<if test="areaId!=null">
+			AND U.area_id=#{areaId}
+		</if>
+		<if test="usertype!=null">
+			AND U.userType=#{usertype}
+		</if>
+		<if test="rebateTotal!=null">
+			AND U.rebate_total=#{rebateTotal}
+		</if>
+		<if test="subcommission!=null">
+			AND U.subcommission=#{subcommission}
+		</if>
+		<if test="thirdPartyUser!=null">
+			AND U.third_party_user=#{thirdPartyUser}
+		</if>
+		<if test="pushuserid!=null and pushuserid!=''">
+			AND U.pushUserID=#{pushuserid}
+		</if>
+		<if test="integralTotal!=null">
+			AND U.integral_total=#{integralTotal}
+		</if>
+		<if test="inviterUserId!=null">
+			AND U.inviter_user_id=#{inviterUserId}
+		</if>
+		<if test="cartSessionId!=null and cartSessionId!=''">
+			AND U.cart_session_id=#{cartSessionId}
+		</if>
+		<if test="areaInfo!=null and areaInfo!=''">
+			AND U.area_info=#{areaInfo}
+		</if>
+		<if test="addressInfo!=null and addressInfo!=''">
+			AND U.address_info=#{addressInfo}
+		</if>
+		<if test="wxUserId!=null and wxUserId!=''">
+			AND U.wx_user_id=#{wxUserId}
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			AND U.img_url=#{imgUrl}
+		</if>
+		<if test="nickName!=null and nickName!=''">
+			AND U.nick_name=#{nickName}
+		</if>
+		<if test="jbAmount!=null">
+			AND U.jb_amount=#{jbAmount}
+		</if>
+		<if test="hzbAmount!=null">
+			AND U.hzb_amount=#{hzbAmount}
+		</if>
+		<if test="isAppLogin!=null">
+			AND U.is_app_login=#{isAppLogin}
+		</if>
+		<if test="empiricalTotal!=null">
+			AND U.empirical_total=#{empiricalTotal}
+		</if>
+		<if test="level!=null">
+			AND U.level=#{level}
+		</if>
+		<if test="hdticket!=null">
+			AND U.hdticket=#{hdticket}
+		</if>
+		<if test="hzbOpenFlag!=null">
+			AND U.hzb_open_flag=#{hzbOpenFlag}
+		</if>
+		<if test="hzbOpenTime!=null">
+			AND U.hzb_open_time=#{hzbOpenTime}
+		</if>
+		<if test="hzbLevel!=null">
+			AND U.hzb_level=#{hzbLevel}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null">
+				AND U.id=#{id}
+			</if>
+			<if test="addtime!=null">
+				AND U.addTime=#{addtime}
+			</if>
+			<if test="deletestatus!=null">
+				AND U.deleteStatus=#{deletestatus}
+			</if>
+			<if test="msn!=null and msn!=''">
+				AND U.MSN LIKE CONCAT('%', #{msn}, '%')
+			</if>
+			<if test="qq!=null and qq!=''">
+				AND U.QQ LIKE CONCAT('%', #{qq}, '%')
+			</if>
+			<if test="ww!=null and ww!=''">
+				AND U.WW LIKE CONCAT('%', #{ww}, '%')
+			</if>
+			<if test="address!=null and address!=''">
+				AND U.address LIKE CONCAT('%', #{address}, '%')
+			</if>
+			<if test="availablebalance!=null">
+				AND U.availableBalance=#{availablebalance}
+			</if>
+			<if test="birthday!=null">
+				AND U.birthday=#{birthday}
+			</if>
+			<if test="email!=null and email!=''">
+				AND U.email LIKE CONCAT('%', #{email}, '%')
+			</if>
+			<if test="freezeblance!=null">
+				AND U.freezeBlance=#{freezeblance}
+			</if>
+			<if test="gold!=null">
+				AND U.gold=#{gold}
+			</if>
+			<if test="integral!=null">
+				AND U.integral=#{integral}
+			</if>
+			<if test="lastlogindate!=null">
+				AND U.lastLoginDate=#{lastlogindate}
+			</if>
+			<if test="lastloginip!=null and lastloginip!=''">
+				AND U.lastLoginIp LIKE CONCAT('%', #{lastloginip}, '%')
+			</if>
+			<if test="logincount!=null">
+				AND U.loginCount=#{logincount}
+			</if>
+			<if test="logindate!=null">
+				AND U.loginDate=#{logindate}
+			</if>
+			<if test="loginip!=null and loginip!=''">
+				AND U.loginIp LIKE CONCAT('%', #{loginip}, '%')
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND U.mobile LIKE CONCAT('%', #{mobile}, '%')
+			</if>
+			<if test="password!=null and password!=''">
+				AND U.password LIKE CONCAT('%', #{password}, '%')
+			</if>
+			<if test="report!=null">
+				AND U.report=#{report}
+			</if>
+			<if test="sex!=null">
+				AND U.sex=#{sex}
+			</if>
+			<if test="status!=null">
+				AND U.status=#{status}
+			</if>
+			<if test="telephone!=null and telephone!=''">
+				AND U.telephone LIKE CONCAT('%', #{telephone}, '%')
+			</if>
+			<if test="truename!=null and truename!=''">
+				AND U.trueName LIKE CONCAT('%', #{truename}, '%')
+			</if>
+			<if test="username!=null and username!=''">
+				AND U.userName LIKE CONCAT('%', #{username}, '%')
+			</if>
+			<if test="userrole!=null and userrole!=''">
+				AND U.userRole LIKE CONCAT('%', #{userrole}, '%')
+			</if>
+			<if test="userCredit!=null">
+				AND U.user_credit=#{userCredit}
+			</if>
+			<if test="photoId!=null">
+				AND U.photo_id=#{photoId}
+			</if>
+			<if test="storeId!=null">
+				AND U.store_id=#{storeId}
+			</if>
+			<if test="qqOpenid!=null and qqOpenid!=''">
+				AND U.qq_openid LIKE CONCAT('%', #{qqOpenid}, '%')
+			</if>
+			<if test="sinaOpenid!=null and sinaOpenid!=''">
+				AND U.sina_openid LIKE CONCAT('%', #{sinaOpenid}, '%')
+			</if>
+			<if test="storeQuickMenu!=null and storeQuickMenu!=''">
+				AND U.store_quick_menu LIKE CONCAT('%', #{storeQuickMenu}, '%')
+			</if>
+			<if test="parentId!=null">
+				AND U.parent_id=#{parentId}
+			</if>
+			<if test="years!=null">
+				AND U.years=#{years}
+			</if>
+			<if test="areaId!=null">
+				AND U.area_id=#{areaId}
+			</if>
+			<if test="usertype!=null">
+				AND U.userType=#{usertype}
+			</if>
+			<if test="rebateTotal!=null">
+				AND U.rebate_total=#{rebateTotal}
+			</if>
+			<if test="subcommission!=null">
+				AND U.subcommission=#{subcommission}
+			</if>
+			<if test="thirdPartyUser!=null">
+				AND U.third_party_user=#{thirdPartyUser}
+			</if>
+			<if test="pushuserid!=null and pushuserid!=''">
+				AND U.pushUserID LIKE CONCAT('%', #{pushuserid}, '%')
+			</if>
+			<if test="integralTotal!=null">
+				AND U.integral_total=#{integralTotal}
+			</if>
+			<if test="inviterUserId!=null">
+				AND U.inviter_user_id=#{inviterUserId}
+			</if>
+			<if test="cartSessionId!=null and cartSessionId!=''">
+				AND U.cart_session_id LIKE CONCAT('%', #{cartSessionId}, '%')
+			</if>
+			<if test="areaInfo!=null and areaInfo!=''">
+				AND U.area_info LIKE CONCAT('%', #{areaInfo}, '%')
+			</if>
+			<if test="addressInfo!=null and addressInfo!=''">
+				AND U.address_info LIKE CONCAT('%', #{addressInfo}, '%')
+			</if>
+			<if test="wxUserId!=null and wxUserId!=''">
+				AND U.wx_user_id LIKE CONCAT('%', #{wxUserId}, '%')
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND U.img_url LIKE CONCAT('%', #{imgUrl}, '%')
+			</if>
+			<if test="nickName!=null and nickName!=''">
+				AND U.nick_name LIKE CONCAT('%', #{nickName}, '%')
+			</if>
+			<if test="jbAmount!=null">
+				AND U.jb_amount=#{jbAmount}
+			</if>
+			<if test="hzbAmount!=null">
+				AND U.hzb_amount=#{hzbAmount}
+			</if>
+			<if test="isAppLogin!=null">
+				AND U.is_app_login=#{isAppLogin}
+			</if>
+			<if test="empiricalTotal!=null">
+				AND U.empirical_total=#{empiricalTotal}
+			</if>
+			<if test="level!=null">
+				AND U.level=#{level}
+			</if>
+			<if test="hdticket!=null">
+				AND U.hdticket=#{hdticket}
+			</if>
+			<if test="hzbOpenFlag!=null">
+				AND U.hzb_open_flag=#{hzbOpenFlag}
+			</if>
+			<if test="hzbOpenTime!=null">
+				AND U.hzb_open_time=#{hzbOpenTime}
+			</if>
+			<if test="hzbLevel!=null">
+				AND U.hzb_level=#{hzbLevel}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				U.id=#{id}, 
+		   </if>
+           <if test="addtime!=null">
+				U.addTime=#{addtime}, 
+		   </if>
+           <if test="deletestatus!=null">
+				U.deleteStatus=#{deletestatus}, 
+		   </if>
+           <if test="msn!=null">
+				U.MSN=#{msn}, 
+		   </if>
+           <if test="qq!=null">
+				U.QQ=#{qq}, 
+		   </if>
+           <if test="ww!=null">
+				U.WW=#{ww}, 
+		   </if>
+           <if test="address!=null">
+				U.address=#{address}, 
+		   </if>
+           <if test="availablebalance!=null">
+				U.availableBalance=#{availablebalance}, 
+		   </if>
+           <if test="birthday!=null">
+				U.birthday=#{birthday}, 
+		   </if>
+           <if test="email!=null">
+				U.email=#{email}, 
+		   </if>
+           <if test="freezeblance!=null">
+				U.freezeBlance=#{freezeblance}, 
+		   </if>
+           <if test="gold!=null">
+				U.gold=#{gold}, 
+		   </if>
+           <if test="integral!=null">
+				U.integral=#{integral}, 
+		   </if>
+           <if test="lastlogindate!=null">
+				U.lastLoginDate=#{lastlogindate}, 
+		   </if>
+           <if test="lastloginip!=null">
+				U.lastLoginIp=#{lastloginip}, 
+		   </if>
+           <if test="logincount!=null">
+				U.loginCount=#{logincount}, 
+		   </if>
+           <if test="logindate!=null">
+				U.loginDate=#{logindate}, 
+		   </if>
+           <if test="loginip!=null">
+				U.loginIp=#{loginip}, 
+		   </if>
+           <if test="mobile!=null">
+				U.mobile=#{mobile}, 
+		   </if>
+           <if test="password!=null">
+				U.password=#{password}, 
+		   </if>
+           <if test="report!=null">
+				U.report=#{report}, 
+		   </if>
+           <if test="sex!=null">
+				U.sex=#{sex}, 
+		   </if>
+           <if test="status!=null">
+				U.status=#{status}, 
+		   </if>
+           <if test="telephone!=null">
+				U.telephone=#{telephone}, 
+		   </if>
+           <if test="truename!=null">
+				U.trueName=#{truename}, 
+		   </if>
+           <if test="username!=null">
+				U.userName=#{username}, 
+		   </if>
+           <if test="userrole!=null">
+				U.userRole=#{userrole}, 
+		   </if>
+           <if test="userCredit!=null">
+				U.user_credit=#{userCredit}, 
+		   </if>
+           <if test="photoId!=null">
+				U.photo_id=#{photoId}, 
+		   </if>
+           <if test="storeId!=null">
+				U.store_id=#{storeId}, 
+		   </if>
+           <if test="qqOpenid!=null">
+				U.qq_openid=#{qqOpenid}, 
+		   </if>
+           <if test="sinaOpenid!=null">
+				U.sina_openid=#{sinaOpenid}, 
+		   </if>
+           <if test="storeQuickMenu!=null">
+				U.store_quick_menu=#{storeQuickMenu}, 
+		   </if>
+           <if test="parentId!=null">
+				U.parent_id=#{parentId}, 
+		   </if>
+           <if test="years!=null">
+				U.years=#{years}, 
+		   </if>
+           <if test="areaId!=null">
+				U.area_id=#{areaId}, 
+		   </if>
+           <if test="usertype!=null">
+				U.userType=#{usertype}, 
+		   </if>
+           <if test="rebateTotal!=null">
+				U.rebate_total=#{rebateTotal}, 
+		   </if>
+           <if test="subcommission!=null">
+				U.subcommission=#{subcommission}, 
+		   </if>
+           <if test="thirdPartyUser!=null">
+				U.third_party_user=#{thirdPartyUser}, 
+		   </if>
+           <if test="pushuserid!=null">
+				U.pushUserID=#{pushuserid}, 
+		   </if>
+           <if test="integralTotal!=null">
+				U.integral_total=#{integralTotal}, 
+		   </if>
+           <if test="inviterUserId!=null">
+				U.inviter_user_id=#{inviterUserId}, 
+		   </if>
+           <if test="cartSessionId!=null">
+				U.cart_session_id=#{cartSessionId}, 
+		   </if>
+           <if test="areaInfo!=null">
+				U.area_info=#{areaInfo}, 
+		   </if>
+           <if test="addressInfo!=null">
+				U.address_info=#{addressInfo}, 
+		   </if>
+           <if test="wxUserId!=null">
+				U.wx_user_id=#{wxUserId}, 
+		   </if>
+		   <if test="imgUrl!=null">
+				U.img_url=#{imgUrl}, 
+		   </if>
+		   <if test="nickName!=null">
+				U.nick_name=#{nickName}, 
+		   </if>
+		   <if test="jbAmount!=null">
+				U.jb_amount=#{jbAmount}, 
+		   </if>
+           <if test="hzbAmount!=null">
+				U.hzb_amount=#{hzbAmount}, 
+		   </if>
+		   <if test="isAppLogin!=null">
+				U.is_app_login=#{isAppLogin},
+			</if>
+			<if test="empiricalTotal!=null">
+			   U.empirical_total=#{empiricalTotal},
+			</if>
+			<if test="level!=null">
+				U.level=#{level},
+			</if>
+			<if test="hdticket!=null">
+				U.hdticket=#{hdticket},
+			</if>
+			<if test="hzbOpenFlag!=null">
+				U.hzb_open_flag=#{hzbOpenFlag},
+			</if>
+			<if test="hzbOpenTime!=null">
+				U.hzb_open_time=#{hzbOpenTime},
+			</if>
+			<if test="hzbLevel!=null">
+				U.hzb_level=#{hzbLevel},
+			</if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE  FROM USER u WHERE U.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE USER U
+		SET 
+		U.STATUS = -1
+		WHERE U.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE USER 
+		<include refid="dynamicSet" /> 
+	    WHERE U.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(U.*) FROM USER U
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="queryTaskHzbWxUser"  resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,IFNULL(TIMESTAMPDIFF(YEAR,DATE_FORMAT(U.hzb_open_time,'%Y-%m-%d 00:00:01'),DATE_FORMAT(date_sub(NOW(),interval 1 day),'%Y-%m-%d')),-1) as ndc
+		FROM USER U
+		WHERE U.status != 0 AND U.hzb_open_flag != 0 AND U.hzb_open_flag != 3
+		ORDER BY U.hzb_open_time asc
+	</select>
+	
+	<select id="queryByHzbUser" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,TU.com_name as comName,(select sum(ml.manager_money) from tjy_hzb_manager_log ml where ml.type in (4,7) and ml.user_id=U.id) as ljcz
+		,SU.true_name shUserName,concat(concat(ifnull(t3.dis_name,''),' '),concat(ifnull(t4.dis_name,''),' '),concat(ifnull(t5.dis_name,''),' ')) as region
+		FROM USER U LEFT JOIN TJY_USER TU ON TU.id=U.id LEFT JOIN SY_USERS SU ON SU.id=U.hzb_open_sh_user_id 
+		LEFT JOIN sy_district t3 ON TU.province = t3.id
+		LEFT JOIN sy_district t4 ON TU.city = t4.id
+		LEFT JOIN sy_district t5 ON TU.county = t5.id
+		WHERE 1=1
+	 	<if test="hzbAmount!=null">
+			AND U.hzb_amount=#{hzbAmount} 
+	   	</if>
+		<if test="keyword!=null and keyword!=''">
+			AND (U.nick_name LIKE CONCAT('%', #{keyword}, '%') OR TU.com_name LIKE CONCAT('%', #{keyword}, '%')) 
+		</if>
+		<if test="hzbOpenFlag!=null and hzbOpenFlag!=''">
+			AND U.hzb_open_flag=#{hzbOpenFlag} 
+		</if>
+		<if test="hzbLevel!=null and hzbLevel!=''">
+			AND U.hzb_level=#{hzbLevel} 
+		</if>
+		<if test="shUser!=null and shUser!=''">
+			AND SU.true_name LIKE CONCAT('%', #{shUser}, '%') 
+		</if>
+		<if test="amountlow!=null">
+			AND U.hzb_amount &gt;=   #{amountlow}
+	    </if>
+	   	<if test="amounthigh!=null">
+			AND   #{amounthigh} &gt;= U.hzb_amount
+	    </if>
+		AND U.status != 0 AND U.hzb_open_flag != 0
+		<include refid="orderby" />
+	</select>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="String">
+		SELECT <include refid="field"/>
+		FROM USER U
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		WHERE U.ID = #{id}
+	</select>
+	
+	<select id="selectByWxUserId" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		WHERE U.wx_user_id = #{wxUserId}
+	</select>
+	
+	<select id="selectByUserId" resultMap="user">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM USER U
+		WHERE U.id = #{userId}
+	</select>
+	
+	<select id="selectByUserName" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		WHERE U.userName = #{userName}
+	</select>
+	
+	<select id="selectByMobile" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		WHERE U.mobile = #{mobile}
+	</select>
+	
+	<select id="selectByNickName" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		WHERE U.nick_name = #{nickName}
+	</select>
+	
+	<select id="selectByOpenId" resultMap="user">
+		SELECT <include refid="field"/>
+		FROM USER U
+		WHERE U.qq_openid = #{qqOpenid}
+	</select>
+	
+	<select id="queryUsersByid" resultType="java.util.HashMap" parameterType="String">
+		SELECT <include refid="field"/>, C.*,L1.list_value as jobName,L2.list_value as industryName 
+		FROM user U 
+		left join tjy_user C on U.id=C.id
+		left join list_values L1 on C.job=L1.id
+		left join list_values L2 on C.industry=L2.id
+		WHERE 1=1 and U.id =#{userId,jdbcType=VARCHAR}   
+	</select>
+	
+	<select id="queryHzbNdcByUserId" resultType="java.lang.Long" parameterType="String">
+		SELECT IFNULL(TIMESTAMPDIFF(YEAR,U.hzb_open_time,NOW()),-1) ndc
+		FROM USER U
+		WHERE U.id = #{userId,jdbcType=VARCHAR}
+	</select>
+	
+</mapper>

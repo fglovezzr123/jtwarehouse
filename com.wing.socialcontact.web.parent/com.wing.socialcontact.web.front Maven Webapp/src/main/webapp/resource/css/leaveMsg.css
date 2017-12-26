@@ -1,0 +1,49 @@
+@charset "utf-8";
+.msg{
+	width: 100%;
+	padding: .30rem .30rem 0 .30rem;
+	box-sizing: border-box;
+	background: #fff;
+	color: #8B8B8B;
+}
+.msg textarea{
+	width: 100%;
+	height: 2.14rem;
+	font-size: .24rem;
+	border: 0;
+	box-sizing: border-box;
+	resize: none;
+	border-bottom: #f1f3f4 1px solid;
+	padding-left:0.25rem;
+	padding-right:0.25rem;
+}
+.msg p{
+	width: 100%;
+	height: .50rem;
+	line-height: .50rem;
+	text-align: end;
+	font-size: .20rem;
+}
+.pst{
+	width: 100%;
+	position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.kf{
+	font-size: .24rem;
+	color: #8B8B8B;
+	line-height: .76rem;
+	text-align: center;
+	width: 100%;
+	margin-top: 8.38rem;
+}
+.M-footer{
+	width: 100%;
+	height: 1rem;
+	text-align: center;
+	line-height: 1rem;
+	background: #0f88eb;
+	color: #fff;
+	font-size: .30rem;
+}

@@ -1,0 +1,240 @@
+@charset "utf-8";
+body{
+	  height:100%;
+	  overflow:scroll;
+	  background:#f0f0f0;
+}
+.clear{clear:both;}
+.wrapper{
+    width:100%;
+    padding-bottom:3rem;
+}
+.wrapper .fistH1{
+	box-sizing:border-box;
+   width:100%;
+   padding:0.2rem .3rem;
+   text-align:left;
+   font-size:0.26rem;
+   line-height:.35rem;
+   border-bottom:1px solid #e6e6e6;
+}
+.cooperate1{
+	  width:100%;
+	  box-sizing:border-box;
+	  padding-left:0.3rem;
+	  padding-right:0.3rem; 
+	  line-height:0.85rem;
+	  font-size:0.26rem;
+	  background:white;
+	  border-bottom:1px solid #e6e6e6;
+}
+.cooperate1 div:nth-child(1){
+     float:left;
+     width:18%;
+     text-align:right;
+}
+.cooperate1 div:nth-child(2){
+     box-sizing:border-box;
+     float:left;
+     width:82%;
+     text-align:left;
+     padding-left:0.5rem;
+     color:#808080;
+}
+
+.cooperate2{
+	    width:100%;
+	  box-sizing:border-box;
+	  padding-left:0.3rem;
+	  padding-right:0.3rem;
+	 
+	  line-height:0.85rem;
+	  font-size:0.26rem;
+	  background:white;
+	  border-bottom:1px solid #e6e6e6;
+	  background:white;
+	  margin-bottom:0.26rem;
+}
+
+.cooperate2 div:nth-child(1){
+     float:left;
+     width:18%;
+     text-align:right;
+}
+.cooperate2 div:nth-child(2){
+     box-sizing:border-box;
+     float:left;
+     width:82%;
+     text-align:left;
+     padding-left:0.5rem;
+     color:#808080;
+     line-height:0.4rem;
+     padding-top:0.2rem;
+     padding-bottom:0.2rem;
+}
+.cooperate2 div:nth-child(3){
+	  width:100%;
+	  height:0.64rem;
+	  line-height:0.64rem;
+}
+.cooperati5 span{
+	  display:inline-block;
+	  float:left;
+	  color:#808080;
+	  padding-left:0.35rem;
+	  background:url(../img/icons/booo1.png) no-repeat center left;
+	  background-size:0.24rem 0.24rem;
+}
+.cooperati5 span:nth-child(2){
+    float:right;
+      background:url(../img/icons/booo.png) no-repeat center left;
+        background-size:0.24rem 0.24rem;
+}
+.cooperati5 span i{
+	color:#ff9a00;
+}
+.cooperati4{
+	box-sizing:border-box;
+	width:100%;
+	border-top:1px solid #e6e6e6;
+	border-bottom:1px solid #e6e6e6;
+	background:white;
+}
+.cooperati4-item{
+	box-sizing:border-box;
+	width:100%;
+	padding-left:0.3rem;
+	padding-right:0.3rem;
+}
+.cooper4-content{
+	  width:100%;
+	  padding-top:0.3rem;
+	  padding-bottom:0.25rem;
+}
+.cooper4-content>div:nth-child(1){
+   width:14%;
+   float:left;
+
+}
+.cooper4-content>div:nth-child(2){
+    width:86%;
+    float:right;
+    border-bottom:1px solid #e6e6e6;
+    padding-bottom:0.2rem;
+}
+.userIcon{
+	height:0.7rem;
+	width:0.7rem;
+	border-radius:50%;
+	background:url(../img/icons/user-incon.png) no-repeat center;
+	background-size:0.7rem 0.7rem;
+}
+.user-infor>div:nth-child(1){
+    font-size:0.26rem;
+    font-weight:bold;
+    position:relative;
+
+}
+.user-infor>div:nth-child(2){
+    font-size:0.24rem;
+    color:#808080;
+}
+.user-infor p{
+   font-size:0.24rem;
+   line-height:0.5rem;
+}
+.coop4-dates>div{
+    width:50%;
+    float:left;
+    font-size:0.24rem;
+    color:#808080;
+}
+.coop4-dates>div:nth-child(2){
+	  text-align:right;
+}
+.coop4-dates>div>span:nth-child(1){
+	 display:inline-block;
+	 padding-left:0.37rem;
+	 background:url(../img/icons/cccccccccc.jpg) no-repeat center left;
+	 background-size:0.31rem 0.28rem;
+	 margin-right:0.1rem;
+	 height:0.28rem;
+	 line-height:0.28rem
+}
+.coop4-dates>div>span:nth-child(2){
+	 display:inline-block;
+	 padding-left:0.37rem;
+	 margin-left:0.1rem;
+	 background:url(../img/icons/good.jpg) no-repeat center left;
+	 background-size:0.3rem 0.3rem;
+	 height:0.32rem;
+	 line-height:0.32rem;
+}
+.mycooperateBtn{
+	  height:1rem;
+	  line-height:1rem;
+	  text-align:center;
+	     background:white;
+	     position:fixed;
+	     left:0;
+	     bottom:0;
+	     width:100%;
+}
+.mycooperateBtn>div{
+	 float:left;
+	 font-size:0.3rem;
+	
+}
+.mycooperateBtn>div:nth-child(2){
+   width:50%;
+   background:#0f88eb;
+   color:white;
+   height:1rem;
+}
+.mycooperateBtn>div:nth-child(3){
+   width:37.5%;
+   background:#0f88eb;
+   color:white;
+}
+.accepte{
+	 background:url(../img/icons/accetion.jpg) no-repeat right top;
+   background-size:0.86rem 0.73rem;
+}
+.goodNum{
+	  color:#ff811a;
+}
+.getIt{
+    height:0.46rem;
+    width:0.9rem;
+    text-align:center;
+    line-height:0.46rem;
+    position:absolute;
+    right:0rem;
+    top:0rem;
+    border-radius:0.1rem;
+    color:white;
+    background:#ff811a;
+}
+.NogetIt{
+	  height:0.46rem;
+    width:0.9rem;
+     text-align:center;
+    line-height:0.46rem;
+     position:absolute;
+     right:0rem;
+     top:0rem;
+     border-radius:0.1rem;
+      color:white;
+}
+.info-l{
+	width: 4.20rem;
+	height: .71rem;
+	display: flex;
+	flex-direction: row;
+    border-radius:50%;
+    background-size:0.7rem 0.7rem;
+}
+.info-l img{
+	width: .71rem;
+	height: .71rem;
+}

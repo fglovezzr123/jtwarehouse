@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-03-30 15:05:41
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ReportDao">
+
+	<resultMap id="report" type="com.wing.socialcontact.service.wx.bean.Report">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="rtType" column="rt_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deletd" column="deletd" javaType="Integer" jdbcType="INTEGER"></result>
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result property="isShow" column="is_show" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<select id="selectTopicReportByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.topic_desc topicDesc,u.true_name userName,r.id,r.create_time createTime,u.mobile,
+		r.content from tjy_report r LEFT JOIN tjy_topic t on r.fk_id = t.id 
+		LEFT JOIN tjy_user u on r.user_id = u.id
+		where 1=1 
+    	<if test="title != null and title != ''">
+			AND	t.topic_desc like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="isShow != null and isShow != 0">
+			AND	r.is_show = #{isShow}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND r.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND r.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND r.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+		order by r.create_time desc
+	</select>
+	
+	<select id="selectReportById" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.topic_desc topicDesc,u.nickname,r.id,r.user_id userId,r.create_time createTime,
+		r.is_show isShow,r.content,r.fk_id fkId,r.rt_type rtType from tjy_report r LEFT JOIN tjy_topic t on r.fk_id = t.id 
+		LEFT JOIN tjy_user u on r.user_id = u.id
+		where r.id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+</mapper>

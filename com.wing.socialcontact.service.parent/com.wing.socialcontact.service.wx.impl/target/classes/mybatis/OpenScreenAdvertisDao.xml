@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.OpenScreenAdvertisDao">
+
+	<resultMap id="openScreenAdvertis" type="com.wing.socialcontact.service.wx.bean.OpenScreenAdvertis">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgName" column="img_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgLink" column="img_link" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="resolvingpower" column="resolvingpower" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	
+	
+	<sql id="field">
+		IA.id, IA.img_url, IA.img_name, 
+		IA.img_link, IA.status, IA.create_user_id, 
+		IA.create_time,IA.order_num,IA.resolvingpower
+	</sql>
+
+	
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND IA.id=#{id}
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			AND IA.img_url=#{imgUrl}
+		</if>
+		<if test="imgName!=null and imgName!=''">
+			AND IA.img_name=#{imgName}
+		</if>
+		<if test="imgLink!=null and imgLink!=''">
+			AND IA.img_link=#{imgLink}
+		</if>
+		<if test="status!=null">
+			AND IA.status=#{status}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND IA.create_user_id=#{createUserId}
+		</if>
+		<if test="createTime!=null">
+			AND IA.create_time=#{createTime}
+		</if>
+		<if test="orderNum!=null">
+			AND IA.order_num=#{orderNum}
+		</if>
+		<if test="resolvingpower!=null">
+			AND IA.resolvingpower=#{resolvingpower}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND IA.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND IA.img_url LIKE CONCAT('%', #{imgUrl}, '%')
+			</if>
+			<if test="imgName!=null and imgName!=''">
+				AND IA.img_name LIKE CONCAT('%', #{imgName}, '%')
+			</if>
+			<if test="imgLink!=null and imgLink!=''">
+				AND IA.img_link LIKE CONCAT('%', #{imgLink}, '%')
+			</if>
+			<if test="status!=null">
+				AND IA.status=#{status}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND IA.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND IA.create_time=#{createTime}
+			</if>
+			<if test="orderNum!=null">
+				AND IA.order_num=#{orderNum}
+			</if>
+			<if test="resolvingpower!=null">
+				AND IA.resolvingpower=#{resolvingpower}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				IA.id=#{id}, 
+		   </if>
+           <if test="imgUrl!=null">
+				IA.img_url=#{imgUrl}, 
+		   </if>
+           <if test="imgName!=null">
+				IA.img_name=#{imgName}, 
+		   </if>
+           <if test="imgLink!=null">
+				IA.img_link=#{imgLink}, 
+		   </if>
+           <if test="status!=null">
+				IA.status=#{status}, 
+		   </if>
+           <if test="createUserId!=null">
+				IA.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createTime!=null">
+				IA.create_time=#{createTime}, 
+		   </if>
+		   <if test="orderNum!=null">
+				IA.order_num=#{orderNum}, 
+		   </if>
+		   <if test="resolvingpower!=null">
+				IA.resolvingpower=#{resolvingpower}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+	
+	<delete id="deleteById">
+		DELETE IA FROM mall.TJY_OPEN_SCREEN_ADVERTIS IA WHERE IA.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		SET 
+		IA.STATUS = -1
+		WHERE IA.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		<include refid="dynamicSet" /> 
+	    WHERE IA.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="openScreenAdvertis">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="openScreenAdvertis">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="openScreenAdvertis">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="openScreenAdvertis">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		WHERE IA.ID = #{id}
+	</select>
+	<select id="selectAdvertisList" resultType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		 FROM mall.TJY_OPEN_SCREEN_ADVERTIS IA
+		 where status = '1'
+		<include refid="dynamicWhere" />
+	</select>
+</mapper>

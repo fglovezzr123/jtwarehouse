@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-04-11 08:52:35
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.WalletLogDao">
+
+	<resultMap id="walletLog" type="com.wing.socialcontact.service.wx.bean.WalletLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="amount" column="amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="rmbAmount" column="rmb_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="payStatus" column="pay_status" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="payType" column="pay_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="paySn" column="pay_sn" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pdType" column="pd_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="fkType" column="fk_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="yeAmount" column="ye_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="businessType" column="business_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="sourceUser" column="source_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="walletLogGlobal" type="com.wing.socialcontact.service.wx.bean.WalletLog">
+		<result property="id" column="WL_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="WL_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="amount" column="WL_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="rmbAmount" column="WL_rmb_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="payStatus" column="WL_pay_status" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="payType" column="WL_pay_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="paySn" column="WL_pay_sn" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pdType" column="WL_pd_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="WL_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="WL_deleted" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="WL_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="fkType" column="WL_fk_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="WL_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="yeAmount" column="WL_ye_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="businessType" column="WL_business_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="sourceUser" column="WL_source_user" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		WL.id, WL.type, WL.amount, WL.rmb_amount, 
+		WL.pay_status, WL.pay_type, WL.pay_sn, WL.pd_type, 
+		WL.user_id, WL.deleted, WL.create_time, WL.fk_type, 
+		WL.remark,WL.ye_amount,WL.business_type,WL.source_user
+	</sql>
+
+	<sql id="fieldGlobal">
+		WL.id WL_id, WL.type WL_type, 
+		WL.amount WL_amount, WL.rmb_amount WL_rmb_amount, 
+		WL.pay_status WL_pay_status, WL.pay_type WL_pay_type, 
+		WL.pay_sn WL_pay_sn, WL.pd_type WL_pd_type, 
+		WL.user_id WL_user_id, WL.deleted WL_deleted, 
+		WL.create_time WL_create_time, WL.fk_type WL_fk_type, 
+		WL.remark WL_remark,WL.ye_amount WL_ye_amount,WL.business_type WL_business_type,WL.source_user WL_source_user
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		WL.id id, WL.type type, 
+		WL.amount amount, WL.rmb_amount rmbAmount, 
+		WL.pay_status payStatus, WL.pay_type payType, 
+		WL.pay_sn paySn, WL.pd_type pdType, 
+		WL.user_id userId, WL.deleted deleted, 
+		WL.create_time createTime, WL.fk_type fkType, 
+		WL.remark remark,WL.ye_amount yeAmount,WL.business_type businessType,WL.source_user sourceUser
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND WL.id=#{id}
+		</if>
+		<if test="type!=null and type!=''">
+			AND WL.type=#{type}
+		</if>
+		<if test="amount!=null">
+			AND WL.amount=#{amount}
+		</if>
+		<if test="rmbAmount!=null">
+			AND WL.rmb_amount=#{rmbAmount}
+		</if>
+		<if test="payStatus!=null and payStatus!=''">
+			AND WL.pay_status=#{payStatus}
+		</if>
+		<if test="payType!=null and payType!=''">
+			AND WL.pay_type=#{payType}
+		</if>
+		<if test="paySn!=null and paySn!=''">
+			AND WL.pay_sn=#{paySn}
+		</if>
+		<if test="pdType!=null and pdType!=''">
+			AND WL.pd_type=#{pdType}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND WL.user_id=#{userId}
+		</if>
+		<if test="deleted!=null and deleted!=''">
+			AND WL.deleted=#{deleted}
+		</if>
+		<if test="createTime!=null">
+			AND WL.create_time=#{createTime}
+		</if>
+		<if test="fkType!=null and fkType!=''">
+			AND WL.fk_type=#{fkType}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND WL.remark=#{remark}
+		</if>
+		<if test="yeAmount!=null and yeAmount!=''">
+			AND WL.ye_amount=#{yeAmount}
+		</if>
+		<if test="businessType!=null and businessType!=''">
+			AND WL.business_type=#{businessType}
+		</if>
+		<if test="sourceUser!=null and sourceUser!=''">
+			AND WL.source_user=#{sourceUser}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND WL.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="type!=null and type!=''">
+				AND WL.type LIKE CONCAT('%', #{type}, '%')
+			</if>
+			<if test="amount!=null">
+				AND WL.amount=#{amount}
+			</if>
+			<if test="rmbAmount!=null">
+				AND WL.rmb_amount=#{rmbAmount}
+			</if>
+			<if test="payStatus!=null and payStatus!=''">
+				AND WL.pay_status LIKE CONCAT('%', #{payStatus}, '%')
+			</if>
+			<if test="payType!=null and payType!=''">
+				AND WL.pay_type LIKE CONCAT('%', #{payType}, '%')
+			</if>
+			<if test="paySn!=null and paySn!=''">
+				AND WL.pay_sn LIKE CONCAT('%', #{paySn}, '%')
+			</if>
+			<if test="pdType!=null and pdType!=''">
+				AND WL.pd_type LIKE CONCAT('%', #{pdType}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND WL.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="deleted!=null and deleted!=''">
+				AND WL.deleted LIKE CONCAT('%', #{deleted}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND WL.create_time=#{createTime}
+			</if>
+			<if test="fkType!=null and fkType!=''">
+				AND WL.fk_type LIKE CONCAT('%', #{fkType}, '%')
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND WL.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="yeAmount!=null and yeAmount!=''">
+				AND WL.ye_amount=#{yeAmount}
+			</if>
+			<if test="businessType!=null and businessType!=''">
+				AND WL.business_type=#{businessType}
+			</if>
+			<if test="sourceUser!=null and sourceUser!=''">
+				AND WL.source_user=#{sourceUser}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				WL.id=#{id}, 
+		   </if>
+           <if test="type!=null">
+				WL.type=#{type}, 
+		   </if>
+           <if test="amount!=null">
+				WL.amount=#{amount}, 
+		   </if>
+           <if test="rmbAmount!=null">
+				WL.rmb_amount=#{rmbAmount}, 
+		   </if>
+           <if test="payStatus!=null">
+				WL.pay_status=#{payStatus}, 
+		   </if>
+           <if test="payType!=null">
+				WL.pay_type=#{payType}, 
+		   </if>
+           <if test="paySn!=null">
+				WL.pay_sn=#{paySn}, 
+		   </if>
+           <if test="pdType!=null">
+				WL.pd_type=#{pdType}, 
+		   </if>
+           <if test="userId!=null">
+				WL.user_id=#{userId}, 
+		   </if>
+           <if test="deleted!=null">
+				WL.deleted=#{deleted}, 
+		   </if>
+           <if test="createTime!=null">
+				WL.create_time=#{createTime}, 
+		   </if>
+           <if test="fkType!=null">
+				WL.fk_type=#{fkType}, 
+		   </if>
+           <if test="remark!=null">
+				WL.remark=#{remark}, 
+		   </if>
+		   <if test="yeAmount!=null">
+				WL.ye_amount=#{yeAmount},
+			</if>
+			<if test="businessType!=null and businessType!=''">
+				WL.business_type=#{businessType},
+			</if>
+			<if test="sourceUser!=null and sourceUser!=''">
+				WL.source_user=#{sourceUser},
+			</if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE WL FROM TJY_WALLET_LOG WL WHERE WL.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_WALLET_LOG WL
+		SET 
+		WL.STATUS = -1
+		WHERE WL.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_WALLET_LOG WL
+		<include refid="dynamicSet" /> 
+	    WHERE WL.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="walletLog">
+		SELECT <include refid="field"/>
+		FROM TJY_WALLET_LOG WL
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="walletLog">
+		SELECT <include refid="field"/>
+		FROM TJY_WALLET_LOG WL
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>,u.nickname as sourceName
+		FROM TJY_WALLET_LOG WL LEFT JOIN TJY_USER U ON U.ID=WL.source_user
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+		<if test="fyFlag != null">
+			LIMIT #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="loadById" resultMap="walletLog">
+		SELECT <include refid="field"/>
+		FROM TJY_WALLET_LOG WL
+		WHERE WL.ID = #{id}
+	</select>
+	
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select o.*,t.nickname,t.true_name,t.mobile from TJY_WALLET_LOG o 
+        JOIN tjy_user t ON t.id = o.user_id
+ 		WHERE 1=1
+    	<if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	    </if>
+	    <if test="type!=null  and type!=''">
+			and o.type=#{type}
+		</if>
+	    <if test="remark!=null  and remark!=''">
+			and o.remark=#{remark}
+		</if>
+	    <if test="mobile!=null  and mobile!=''">
+			and t.mobile  LIKE CONCAT('%', #{mobile}, '%')
+		</if>
+		<if test="createTime!=null">
+			and	datediff(o.create_time,#{createTime})=0 
+	    </if>
+	    <if test="payStatus!=null and payStatus!=''">
+			and o.pay_status=#{payStatus}
+		</if>
+		<if test="businessType!=null and businessType!=''">
+			and o.business_type=#{businessType}
+		</if>
+		<if test="userId!=null and userId!=''">
+			and o.user_id=#{userId}
+		</if>
+		order by o.create_time desc
+	</select>
+	
+	
+	<select id="selectJbSum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select ifnull(floor(sum(o.amount)),0) from TJY_WALLET_LOG o 
+		WHERE  1=1 and o.type=2 and o.pd_type=2
+		<if test="userId!=null and userId!=''">
+			and o.user_id=#{userId}
+		</if>
+	</select>
+	<select id="selectRewardSum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(o.id) from TJY_WALLET_LOG o 
+		WHERE  1=1 
+		<if test="businessType!=null and businessType!=''">
+			and o.business_type = #{businessType}
+		</if>
+		<if test="fkId!=null and fkId!=''">
+			and o.fk_id=#{fkId}
+		</if>
+	</select>
+	
+	
+	
+</mapper>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-04-22 20:19:47
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserGreetingsDao">
+
+	<resultMap id="userGreetings" type="com.wing.socialcontact.service.wx.bean.UserGreetings">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="friendUser" column="friend_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="askmessage" column="askmessage" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="answermessage" column="answermessage" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="answerstatus" column="answerstatus" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="userGreetingsGlobal" type="com.wing.socialcontact.service.wx.bean.UserGreetings">
+		<result property="id" column="UG_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="UG_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="friendUser" column="UG_friend_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="askmessage" column="UG_askmessage" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="UG_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="UG_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="UG_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="answermessage" column="UG_answermessage" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="answerstatus" column="UG_answerstatus" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UG.id, UG.user_id, UG.friend_user, UG.askmessage, 
+		UG.status, UG.create_time, UG.update_time,UG.answermessage,UG.answerstatus
+	</sql>
+
+	<sql id="fieldGlobal">
+		UG.id UG_id, UG.user_id UG_user_id, 
+		UG.friend_user UG_friend_user, UG.askmessage UG_askmessage, 
+		UG.status UG_status, UG.create_time UG_create_time, 
+		UG.update_time UG_update_time, UG.answermessage UG_answermessage, UG.answerstatus UG_answerstatus
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UG.id id, UG.user_id userId, 
+		UG.friend_user friendUser, UG.askmessage askmessage, 
+		UG.status status, UG.create_time createTime, 
+		UG.update_time updateTime,UG.answermessage answermessage,UG.answerstatus answerstatus
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UG.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND UG.user_id=#{userId}
+		</if>
+		<if test="friendUser!=null and friendUser!=''">
+			AND UG.friend_user=#{friendUser}
+		</if>
+		<if test="askmessage!=null and askmessage!=''">
+			AND UG.askmessage=#{askmessage}
+		</if>
+		<if test="status!=null">
+			AND UG.status=#{status}
+		</if>
+		<if test="answerstatus!=null">
+			AND UG.answerstatus=#{answerstatus}
+		</if>
+		<if test="createTime!=null">
+			AND UG.create_time=#{createTime}
+		</if>
+		<if test="updateTime!=null">
+			AND UG.update_time=#{updateTime}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UG.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND UG.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="friendUser!=null and friendUser!=''">
+				AND UG.friend_user LIKE CONCAT('%', #{friendUser}, '%')
+			</if>
+			<if test="askmessage!=null and askmessage!=''">
+				AND UG.askmessage LIKE CONCAT('%', #{askmessage}, '%')
+			</if>
+			<if test="status!=null">
+				AND UG.status=#{status}
+			</if>
+			<if test="createTime!=null">
+				AND UG.create_time=#{createTime}
+			</if>
+			<if test="updateTime!=null">
+				AND UG.update_time=#{updateTime}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UG.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				UG.user_id=#{userId}, 
+		   </if>
+           <if test="friendUser!=null">
+				UG.friend_user=#{friendUser}, 
+		   </if>
+           <if test="askmessage!=null">
+				UG.askmessage=#{askmessage}, 
+		   </if>
+           <if test="status!=null">
+				UG.status=#{status}, 
+		   </if>
+           <if test="createTime!=null">
+				UG.create_time=#{createTime}, 
+		   </if>
+           <if test="updateTime!=null">
+				UG.update_time=#{updateTime}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+
+	<select id="load" resultMap="userGreetings">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_GREETINGS UG
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_USER_GREETINGS UG
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="userGreetings">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_GREETINGS UG
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="userGreetings">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_GREETINGS UG
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="userGreetings">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_GREETINGS UG
+		WHERE UG.ID = #{id}
+	</select>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT UG.*
+		FROM TJY_USER_GREETINGS UG
+        where 1=1
+		order by UG.create_time desc
+	</select>
+	
+	<select id="selectAllUserGreetings" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM TJY_USER_GREETINGS UG
+		<include refid="dynamicWhere" />
+		 order by UG.create_time  desc
+	</select>
+	
+	<select id="selectByType" resultMap="userGreetings" parameterType="java.util.Map">
+		SELECT UG.*
+		FROM TJY_USER_GREETINGS UG
+ 		WHERE 1=1
+ 		<if test="status!=null">
+			AND	UG.status=#{status}
+		</if>
+	   <if test="userId!=null and userId!=''">
+			AND	 UG.user_id=#{userId} 
+	   </if>
+        <if test="friendUser!=null and friendUser!=''">
+			AND	 UG.friend_user=#{friendUser}
+	   </if>
+        <if test="answerstatus!=null and answerstatus!=''">
+			AND	 UG.answerstatus=#{answerstatus}
+	   </if>
+		order by UG.create_time  desc
+	</select>
+	
+	<select id="getCountOneDay" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_USER_GREETINGS UG
+		WHERE 1=1 AND	 UG.user_id=#{userId} 
+		and  to_days(UG.create_time) = to_days(now()) 
+	</select>
+	
+</mapper>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.wx.dao.MeetingSignupDao">
+	<resultMap id="meetingSignup" type="com.tojoy.service.wx.bean.MeetingSignup">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="meetingId" column="meeting_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="signupTime" column="signup_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isFree" column="is_free" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="orderId" column="order_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderStatus" column="order_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="payTime" column="pay_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="mainBusiness" column="main_business" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="regCapital" column="reg_capital" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="payCapital" column="pay_capital" javaType="Double" jdbcType="DOUBLE"></result>
+		<result property="totalAssets" column="total_assets" javaType="Double" jdbcType="DOUBLE"></result>
+		<result property="annualSales" column="annual_sales" javaType="Double" jdbcType="DOUBLE"></result>
+		<result property="attendType" column="attend_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="otherReq" column="other_req" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="tjLinkMan" column="tj_link_man" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="recLinkMan" column="rec_link_man" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="trueName" column="true_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comName" column="com_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="kfTelephone" column="kf_telephone" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titles" column="titles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ticketPrice" column="ticket_price" javaType="Double" jdbcType="DOUBLE"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		
+	</resultMap>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND ms.id=#{id}
+			</if>
+			<if test="meetingId!=null and meetingId!=''">
+				AND ms.meeting_id=#{meetingId}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND ms.user_id=#{userId}
+			</if>
+			<if test="signupTime!=null">
+				AND ms.signup_time= #{signupTime}
+		   	</if>
+		   	<if test="gtsignupTime!=null">
+				AND ms.signup_time &gt;= #{gtsignupTime}
+		   	</if>
+		   	<if test="gesignupTime!=null">
+				AND ms.signup_time &gt;= #{gesignupTime}
+		   	</if>
+		   	<if test="ltsignupTime!=null">
+				AND ms.signup_time &lt;= #{ltsignupTime}
+		   	</if>
+		   	<if test="lesignupTime!=null">
+				AND ms.signup_time &lt;= #{lesignupTime}
+		   	</if>
+			<if test="deleted!=null">
+				AND ms.deleted=#{deleted}
+			</if>
+			<if test="isFree!=null">
+				AND ms.is_free=#{isFree}
+			</if>
+			<if test="orderId!=null and orderId!=''">
+				AND ms.order_id=#{orderId}
+			</if>
+			<if test="orderStatus!=null">
+				AND ms.order_status=#{orderStatus}
+			</if>
+			<if test="payTime!=null">
+				AND ms.pay_time= #{payTime}
+		   	</if>
+		   	<if test="gtpayTime!=null">
+				AND ms.pay_time &gt;= #{gtpayTime}
+		   	</if>
+		   	<if test="gepayTime!=null">
+				AND ms.pay_time &gt;= #{gepayTime}
+		   	</if>
+		   	<if test="ltpayTime!=null">
+				AND ms.pay_time &lt;= #{ltpayTime}
+		   	</if>
+		   	<if test="lepayTime!=null">
+				AND ms.pay_time &lt;= #{lepayTime}
+		   	</if>
+			<if test="mainBusiness!=null and mainBusiness!=''">
+				AND ms.main_business=#{mainBusiness}
+			</if>
+			<if test="regCapital!=null">
+				AND ms.reg_capital=#{regCapital}
+			</if>
+			<if test="payCapital!=null">
+				AND ms.pay_capital=#{payCapital}
+			</if>
+			<if test="totalAssets!=null">
+				AND ms.total_assets=#{totalAssets}
+			</if>
+			<if test="annualSales!=null">
+				AND ms.annual_sales=#{annualSales}
+			</if>
+			<if test="attendType!=null">
+				AND ms.attend_type=#{attendType}
+			</if>
+			<if test="otherReq!=null and otherReq!=''">
+				AND ms.other_req=#{otherReq}
+			</if>
+			<if test="tjLinkMan!=null and tjLinkMan!=''">
+				AND ms.tj_link_man=#{tjLinkMan}
+			</if>
+			<if test="recLinkMan!=null and recLinkMan!=''">
+				AND ms.rec_link_man=#{recLinkMan}
+			</if>
+			<if test="payType !=null and payType !=''">
+				AND ms.pay_type=#{payType}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectByMeetingIdAndUserId" resultMap="meetingSignup">
+		select 
+		  	ms.id, 
+		  	ms.meeting_id, 
+		  	ms.user_id, 
+		  	ms.signup_time, 
+			ms.deleted, 
+			ms.is_free, 
+			ms.order_id, 
+			ms.order_status, 
+			ms.pay_time, 
+			ms.main_business, 
+			ms.reg_capital, 
+			ms.pay_capital, 
+			ms.total_assets, 
+			ms.annual_sales, 
+			ms.attend_type, 
+			ms.other_req, 
+			ms.tj_link_man, 
+			ms.rec_link_man,
+			u.true_name, 
+			u.nickname,
+			ifnull(ms.mobile,u.mobile) as mobile,
+			u.com_name,
+			m.titles,
+			m.ticket_price,
+			m.types,
+			ms.pay_type as payType,
+			ms.remind_time as remindTime
+		from
+			tjy_meeting_signup ms
+			inner join tjy_meeting m on ms.meeting_id = m.id
+			left join tjy_user u on ms.user_id=u.id
+ 		where
+			ms.user_id=#{userId} and ms.meeting_id=#{meetingId} limit 0,1
+	</select>
+	
+	<select id="selectByParam"  resultMap="meetingSignup" parameterType="java.util.Map">
+		select 
+		  	ms.id, 
+		  	ms.meeting_id, 
+		  	ms.user_id, 
+		  	ms.signup_time, 
+			ms.deleted, 
+			ms.is_free, 
+			ms.order_id, 
+			ms.order_status, 
+			ms.pay_time, 
+			ms.main_business, 
+			ms.reg_capital, 
+			ms.pay_capital, 
+			ms.total_assets, 
+			ms.annual_sales, 
+			ms.attend_type, 
+			ms.other_req, 
+			ms.tj_link_man, 
+			ms.rec_link_man,
+			u.true_name, 
+			u.nickname,
+			ifnull(ms.mobile,u.mobile) as mobile,
+			u.com_name,
+		    u.kf_telephone,
+			m.titles,
+			m.ticket_price,
+			m.types,
+			ms.pay_type as payType,
+			ms.remind_time as remindTime
+		from
+			tjy_meeting_signup ms
+			inner join tjy_meeting m on ms.meeting_id = m.id
+			left join tjy_user u on ms.user_id=u.id
+ 		where 
+ 		    m.id=ifnull(#{meetingId},'-1')
+ 		    <if test="trueName !=null and trueName !=''">
+				AND u.true_name like concat('%',#{trueName},'%')
+			</if>
+ 		    <if test="nickname !=null and nickname !=''">
+				AND u.nickname like concat('%',#{nickname},'%')
+			</if>
+			<if test="mobile !=null and mobile !=''">
+				AND ms.mobile like concat('%',#{mobile},'%')
+			</if>
+			<if test="attendType !=null and attendType !=''">
+				AND ms.attend_type = #{attendType}
+			</if>
+			<if test="signupTime !=null and signupTime !=''">
+				AND ms.signup_time &gt;= STR_TO_DATE(concat(#{signupTime},' 00:00:00'),'%Y-%m-%d %H:%i:%s')
+				AND ms.signup_time &lt;= STR_TO_DATE(concat(#{signupTime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')
+			</if>
+			<if test="payType !=null and payType !=''">
+				AND ms.pay_type=#{payType}
+			</if>
+ 		order by ms.signup_time desc
+	</select>
+	
+	<select id="selectUnRemind"  resultMap="meetingSignup">
+		select 
+		  	ms.id, 
+		  	ms.meeting_id, 
+		  	ms.user_id, 
+		  	ms.signup_time, 
+			ms.deleted, 
+			ms.is_free, 
+			ms.order_id, 
+			ms.order_status, 
+			ms.pay_time, 
+			ms.main_business, 
+			ms.reg_capital, 
+			ms.pay_capital, 
+			ms.total_assets, 
+			ms.annual_sales, 
+			ms.attend_type, 
+			ms.other_req, 
+			ms.tj_link_man, 
+			ms.rec_link_man,
+			u.true_name, 
+			ifnull(ms.mobile,u.mobile) as mobile, 
+			u.com_name,
+			m.titles,
+			m.ticket_price,
+			m.types,
+			m.start_time as startTime,
+			ms.pay_type as payType,
+			ms.remind_time as remindTime
+ 		from
+			tjy_meeting_signup ms
+			inner join tjy_meeting m on ms.meeting_id = m.id
+			left join tjy_user u on ms.user_id=u.id
+ 		where ms.remind_time is null and order_status in (2,3) 
+ 		 and date_format(date_sub(m.start_time,interval + 1 day),'%Y%m%d') = date_format(NOW(),'%Y%m%d')
+ 		order by m.start_time asc
+	</select>
+	<update id="changeOrderStatusById">
+		update tjy_meeting_signup set order_status=3,pay_time=now() where id=#{id}
+	</update>
+</mapper>

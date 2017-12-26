@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-04-04 00:05:28
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.MeetingProjectDao">
+
+	<resultMap id="meetingProject" type="com.wing.socialcontact.service.wx.bean.MeetingProject">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="meetingId" column="meeting_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="projectId" column="project_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		MP.id, MP.meeting_id, MP.project_id, MP.create_time
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND MP.id=#{id}
+			</if>
+			<if test="meetingId!=null and meetingId!=''">
+				AND MP.meeting_id=#{meetingId}
+			</if>
+			<if test="projectId!=null and projectId!=''">
+				AND MP.project_id=#{projectId}
+			</if>
+			<if test="createTime!=null">
+				AND MP.create_time=#{createTime}
+			</if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="meetingProject" parameterType="java.util.Map">
+		SELECT 
+			<include refid="field"/>
+		FROM tjy_meeting_project MP
+ 		<include refid="dynamicWhere"/>
+	</select>
+	<select id="deleteByMeetingId" parameterType="java.lang.String">
+		delete mg from tjy_meeting_project mg where mg.meeting_id=#{meetingid}
+	</select>
+</mapper>

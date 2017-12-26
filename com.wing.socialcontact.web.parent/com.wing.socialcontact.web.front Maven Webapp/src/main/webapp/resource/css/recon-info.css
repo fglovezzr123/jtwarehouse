@@ -1,0 +1,144 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	    background:#f3f4f6;
+      height:100%;
+      overflow:scroll;
+
+}
+.wrapper{
+      
+      width:100%;
+      font-size:0.3rem;
+        padding-bottom:2rem;
+        margin:0;
+    
+
+
+}
+input{border:none;outline:none;}
+.clear{
+     clear:both;
+}
+.items{
+  box-sizing:border-box;
+  height:0.82rem;
+  line-height:0.82rem;
+  width:100%;
+  padding-left:0.4rem;
+  padding-right:0.4rem;
+  margin:0 auto;
+  border-bottom:1px solid #e6e6e6;
+  background:white;
+  
+}
+.ma-top{
+ 
+}
+ul li{
+        display:inline-block;
+        float:left;
+}
+.items ul li:nth-child(1){
+      width:30%;
+      font-weight:bold;
+      text-align:left;
+}
+.items ul li:nth-child(2){
+      width:70%;
+      text-align:left;
+}
+.items ul li input{
+
+      width:100%;
+      height:0.7rem;
+
+}
+li b{
+      color:white;
+}
+.zone input{
+     background:url(../img/icons/mapPin.png) no-repeat center right;
+     background-size:0.31rem 0.52rem;
+}
+
+.submit{
+        background:#ff811b;
+        height:0.9rem;
+        color:white;
+        font-size:0.36rem;
+        text-align:center;
+        position:fixed;
+        left:0;
+        bottom:0;
+        width:100%;
+        line-height:0.9rem;
+
+}
+.photo{
+      box-sizing:border-box;
+      width:100%;
+      padding-left:0.4rem;
+      padding-right:0.4rem;
+      padding-top:0.2rem;
+      padding-bottom:0.2rem;
+      font-size:0.2rem;
+      background:white;
+      margin-top:0.2rem;
+
+}
+.p-head{
+      box-sizing:border-box;
+      text-align:left;
+      width:100%;
+      color:#3b3b3b;
+      margin-bottom:0.4rem;
+}
+.photo span {
+      color:#ff9a02;
+}
+.photo-oper{
+      width:100%;
+
+}
+.imagess{
+
+     height:1.3rem;
+     width:1.3rem;
+     background:#e0e0e0;
+     text-align:center;
+     line-height:1.3rem;
+     margin-right:1rem;
+     margin-bottom:0.4rem;
+     position: relative;
+}
+.imagess i{
+	position: absolute;
+	left: 1.1rem;
+	top: -.16rem;
+	width: .40rem;
+	height: .40rem;
+	background-image:url(../img/images/创建自荐项目_03.png);
+	background-size:100% ;
+	border-radius: 100%;
+}
+.addimagess{
+   height:1.3rem;
+   width:1.3rem;
+
+     background:url(../img/images/addphoto.png) no-repeat center ;
+     background-size:1.3rem 1.3rem;
+}
+.photo-oper div{
+     float:left;
+}
+.checkExam{
+     color:#3b3b3b;
+     width:4.5rem;
+     height:0.66rem;
+     line-height:0.66rem;
+     text-align:center;
+     margin:0 auto;
+     margin-top:0.2rem;
+     background:white;
+}

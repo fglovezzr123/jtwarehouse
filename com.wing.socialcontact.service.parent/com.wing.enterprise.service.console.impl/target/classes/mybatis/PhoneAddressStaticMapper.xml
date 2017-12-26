@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.enterprise.service.dao.PhoneAddressStaticDao">
+
+	<resultMap id="pac" type="java.util.HashMap">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fCount" column="f_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="tCount" column="t_count" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<select id="selectByParam" resultMap="pac" parameterType="java.util.Map">
+		SELECT SUM(f_count) fCount,SUM(t_count) tCount from qfy_phone_address_static t
+	</select>
+</mapper>
+

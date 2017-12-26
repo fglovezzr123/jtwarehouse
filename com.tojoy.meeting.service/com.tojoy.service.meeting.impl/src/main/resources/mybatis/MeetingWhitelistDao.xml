@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.wx.dao.MeetingWhitelistDao">
+
+	<resultMap id="meetingWhitelist" type="com.tojoy.service.wx.bean.MeetingWhitelist">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="meetingId" column="meeting_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		mw.id, mw.meeting_id, mw.user_id,
+		mw.create_time, tu.true_name as userName, 
+		tu.com_name as comName, tu.mobile,tu.nickname
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND mw.id=#{id}
+			</if>
+			<if test="meetingId!=null and meetingId!=''">
+				AND mw.meeting_id=#{meetingId}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND mw.user_id=#{userId}
+			</if>
+			<if test="userName!=null and userName!=''">
+				AND tu.true_name like concat('%', #{userName}, '%')
+			</if>
+			<if test="nickname!=null and nickname!=''">
+				AND tu.nickname like concat('%', #{nickname}, '%')
+			</if>
+			<if test="comName!=null and comName!=''">
+				AND tu.com_name like concat('%', #{comName}, '%')
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND tu.mobile like concat('%', #{mobile}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND mw.create_time= #{createTime}
+		   	</if>
+		   	<if test="gtcreateTime!=null">
+				AND mw.create_time &gt;= #{gtcreateTime}
+		   	</if>
+		   	<if test="gecreateTime!=null">
+				AND mw.create_time &gt;= #{gecreateTime}
+		   	</if>
+		   	<if test="ltcreateTime!=null">
+				AND mw.create_time &lt;= #{ltcreateTime}
+		   	</if>
+		   	<if test="lecreateTime!=null">
+				AND mw.create_time &lt;= #{lecreateTime}
+		   	</if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="meetingWhitelist">
+		select 
+			<include refid="field"/>
+		from tjy_meeting_whitelist mw left join tjy_user tu on mw.user_id = tu.id
+ 		<include refid="dynamicWhere"/>
+	</select>
+</mapper>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-03-29 11:34:46
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.TopicDao">
+
+	<resultMap id="topic" type="com.wing.socialcontact.service.wx.bean.Topic">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="topicDesc" column="topic_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="redPoint" column="red_point" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="redCount" column="red_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="bluePoint" column="blue_point" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="blueCount" column="blue_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="allowComment" column="allow_comment" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isRecommend" column="is_recommend" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isShow" column="is_show" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deletd" column="deletd" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="topicExplain" column="topic_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result property="url" column="url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isAd" column="is_ad" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="imagePath" column="image_path" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+
+	<select id="selectByParam" resultMap="topic" parameterType="java.util.Map">
+		SELECT t.*,u.nickname userName,u.mobile mobile 
+		FROM tjy_topic t
+		left join  tjy_user u on t.create_user_id = u.id
+		
+ 		<if test="userId != null and userId != '' ">
+ 		    left join  tjy_vote v on v.fk_id = t.id 
+		</if>
+ 		WHERE 1=1
+ 		<if test="userId != null and userId != '' ">
+			AND	v.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="isAd == 1 ">
+			AND	t.is_ad = #{isAd}
+		</if>
+		<if test="isAd == 0 ">
+			AND IFNULL(t.is_ad,0) != 1
+		</if>
+    	<if test="topicDesc != null and topicDesc != ''">
+			AND	t.topic_desc like CONCAT('%',#{topicDesc,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="status != null and status != 0">
+			AND	t.status = #{status}
+		</if>
+		<if test="isRecommend != null and isRecommend != 0">
+			AND	t.is_recommend = #{isRecommend}
+		</if>
+		<if test="allowComment != null and allowComment != 0">
+			AND	t.allow_comment = #{allowComment}
+		</if>
+		<if test="createUserId != null and createUserId != ''">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+		order by t.sort DESC,t.create_time desc
+	</select>
+	
+	<select id="selectHotList" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,COUNT(c.id) countNum,
+		t.url url,t.is_ad isAd,t.image_path imagePath  
+		from tjy_topic t left JOIN tjy_comment c on t.id = c.fk_id   where t.status = 1
+		<if test="titles != null and titles != ''">
+			AND	t.topic_desc like CONCAT('%',#{titles,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="curruserId != null and curruserId != '' ">
+		and (t.create_user_id in 
+        (SELECT f.friend_user FROM tjy_im_friend f
+         WHERE f.user_id = #{curruserId,jdbcType=VARCHAR}) or t.is_show = 2)
+         </if>
+		GROUP BY t.id ORDER BY t.sort DESC,COUNT(c.id) desc 
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	<select id="selectFireList" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,COUNT(a.id) countNum,
+		t.url url,t.is_ad isAd,t.image_path imagePath  
+		from tjy_topic t left JOIN tjy_attention a on t.id = a.fk_id   where t.status = 1
+		<if test="titles != null and titles != ''">
+			AND	t.topic_desc like CONCAT('%',#{titles,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="curruserId != null and curruserId != '' ">
+		and (t.create_user_id in 
+        (SELECT f.friend_user FROM tjy_im_friend f
+         WHERE f.user_id = #{curruserId,jdbcType=VARCHAR}) or t.is_show = 2)
+         </if>
+		GROUP BY t.id ORDER BY COUNT(a.id) desc 
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	<select id="selectNewList" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,COUNT(c.id) countNum,
+		t.url url,t.is_ad isAd,t.image_path imagePath  
+		from tjy_topic t left JOIN tjy_comment c on t.id = c.fk_id  where t.status = 1 
+		<if test="titles != null and titles != ''">
+			AND	t.topic_desc like CONCAT('%',#{titles,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="curruserId != null and curruserId != '' ">
+		and (t.create_user_id in 
+        (SELECT f.friend_user FROM tjy_im_friend f
+         WHERE f.user_id = #{curruserId,jdbcType=VARCHAR}) or t.is_show = 2)
+         </if>
+		GROUP BY t.id ORDER BY t.create_time desc 
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="selectTopicById" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,t.red_point redPoint,
+		t.blue_point bluePoint,t.allow_comment allowComment,t.create_time createTime,t.is_show isShow,
+		t.is_recommend isRecommend,t.create_user_id createUserId,t.topic_explain topicExplain,
+		t.url url,t.is_ad isAd,t.image_path imagePath,
+        u.nickname nickname,u.head_portrait headPortrait,IFNULL(u.honor_title, '') AS honor_title,IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,(select lv.list_value from list_values lv where lv.id=u.job) job,COUNT(c.id) countNum 
+		from tjy_topic t left JOIN tjy_user u on t.create_user_id = u.mall_user 
+		left JOIN tjy_comment c on t.id = c.fk_id  
+		where t.id = #{id,jdbcType=VARCHAR} GROUP BY t.id 
+	</select>
+	
+	<select id="selectMyTopic" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,
+		t.url url,t.is_ad isAd,t.image_path imagePath,COUNT(c.id) countNum  
+		from tjy_topic t left JOIN tjy_comment c on t.id = c.fk_id  where t.status = 1
+		<if test="createUserId != null and createUserId != ''">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		GROUP BY t.id ORDER BY t.create_time desc 
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="selectMyTopicMy" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,t.red_point redPoint,t.topic_explain topicExplain,
+		t.blue_point bluePoint,t.url url,t.is_ad isAd,t.image_path imagePath,
+		date_format(t.create_time,'%Y-%m-%d') createTime,IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,IFNULL(u.honor_title, '') AS honor_title,IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job ,v.vote_type voteType 
+        from tjy_topic t left JOIN  tjy_user u on t.create_user_id = u.mall_user 
+		left join tjy_vote v  on t.id = v.fk_id and t.create_user_id = v.user_id where t.status = 1
+		<if test="createUserId != null and createUserId != ''">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		GROUP BY t.id ORDER BY t.create_time desc 
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="attentionCount" resultType="java.lang.Integer">
+		SELECT count(t.id) from tjy_attention t where 1=1
+		<if test="fkId != null and fkId != ''">
+			AND	t.fk_id = #{fkId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="selectJxTopic" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,t.red_point redPoint,
+		t.blue_point bluePoint,date_format(t.create_time,'%m-%d %H:%i') createTime,t.url url,t.is_ad isAd,t.image_path imagePath,
+        IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,IFNULL(u.honor_title, '') AS honor_title,IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job,COUNT(c.id) countNum  
+		from tjy_topic t left JOIN tjy_user u on t.create_user_id = u.mall_user 
+		left JOIN tjy_comment c on t.id = c.fk_id  where t.is_recommend = 1 and t.status = 1 
+		<if test="curruserId != null and curruserId != '' ">
+		and (t.create_user_id in 
+        (SELECT f.friend_user FROM tjy_im_friend f
+         WHERE f.user_id = #{curruserId,jdbcType=VARCHAR}) or t.is_show = 2)
+         </if>
+		GROUP BY t.id order by t.create_time desc limit 2
+	</select>
+	
+	<select id="selectMyAttention" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,t.red_point redPoint,
+		t.blue_point bluePoint,t.url url,t.is_ad isAd,t.image_path imagePath,
+		date_format(t.create_time,'%Y-%m-%d') createTime,IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,IFNULL(u.honor_title, '') AS honor_title,IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job ,v.vote_type voteType    
+		FROM tjy_attention a join tjy_topic t on a.fk_id = t.id  
+		left JOIN tjy_user u on t.create_user_id = u.mall_user 
+		left join tjy_vote v  on a.fk_id = v.fk_id and a.user_id = v.user_id 
+ 		WHERE a.att_type = '1'
+ 		<if test="userId != null and userId != '' ">
+			AND	a.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        GROUP BY a.fk_id ORDER BY a.create_time desc
+	</select>
+	
+	<select id="selectMyAttentionApp" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,t.red_point redPoint,
+		t.blue_point bluePoint,t.url url,t.is_ad isAd,t.image_path imagePath,
+		date_format(t.create_time,'%Y-%m-%d') createTime,IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,IFNULL(u.honor_title, '') AS honor_title,IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job ,v.vote_type voteType    
+		FROM tjy_attention a join tjy_topic t on a.fk_id = t.id  
+		left JOIN tjy_user u on t.create_user_id = u.mall_user 
+		left join tjy_vote v  on a.fk_id = v.fk_id and a.user_id = v.user_id 
+ 		WHERE a.att_type = '1'
+ 		<if test="userId != null and userId != '' ">
+			AND	a.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        GROUP BY a.fk_id ORDER BY a.create_time desc  
+        limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectMyVote" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,t.red_point redPoint,
+		t.url url,t.is_ad isAd,t.image_path imagePath,
+		t.blue_point bluePoint,date_format(t.create_time,'%Y-%m-%d') createTime,
+        IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,IFNULL(u.honor_title, '') AS honor_title,IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job,v.vote_type voteType 
+		from tjy_vote v JOIN tjy_topic t on v.fk_id = t.id 
+        left JOIN tjy_user u on t.create_user_id = u.mall_user where 1=1 
+ 		<if test="userId != null and userId != '' ">
+			AND	v.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        order by t.create_time desc
+	</select>
+	<select id="selectMyVoteApp" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.topic_desc topicDesc,t.red_count redCount,t.blue_count blueCount,t.red_point redPoint,
+		t.url url,t.is_ad isAd,t.image_path imagePath,
+		t.blue_point bluePoint,date_format(t.create_time,'%Y-%m-%d') createTime,
+        IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,IFNULL(u.honor_title, '') AS honor_title,IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job,v.vote_type voteType 
+		from tjy_vote v JOIN tjy_topic t on v.fk_id = t.id 
+        left JOIN tjy_user u on t.create_user_id = u.mall_user where 1=1 
+ 		<if test="userId != null and userId != '' ">
+			AND	v.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        order by t.create_time desc     
+        limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	
+</mapper>

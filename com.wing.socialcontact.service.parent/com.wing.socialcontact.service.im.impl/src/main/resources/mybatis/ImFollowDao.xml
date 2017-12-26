@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-03-29 15:33:12
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImFollowDao">
+
+	<resultMap id="imFollow" type="com.wing.socialcontact.service.im.bean.ImFollow">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="followUser" column="follow_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		id, user_id, follow_user, status, 
+		create_time, update_time
+	</sql>
+	<delete id="deleteById">
+		DELETE  FROM TJY_IM_FOLLOW  WHERE ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imFollow">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_FOLLOW
+		WHERE ID = #{id}
+	</select>
+	
+	<!--  获取用户关注列表-->
+	<select id="findMyFollowUsers" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.id,
+			t.user_id,
+			t.follow_user,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.nickname,
+			t1.com_name,
+			t1.job,
+			t2.list_value AS job_name
+		FROM
+			tjy_im_follow t
+		JOIN tjy_user t1 ON t.follow_user = t1.id
+		JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.user_id = #{userId} and t.`status` = 2
+	</select>
+	
+	<!--  获取用户关注列表数量-->
+	<select id="findMyFollowUsersCount" resultType="java.lang.Integer" parameterType="string">
+		SELECT
+			count(*)
+		FROM
+			tjy_im_follow t
+		JOIN tjy_user t1 ON t.follow_user = t1.id
+		JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.user_id = #{userId} and t.`status` = 2
+	</select>
+	
+	<!--  获取用户粉丝列表 -->
+	<select id="findMyFansUsers" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.id,
+			t.user_id,
+			t.follow_user,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.nickname,
+			t1.com_name,
+			t1.job,
+			t2.list_value AS job_name
+		FROM
+			tjy_im_follow t
+		JOIN tjy_user t1 ON t.user_id = t1.id
+		JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.follow_user = #{userId} and t.`status` = 2
+	</select>
+	
+	<!--  获取用户粉丝列表 -->
+	<select id="findMyFansUsersCount" resultType="java.lang.Integer" parameterType="string">
+		SELECT
+			count(*)
+		FROM
+			tjy_im_follow t
+		JOIN tjy_user t1 ON t.user_id = t1.id
+		JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.follow_user =  #{userId}
+		AND t.`status` = 2
+	</select>
+	
+	<!-- 根据用户id和关注用户获取信息 -->
+	<select id="selectByUserIdAndFollowId" resultMap="imFollow" parameterType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		FROM tjy_im_follow
+		WHERE user_id = #{userId} and follow_user=#{followUser}
+	</select>
+	
+</mapper>

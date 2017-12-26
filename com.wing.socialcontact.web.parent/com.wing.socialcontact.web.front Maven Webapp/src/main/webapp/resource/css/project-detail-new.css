@@ -1,0 +1,209 @@
+@charset "utf-8";
+body{
+    overflow:scroll;
+      height:100%;
+     background:#f2f3f4; 
+}
+.wrapper{
+      box-sizing:border-box;
+      width:100%;
+      font-size:0.28rem;
+       color:#3b3b3b;
+      margin:0 auto;
+      padding-bottom:1.2rem;
+    
+}
+.clear{
+	  clear:both;
+}
+.project-detail-submit{
+	width:100%;
+	background:white;
+	height:1rem;
+	line-height:1rem;
+	text-align:center;
+	font-size:0.3rem;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+
+}
+.project-detail-submit>div:nth-child(1){
+   width:50%;
+   float:left;
+   background:url(../img/icons/hearts.png) no-repeat left center;
+   background-size:0.30rem 0.27rem;
+   background-position-x:0.9rem;
+   text-indent:0.6rem;
+}
+.project-detail-submit>div:nth-child(2){
+    width:50%;
+    background:#1087eb;
+    color:white;
+    float:left;
+}
+.project-detail-submit1{
+	width:100%;
+	background:white;
+	height:1rem;
+	line-height:1rem;
+	text-align:center;
+	font-size:0.3rem;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+
+}
+.project-detail-submit1>div:nth-child(1){
+   width:100%;
+   float:center;
+   background-size:0.30rem 0.27rem;
+   background-position-x:0.9rem;
+   background:#0f88eb;
+   color:#fff;
+   height:1rem;
+}
+.warmTip{
+     box-sizing:border-box;
+	 width:100%;
+	 padding-left:0.3rem;
+	 padding-right:0.3rem;
+	 height:0.5rem;
+	 line-height:0.5rem;
+	 color:#808080;
+}
+.project-small-poster{
+	  width:100%;
+	  position:relative;
+      box-sizing:border-box;
+	  height:2rem;
+	 padding:0.3rem;
+	 background:white;
+}
+.project-small-poster img{
+    width:2rem;
+   	height:100%;
+   	float:left;
+}
+.project-poster-right{
+	width:65%;
+	height:100%;
+	float:right;
+}
+
+.project-poster-right ul{
+	width:100%;
+}
+.project-poster-right ul li{
+	width:100%;
+	display:block;
+}
+.project-poster-right ul li:nth-child(1){
+	font-size:0.3rem;
+	color:#3b3b3b;
+    width: 100%;
+    font-size: .30rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+.project-poster-right ul li:nth-child(2){
+	font-size:0.2rem;
+	line-height:0.6rem;
+	color:#808080;
+}
+.project-poster-right ul li span{
+	font-size:0.2rem;
+	display:inline-block;
+	color:#808080;
+}
+.project-poster-right ul li span i{
+	color:#ff811b;
+}
+.project-poster-right ul li span:nth-child(1){
+	float:left;
+}
+.project-poster-right ul li span:nth-child(2){
+	float:right;
+	margin-left:0.2rem;
+}
+.project-poster-right ul li span:nth-child(3){
+	float:right;
+}
+.theTip{
+	  box-sizing:border-box;
+	 width:100%;
+	 
+	 height:0.8rem;
+	 line-height:0.8rem;
+	 color:#3b3b3b;
+	 font-size:0.3rem;
+}
+.theTip1{
+	  box-sizing:border-box;
+	 width:100%;
+	 padding-left:0.3rem;
+	 height:0.8rem;
+	 line-height:0.8rem;
+	 color:#3b3b3b;
+	 font-size:0.3rem;
+}
+.enrolling{
+   box-sizing:border-box;
+	 width:100%;
+padding-bottom:0.3rem;
+padding-left:0.3rem;
+padding-right:0.3rem;
+background:white;
+border-top:1px solid #e7e7e7;
+
+}
+#prodetail{
+   box-sizing:border-box;
+	 width:100%;
+padding-bottom:0.3rem;
+padding-left:0.3rem;
+padding-right:0.3rem;
+background:white;
+border-top:1px solid #e7e7e7;
+
+}
+.enrolling img{
+	width:100%;
+}
+.enrolling .introduce{
+	 box-sizing:border-box;
+	 padding:0.1rem;
+	 border:1px solid #f2efea;
+	 width:100%;
+	 background:#fff7ea;
+}
+
+.enrolling .toTelephone{
+     width:100%;
+     padding-bottom:2rem;
+}
+.tel1{
+	 width:50%;
+	 height:0.8rem;
+	 line-height:0.8rem;
+	 float:left;
+	 background:url(../img/icons/yellowtel.jpg) no-repeat center;
+	 background-size:100% 100%;
+	 text-indent:0.8rem;
+	 color:white;
+}
+.tel2{
+	 width:50%;
+	 height:0.8rem;
+	 line-height:0.8rem;
+	 float:right;
+	  background:url(../img/icons/lightbluetel.jpg) no-repeat center;
+	 background-size:100% 100%;
+	 text-indent:0.8rem;
+	 color:white;
+}
+.introduce a{
+	color:#0066ff;
+}

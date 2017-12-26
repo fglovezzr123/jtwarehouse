@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="com.wing.enterprise.service.console.api" />
+        <module name="com.wing.enterprise.service.console.impl" />
+        <module name="com.wing.socialcontact.service.console.api" />
+        <module name="com.wing.socialcontact.service.console.impl" />
+        <module name="com.wing.socialcontact.service.core" />
+        <module name="com.wing.socialcontact.service.dubbostart" />
+        <module name="com.wing.socialcontact.service.im.api" />
+        <module name="com.wing.socialcontact.service.im.impl" />
+        <module name="com.wing.socialcontact.service.wx.api" />
+        <module name="com.wing.socialcontact.service.wx.impl" />
+        <module name="com.wing.socialcontact.util" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.wing.enterprise.service.console.api" target="1.7" />
+      <module name="com.wing.enterprise.service.console.impl" target="1.7" />
+      <module name="com.wing.socialcontact.service.console.api" target="1.7" />
+      <module name="com.wing.socialcontact.service.console.impl" target="1.7" />
+      <module name="com.wing.socialcontact.service.core" target="1.7" />
+      <module name="com.wing.socialcontact.service.dubbostart" target="1.7" />
+      <module name="com.wing.socialcontact.service.im.api" target="1.7" />
+      <module name="com.wing.socialcontact.service.im.impl" target="1.7" />
+      <module name="com.wing.socialcontact.service.parent" target="1.7" />
+      <module name="com.wing.socialcontact.service.wx.api" target="1.7" />
+      <module name="com.wing.socialcontact.service.wx.impl" target="1.7" />
+      <module name="com.wing.socialcontact.util" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

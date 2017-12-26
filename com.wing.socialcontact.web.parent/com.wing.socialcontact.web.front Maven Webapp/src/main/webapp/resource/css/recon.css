@@ -1,0 +1,141 @@
+@charset "utf-8";
+.Z-item {
+	width: 100%;
+	height: .78rem;
+	background: #fff;
+	padding: 0 .3rem;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	margin-bottom: .02rem;
+}
+
+.Z-item span {
+	font-size: .28rem;
+	color: #3B3B3B;
+	line-height: .78rem;
+}
+
+.Z-item input {
+	font-size: .26rem;
+	color: #8B8B8B;
+	text-align: end;
+	background:none;
+	overflow:scroll;
+}
+
+.Z-item .iconfont {
+	line-height: .78rem;
+}
+
+.gsj {
+	width: 100%;
+	height: 3.1rem;
+	font-size: .28rem;
+	padding: 0 .3rem;
+	background: #fff;
+	box-sizing: border-box;
+}
+
+.gsj p {
+	height: .78rem;
+	line-height: .78rem;
+}
+
+.gsj .nerong {
+	height: 1.82rem;
+	font-size: .26rem;
+	width: 100%;
+	color: #8B8B8B;
+	border: 0;
+	border-bottom: 1px #f2f3f4 solid;
+	box-sizing: border-box;
+	resize: none;
+}
+
+.gsj span {
+	display: block;
+	height: .40rem;
+	font-size: .20rem;
+	color: #8b8b8b;
+	text-align: end;
+}
+
+.photo {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0 .3rem;
+	background: #fff;
+}
+
+.p-head {
+	box-sizing: border-box;
+	height: .78rem;
+	width: 100%;
+	color: #3b3b3b;
+	background: #f2f3f4;
+	font-size: .28rem;
+	line-height: .78rem;
+	padding: 0 .3rem;
+}
+
+.imagess {
+	height: 1.3rem;
+	width: 1.3rem;
+	background: #e0e0e0;
+	text-align: center;
+	line-height: 1.3rem;
+	margin-right: 1rem;
+	margin-bottom: 0.4rem;
+	margin-top: .40rem;
+	font-size: .30rem;
+	position: relative;
+}
+.imagess i{
+	position: absolute;
+	left: 1.1rem;
+	top: -.16rem;
+	width: .40rem;
+	height: .40rem;
+	background-image:url(../img/images/delete.png);
+	background-size:100% ;
+	border-radius: 100%;
+}
+.addimagess {
+	height: 1.3rem;
+	width: 1.3rem;
+	background: url(../img/images/addphoto.png) no-repeat center;
+	background-size: 1.3rem 1.3rem;
+	margin-top: .40rem;
+}
+
+.photo-oper {
+	display: flex;
+}
+
+.checkExam {
+	color: #3b3b3b;
+	width: 4.5rem;
+	height: 0.66rem;
+	line-height: 0.66rem;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 0.2rem;
+	background: white;
+}
+.phlast{
+	margin-bottom: 1.5rem;
+}
+.submit {
+	background: #1087eb;
+	height: 0.9rem;
+	color: white;
+	font-size: 0.36rem;
+	text-align: center;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	line-height: 0.9rem;
+}

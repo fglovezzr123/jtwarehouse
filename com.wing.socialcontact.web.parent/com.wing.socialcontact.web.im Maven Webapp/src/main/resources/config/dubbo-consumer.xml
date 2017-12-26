@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<context:property-placeholder location="classpath:sysconfig.properties" />
+
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="socialcontact.web.im" />
+	<dubbo:consumer retries="0" timeout="12000" check="false"/>
+
+	<!-- 使用zookeeper注册中心暴露发现服务地址 -->
+	<dubbo:registry protocol="${dubbo.consumer.registry.protocol}"
+		address="${dubbo.consumer.registry.address}" />
+
+	<dubbo:annotation />
+	<!-- 
+	<context:component-scan base-package="cn.b2b2c.mall.freight" />
+	<context:component-scan base-package="com.b2b2c.mall.mobile">
+		<context:include-filter type="annotation"
+			expression="com.alibaba.dubbo.config.annotation.Reference" />
+	</context:component-scan>
+	 -->
+	<!-- 服务消费者配置 -->
+	<dubbo:reference id="imFriendService" interface="com.wing.socialcontact.service.im.api.IImFriendService"/>
+	<dubbo:reference id="imFriendrequestService" interface="com.wing.socialcontact.service.im.api.IImFriendrequestService"/>
+</beans>

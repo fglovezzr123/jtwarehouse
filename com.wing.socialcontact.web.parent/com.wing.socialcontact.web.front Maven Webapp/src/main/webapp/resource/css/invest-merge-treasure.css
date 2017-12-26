@@ -1,0 +1,217 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 overflow:scroll;
+   height:100%;
+}
+.wrapper{
+
+      width:100%;
+      font-size:0.3rem;
+      padding-top:0.8rem;      
+      margin:0 auto;
+      padding-bottom:0.9rem;
+  
+}
+  .banner_ul img{
+	     height:auto;
+	 }
+	 .t-cont{
+	width: 100%;
+	height: 1.70rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background: #fff;
+}
+.t-cont a img{
+	width: .77rem;
+    height: .77rem;
+	margin-bottom: .1rem;
+}
+.t-cont a{
+	display: flex;
+	flex-direction: column;
+	font-size: .26rem;
+	color: #666;
+	align-items:center ;
+}
+/* .menu{
+     width:95%;
+     height:1.75rem;
+     line-height:1.75rem;
+     padding-left:2.5%;
+     padding-right:2.5%;
+     border-bottom:0.1rem solid #f5f5f5;
+}
+.menu a{
+     display:inline-block;
+     height:1rem;
+     width:1rem;
+     float:left;
+     margin-right:0.21rem;
+     margin-left:0.21rem;
+     margin-top:0.38rem;
+}
+.menu a:nth-child(1){
+     background:url(../img/icons/tou1.png) no-repeat center;
+     background-size:1rem 1rem;
+}
+.menu a:nth-child(2){
+      background:url(../img/icons/tou2.png) no-repeat center;
+      background-size:1rem 1rem;
+}
+.menu a:nth-child(3){
+     background:url(../img/icons/tou3.png) no-repeat center;
+      background-size:1rem 1rem;
+}
+.menu a:nth-child(4){
+     background:url(../img/icons/tou4.png) no-repeat center;
+      background-size:1rem 1rem;
+}
+.menu a:nth-child(5){
+     background:url(../img/icons/tou5.png) no-repeat center;
+      background-size:1rem 1rem;
+} */
+.clear{
+
+     clear:both;
+}
+/*搜索*/
+.search-box{
+     width:90%;
+     background:#f3f4f6;
+     height:0.8rem;
+     padding-left:5%;
+     padding-right:5%;
+     line-height:0.75rem;
+     text-align:center;
+     position:fixed;
+     top:0;
+     left:0;
+     z-index:1000;
+}
+
+.search-box input{
+     height:0.5rem;
+     width:90%;
+     border-radius:0.15rem;
+     border:none;
+     text-align:center;  
+     
+}
+.forecast{
+    width:100%;
+    border-bottom:1px solid #f3f4f6;
+     margin-top:0.2rem;
+    margin-bottom:0.2rem;
+    background-size:7rem 4rem;
+    height:3.56rem;
+    position:relative;
+}
+.forecast a{
+       display:block;
+       height:0.7rem;
+       width:2rem;
+       text-align:center;
+       line-height:0.7rem;
+       color:white;
+         background: rgba(225, 48, 69,0.8);
+       margin:0 auto;
+       margin-top:2.3rem
+}
+ h3{
+    padding-top: 0.2rem;
+    width: 100%;
+    font-size: 0.3rem;
+    box-sizing: border-box;
+    padding: 0 0.3rem;
+}
+.forecast ul{
+     padding-top:5%;
+     height:90%;
+     width:100%;
+      position:relative;
+     z-index:10;
+}
+.forecast  ul li{
+      display:block;
+     margin:0 auto;
+     width:100%;
+     margin-top:0.2rem;
+     text-align:center;
+     color:#fff;
+
+}
+.forecast div{
+     background:black;
+     height:4rem;
+     width:100%;
+     margin:0 auto;
+     position:absolute;
+     top:0;
+     left:0;
+     opacity:0.4;
+}
+.option-ite{
+   width:100%;
+   padding-left:0.3rem;
+   padding-right:0.3rem;
+   box-sizing:border-box;
+   font-size:0.3rem;
+   font-weight:bold;
+   border-top:1px solid #f4f4f4;
+   padding-top:0.2rem;
+   padding-bottom:0.2rem;
+   background:url(../img/icons/arrow.png) no-repeat right center;
+   background-position-x:7rem;
+}
+.projects{
+   width:100%; 
+   padding-left:0.3rem;
+     padding-right:0.3rem; 
+     color:#808080;
+     box-sizing:border-box;
+}
+.projects .newProject{
+    display:inline-block;
+    height:2.6rem;
+    width:3.4rem;
+    position:relative;
+}
+.projects .newProject p{
+	width:100%;
+	white-space:nowrap;text-overflow:ellipsis; -o-text-overflow:ellipsis;
+	overflow:hidden;
+	font-size:0.24rem;
+}
+.projects .newProject span{
+    position:absolute;
+    display:block;
+    color:white;
+    padding-top:0.05rem;
+     padding-bottom:0.05rem;
+     padding-right:0.2rem;
+     padding-left:0.1rem;
+    font-size:0.2rem;
+   background: rgba(225, 48, 69,0.8);
+    border-top-right-radius:0.3rem;
+    border-bottom-right-radius:0.3rem;
+    top:0.2rem;
+    left:0rem;
+}
+.projects .newProject img{
+     width:3.4rem;
+     height:2.1rem;
+
+}
+.projects .newProject:nth-of-type(odd){
+    float:left;
+     border-bottom:1px solid #e6e6e6; 
+}
+.projects .newProject:nth-of-type(even){
+    float:right;
+    border-bottom:1px solid #e6e6e6;
+}
+
+    

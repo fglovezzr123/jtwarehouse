@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-05-02 11:14:42
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserLatestvistorDao">
+
+	<resultMap id="userLatestvistor" type="com.wing.socialcontact.service.wx.bean.UserLatestvistor">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="vistorUserId" column="vistor_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="userLatestvistorGlobal" type="com.wing.socialcontact.service.wx.bean.UserLatestvistor">
+		<result property="id" column="UL_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="UL_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="vistorUserId" column="UL_vistor_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="UL_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="UL_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="UL_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UL.id, UL.user_id, UL.vistor_user_id, UL.create_time, 
+		UL.update_time,UL.status 
+	</sql>
+
+	<sql id="fieldGlobal">
+		UL.id UL_id, UL.user_id UL_user_id, 
+		UL.vistor_user_id UL_vistor_user_id, UL.create_time UL_create_time, 
+		UL.update_time UL_update_time,UL.status UL_status
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UL.id id, UL.user_id userId, 
+		UL.vistor_user_id vistorUserId, UL.create_time createTime, 
+		UL.update_time updateTime,UL.status status
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UL.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND UL.user_id=#{userId}
+		</if>
+		<if test="vistorUserId!=null and vistorUserId!=''">
+			AND UL.vistor_user_id=#{vistorUserId}
+		</if>
+		<if test="createTime!=null">
+			AND UL.create_time=#{createTime}
+		</if>
+		<if test="updateTime!=null">
+			AND UL.update_time=#{updateTime}
+		</if>
+		<if test="status!=null">
+			AND UL.status=#{status}
+		</if>
+		  and UL.deleted !=1
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UL.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND UL.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="vistorUserId!=null and vistorUserId!=''">
+				AND UL.vistor_user_id LIKE CONCAT('%', #{vistorUserId}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND UL.create_time=#{createTime}
+			</if>
+			<if test="updateTime!=null">
+				AND UL.update_time=#{updateTime}
+			</if>
+			<if test="status!=null">
+				AND UL.status=#{status}
+			</if>
+			  and UL.deleted !=1
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UL.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				UL.user_id=#{userId}, 
+		   </if>
+           <if test="vistorUserId!=null">
+				UL.vistor_user_id=#{vistorUserId}, 
+		   </if>
+           <if test="createTime!=null">
+				UL.create_time=#{createTime}, 
+		   </if>
+           <if test="updateTime!=null">
+				UL.update_time=#{updateTime}, 
+		   </if>
+		    <if test="status!=null">
+				UL.status=#{status}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+	
+	<select id="load" resultMap="userLatestvistor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_LATESTVISTOR UL
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_USER_LATESTVISTOR UL
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="userLatestvistor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_LATESTVISTOR UL
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="userLatestvistor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_LATESTVISTOR UL
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="userLatestvistor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_LATESTVISTOR UL
+		WHERE UL.ID = #{id} and UL.deleted !=1
+	</select>
+	
+	<select id="selectLatestVistors" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT
+			t.*, date_format(
+				t.create_time,
+				'%Y-%c-%d %H:%i'
+			) AS createTime,
+			date_format(
+				t.update_time,
+				'%Y-%c-%d %H:%i'
+			) AS updateTime,
+    		t2.nickname,
+			t2.com_name,
+			t2.com_profile,
+		    t3.list_value AS job_name,
+		    t4.list_value AS industry,
+			t2.head_portrait,
+			IFNULL(t2.honor_title, '') AS honor_title,
+            IFNULL(t2.honor_flag, '') AS honor_flag
+
+		from tjy_user_latestvistor t
+		JOIN tjy_user t2 ON t.vistor_user_id= t2.id
+		LEFT JOIN list_values t3 ON t2.job = t3.id
+		LEFT JOIN list_values t4 ON t2.industry = t4.id
+ 		WHERE 1=1 AND  DATEDIFF(NOW(),t.update_time) &lt;=7  and t.deleted !=1
+    	<if test="userId != null and userId != ''">
+			AND	t.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+    	<if test="vistorUserId != null and vistorUserId != ''">
+			AND	t.vistor_user_id = #{vistorUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="status==0">
+			AND	t.status = 0
+		</if>
+		<if test="status==1">
+			AND	t.status = 1
+		</if>
+		order by t.update_time desc
+	</select>
+	
+	<select id="selectByParam" resultMap="userLatestvistor" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM TJY_USER_LATESTVISTOR UL 
+    	<include refid="dynamicWhere" />
+	</select>
+	
+</mapper>

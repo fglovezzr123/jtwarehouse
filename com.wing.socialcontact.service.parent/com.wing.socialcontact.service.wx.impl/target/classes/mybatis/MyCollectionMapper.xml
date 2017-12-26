@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.MyCollectionDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+	    <result column="collection_id" property="collectionId" jdbcType="VARCHAR" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<select id="getClubCollections"  resultMap="BaseResultMap" parameterType="java.util.Map">
+		select  l.*,c.id  collectionid   from tjy_mycollection c  left join  tjy_club l   on c.collection_id = l.id   where 
+			c.user_id = #{userId,jdbcType=VARCHAR}   and c.type = #{type,jdbcType=INTEGER}  order by  c.create_time desc  
+			limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getLibraryCollections"  resultMap="BaseResultMap" parameterType="java.util.Map">
+		select  l.* ,c.id  collectionid  from tjy_mycollection  c  left join  tjy_library  l   on c.collection_id = l.id  where 	
+		c.user_id = #{userId,jdbcType=VARCHAR}  and c.type = #{type,jdbcType=INTEGER}  order by  c.create_time desc   
+		 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getActivityCollections"  resultMap="BaseResultMap" parameterType="java.util.Map">
+		select  l.* ,c.id  collectionid  ,dp.dis_name proName,dc.dis_name cityName,da.dis_name countyName  
+		from tjy_mycollection  c  
+		left join  tjy_activity  l   on c.collection_id = l.id  
+		left join sy_district dp on l.province = dp.id 
+		left join sy_district dc on l.city = dc.id
+		LEFT JOIN sy_district da ON l.county = da.id
+		where 	c.user_id = #{userId,jdbcType=VARCHAR}  and c.type = #{type,jdbcType=INTEGER}  order by  c.create_time desc   
+		 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	<select id="getLiveCollections"  resultMap="BaseResultMap" parameterType="java.util.Map">
+		select  l.* ,c.id  collectionid  
+		from tjy_mycollection  c  
+		left join  tjy_library_live  l   on c.collection_id = l.id  
+		where 	c.user_id = #{userId,jdbcType=VARCHAR}  and c.type = #{type,jdbcType=INTEGER}  order by  c.create_time desc   
+		 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+</mapper>

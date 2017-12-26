@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.wx.dao.OrderDao">
+	<resultMap id="appointmentPay" type="com.tojoy.service.wx.bean.Order">
+		<result property="id" column="id" javaType="long" jdbcType="INTEGER"></result>
+		<result property="order_Id" column="order_id" javaType="String"
+			jdbcType="VARCHAR"></result>
+		<result property="payment" column="payment" javaType="Double"
+			jdbcType="DECIMAL"></result>
+		<result property="payment_Type" column="payment_type" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="status" column="status" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="create_Time" column="create_time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="update_Time" column="update_time"
+			javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="payment_Time" column="payment_time"
+			javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="end_Time" column="end_time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="user_Id" column="user_id" javaType="Long"
+			jdbcType="INTEGER"></result>
+		<result property="type" column="type"
+			javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<sql id="order">
+		m.id, m.order_id, m.payment, m.payment_type,
+		m.status,m.create_time, m.update_time,
+		m.payment_time,
+		m.end_time, m.user_id, m.type
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<!-- <if test="id!=null and id!=''"> AND m.id=#{id} </if> -->
+			<if test="order_Id!=null and order_Id!=''">
+				AND m.order_id=#{order_Id}
+			</if>
+			<if test="payment!=null and payment!=''">
+				AND m.payment=#{payment}
+			</if>
+			<if test="payment_Type!=null and payment_Type!=''">
+				AND m.payment_type=#{payment_Type}
+			</if>
+			<if test="status!=null and status!=''">
+				AND m.status=#{status}
+			</if>
+			<if test="create_Time!=null">
+				AND m.create_time=#{create_Time}
+			</if>
+			<if test="update_Time!=null">
+				AND m.update_time=#{update_Time}
+			</if>
+			<if test="payment_Time!=null">
+				AND m.payment_time=#{payment_Time}
+			</if>
+			<if test="end_Time!=null">
+				AND m.end_time=#{end_Time}
+			</if>
+			<if test="user_Id!=null and user_Id!=''">
+				AND m.user_id=#{user_Id}
+			</if>
+			<if test="type!=null and type!=''">
+				AND m.type=#{type}
+			</if>
+		</where>
+	</sql>
+	<sql id="dynamicSet">
+		<!-- <if test="id!=null and id!=''"> AND m.id=#{id} </if> -->
+			<if test="order_Id!=null and order_Id!=''">
+				m.order_id=#{order_Id}
+			</if>
+			<if test="payment!=null and payment!=''">
+				m.payment=#{payment}
+			</if>
+			<if test="payment_Type!=null and payment_Type!=''">
+				m.payment_type=#{payment_Type}
+			</if>
+			<if test="status!=null and status!=''">
+				m.status=#{status}
+			</if>
+			<if test="create_Time!=null">
+				m.create_time=#{create_Time}
+			</if>
+			<if test="update_Time!=null">
+				m.update_time=#{update_Time}
+			</if>
+			<if test="payment_Time!=null">
+				m.payment_time=#{payment_Time}
+			</if>
+			<if test="end_Time!=null">
+				m.end_time=#{end_Time}
+			</if>
+			<if test="user_Id!=null and user_Id!=''">
+				m.user_id=#{user_Id}
+			</if>
+			<if test="type!=null and type!=''">
+				m.type=#{type}
+			</if>
+	</sql>
+	<sql id="fields">
+			<if test="order_Id!=null and order_Id!=''">
+				order_id,
+			</if>
+			<if test="payment!=null and payment!=''">
+				payment,
+			</if>
+			<if test="payment_Type!=null and payment_Type!=''">
+				payment_type,
+			</if>
+			<if test="status!=null and status!=''">
+				status,
+			</if>
+			<if test="create_Time!=null">
+				create_time,
+			</if>
+			<if test="update_Time!=null">
+				update_time,
+			</if>
+			<if test="payment_Time!=null">
+				payment_time,
+			</if>
+			<if test="end_Time!=null">
+				end_time,
+			</if>
+			<if test="user_Id!=null and user_Id!=''">
+				user_id,
+			</if>
+			<if test="type!=null and type!=''">
+				type,
+			</if>
+	</sql>
+	<sql id="values">
+		<if test="order_Id!=null and order_Id!=''">
+				#{order_Id},
+			</if>
+			<if test="payment!=null and payment!=''">
+				#{payment},
+			</if>
+			<if test="payment_Type!=null and payment_Type!=''">
+				#{payment_Type},
+			</if>
+			<if test="status!=null and status!=''">
+				#{status},
+			</if>
+			<if test="create_Time!=null">
+				#{create_Time},
+			</if>
+			<if test="update_Time!=null">
+				#{update_Time},
+			</if>
+			<if test="payment_Time!=null">
+				#{payment_Time},
+			</if>
+			<if test="end_Time!=null">
+				#{end_Time},
+			</if>
+			<if test="user_Id!=null and user_Id!=''">
+				#{user_Id},
+			</if>
+			<if test="type!=null and type!=''">
+				#{type},
+			</if>
+	</sql>
+
+	<!-- 生成约见订单 -->
+	<insert id="insertOrder" parameterType="com.tojoy.service.wx.bean.Order">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_order(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+
+	<update id="updateOrder" parameterType="java.util.Map">
+		UPDATE tjy_order m
+		SET
+		<trim suffixOverrides=",">
+			<include refid="dynamicSet" />
+		</trim>
+		WHERE m.ID = #{id}
+	</update>
+
+	<select id="queryOrder" resultType="java.util.HashMap"
+		parameterType="com.tojoy.service.wx.bean.Order">
+		SELECT
+		<include refid="order" />
+		FROM
+		tjy_order m
+		<include refid="dynamicWhere" />
+	</select>
+	<select id="getOrder" parameterType="String" resultType="com.tojoy.service.wx.bean.Order">
+		SELECT
+		<include refid="order" />
+		FROM
+		tjy_order m
+		WHERE m.ID = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.AppointmentDao">
+	<resultMap id="userAppointmentRecord"
+		type="com.wing.socialcontact.service.wx.bean.UserAppointmentRecord">
+		<result property="id" column="id" javaType="long" jdbcType="INTEGER"></result>
+		<result property="from_Id" column="from_Id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="to_Id" column="to_id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="create_Time" column="create_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="start_Time" column="start_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="expect_Time" column="expect_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="estimateTimeLength" column="estimateTimeLength"
+			javaType="long" jdbcType="INTEGER"></result>
+		<result property="duration" column="duration" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="msg" column="msg" javaType="String"
+			jdbcType="VARCHAR"></result>
+		<result property="module" column="module" javaType="String"
+			jdbcType="CHAR"></result>
+	</resultMap>
+	<sql id="fields">
+		<if test="from_Id!=null and from_Id!=''">
+			from_id,
+		</if>
+		<if test="to_Id!=null and to_Id!=''">
+			to_id,
+		</if>
+		<if test="status!=null and status!=''">
+			status,
+		</if>
+
+		<if test="start_Time!=null">
+			start_time,
+		</if>
+		<if test="expect_Time!=null">
+			expect_time,
+		</if>
+		<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+			estimateTimeLength,
+		</if>
+		<if test="duration!=null and duration!=''">
+			duration,
+		</if>
+		<if test="msg!=null and msg!=''">
+			msg,
+		</if>
+		<if test="module!=null and module!=''">
+			module,
+		</if>
+	</sql>
+	<sql id="values">
+		<if test="from_Id!=null and from_Id!=''">
+			#{from_Id},
+		</if>
+		<if test="to_Id!=null and to_Id!=''">
+			#{to_Id},
+		</if>
+		<if test="status!=null and status!=''">
+			#{status},
+		</if>
+		<if test="start_Time!=null">
+			start_Time,
+		</if>
+		<if test="expect_Time!=null">
+			#{expect_Time},
+		</if>
+		<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+			#{estimateTimeLength},
+		</if>
+		<if test="duration!=null and duration!=''">
+			#{duration},
+		</if>
+		<if test="msg!=null and msg!=''">
+			#{msg},
+		</if>
+		<if test="module!=null and module!=''">
+			#{module},
+		</if>
+	</sql>
+	<sql id="appointmentRecord">
+		t.id,
+		t.from_id,
+		t.to_id,
+		t.status,
+		t.create_time,
+		t.start_time,
+		t.expect_time,
+		t.estimateTimeLength,
+		t.duration,
+		t.msg,
+		t.module
+	</sql>
+	<sql id="condition">
+		<where>
+			<if test="id!=null and id!=''">
+				AND t.id=#{id}
+			</if>
+		</where>
+	</sql>
+	<!-- 生成约见订单 -->
+	<insert id="insertAPPointmentRecord"
+		parameterType="com.wing.socialcontact.service.wx.bean.UserAppointmentRecord">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_user_appointment_record(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+	<!-- 根据用户id获取约见订单 -->
+	<select id="getUserAppointmentRecordByid"
+		resultType="com.wing.socialcontact.service.wx.bean.UserAppointmentRecord"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE id=#{id}
+	</select>
+	<!-- 修改约见订单 -->
+	<update id="updateAppointmentRecord"
+		parameterType="com.wing.socialcontact.service.wx.bean.UserAppointmentRecord">
+		UPDATE tjy_user_appointment_record t
+		SET
+		
+		<trim suffixOverrides=",">
+		<if test="status!=null and status!=''">
+			t.STATUS =#{status},
+		</if>
+		
+		<if test="duration!=null and duration!=''">
+			t.duration=#{duration},
+		</if>
+		</trim>
+		
+		
+		WHERE t.ID = #{id}
+	</update>
+	<!-- 根据userId获取已约见订单 -->
+	<select id="findHaveAppointmentRecord" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE from_id=#{userId} and status=2
+	</select>
+	<!-- 根据userId获取待约见订单 -->
+	<select id="findWaitAppointmentRecord" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE from_id=#{userId} and status=0
+	</select>
+	<!-- 根据userId获取被约见订单 -->
+	<select id="findByAppointmentRecord" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE to_id=#{userId} and status=0
+	</select>
+	<!-- 根据期望约见时间获取约见订单 -->
+	<select id="getUserAppointmentRecordByExpecttime" resultType="java.util.HashMap"
+		parameterType="Date">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE expect_time=#{expecttime}
+		and
+		status = 0 or status = 1
+	</select>
+	
+	<!-- <select id="getDyjList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. STATUS,
+		t1.create_time,
+		t1.expect_time,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_user_appointment_record
+			WHERE
+				from_id = #{from_Id} and status=0) t1
+			LEFT JOIN (
+				SELECT
+					t.id,
+					t.nickname,
+					t.head_portrait,
+					t1.list_value AS job,
+					com_name
+				FROM
+					tjy_user t
+				LEFT JOIN list_values t1 ON t.job = t1.id
+			) t2 ON t1.to_id = t2.id
+			ORDER BY
+				create_time DESC
+	</select> -->
+	<select id="getDyjList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. status,
+		t1.create_time,
+		t1.expect_time,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name,
+		IFNULL(t3.count, '0')
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_user_appointment_record
+			WHERE
+				from_id = #{from_Id}
+			AND STATUS = 0
+		) t1
+	LEFT JOIN (
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			t1.list_value AS job,
+			com_name
+		FROM
+			tjy_user t
+		LEFT JOIN list_values t1 ON t.job = t1.id
+	) t2 ON t1.to_id = t2.id
+	LEFT JOIN (
+		SELECT
+			count(*) AS count,
+			tuard.id,
+			tuard.ar_id
+		FROM
+			tjy_user_appointment_record_details tuard
+		LEFT JOIN tjy_user_appointment_record tuar ON tuard.ar_id = tuar.id
+	) t3 ON t1.id = t3.ar_id
+	ORDER BY
+		create_time DESC
+	</select>
+	
+	<!-- <select id="getYyjList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. STATUS,
+		t1.create_time,
+		t1.expect_time,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_user_appointment_record
+			WHERE
+				from_id = #{from_Id} and (status=1 or status = 2)) t1
+			LEFT JOIN (
+				SELECT
+					t.id,
+					t.nickname,
+					t.head_portrait,
+					t1.list_value AS job,
+					com_name
+				FROM
+					tjy_user t
+				LEFT JOIN list_values t1 ON t.job = t1.id
+			) t2 ON t1.to_id = t2.id
+			ORDER BY
+				create_time DESC
+	</select> -->
+	
+	<select id="getYyjList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. status,
+		t1.create_time,
+		t1.expect_time,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name,
+		IFNULL(t3.count, '0')
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_user_appointment_record
+			WHERE
+				from_id = #{from_Id} and (status=1 or status = 2)) t1
+			LEFT JOIN (
+				SELECT
+					t.id,
+					t.nickname,
+					t.head_portrait,
+					t1.list_value AS job,
+					com_name
+				FROM
+					tjy_user t
+				LEFT JOIN list_values t1 ON t.job = t1.id
+			) t2 ON t1.to_id = t2.id
+			LEFT JOIN (
+				SELECT
+					count(*) AS count,
+					tuard.id,
+					tuard.ar_id
+				FROM
+					tjy_user_appointment_record_details tuard
+				LEFT JOIN tjy_user_appointment_record tuar ON tuard.ar_id = tuar.id
+			) t3 ON t1.id = t3.ar_id
+			ORDER BY
+				create_time DESC
+	</select>
+	
+	<select id="getByjList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. status,
+		t1.create_time,
+		t1.expect_time,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_user_appointment_record
+			WHERE
+				to_id = #{to_Id} and (status=1 or status = 0 or status = 2)) t1
+			LEFT JOIN (
+				SELECT
+					t.id,
+					t.nickname,
+					t.head_portrait,
+					t1.list_value AS job,
+					com_name
+				FROM
+					tjy_user t
+				LEFT JOIN list_values t1 ON t.job = t1.id
+			) t2 ON t1.from_id = t2.id
+			ORDER BY
+				create_time DESC
+	</select>
+	
+	<!-- 获取用户爱好 -->
+	<select id="getUserHobby" resultType="String" parameterType="String">
+	SELECT
+		hobby
+	FROM
+		(
+			SELECT
+				user_id,
+				GROUP_CONCAT(list_value) AS hobby
+			FROM
+				(
+					SELECT
+						t1.user_id,
+						t2.*
+					FROM
+						(
+							SELECT
+								fav_id,
+								user_id
+							FROM
+								tjy_user_fav
+							WHERE
+								user_id = #{userId}
+						) t1
+					LEFT JOIN list_values t2 ON t1.fav_id = t2.id
+			) o
+	) oo
+	</select>
+</mapper>

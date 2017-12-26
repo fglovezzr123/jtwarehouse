@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-03-28 15:00:44
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.MessageInfoDao">
+
+	<resultMap id="messageInfo" type="com.wing.socialcontact.service.wx.bean.MessageInfo">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sendTime" column="send_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="wxOpenId" column="wx_open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fromUserId" column="from_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="toUserId" column="to_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="templateId" column="template_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="paramFwh" column="param_fwh" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wxMsgType" column="wx_msg_type" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="messageInfoGlobal" type="com.wing.socialcontact.service.wx.bean.MessageInfo">
+		<result property="id" column="MI_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="MI_content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="MI_mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sendTime" column="MI_send_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="MI_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="MI_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="wxOpenId" column="MI_wx_open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fromUserId" column="MI_from_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="toUserId" column="MI_to_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="templateId" column="MI_template_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="MI_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="MI_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="MI_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="MI_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="MI_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="MI_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="MI_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="paramFwh" column="MI_param_fwh" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wxMsgType" column="MI_wx_msg_type" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		MI.id, MI.content, MI.mobile, MI.send_time, 
+		MI.status, MI.type, MI.wx_open_id, MI.from_user_id, 
+		MI.to_user_id, MI.template_id, MI.create_time, MI.create_user_id, 
+		MI.create_user_name, MI.update_time, MI.update_user_id, MI.update_user_name, 
+		MI.deleted,MI.param_fwh,MI.wx_msg_type
+	</sql>
+
+	<sql id="fieldGlobal">
+		MI.id MI_id, MI.content MI_content, 
+		MI.mobile MI_mobile, MI.send_time MI_send_time, 
+		MI.status MI_status, MI.type MI_type, 
+		MI.wx_open_id MI_wx_open_id, MI.from_user_id MI_from_user_id, 
+		MI.to_user_id MI_to_user_id, MI.template_id MI_template_id, 
+		MI.create_time MI_create_time, MI.create_user_id MI_create_user_id, 
+		MI.create_user_name MI_create_user_name, MI.update_time MI_update_time, 
+		MI.update_user_id MI_update_user_id, MI.update_user_name MI_update_user_name, 
+		MI.deleted MI_deleted,MI.param_fwh MI_param_fwh,MI.wx_msg_type MI_wx_msg_type
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		MI.id id, MI.content content, 
+		MI.mobile mobile, MI.send_time sendTime, 
+		MI.status status, MI.type type, 
+		MI.wx_open_id wxOpenId, MI.from_user_id fromUserId, 
+		MI.to_user_id toUserId, MI.template_id templateId, 
+		MI.create_time createTime, MI.create_user_id createUserId, 
+		MI.create_user_name createUserName, MI.update_time updateTime, 
+		MI.update_user_id updateUserId, MI.update_user_name updateUserName, 
+		MI.deleted deleted,MI.param_fwh paramFwh,MI.wx_msg_type wxMsgType
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND MI.id=#{id}
+		</if>
+		<if test="content!=null and content!=''">
+			AND MI.content=#{content}
+		</if>
+		<if test="mobile!=null and mobile!=''">
+			AND MI.mobile=#{mobile}
+		</if>
+		<if test="sendTime!=null">
+			AND MI.send_time=#{sendTime}
+		</if>
+		<if test="status!=null">
+			AND MI.status=#{status}
+		</if>
+		<if test="type!=null">
+			AND MI.type=#{type}
+		</if>
+		<if test="wxOpenId!=null and wxOpenId!=''">
+			AND MI.wx_open_id=#{wxOpenId}
+		</if>
+		<if test="fromUserId!=null and fromUserId!=''">
+			AND MI.from_user_id=#{fromUserId}
+		</if>
+		<if test="toUserId!=null and toUserId!=''">
+			AND MI.to_user_id=#{toUserId}
+		</if>
+		<if test="templateId!=null and templateId!=''">
+			AND MI.template_id=#{templateId}
+		</if>
+		<if test="createTime!=null">
+			AND MI.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND MI.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND MI.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND MI.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND MI.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND MI.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND MI.deleted=#{deleted}
+		</if>
+		<if test="paramFwh!=null">
+			AND MI.param_fwh=#{paramFwh}
+		</if>
+		<if test="wxMsgType!=null">
+			AND MI.wx_msg_type=#{wxMsgType}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND MI.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="content!=null and content!=''">
+				AND MI.content LIKE CONCAT('%', #{content}, '%')
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND MI.mobile LIKE CONCAT('%', #{mobile}, '%')
+			</if>
+			<if test="sendTime!=null">
+				AND MI.send_time=#{sendTime}
+			</if>
+			<if test="status!=null">
+				AND MI.status=#{status}
+			</if>
+			<if test="type!=null">
+				AND MI.type=#{type}
+			</if>
+			<if test="wxOpenId!=null and wxOpenId!=''">
+				AND MI.wx_open_id LIKE CONCAT('%', #{wxOpenId}, '%')
+			</if>
+			<if test="fromUserId!=null and fromUserId!=''">
+				AND MI.from_user_id LIKE CONCAT('%', #{fromUserId}, '%')
+			</if>
+			<if test="toUserId!=null and toUserId!=''">
+				AND MI.to_user_id LIKE CONCAT('%', #{toUserId}, '%')
+			</if>
+			<if test="templateId!=null and templateId!=''">
+				AND MI.template_id LIKE CONCAT('%', #{templateId}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND MI.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND MI.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND MI.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND MI.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND MI.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND MI.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND MI.deleted=#{deleted}
+			</if>
+			<if test="paramFwh!=null">
+				AND MI.param_fwh=#{paramFwh}
+			</if>
+			<if test="wxMsgType!=null">
+				AND MI.wx_msg_type=#{wxMsgType}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				MI.id=#{id}, 
+		   </if>
+           <if test="content!=null">
+				MI.content=#{content}, 
+		   </if>
+           <if test="mobile!=null">
+				MI.mobile=#{mobile}, 
+		   </if>
+           <if test="sendTime!=null">
+				MI.send_time=#{sendTime}, 
+		   </if>
+           <if test="status!=null">
+				MI.status=#{status}, 
+		   </if>
+           <if test="type!=null">
+				MI.type=#{type}, 
+		   </if>
+           <if test="wxOpenId!=null">
+				MI.wx_open_id=#{wxOpenId}, 
+		   </if>
+           <if test="fromUserId!=null">
+				MI.from_user_id=#{fromUserId}, 
+		   </if>
+           <if test="toUserId!=null">
+				MI.to_user_id=#{toUserId}, 
+		   </if>
+           <if test="templateId!=null">
+				MI.template_id=#{templateId}, 
+		   </if>
+           <if test="createTime!=null">
+				MI.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				MI.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				MI.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				MI.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				MI.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				MI.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				MI.deleted=#{deleted}, 
+		   </if>
+		   <if test="paramFwh!=null">
+				MI.param_fwh=#{paramFwh},
+			</if>
+			<if test="wxMsgType!=null">
+				MI.wx_msg_type=#{wxMsgType},
+			</if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+
+	<select id="load" resultMap="messageInfo">
+		SELECT <include refid="field"/>
+		FROM TJY_MESSAGE_INFO MI
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT COUNT(*) FROM TJY_MESSAGE_INFO MI
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="messageInfo">
+		SELECT <include refid="field"/>
+		FROM TJY_MESSAGE_INFO MI
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="messageInfo">
+		SELECT <include refid="field"/>
+		FROM TJY_MESSAGE_INFO MI
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="messageInfo">
+		SELECT <include refid="field"/>
+		FROM TJY_MESSAGE_INFO MI
+		WHERE MI.ID = #{id}
+	</select>
+	
+	<select id="selectAllTemplateMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM tjy_message_info MI order by MI.create_time  
+	</select>
+	<select id="selectByParam" resultMap="messageInfo" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_message_info MI 
+    	<include refid="dynamicWhere" />
+		order by MI.status asc,MI.create_time desc
+	</select>
+	
+	<update id="updateStatusByUserIdAndType" parameterType="java.util.Map">
+		update tjy_message_info t set t.status=1 WHERE t.type=#{type} and t.to_user_id=#{toUserId} and t.status=0
+	</update>
+	
+	<select id="selOneToOneDnd" resultMap="messageInfo" parameterType="java.util.Map">
+		select t.* from tjy_im_dnd t where 1=1 
+    	<if test="fromUserId != null and fromUserId != ''">
+			AND	t.peer = #{fromUserId}
+		</if>
+    	<if test="toUserId != null and toUserId != ''">
+			AND	t.username = #{toUserId}
+		</if>
+	</select>
+	<select id="selToken" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.username username,t.device device,t.dnd dnd,t.token token from tjy_im_token t where 1=1 
+    	<if test="toUserId != null and toUserId != ''">
+			AND	t.username = #{toUserId}
+		</if>
+	</select>
+	
+</mapper>

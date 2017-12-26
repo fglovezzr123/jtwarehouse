@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-05-04 16:15:41
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.WalletTxDao">
+
+	<resultMap id="walletTx" type="com.wing.socialcontact.service.wx.bean.WalletTx">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userid" column="userid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="username" column="username" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wxh" column="wxh" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="txje" column="txje" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="syje" column="syje" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="state" column="state" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="opUser" column="op_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="opTime" column="op_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="paySn" column="pay_sn" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="payStatus" column="pay_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="walletTxGlobal" type="com.wing.socialcontact.service.wx.bean.WalletTx">
+		<result property="id" column="WT_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userid" column="WT_userid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="username" column="WT_username" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="wxh" column="WT_wxh" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="txje" column="WT_txje" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="syje" column="WT_syje" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="createTime" column="WT_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="state" column="WT_state" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="opUser" column="WT_op_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="opTime" column="WT_op_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="paySn" column="WT_pay_sn" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="payStatus" column="WT_pay_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		WT.id, WT.userid, WT.username, WT.wxh, 
+		WT.txje, WT.syje, WT.create_time, WT.state, 
+		WT.op_user, WT.op_time, WT.pay_sn, WT.pay_status
+	</sql>
+
+	<sql id="fieldGlobal">
+		WT.id WT_id, WT.userid WT_userid, 
+		WT.username WT_username, WT.wxh WT_wxh, 
+		WT.txje WT_txje, WT.syje WT_syje, 
+		WT.create_time WT_create_time, WT.state WT_state, 
+		WT.op_user WT_op_user, WT.op_time WT_op_time, WT.pay_sn WT_pay_sn, WT.pay_status WT_pay_status
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		WT.id id, WT.userid userid, 
+		WT.username username, WT.wxh wxh, 
+		WT.txje txje, WT.syje syje, 
+		WT.create_time createTime, WT.state state, 
+		WT.op_user opUser, WT.op_time opTime,WT.pay_sn paySn, WT.pay_status payStatus
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND WT.id=#{id}
+		</if>
+		<if test="userid!=null and userid!=''">
+			AND WT.userid=#{userid}
+		</if>
+		<if test="username!=null and username!=''">
+			AND WT.username=#{username}
+		</if>
+		<if test="wxh!=null and wxh!=''">
+			AND WT.wxh=#{wxh}
+		</if>
+		<if test="txje!=null">
+			AND WT.txje=#{txje}
+		</if>
+		<if test="syje!=null">
+			AND WT.syje=#{syje}
+		</if>
+		<if test="createTime!=null">
+			AND WT.create_time=#{createTime}
+		</if>
+		<if test="state!=null and state!=''">
+			AND WT.state=#{state}
+		</if>
+		<if test="opUser!=null and opUser!=''">
+			AND WT.op_user=#{opUser}
+		</if>
+		<if test="opTime!=null">
+			AND WT.op_time=#{opTime}
+		</if>
+		<if test="paySn!=null">
+			AND WT.pay_sn=#{paySn}
+		</if>
+		<if test="payStatus!=null">
+			AND WT.pay_status=#{payStatus}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND WT.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userid!=null and userid!=''">
+				AND WT.userid LIKE CONCAT('%', #{userid}, '%')
+			</if>
+			<if test="username!=null and username!=''">
+				AND WT.username LIKE CONCAT('%', #{username}, '%')
+			</if>
+			<if test="wxh!=null and wxh!=''">
+				AND WT.wxh LIKE CONCAT('%', #{wxh}, '%')
+			</if>
+			<if test="txje!=null">
+				AND WT.txje=#{txje}
+			</if>
+			<if test="syje!=null">
+				AND WT.syje=#{syje}
+			</if>
+			<if test="createTime!=null">
+				AND WT.create_time=#{createTime}
+			</if>
+			<if test="state!=null and state!=''">
+				AND WT.state LIKE CONCAT('%', #{state}, '%')
+			</if>
+			<if test="opUser!=null and opUser!=''">
+				AND WT.op_user LIKE CONCAT('%', #{opUser}, '%')
+			</if>
+			<if test="opTime!=null">
+				AND WT.op_time=#{opTime}
+			</if>
+			<if test="paySn!=null">
+				AND WT.pay_sn=#{paySn}
+			</if>
+			<if test="payStatus!=null">
+				AND WT.pay_status=#{payStatus}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				WT.id=#{id}, 
+		   </if>
+           <if test="userid!=null">
+				WT.userid=#{userid}, 
+		   </if>
+           <if test="username!=null">
+				WT.username=#{username}, 
+		   </if>
+           <if test="wxh!=null">
+				WT.wxh=#{wxh}, 
+		   </if>
+           <if test="txje!=null">
+				WT.txje=#{txje}, 
+		   </if>
+           <if test="syje!=null">
+				WT.syje=#{syje}, 
+		   </if>
+           <if test="createTime!=null">
+				WT.create_time=#{createTime}, 
+		   </if>
+           <if test="state!=null">
+				WT.state=#{state}, 
+		   </if>
+           <if test="opUser!=null">
+				WT.op_user=#{opUser}, 
+		   </if>
+           <if test="opTime!=null">
+				WT.op_time=#{opTime}, 
+		   </if>
+		   <if test="paySn!=null">
+				WT.pay_sn=#{paySn},
+			</if>
+			<if test="payStatus!=null">
+				WT.pay_status=#{payStatus},
+			</if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE WT FROM TJY_WALLET_TX WT WHERE WT.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_WALLET_TX WT
+		SET 
+		WT.STATUS = -1
+		WHERE WT.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_WALLET_TX WT
+		<include refid="dynamicSet" /> 
+	    WHERE WT.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="walletTx">
+		SELECT <include refid="field"/>
+		FROM TJY_WALLET_TX WT
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_WALLET_TX WT
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="walletTx">
+		SELECT <include refid="field"/>
+		FROM TJY_WALLET_TX WT
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="walletTx">
+		SELECT <include refid="field"/>
+		FROM TJY_WALLET_TX WT
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="walletTx">
+		SELECT <include refid="field"/>
+		FROM TJY_WALLET_TX WT
+		WHERE WT.ID = #{id}
+	</select>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select o.*,t.nickname,t.true_name,t.mobile ,t.com_name from TJY_WALLET_TX o 
+        JOIN tjy_user t ON t.id = o.userid
+ 		WHERE 1=1
+    	<if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	    </if>
+	    <if test="state!=null  and state!=''">
+			and o.state=#{state}
+		</if>
+	    <if test="mobile!=null  and mobile!=''">
+			and t.mobile=#{mobile}
+		</if>
+		order by o.create_time desc
+	</select>
+	
+</mapper>

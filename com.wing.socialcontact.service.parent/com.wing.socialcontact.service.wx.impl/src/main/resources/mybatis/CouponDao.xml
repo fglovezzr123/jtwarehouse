@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-07-20 10:24:15
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.CouponDao">
+
+	<resultMap id="coupon" type="com.wing.socialcontact.service.wx.bean.Coupon">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="couponName" column="coupon_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="couponType" column="coupon_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="couponCoinType" column="coupon_coin_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="couponAmount" column="coupon_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="orderMinBuy" column="order_min_buy" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="useRange" column="use_range" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="useStore" column="use_store" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		t.id id, t.coupon_name couponName, 
+		t.coupon_type couponType, t.coupon_coin_type couponCoinType, 
+		t.coupon_amount couponAmount, t.order_min_buy orderMinBuy, 
+		t.use_range useRange, t.use_store useStore, 
+		t.status status, t.create_time createTime, 
+		t.create_user_id createUserId, t.create_user_name createUserName, 
+		t.deleted deleted
+	</sql>
+	
+	<select id="selectByParam" resultMap="coupon" parameterType="java.util.Map">
+		SELECT * 
+		FROM tjy_coupon t 
+ 		WHERE 1=1 
+		<if test="couponName!=null and couponName!=''">
+				AND t.coupon_name LIKE CONCAT('%', #{couponName}, '%')
+		</if>
+		<if test="couponCoinType!=null">
+				AND t.coupon_coin_type=#{couponCoinType}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	<select id="selectAllStore" resultType="java.util.HashMap" parameterType="java.util.Map">
+	  select t.*,u.mobile,u.userName from store t left join user u on t.id = u.store_id where t.store_status = '2' 
+	  <if test="storeName!=null and storeName!=''">
+				AND t.store_name LIKE CONCAT('%', #{storeName}, '%')
+	  </if>
+	</select>
+
+
+</mapper>

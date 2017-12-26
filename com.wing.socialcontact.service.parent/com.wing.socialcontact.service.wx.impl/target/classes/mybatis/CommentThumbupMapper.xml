@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-04-04 15:00:56
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.CommentThumbupDao">
+
+	<resultMap id="commentThumbup" type="com.wing.socialcontact.service.wx.bean.CommentThumbup">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="openId" column="open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pId" column="p_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="commentThumbupGlobal" type="com.wing.socialcontact.service.wx.bean.CommentThumbup">
+		<result property="id" column="CT_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="openId" column="CT_open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="CT_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pId" column="CT_p_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="CT_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="CT_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="CT_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="CT_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="CT_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="CT_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="CT_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		CT.id, CT.open_id, CT.user_id, CT.p_id, 
+		CT.create_time, CT.create_user_id, CT.create_user_name, CT.update_time, 
+		CT.update_user_id, CT.update_user_name, CT.deleted
+	</sql>
+
+	<sql id="fieldGlobal">
+		CT.id CT_id, CT.open_id CT_open_id, 
+		CT.user_id CT_user_id, CT.p_id CT_p_id, 
+		CT.create_time CT_create_time, CT.create_user_id CT_create_user_id, 
+		CT.create_user_name CT_create_user_name, CT.update_time CT_update_time, 
+		CT.update_user_id CT_update_user_id, CT.update_user_name CT_update_user_name, 
+		CT.deleted CT_deleted
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		CT.id id, CT.open_id openId, 
+		CT.user_id userId, CT.p_id pId, 
+		CT.create_time createTime, CT.create_user_id createUserId, 
+		CT.create_user_name createUserName, CT.update_time updateTime, 
+		CT.update_user_id updateUserId, CT.update_user_name updateUserName, 
+		CT.deleted deleted
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND CT.id=#{id}
+		</if>
+		<if test="openId!=null and openId!=''">
+			AND CT.open_id=#{openId}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND CT.user_id=#{userId}
+		</if>
+		<if test="pId!=null and pId!=''">
+			AND CT.p_id=#{pId}
+		</if>
+		<if test="createTime!=null">
+			AND CT.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND CT.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND CT.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND CT.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND CT.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND CT.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND CT.deleted=#{deleted}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND CT.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="openId!=null and openId!=''">
+				AND CT.open_id LIKE CONCAT('%', #{openId}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND CT.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="pId!=null and pId!=''">
+				AND CT.p_id LIKE CONCAT('%', #{pId}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND CT.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND CT.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND CT.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND CT.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND CT.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND CT.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND CT.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				CT.id=#{id}, 
+		   </if>
+           <if test="openId!=null">
+				CT.open_id=#{openId}, 
+		   </if>
+           <if test="userId!=null">
+				CT.user_id=#{userId}, 
+		   </if>
+           <if test="pId!=null">
+				CT.p_id=#{pId}, 
+		   </if>
+           <if test="createTime!=null">
+				CT.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				CT.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				CT.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				CT.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				CT.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				CT.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				CT.deleted=#{deleted}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+
+	<select id="load" resultMap="commentThumbup">
+		SELECT <include refid="field"/>
+		FROM TJY_COMMENT_THUMBUP CT
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_COMMENT_THUMBUP CT
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="commentThumbup">
+		SELECT <include refid="field"/>
+		FROM TJY_COMMENT_THUMBUP CT
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="commentThumbup">
+		SELECT <include refid="field"/>
+		FROM TJY_COMMENT_THUMBUP CT
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="commentThumbup">
+		SELECT <include refid="field"/>
+		FROM TJY_COMMENT_THUMBUP CT
+		WHERE CT.ID = #{id}
+	</select>
+	
+	
+	<select id="selectAllCommentThumbupMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM TJY_COMMENT_THUMBUP CT 
+		<include refid="dynamicWhere" />
+		order by CT.create_time  desc
+		
+	</select>
+	<select id="selectByParam" resultMap="commentThumbup" parameterType="java.util.Map">
+		SELECT *
+		FROM TJY_COMMENT_THUMBUP CT 
+    	<include refid="dynamicWhere" />
+	</select>
+	
+	<select id="selectcount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT COUNT(*) FROM TJY_COMMENT_THUMBUP CT
+ 		<include refid="dynamicWhere" />
+	</select>
+	
+	
+</mapper>

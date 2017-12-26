@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-09-18 15:40:53
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ConfigDao">
+
+	<resultMap id="config" type="com.wing.socialcontact.service.wx.bean.Config">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="config1" column="config1" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config2" column="config2" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config3" column="config3" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config4" column="config4" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config5" column="config5" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config6" column="config6" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="configGlobal" type="com.wing.socialcontact.service.wx.bean.Config">
+		<result property="id" column="C_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="C_type" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="status" column="C_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="C_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="C_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="C_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="C_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="config1" column="C_config1" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config2" column="C_config2" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config3" column="C_config3" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config4" column="C_config4" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config5" column="C_config5" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="config6" column="C_config6" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="C_remark" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		C.id, C.type, C.status, C.create_time, 
+		C.create_user_id, C.create_user_name, C.deleted, C.config1, 
+		C.config2, C.config3, C.config4, C.config5, 
+		C.config6, C.remark
+	</sql>
+
+	<sql id="fieldGlobal">
+		C.id C_id, C.type C_type, 
+		C.status C_status, C.create_time C_create_time, 
+		C.create_user_id C_create_user_id, C.create_user_name C_create_user_name, 
+		C.deleted C_deleted, C.config1 C_config1, 
+		C.config2 C_config2, C.config3 C_config3, 
+		C.config4 C_config4, C.config5 C_config5, 
+		C.config6 C_config6, C.remark C_remark
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		C.id id, C.type type, 
+		C.status status, C.create_time createTime, 
+		C.create_user_id createUserId, C.create_user_name createUserName, 
+		C.deleted deleted, C.config1 config1, 
+		C.config2 config2, C.config3 config3, 
+		C.config4 config4, C.config5 config5, 
+		C.config6 config6, C.remark remark
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND C.id=#{id}
+		</if>
+		<if test="type!=null and type!=''">
+			AND C.type=#{type}
+		</if>
+		<if test="status!=null">
+			AND C.status=#{status}
+		</if>
+		<if test="createTime!=null">
+			AND C.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND C.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND C.create_user_name=#{createUserName}
+		</if>
+		<if test="deleted!=null">
+			AND C.deleted=#{deleted}
+		</if>
+		<if test="config1!=null and config1!=''">
+			AND C.config1=#{config1}
+		</if>
+		<if test="config2!=null and config2!=''">
+			AND C.config2=#{config2}
+		</if>
+		<if test="config3!=null and config3!=''">
+			AND C.config3=#{config3}
+		</if>
+		<if test="config4!=null and config4!=''">
+			AND C.config4=#{config4}
+		</if>
+		<if test="config5!=null and config5!=''">
+			AND C.config5=#{config5}
+		</if>
+		<if test="config6!=null and config6!=''">
+			AND C.config6=#{config6}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND C.remark=#{remark}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND C.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="type!=null and type!=''">
+				AND C.type LIKE CONCAT('%', #{type}, '%')
+			</if>
+			<if test="status!=null">
+				AND C.status=#{status}
+			</if>
+			<if test="createTime!=null">
+				AND C.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND C.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND C.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND C.deleted=#{deleted}
+			</if>
+			<if test="config1!=null and config1!=''">
+				AND C.config1 LIKE CONCAT('%', #{config1}, '%')
+			</if>
+			<if test="config2!=null and config2!=''">
+				AND C.config2 LIKE CONCAT('%', #{config2}, '%')
+			</if>
+			<if test="config3!=null and config3!=''">
+				AND C.config3 LIKE CONCAT('%', #{config3}, '%')
+			</if>
+			<if test="config4!=null and config4!=''">
+				AND C.config4 LIKE CONCAT('%', #{config4}, '%')
+			</if>
+			<if test="config5!=null and config5!=''">
+				AND C.config5 LIKE CONCAT('%', #{config5}, '%')
+			</if>
+			<if test="config6!=null and config6!=''">
+				AND C.config6 LIKE CONCAT('%', #{config6}, '%')
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND C.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				C.id=#{id}, 
+		   </if>
+           <if test="type!=null">
+				C.type=#{type}, 
+		   </if>
+           <if test="status!=null">
+				C.status=#{status}, 
+		   </if>
+           <if test="createTime!=null">
+				C.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				C.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				C.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				C.deleted=#{deleted}, 
+		   </if>
+           <if test="config1!=null">
+				C.config1=#{config1}, 
+		   </if>
+           <if test="config2!=null">
+				C.config2=#{config2}, 
+		   </if>
+           <if test="config3!=null">
+				C.config3=#{config3}, 
+		   </if>
+           <if test="config4!=null">
+				C.config4=#{config4}, 
+		   </if>
+           <if test="config5!=null">
+				C.config5=#{config5}, 
+		   </if>
+           <if test="config6!=null">
+				C.config6=#{config6}, 
+		   </if>
+           <if test="remark!=null">
+				C.remark=#{remark}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+	<delete id="deleteById">
+		DELETE C FROM mall.TJY_CONFIG C WHERE C.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE mall.TJY_CONFIG C
+		SET 
+		C.STATUS = -1
+		WHERE C.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE mall.TJY_CONFIG C
+		<include refid="dynamicSet" /> 
+	    WHERE C.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="config">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CONFIG C
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM mall.TJY_CONFIG C
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="config">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CONFIG C
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="config">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CONFIG C
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="config">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CONFIG C
+		WHERE C.ID = #{id}
+	</select>
+	
+	<select id="selectByType" resultMap="config">
+			SELECT *
+		FROM TJY_CONFIG t 
+ 		WHERE 1=1
+		and  t.type=#{type} limit 0,1
+	</select>
+	
+</mapper>

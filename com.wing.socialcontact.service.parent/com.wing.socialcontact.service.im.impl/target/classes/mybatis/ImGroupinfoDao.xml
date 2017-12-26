@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-03-29 15:33:12
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImGroupinfoDao">
+
+	<resultMap id="imGroupinfo" type="com.wing.socialcontact.service.im.bean.ImGroupinfo">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="groupNo" column="group_no" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="groupName" column="group_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="headPortrait" column="head_portrait" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="creator" column="creator" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mainUser" column="main_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="groupDesc" column="group_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="membersMax" column="members_max" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="groupType" column="group_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="groupPower" column="group_power" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="deleteDate" column="delete_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		
+		<result property="tid" column="tid" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		IG.id, IG.group_no, IG.group_name, IG.head_portrait, 
+		IG.creator, IG.main_user, IG.group_desc, 
+		IG.members_max, IG.group_type, IG.group_power,IG.create_time, IG.update_time, 
+		IG.deleted, IG.delete_date,IG.tid 
+	</sql>
+	<delete id="deleteById">
+		DELETE IG FROM TJY_IM_GROUPINFO IG WHERE IG.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imGroupinfo">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPINFO IG
+		WHERE IG.ID = #{id} AND IG.deleted = 0
+	</select>
+	<select id="findByTid" resultMap="imGroupinfo">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPINFO IG
+		WHERE IG.tid = #{id} AND IG.deleted = 0
+	</select>
+	
+	<!--  获取我的群聊-->
+	<select id="findMyGroupInfoListByUserId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+		t.group_id,t1.group_no,t1.group_name,t1.head_portrait,t1.creator,t1.main_user,t1.group_desc,
+		t1.members_max,t1.group_type,t1.group_power,t1.tid  
+		FROM
+			tjy_im_groupusers t
+		JOIN tjy_im_groupinfo t1 ON t.group_id = t1.id
+		WHERE
+			t.user_id = #{userId}
+			and t1.deleted = 0
+			<if test="groupName != null and groupName != ''">
+				and t1.group_name like CONCAT('%',#{groupName},'%')
+			</if>
+		ORDER BY
+			t.create_time DESC
+	</select>
+	
+	<!--  获取我的群聊数量-->
+	<select id="findMyGroupInfoCounttByUserId" resultType="int" parameterType="string">
+		SELECT
+		count(*)
+		FROM
+			tjy_im_groupusers t
+		JOIN tjy_im_groupinfo t1 ON t.group_id = t1.id
+		WHERE
+			t.user_id = #{userId}
+			and t1.deleted = 0
+		ORDER BY
+			t.create_time DESC
+	</select>
+	
+	<!--  获取我的群组-->
+	<select id="findByCreaterAndName" resultMap="imGroupinfo" parameterType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		FROM
+			tjy_im_groupinfo IG
+		WHERE
+			IG.creator = #{creator}
+			and IG.group_name = #{groupName}
+		AND IG.deleted = 0
+		ORDER BY
+			IG.create_time DESC
+	</select>
+	
+	<!--  获取与用户相同爱好的公开群组-->
+	<select id="findHobbyGroupByUser" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.group_id,
+			t.group_name,
+			t.head_portrait,
+			t.create_time,
+			count(t2.user_id) AS userCount
+		FROM
+			(
+				SELECT DISTINCT
+					t.user_id,
+					t1.group_id,
+					t2.group_name,
+					t2.head_portrait,
+					t2.create_time,
+					t2.group_power,
+					t2.group_type
+				FROM
+					tjy_user_fav t
+				JOIN tjy_im_groupfav t1 ON t.fav_id = t1.fav_id
+				JOIN tjy_im_groupinfo t2 ON t1.group_id = t2.id
+				WHERE 1=1 
+				<if test="hobby == null or hobby == ''">
+					and t.user_id = #{userId}
+				</if>	
+				<if test="hobby != null and hobby != ''">
+					and t.fav_id = #{hobby}
+				</if>	
+				<if test="groupName != null and groupName != ''">
+					and t2.group_name like CONCAT('%',#{groupName},'%')
+				</if>	
+				AND t2.deleted = 0
+				AND t2.group_type = 1
+				AND t1.group_id NOT IN (
+					SELECT
+						t.group_id
+					FROM
+						tjy_im_groupusers t
+					JOIN tjy_im_groupinfo t1 ON t.group_id = t1.id
+					WHERE
+						t.user_id = #{userId}
+					AND t1.deleted = 0
+					AND t1.group_type = 1
+				 )
+			) t
+		JOIN tjy_im_groupusers t2 ON t.group_id = t2.group_id
+		GROUP BY
+			t.group_id,
+			t.group_name,
+			t.head_portrait
+		ORDER BY
+			t.create_time DESC
+	</select>
+	
+	
+	
+	<!--  获取与用户相同爱好的商友-->
+	<select id="findHobbyFriendsByUser" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					t.id,
+					t.nickname,
+					t.head_portrait,
+					IFNULL(t.honor_title, '') AS honor_title,
+					IFNULL(t.honor_flag, '') AS honor_flag,
+					t.com_name,
+					t.job,
+					t1.list_value AS job_name,
+					t.industry,
+					t2.list_value AS industry_name,
+					t.province,
+					t3.dis_name AS province_name,
+					t.city,
+					t4.dis_name AS city_name,
+					t.county,
+					t5.dis_name AS couty_name,
+					tuflv.hobby
+				FROM
+					tjy_user t
+				JOIN list_values t1 ON t.job = t1.id
+				AND t1.list_type = '12'
+				JOIN list_values t2 ON t.industry = t2.id
+				AND t2.list_type = '8001'
+				JOIN sy_district t3 ON t.province = t3.id
+				JOIN sy_district t4 ON t.city = t4.id
+				JOIN sy_district t5 ON t.county = t5.id
+				JOIN (
+					SELECT
+						id,
+						GROUP_CONCAT(list_value) AS hobby
+					FROM
+						(
+							SELECT
+								tu.*, tuf.fav_id,
+								lv.list_value
+							FROM
+								tjy_user tu
+							JOIN (
+								SELECT
+									*
+								FROM
+									tjy_user_fav
+								WHERE
+									fav_id IN (
+										SELECT
+											fav_id
+										FROM
+											tjy_user_fav
+										WHERE
+											user_id = #{userId}
+									)
+							) tuf ON tu.id = tuf.user_id
+							JOIN (
+								SELECT
+									*
+								FROM
+									list_values
+								WHERE
+									list_type = 8002
+							) lv ON tuf.fav_id = lv.id
+						) oo
+					GROUP BY
+						id
+				) tuflv ON t.id = tuflv.id
+				WHERE
+					t.id != #{userId}
+				AND t.is_realname = 1
+				AND t.isdisturb = 0
+				AND NOT EXISTS (
+					SELECT
+						1
+					FROM
+						tjy_im_friend t6
+					WHERE
+						t6.user_id = #{userId}
+					AND t6.friend_user = t.id
+				)
+			) o
+	</select>
+	
+	
+	
+	
+	
+	
+	<!--  查询好友列表 -->
+	<select id="findGroupListByParam" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					t.group_id,
+					t1.group_no,
+					t1.group_name,
+					t1.head_portrait,
+					t1.creator,
+					t1.main_user,
+					t1.group_desc,
+					t1.members_max,
+					t1.group_type,
+					count(t2.id) AS group_userCount
+				FROM
+					tjy_im_groupusers t
+				JOIN tjy_im_groupinfo t1 ON t.group_id = t1.id
+				JOIN tjy_im_groupusers t2 ON t.group_id = t2.group_id
+				WHERE
+					t.user_id = #{userId}
+				AND t1.deleted = 0
+				GROUP BY
+					t.group_id,
+					t1.group_no,
+					t1.group_name,
+					t1.head_portrait,
+					t1.creator,
+					t1.main_user,
+					t1.group_desc,
+					t1.members_max,
+					t1.group_type
+				ORDER BY
+					t.create_time DESC
+			) t
+		WHERE
+			1 = 1
+		<if test="groupName!=null and groupName!=''">
+			AND t.group_name LIKE CONCAT('%', #{groupName}, '%')
+		</if>
+		<if test="userCount!=null">
+			AND t.group_userCount = #{userCount}
+		</if>
+		<if test="groupType!=null">
+			AND t.group_type =  #{groupType}
+		</if>
+	</select>
+	
+	<!--  查询vt列表 -->
+	<select id="findGroupListByParam2" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+				    t1.id,
+					t1.group_no,
+					t1.group_name,
+					t1.head_portrait,
+					t1.creator,
+					t1.main_user,
+					t1.group_desc,
+					t1.members_max,
+					t1.group_type,
+					t1.group_power,
+	        t3.nickname,
+          t3.true_name,
+          t3.mobile,
+          t1.create_time,
+					count(t2.id) AS group_userCount
+				FROM
+					 tjy_im_groupinfo t1 
+        left JOIN tjy_im_groupusers t2 ON t1.id = t2.group_id
+        left JOIN tjy_user t3 on t3.id = t1.creator
+				WHERE
+					1 = 1
+				AND t1.deleted = 0
+				GROUP BY
+					t1.group_no,
+					t1.group_name,
+					t1.head_portrait,
+					t1.creator,
+					t1.main_user,
+					t1.group_desc,
+					t1.members_max,
+					t1.group_type
+				ORDER BY
+					t1.create_time DESC
+			) tt where 1=1
+		<if test="groupName!=null and groupName!=''">
+			AND tt.group_name LIKE CONCAT('%', #{groupName}, '%')
+		</if>
+		<if test="userCount!=null">
+			AND tt.group_userCount = #{userCount}
+		</if>
+		<if test="groupType!=null">
+			AND tt.group_type =  #{groupType}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND tt.nickname LIKE CONCAT('%', #{userId}, '%')
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND tt.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND tt.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND tt.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+	</select>
+	
+	<!-- 同行精英-->
+	<select id="findPeerEliteByUser" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT * FROM  (
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.com_name,
+			t.job,
+			t1.list_value AS job_name,
+			t.industry,
+			t2.list_value AS industry_name,
+			t.province,
+			t3.dis_name AS province_name,
+			t.city,
+			t4.dis_name AS city_name,
+			t.county,
+			t5.dis_name AS couty_name
+		FROM
+			tjy_user t
+		JOIN list_values t1 ON t.job = t1.id
+		AND t1.list_type = '12'
+		JOIN list_values t2 ON t.industry = t2.id
+		AND t2.list_type = '8001'
+		JOIN sy_district t3 ON t.province = t3.id
+		JOIN sy_district t4 ON t.city = t4.id
+		JOIN sy_district t5 ON t.county = t5.id
+		WHERE
+		<if test="industry != null and industry != ''">
+			t.industry = #{industry}
+		</if>
+		<if test="industry == null or industry == ''">
+			t.industry = (
+			SELECT
+				t.industry
+			FROM
+				tjy_user t
+			WHERE
+				t.id = #{userId}
+			)
+		</if>
+		AND t.id != #{userId} and t.is_realname = 1  and t.isdisturb = 0
+		<if test="nickname != null and nickname != ''">
+			AND	t.nickname like CONCAT('%',#{nickname},'%')
+		</if>
+		AND NOT EXISTS (
+			SELECT
+				1
+			FROM
+				tjy_im_friend t6
+			WHERE
+				t6.user_id = #{userId}
+			AND t6.friend_user = t.id
+		)
+		) o
+		<if test="tjNum != null and tjNum != ''">
+			 ORDER BY RAND() LIMIT #{tjNum}
+		</if>
+		
+	</select>
+	
+	<!-- 同城精英-->
+	<select id="findCityEliteByUser" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT * FROM  (
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.com_name,
+			t.job,
+			t1.list_value AS job_name,
+			t.industry,
+			t2.list_value AS industry_name,
+			t.province,
+			t3.dis_name AS province_name,
+			t.city,
+			t4.dis_name AS city_name,
+			t.county,
+			t5.dis_name AS couty_name
+		FROM
+			tjy_user t
+		JOIN list_values t1 ON t.job = t1.id
+		AND t1.list_type = '12'
+		JOIN list_values t2 ON t.industry = t2.id
+		AND t2.list_type = '8001'
+		JOIN sy_district t3 ON t.province = t3.id
+		JOIN sy_district t4 ON t.city = t4.id
+		JOIN sy_district t5 ON t.county = t5.id
+		WHERE
+			t.county = (
+				SELECT
+					t.county
+				FROM
+					tjy_user t
+				WHERE
+					t.id = #{userId}
+			)
+		AND t.id != #{userId} and t.is_realname = 1  and t.isdisturb = 0
+		AND NOT EXISTS (
+			SELECT
+				1
+			FROM
+				tjy_im_friend t6
+			WHERE
+				t6.user_id = #{userId}
+			AND t6.friend_user = t.id
+		)
+		) o
+		<if test="tjNum != null and tjNum != ''">
+			 ORDER BY RAND() LIMIT #{tjNum}
+		</if>
+	</select>
+	
+	<!-- 智同道合-->
+	<select id="findSameIdeasEliteByUser" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.com_name,
+			t.job,
+			t1.list_value AS job_name,
+			t.industry,
+			t2.list_value AS industry_name,
+			t.province,
+			t3.dis_name AS province_name,
+			t.city,
+			t4.dis_name AS city_name,
+			t.county,
+			t5.dis_name AS couty_name
+		FROM
+			tjy_user t
+		JOIN list_values t1 ON t.job = t1.id
+		AND t1.list_type = '12'
+		JOIN list_values t2 ON t.industry = t2.id
+		AND t2.list_type = '8001'
+		JOIN sy_district t3 ON t.province = t3.id
+		JOIN sy_district t4 ON t.city = t4.id
+		JOIN sy_district t5 ON t.county = t5.id
+		JOIN (
+			SELECT DISTINCT
+				t.user_id
+			FROM
+				tjy_user_fav t
+			JOIN (
+				SELECT
+					*
+				FROM
+					`tjy_user_fav`
+				WHERE
+					user_id = #{userId}
+			) t1 ON t.fav_id = t1.fav_id
+			AND t.user_id != #{userId}
+		) t6 ON t.id = t6.user_id
+		WHERE
+			t.city = (
+				SELECT
+					t.city
+				FROM
+					tjy_user t
+				WHERE
+					t.id = #{userId}
+			)
+		AND t.industry = (
+			SELECT
+				t.industry
+			FROM
+				tjy_user t
+			WHERE
+				t.id = #{userId}
+		)
+		AND t.id != #{userId}
+		AND NOT EXISTS (
+			SELECT
+				1
+			FROM
+				tjy_im_friend t7
+			WHERE
+				t7.user_id = #{userId}
+			AND t7.friend_user = t.id
+		)
+	</select>
+	
+	<!-- 获取推荐智同道合列表 -->
+	
+	<select id="getRecommendZtdhList"  resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.com_name,
+			t.job,
+			t1.list_value AS job_name,
+			t.industry,
+			t2.list_value AS industry_name,
+			t.province,
+			t3.dis_name AS province_name,
+			t.city,
+			t4.dis_name AS city_name,
+			t.county,
+			t5.dis_name AS couty_name
+		FROM
+			tjy_user t
+		JOIN list_values t1 ON t.job = t1.id
+		AND t1.list_type = '12'
+		JOIN list_values t2 ON t.industry = t2.id
+		AND t2.list_type = '8001'
+		JOIN sy_district t3 ON t.province = t3.id
+		JOIN sy_district t4 ON t.city = t4.id
+		JOIN sy_district t5 ON t.county = t5.id
+		where t.isztdh = 1  and  t.id !=#{userId} and  t.id not in (select friend_user from tjy_im_friend where user_id = #{userId} )
+		
+		order by t.ztdhsort desc
+	</select>
+	
+	<!-- 获取大咖-->
+	<select id="findDKListByUser" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.com_name,
+			t.job,
+			t1.list_value AS job_name,
+			t.industry,
+			t2.list_value AS industry_name,
+			t.province,
+			t3.dis_name AS province_name,
+			t.city,
+			t4.dis_name AS city_name,
+			t.county,
+			t5.dis_name AS couty_name
+		FROM
+			tjy_user t
+		JOIN list_values t1 ON t.job = t1.id
+		AND t1.list_type = '12'
+		JOIN list_values t2 ON t.industry = t2.id
+		AND t2.list_type = '8001'
+		JOIN sy_district t3 ON t.province = t3.id
+		JOIN sy_district t4 ON t.city = t4.id
+		JOIN sy_district t5 ON t.county = t5.id
+		WHERE
+			t.isdk = 1
+		order by t.sort desc,t.dk_date desc
+	</select>
+	
+	<!-- 二度人脉-->
+	<select id="findTwoDegreeConnectionsByUser" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.friend_user,
+			t2.nickname,
+			t.create_time,
+			t2.head_portrait,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag,
+			t2.com_name,
+			t2.job,
+			t3.list_value AS job_name,
+			t2.industry,
+			t4.list_value AS industry_name
+		FROM
+			tjy_im_friend t
+		JOIN (
+			SELECT
+				t.friend_user
+			FROM
+				tjy_im_friend t
+			WHERE
+				user_id = #{userId}
+		) t1 ON t.user_id = t1.friend_user
+		JOIN tjy_user t2 ON t.friend_user = t2.id
+		JOIN list_values t3 ON t2.job = t3.id
+		AND t3.list_type = '12'
+		JOIN list_values t4 ON t2.industry = t4.id
+		AND t4.list_type = '8001'
+		WHERE
+			t.friend_user != #{userId}
+		AND NOT EXISTS (
+			SELECT
+				1
+			FROM
+				tjy_im_friend t5
+			WHERE
+				t5.user_id = #{userId} and t5.friend_user = t.friend_user
+		)
+	</select>
+	
+	<!--  获取群组列表-->
+	<select id="selGourpsListByName" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.id,
+			t.group_name,
+			t.group_no,
+			t.head_portrait,
+			t.create_time,
+			count(t2.user_id) AS userCount,
+			t.tid
+		FROM
+			tjy_im_groupinfo t
+		JOIN tjy_im_groupusers t2 ON t.id = t2.group_id
+		WHERE
+			1 = 1
+		AND t.deleted = 0
+		AND t.group_type = 1
+		<if test="groupName != null and groupName != ''">
+			and t.group_name LIKE CONCAT('%',#{groupName},'%')
+		</if>
+		AND t.id NOT IN (
+					SELECT
+						t.group_id
+					FROM
+						tjy_im_groupusers t
+					JOIN tjy_im_groupinfo t1 ON t.group_id = t1.id
+					WHERE
+						t.user_id = #{userId}
+					AND t1.deleted = 0
+					AND t1.group_type = 1
+				 )
+		GROUP BY
+			t.id,
+			t.group_name,
+			t.group_no,
+			t.head_portrait,
+			t.create_time
+		ORDER BY
+			t.create_time DESC
+	</select>
+	
+	
+	<select id="selectAllGroup" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT  t.id,t.group_name groupName,t.main_user mainUser,t.tid from tjy_im_groupinfo t 
+		where t.main_user is not null  
+		order by t.create_time 
+		 <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+	  </if>
+	</select>
+	
+	<select id="selTwoDegreeConnectionsCount" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+		IFNULL(t2.true_name,'') as name,
+		count(*) AS count
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_im_friend
+			WHERE
+				user_id IN (
+					SELECT
+						friend_user
+					FROM
+						tjy_im_friend
+					WHERE
+						user_id = #{user_id}
+				)
+			AND friend_user = #{friend_user}
+		) t1
+	JOIN tjy_user t2 ON t1.user_id = t2.id
+	</select>
+</mapper>

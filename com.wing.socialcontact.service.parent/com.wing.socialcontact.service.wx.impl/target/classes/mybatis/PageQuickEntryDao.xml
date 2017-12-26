@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-06-28 16:39:29
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.PageQuickEntryDao">
+
+	<resultMap id="pageQuickEntry" type="com.wing.socialcontact.service.wx.bean.PageQuickEntry">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="linkUrl" column="link_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="pageId" column="page_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="pageQuickEntryGlobal" type="com.wing.socialcontact.service.wx.bean.PageQuickEntry">
+		<result property="id" column="PQE_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="name" column="PQE_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="linkUrl" column="PQE_link_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="PQE_img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="PQE_order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="pageId" column="PQE_page_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		PQE.id, PQE.name, PQE.link_url, PQE.img_url, 
+		PQE.order_num, PQE.page_id
+	</sql>
+
+	<sql id="fieldGlobal">
+		PQE.id PQE_id, PQE.name PQE_name, 
+		PQE.link_url PQE_link_url, PQE.img_url PQE_img_url, 
+		PQE.order_num PQE_order_num, PQE.page_id PQE_page_id
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		PQE.id id, PQE.name name, 
+		PQE.link_url linkUrl, PQE.img_url imgUrl, 
+		PQE.order_num orderNum, PQE.page_id pageId
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND PQE.id=#{id}
+		</if>
+		<if test="name!=null and name!=''">
+			AND PQE.name=#{name}
+		</if>
+		<if test="linkUrl!=null and linkUrl!=''">
+			AND PQE.link_url=#{linkUrl}
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			AND PQE.img_url=#{imgUrl}
+		</if>
+		<if test="orderNum!=null">
+			AND PQE.order_num=#{orderNum}
+		</if>
+		<if test="pageId!=null and pageId!=''">
+			AND PQE.page_id=#{pageId}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND PQE.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="name!=null and name!=''">
+				AND PQE.name LIKE CONCAT('%', #{name}, '%')
+			</if>
+			<if test="linkUrl!=null and linkUrl!=''">
+				AND PQE.link_url LIKE CONCAT('%', #{linkUrl}, '%')
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND PQE.img_url LIKE CONCAT('%', #{imgUrl}, '%')
+			</if>
+			<if test="orderNum!=null">
+				AND PQE.order_num=#{orderNum}
+			</if>
+			<if test="pageId!=null and pageId!=''">
+				AND PQE.page_id LIKE CONCAT('%', #{pageId}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				PQE.id=#{id}, 
+		   </if>
+           <if test="name!=null">
+				PQE.name=#{name}, 
+		   </if>
+           <if test="linkUrl!=null">
+				PQE.link_url=#{linkUrl}, 
+		   </if>
+           <if test="imgUrl!=null">
+				PQE.img_url=#{imgUrl}, 
+		   </if>
+           <if test="orderNum!=null">
+				PQE.order_num=#{orderNum}, 
+		   </if>
+           <if test="pageId!=null">
+				PQE.page_id=#{pageId}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE PQE FROM TJY_PAGE_QUICK_ENTRY PQE WHERE PQE.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_PAGE_QUICK_ENTRY PQE
+		SET 
+		PQE.STATUS = -1
+		WHERE PQE.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_PAGE_QUICK_ENTRY PQE
+		<include refid="dynamicSet" /> 
+	    WHERE PQE.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="pageQuickEntry">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_QUICK_ENTRY PQE
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_PAGE_QUICK_ENTRY PQE
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="pageQuickEntry">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_QUICK_ENTRY PQE
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="pageQuickEntry">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_QUICK_ENTRY PQE
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="pageQuickEntry">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_QUICK_ENTRY PQE
+		WHERE PQE.ID = #{id}
+	</select>
+	
+</mapper>

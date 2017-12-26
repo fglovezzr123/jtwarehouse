@@ -1,0 +1,243 @@
+@charset "utf-8";
+/*.wrapper*/
+/*swipper*/
+
+/*content*/
+.cPlay{
+	width: 100%;
+	height: 2.5rem;
+	background: #fff;
+}
+.cPlay .c-t{
+	width: 100%;
+	height: .70rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 .40rem;
+	font-size: .30rem;
+	box-sizing: border-box;
+	margin-top:0.17rem;
+}
+.cPlay .c-t h2{
+	font-weight: 700;
+	font-size: .30rem;
+}
+.cPlay .c-t .iconfont{
+	font-size: .30rem;
+	line-height: .30rem;
+}
+.swiper-container1 {
+        width: 100%;
+        height: 1.54rem;
+        overflow: hidden;
+        background:#fff;
+    }
+.swiper-container1 .swiper-slide img{
+	width: 100%;
+	height: 100%;
+}
+.hList{
+	width: 100%;
+	height: .78rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background: #fff;
+	border-bottom:1px solid #e6e6e6;
+	box-sizing: border-box;
+	padding-left:0.2rem;
+	padding-right:0.2rem;
+	font-size:0.24rem;
+}
+.hList li{
+	font-size: .30rem;
+	width: 23%;
+	padding-left:2%;
+	text-align: center;
+	box-sizing: border-box;
+	position:relative;
+}
+.hList li #citys_dummy{
+	width:100%;
+	background:url(../img/icons/truangles.png) no-repeat right center;
+	background-size:0.15rem;
+	font-size:0.24rem;
+}
+.hList li+li{
+	border-left: 1px #e6e6e6 solid;
+}
+.hList li span{
+	/*padding-left:.20rem;*/
+}
+.hList li .iconfont{
+	padding-left: .10rem;
+   color: #8B8B8B;
+   font-size: .30rem;
+}
+.h-cont{
+	width: 100%;
+	height: 2.50rem;
+	padding: .4rem .3rem .25rem .3rem;
+	box-sizing: border-box;
+	display: flex;
+	background: #fff;
+	border-bottom:1px solid #e6e6e6;
+}
+.h-cont .cont-l{
+	width: 1.80rem;
+	height: 1.80rem;
+}
+.h-cont .cont-l img{
+	width: 100%;
+	height: 100%;
+}
+.h-cont .cont-r{
+	width: 5.3rem;
+	height: 1.8rem;
+	position: relative;
+	padding-left: .08rem;
+	box-sizing: border-box;
+}
+.h-cont .cont-r h2{
+	font-size: .30rem;
+	color: #000000;
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+.h-cont .cont-r h2 b{
+	color: #0f88eb;
+}
+.h-cont .cont-r .icontt{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 5.3rem;
+	height: .40rem;
+	font-size: .24rem;
+	color: #8b8b8b;
+	position: absolute;
+	left: 0.06rem;
+	bottom: -0.08rem;
+}
+.h-cont .cont-r .icontt .cc{
+	flex: 1;
+	text-align: center;
+}
+.h-cont .cont-r .icontt .cc .iconfont{
+	font-size: .30rem;
+}
+.h-cont .cont-r .icontt .cc span b{
+	color: #0f88eb;
+}
+.h-cont .cont-r button{
+	width: 1.46rem;
+	height: .60rem;
+	box-sizing: border-box;
+	border: 1px #0f88eb solid;
+	text-align: center;
+	font-size:.30rem;
+	color: #0f88eb;
+	position: absolute;
+	right: .20rem;
+	bottom: 0.42rem;
+	background: #fff;
+	border-radius: .1rem;
+}
+.c-footer{
+	width: 100%;
+	height: 1rem;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	/* box-shadow: 0px 6px 4px 5px #808080; */
+}
+.c-footer .want{
+	width: 4.5rem;
+	height: 1rem;
+	background: #fff;
+	font-size: .30rem;
+	color: #000;
+	text-align: center;
+	line-height: 1rem;
+}
+.c-footer div{
+	width: 4.5rem;
+	height: 1rem;
+	background: #1087eb;
+	font-size: .30rem;
+	color: #fff;
+	text-align: center;
+	line-height: 1rem;
+	
+}
+.c-footer div a{
+	color:white;
+}
+.searchInfo{
+	padding-top:1rem;
+	width:100%;
+	height:0.5rem;
+	text-align:center;
+	font-size:0.3rem;
+}
+select{
+	  appearance:none;
+-moz-appearance:none;
+-webkit-appearance:none;
+ width:95%;
+ border:none;
+ background:url(../img/icons/truangles.png) no-repeat right center;
+ background-size:0.15rem;
+ text-align:center;
+ font-size:0.24rem;
+}
+.b-imgBox{
+	width: 100%;
+	/* height: 2.50rem; */
+	padding: 0.05rem .26rem .1rem .26rem;
+	box-sizing: border-box;
+	display: flex;
+	background-color: #fff;
+	/* margin-top: .16rem; */
+	margin-bottom: .02rem;
+}
+.b-imgBox a{
+	width: 2.24rem;
+	height: 1.54rem;
+	position: relative;
+	display:flex;
+}
+.b-imgBox a+a{
+	margin-left: .08rem;
+}
+.b-imgBox a img{
+	width: 100%;
+	height: 100%;
+}
+.covers{
+	position:absolute;
+	width: 2.24rem;
+	height: 1.54rem;
+	background:black;
+	opacity:0.3;
+	z-index:1;
+}
+.b-imgBox a span{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 2.24rem;
+	height: 1.54rem;
+	text-align: center;
+	line-height: 1.54rem;
+	font-size: .30rem;
+	color:#fff ;
+	z-index:10;
+	overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}

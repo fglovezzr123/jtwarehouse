@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-04-13 10:46:03
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.VoteDao">
+
+	<resultMap id="vote" type="com.wing.socialcontact.service.wx.bean.Vote">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="voteType" column="vote_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deletd" column="deletd" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="fieldWithAlias">
+		V.id id, V.fk_id fkId, 
+		V.user_id userId, V.vote_type voteType, 
+		V.create_time createTime, V.deletd deletd
+	</sql>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.vote_type 
+		FROM tjy_vote t
+ 		WHERE 1=1
+    	<if test="userId != null and userId != ''">
+			AND	t.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="fkId != null and fkId != ''">
+			AND	t.fk_id = #{fkId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+</mapper>

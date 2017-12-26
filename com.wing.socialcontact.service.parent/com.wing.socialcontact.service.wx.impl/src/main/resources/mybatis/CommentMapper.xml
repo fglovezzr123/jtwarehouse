@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-03-27 09:01:08
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.CommentDao">
+
+	<resultMap id="comment" type="com.wing.socialcontact.service.wx.bean.Comment">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="parentId" column="parent_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="cmeType" column="cme_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="cmeDesc" column="cme_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="anonymous" column="anonymous" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="commentGlobal" type="com.wing.socialcontact.service.wx.bean.Comment">
+		<result property="id" column="C_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="parentId" column="C_parent_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="C_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="C_fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="cmeType" column="C_cme_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="cmeDesc" column="C_cme_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="anonymous" column="C_anonymous" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="imgUrl" column="C_img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="C_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="C_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="C_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="C_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="C_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="C_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="C_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="C_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		C.id, C.parent_id, C.user_id, C.fk_id, 
+		C.cme_type, C.cme_desc, C.anonymous, C.img_url, 
+		C.status, C.create_time, C.create_user_id, C.create_user_name, 
+		C.update_time, C.update_user_id, C.update_user_name, C.deleted
+	</sql>
+
+	<sql id="fieldGlobal">
+		C.id C_id, C.parent_id C_parent_id, 
+		C.user_id C_user_id, C.fk_id C_fk_id, 
+		C.cme_type C_cme_type, C.cme_desc C_cme_desc, 
+		C.anonymous C_anonymous, C.img_url C_img_url, 
+		C.status C_status, C.create_time C_create_time, 
+		C.create_user_id C_create_user_id, C.create_user_name C_create_user_name, 
+		C.update_time C_update_time, C.update_user_id C_update_user_id, 
+		C.update_user_name C_update_user_name, C.deleted C_deleted
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		C.id id, C.parent_id parentId, 
+		C.user_id userId, C.fk_id fkId, 
+		C.cme_type cmeType, C.cme_desc cmeDesc, 
+		C.anonymous anonymous, C.img_url imgUrl, 
+		C.status status, C.create_time createTime, 
+		C.create_user_id createUserId, C.create_user_name createUserName, 
+		C.update_time updateTime, C.update_user_id updateUserId, 
+		C.update_user_name updateUserName, C.deleted deleted
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND C.id=#{id}
+		</if>
+		<if test="parentId!=null and parentId!=''">
+			AND C.parent_id=#{parentId}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND C.user_id=#{userId}
+		</if>
+		<if test="fkId!=null and fkId!=''">
+			AND C.fk_id=#{fkId}
+		</if>
+		<if test="cmeType!=null and cmeType!=''">
+			AND C.cme_type=#{cmeType}
+		</if>
+		<if test="cmeDesc!=null and cmeDesc!=''">
+			AND C.cme_desc=#{cmeDesc}
+		</if>
+		<if test="anonymous!=null">
+			AND C.anonymous=#{anonymous}
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			AND C.img_url=#{imgUrl}
+		</if>
+		<if test="status!=null">
+			AND C.status=#{status}
+		</if>
+		<if test="createTime!=null">
+			AND C.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND C.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND C.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND C.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND C.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND C.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND C.deleted=#{deleted}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND C.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="parentId!=null and parentId!=''">
+				AND C.parent_id LIKE CONCAT('%', #{parentId}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND C.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="fkId!=null and fkId!=''">
+				AND C.fk_id LIKE CONCAT('%', #{fkId}, '%')
+			</if>
+			<if test="cmeType!=null and cmeType!=''">
+				AND C.cme_type LIKE CONCAT('%', #{cmeType}, '%')
+			</if>
+			<if test="cmeDesc!=null and cmeDesc!=''">
+				AND C.cme_desc LIKE CONCAT('%', #{cmeDesc}, '%')
+			</if>
+			<if test="anonymous!=null">
+				AND C.anonymous=#{anonymous}
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND C.img_url LIKE CONCAT('%', #{imgUrl}, '%')
+			</if>
+			<if test="status!=null">
+				AND C.status=#{status}
+			</if>
+			<if test="createTime!=null">
+				AND C.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND C.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND C.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND C.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND C.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND C.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND C.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				C.id=#{id}, 
+		   </if>
+           <if test="parentId!=null">
+				C.parent_id=#{parentId}, 
+		   </if>
+           <if test="userId!=null">
+				C.user_id=#{userId}, 
+		   </if>
+           <if test="fkId!=null">
+				C.fk_id=#{fkId}, 
+		   </if>
+           <if test="cmeType!=null">
+				C.cme_type=#{cmeType}, 
+		   </if>
+           <if test="cmeDesc!=null">
+				C.cme_desc=#{cmeDesc}, 
+		   </if>
+           <if test="anonymous!=null">
+				C.anonymous=#{anonymous}, 
+		   </if>
+           <if test="imgUrl!=null">
+				C.img_url=#{imgUrl}, 
+		   </if>
+           <if test="status!=null">
+				C.status=#{status}, 
+		   </if>
+           <if test="createTime!=null">
+				C.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				C.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				C.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				C.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				C.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				C.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				C.deleted=#{deleted}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_COMMENT C
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="comment">
+		SELECT <include refid="field"/>
+		FROM TJY_COMMENT C
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="comment">
+		SELECT <include refid="field"/>
+		FROM TJY_COMMENT C
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="comment">
+		SELECT <include refid="field"/>
+		FROM TJY_COMMENT C
+		WHERE C.ID = #{id}
+	</select>
+	
+	
+	<select id="queryCommentByPid" resultType="java.util.HashMap" parameterType="String">
+		SELECT <include refid="fieldWithAlias"/>,U.nick_name as trueName 
+		FROM tjy_comment C left join User U on U.id=C.User_id
+		WHERE 1=1 and C.parent_id =#{pid,jdbcType=VARCHAR} order by C.create_time desc  
+	</select>
+	
+	<select id="selectAllCommentMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM tjy_comment C 
+		where 1=1 
+		<if test="parentId!=null and parentId!=''">
+			AND C.parent_id=#{parentId}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND C.user_id=#{userId}
+		</if>
+		<if test="fkId!=null and fkId!=''">
+			AND C.fk_id=#{fkId}
+		</if>
+		<if test="cmeType!=null and cmeType!=''">
+			AND C.cme_type=#{cmeType}
+		</if>
+		<if test="cmeDesc!=null and cmeDesc!=''">
+			AND C.cme_desc=#{cmeDesc}
+		</if>
+		and C.parent_id is null order by C.create_time  desc
+	</select>
+	<select id="selectAllCommentMapApp" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM tjy_comment C 
+		where 1=1 
+		<if test="parentId!=null and parentId!=''">
+			AND C.parent_id=#{parentId}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND C.user_id=#{userId}
+		</if>
+		<if test="fkId!=null and fkId!=''">
+			AND C.fk_id=#{fkId}
+		</if>
+		<if test="cmeType!=null and cmeType!=''">
+			AND C.cme_type=#{cmeType}
+		</if>
+		<if test="cmeDesc!=null and cmeDesc!=''">
+			AND C.cme_desc=#{cmeDesc}
+		</if>
+		and C.parent_id is null order by C.create_time  desc    
+		limit #{start},#{size}
+	</select>
+	
+	<select id="selectAllCommentMap2" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM tjy_comment C 
+		where 1=1 
+		<if test="parentId!=null and parentId!=''">
+			AND C.parent_id=#{parentId}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND C.user_id=#{userId}
+		</if>
+		<if test="fkId!=null and fkId!=''">
+			AND C.fk_id=#{fkId}
+		</if>
+		<if test="cmeType!=null and cmeType!=''">
+			AND C.cme_type=#{cmeType}
+		</if>
+		<if test="cmeDesc!=null and cmeDesc!=''">
+			AND C.cme_desc=#{cmeDesc}
+		</if>
+		and C.parent_id is null order by C.create_time  desc
+		<if test="fyFlag != null">
+			LIMIT #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="selectSumShafa" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT count(C.id)
+		FROM tjy_comment C 
+		WHERE  1=1
+		<if test="cmeType!=null and cmeType!=''">
+			and C.cme_type=#{cmeType}
+	    </if>
+		<if test="userId!=null and userId!=''">
+			and C.user_id=#{userId}
+	    </if>
+		
+	</select>
+	
+	<select id="selectAllCommentMap3" resultType="java.util.HashMap" parameterType="java.util.Map">
+			select S.* from 
+			(select P.*,
+			case when P.cme_type3='1' then (select a1.news_title  from tjy_news a1 where a1.id=P.fk_id2)
+			 when P.cme_type3='2' then (select a2.titles  from TJY_BUSINESS a2 left join tjy_business_disscuss bd on bd.fk_id = a2.id where bd.id=P.pid)
+			 when P.cme_type3='3' then (select a3.topic_desc from tjy_topic a3 where a3.id=P.fk_id2)
+			 when P.cme_type3='4' then (select a4.titles  from tjy_activity a4 where a4.id=P.fk_id2)
+			 when P.cme_type3='5' then (select a5.dy_content  from tjy_dynamic a5 where a5.id=P.fk_id2)
+			else '' 
+			end as title
+			 from 
+			(select C.* ,ifnull(C.parent_id,C.id) as pid, 
+			case when C.cme_type  is null  then (select concat(o.cme_type,'0') from tjy_comment o where o.id = C.parent_id) else C.cme_type end as cme_type2,
+			case when C.cme_type  is null  then (select o.cme_type  from tjy_comment o where o.id = C.parent_id) else C.cme_type end as cme_type3,
+			case when C.fk_id  is null  then (select o.fk_id from tjy_comment o where o.id = C.parent_id) else C.fk_id end as fk_id2,
+			 U.nickname as nickName ,  U.true_name as trueName ,  U.mobile as mobile 
+			FROM tjy_comment C 
+			left join tjy_user U on U.id=C.User_id)P)S
+			Where 1=1 and S.cme_type2 is not null 
+    	<if test="trueName != null and trueName != ''">
+			AND	S.trueName like CONCAT('%',#{trueName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="mobile!=null and mobile!=''">
+			AND	 S.mobile like CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="cmeDesc!=null and cmeDesc!=''">
+			AND	 S.cme_desc like CONCAT('%',#{cmeDesc,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="userId!=null and userId!=''">
+			AND	 S.user_id=#{userId,jdbcType=VARCHAR}
+		</if>
+		<if test="cmeType != null and cmeType != '' ">
+			AND	S.cme_type2  like CONCAT('%',#{cmeType,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="title != null and title != '' ">
+			AND	S.title  like CONCAT('%',#{title,jdbcType=VARCHAR},'%') 
+		</if>
+	
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND S.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND S.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND S.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+		order by  S.pid desc ,S.create_time desc
+	</select>
+	<select id="selectByParam" resultMap="comment" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_comment C 
+    	<include refid="dynamicWhere" />
+	</select>
+	
+	
+	<select id="selectAllCommentMap4" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM tjy_comment C 
+		where 1=1 
+		<if test="parentId!=null and parentId!=''">
+			AND C.parent_id=#{parentId}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND C.user_id=#{userId}
+		</if>
+		<if test="fkId!=null and fkId!=''">
+			AND C.fk_id=#{fkId}
+		</if>
+		<if test="cmeType!=null and cmeType!=''">
+			AND C.cme_type=#{cmeType}
+		</if>
+		<if test="cmeDesc!=null and cmeDesc!=''">
+			AND C.cme_desc=#{cmeDesc}
+		</if>
+		 order by C.create_time  desc
+	</select>
+	
+	
+
+	
+	
+	
+	
+	
+</mapper>

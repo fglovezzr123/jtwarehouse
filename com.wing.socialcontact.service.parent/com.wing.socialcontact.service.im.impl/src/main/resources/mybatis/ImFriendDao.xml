@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-03-26 19:21:38
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImFriendDao">
+
+	<resultMap id="imFriend" type="com.wing.socialcontact.service.im.bean.ImFriend">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="friendUser" column="friend_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="friendMemo" column="friend_memo" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="msgDisturb" column="msg_disturb" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="starFlag" column="star_flag" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="starFlagDate" column="star_flag_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		id, user_id, friend_user, friend_memo, 
+		create_time, update_time,msg_disturb,star_flag,star_flag_date
+	</sql>
+
+	
+	
+	<delete id="deleteById" parameterType="string">
+		DELETE FROM TJY_IM_FRIEND  WHERE ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imFriend" parameterType="string">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_FRIEND 
+		WHERE ID = #{id}
+	</select>
+	
+	<!--  根据用户id查询好友列表并已首字母排序含星标用户-->
+	<select id="findMyFriendListByUserId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.id,
+			t.user_id,
+			t.friend_user,
+			UPPER(
+				LEFT (getPY(t.friend_memo), 1)
+			) AS sort_letter,
+			t1.nickname as friend_memo,
+			IFNULL(t.msg_disturb,0) as msg_disturb,
+			IFNULL(t.star_flag,0) as star_flag,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.job,
+			t2.list_value AS job_name
+		FROM
+			tjy_im_friend t
+		JOIN tjy_user t1 ON t.friend_user = t1.id
+		join user t7 on t1.mall_user = t7.id
+		left JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.user_id = #{userId} 
+		<if test="isAll!=null and isAll == 0">
+			AND NOT EXISTS (
+				SELECT
+					t3.id,
+					t3.subject_id,
+					t3.relat_user
+				FROM
+					TJY_IM_TOPRELAT t3
+				WHERE
+					t3.subject_id = #{userId} and t3.relat_user = t.friend_user
+				AND t3.subject_type = 1
+			)
+		</if>
+		<if test="nickname!=null and nickname !=''">
+		and (t7.trueName like CONCAT('%', #{nickname}, '%') or t7.nick_name like CONCAT('%', #{nickname}, '%') or t7.mobile like CONCAT('%', #{nickname}, '%') or t.friend_memo like CONCAT('%', #{nickname}, '%') )
+		</if>
+		ORDER BY
+			UPPER(
+				LEFT (getPY(t.friend_memo), 1)
+			) ASC
+	</select>
+	
+	<!--  根据用户id查询好友列表并已首字母排序含星标用户-->
+	<select id="findMyFriendListByUserId3" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+		
+			t.user_id,
+			t.friend_user as id,
+			UPPER(
+				LEFT (getPY(t.friend_memo), 1)
+			) AS sort_letter,
+			t1.nickname as friend_memo,
+			IFNULL(t.msg_disturb,0) as msg_disturb,
+			IFNULL(t.star_flag,0) as star_flag,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.nickname as userName,
+			t1.nickname as trueName,
+			t1.mobile,
+			t1.job,
+			t2.list_value AS job_name
+		FROM
+			tjy_im_friend t
+		JOIN tjy_user t1 ON t.friend_user = t1.id
+		join user t7 on t1.mall_user = t7.id
+		left JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.user_id = #{userId} 
+		<if test="isAll!=null and isAll == 0">
+			AND NOT EXISTS (
+				SELECT
+					t3.id,
+					t3.subject_id,
+					t3.relat_user
+				FROM
+					TJY_IM_TOPRELAT t3
+				WHERE
+					t3.subject_id = #{userId} and t3.relat_user = t.friend_user
+				AND t3.subject_type = 1
+			)
+		</if>
+		<if test="nickname!=null and nickname !=''">
+		and (t7.trueName like CONCAT('%', #{nickname}, '%') or t7.nick_name like CONCAT('%', #{nickname}, '%') or t7.mobile like CONCAT('%', #{nickname}, '%') or t.friend_memo like CONCAT('%', #{nickname}, '%') )
+		</if>
+		ORDER BY
+			UPPER(
+				LEFT (getPY(t.friend_memo), 1)
+			) ASC
+	</select>
+	
+	<!--  根据用户id查询好友列表并已首字母排序不含星标用户 -->
+	<select id="findMyFriendListByUserId1" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.id,
+			t.user_id,
+			t.friend_user,
+			UPPER(
+				LEFT (getPY(t.friend_memo), 1)
+			) AS sort_letter,
+			t1.nickname as friend_memo,
+			IFNULL(t.msg_disturb,0) as msg_disturb,
+			IFNULL(t.star_flag,0) as star_flag,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.job,
+			t2.list_value AS job_name
+		FROM
+			tjy_im_friend t
+		JOIN tjy_user t1 ON t.friend_user = t1.id
+		join user t7 on t1.mall_user = t7.id
+		left JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.user_id = #{userId} and (t.star_flag = '0' or t.star_flag is null)  
+		<if test="isAll!=null and isAll == 0">
+			AND NOT EXISTS (
+				SELECT
+					t3.id,
+					t3.subject_id,
+					t3.relat_user
+				FROM
+					TJY_IM_TOPRELAT t3
+				WHERE
+					t3.subject_id = #{userId} and t3.relat_user = t.friend_user
+				AND t3.subject_type = 1
+			)
+		</if>
+		<if test="nickname!=null and nickname !=''">
+		and (t7.trueName like CONCAT('%', #{nickname}, '%') or t7.nick_name like CONCAT('%', #{nickname}, '%') or t7.mobile like CONCAT('%', #{nickname}, '%') or t.friend_memo like CONCAT('%', #{nickname}, '%') )
+		</if>
+		ORDER BY
+			UPPER(
+				LEFT (getPY(t.friend_memo), 1)
+			) ASC
+	</select>
+	
+	
+	
+	<!--  根据用户id查询星标好友 -->
+	<select id="findMyFriendListByUserId2" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.id,
+			t.user_id,
+			t.friend_user,
+			UPPER(
+				LEFT (getPY(t.friend_memo), 1)
+			) AS sort_letter,
+			t1.nickname as friend_memo,
+			IFNULL(t.msg_disturb,0) as msg_disturb,
+			IFNULL(t.star_flag,0) as star_flag,
+			t1.head_portrait,
+			IFNULL(t1.honor_title, '') AS honor_title,
+			IFNULL(t1.honor_flag, '') AS honor_flag,
+			t1.com_name,
+			t1.job,
+			t2.list_value AS job_name,
+			t.star_flag_date
+		FROM
+			tjy_im_friend t
+		JOIN tjy_user t1 ON t.friend_user = t1.id
+		join user t7 on t1.mall_user = t7.id
+		left JOIN list_values t2 ON t1.job = t2.id
+		WHERE
+			t.user_id = #{userId} and t.star_flag = '1'
+		
+		<if test="nickname!=null and nickname !=''">
+		and (t7.trueName like CONCAT('%', #{nickname}, '%') or t7.nick_name like CONCAT('%', #{nickname}, '%') or t7.mobile like CONCAT('%', #{nickname}, '%') or t.friend_memo like CONCAT('%', #{nickname}, '%') )
+		</if>
+		ORDER BY IFNULL(t.star_flag_date,t.create_time)  desc
+			
+	</select>
+	<select id="getStarFlag" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			*
+		FROM
+			tjy_im_friend t
+		WHERE
+			t.user_id = #{userId} and t.star_flag = '1' and   t.friend_user =#{friendUserId} 
+	</select>
+	<select id="selectStarFriendList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.*
+		FROM
+			tjy_im_friend t
+		WHERE
+			t.user_id = #{userId} and t.star_flag = '1' 
+		order by  t.create_time 
+	</select>
+	
+	<!--  根据用户id好友数量 -->
+	<select id="findMyFriendCountByUserId" resultType="int" parameterType="string">
+		SELECT
+			count(*)
+		FROM
+			tjy_im_friend t join user t1 on t.friend_user = t1.id
+		WHERE
+			t.user_id = #{userId}
+	</select>
+	
+	<!-- 根据用户id和好友id获取信息 -->
+	<select id="selectByUserIdAndFriendId" resultMap="imFriend" parameterType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_FRIEND
+		WHERE user_id = #{userId} and friend_user=#{friendUser}
+	</select>
+	
+	
+	<!--  获取共同的好友 -->
+	<select id="findCommonFriendsByUserAndUser" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.friend_user,
+			t.friend_memo,
+			t2.com_name,
+			t2.com_profile,
+			t2.job,
+			t3.list_value AS job_name,
+			t2.wechart,
+			t2.user_profile,
+			t2.province,
+			t4.dis_name AS province_name,
+			t2.city,
+			t5.dis_name AS city_name,
+			t2.county,
+			t6.dis_name AS county_name,
+			t2.region,
+			t2.industry,
+			t7.list_value AS industry_name,
+			t2.nickname,
+			t2.head_portrait,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag
+		FROM
+			(
+				SELECT
+					t.user_id,
+					t.friend_user,
+					t.friend_memo
+				FROM
+					tjy_im_friend t
+				WHERE
+					user_id = #{firstUserId}
+			) t
+		JOIN (
+			SELECT
+				t.user_id,
+				t.friend_user
+			FROM
+				tjy_im_friend t
+			WHERE
+				user_id =  #{sencondUserId}
+		) t1 ON t.friend_user = t1.friend_user
+		JOIN tjy_user t2 ON t.friend_user = t2.id
+		JOIN list_values t3 ON t2.job = t3.id
+		LEFT JOIN sy_district t4 ON t2.province = t4.id
+		LEFT JOIN sy_district t5 ON t2.city = t5.id
+		LEFT JOIN sy_district t6 ON t2.county = t6.id
+		LEFT JOIN list_values t7 ON t2.industry = t7.id
+	</select>
+	
+	
+	<!-- 获取我的好友的个人信息 -->
+	<select id="findMyFriendUserInfo" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.friend_user,
+			t.friend_memo,
+			IFNULL(t.msg_disturb, 0) AS msg_disturb,
+			(
+				CASE
+				WHEN t1.subject_id IS NULL THEN
+					0
+				ELSE
+					1
+				END
+			) AS is_top,
+			t2.com_name,
+			t2.com_profile,
+			t2.job,
+			t3.list_value AS job_name,
+			t2.wechart,
+			t2.user_profile,
+			t2.province,
+			t4.dis_name AS province_name,
+			t2.city,
+			t5.dis_name AS city_name,
+			t2.county,
+			t6.dis_name AS county_name,
+			t2.region,
+			t2.industry,
+			t7.list_value AS industry_name,
+			t2.nickname,
+			t2.head_portrait,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag
+		FROM
+			TJY_IM_FRIEND t
+		LEFT JOIN tjy_im_toprelat t1 ON t.user_id = t1.subject_id
+		AND t.friend_user = t1.relat_user
+		AND t1.subject_type = 1
+		JOIN tjy_user t2 ON t.friend_user = t2.id
+		JOIN list_values t3 ON t2.job = t3.id
+		LEFT JOIN sy_district t4 ON t2.province = t4.id
+		LEFT JOIN sy_district t5 ON t2.city = t5.id
+		LEFT JOIN sy_district t6 ON t2.county = t6.id
+		LEFT JOIN list_values t7 ON t2.industry = t7.id
+		WHERE
+			t.user_id =  #{userId}
+		AND t.friend_user =#{friendUser}
+	</select>
+	
+	<!--  查询好友列表 -->
+	<select id="findFriendListByParam" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.id,
+			t.mall_user,
+			t.open_id,
+			t.com_name,
+			t.com_profile,
+			t.job,
+			t1.list_value AS job_name,
+			t.wechart,
+			t.user_profile,
+			t.province,
+			t2.dis_name AS province_name,
+			t.city,
+			t3.dis_name AS city_name,
+			t.county,
+			t4.dis_name AS county_name,
+			t.region,
+			t.industry,
+			t5.list_value AS industry_name,
+			t.nickname,
+			t.true_name,
+			t.head_portrait,
+			IFNULL(t.honor_title, '') AS honor_title,
+			IFNULL(t.honor_flag, '') AS honor_flag,
+			t.leave_msg,
+			t.visit_quantity,
+			t.homepage_pic,
+			t.is_realname,
+			t.user_signature,
+			t7.mobile
+		FROM
+			tjy_user t
+		JOIN USER t7 ON t.mall_user = t7.id
+		LEFT JOIN list_values t1 ON t.job = t1.id
+		LEFT JOIN sy_district t2 ON t.province = t2.id
+		LEFT JOIN sy_district t3 ON t.city = t3.id
+		LEFT JOIN sy_district t4 ON t.county = t4.id
+		LEFT JOIN list_values t5 ON t.industry = t5.id
+		WHERE
+			EXISTS (
+				SELECT
+					1
+				FROM
+					tjy_im_friend t6
+				WHERE
+					t6.user_id = #{userId}
+				AND t6.friend_user = t.id
+			)
+			<if test="nickname!=null and nickname!=''">
+				AND t.nickname LIKE CONCAT('%', #{nickname}, '%')
+			</if>
+			<if test="comName!=null and comName!=''">
+				AND t.com_name LIKE CONCAT('%', #{comName}, '%')
+			</if>
+			<if test="jobName!=null and jobName!=''">
+				AND t1.list_value LIKE CONCAT('%', #{jobName}, '%')
+			</if>
+			<if test="cityName!=null and cityName!=''">
+				AND t3.dis_name  LIKE CONCAT('%', #{cityName}, '%')
+			</if>
+			<if test="industryName!=null and industryName!=''">
+				AND t5.list_value  LIKE CONCAT('%', #{industryName}, '%')
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND t7.mobile  LIKE CONCAT('%', #{mobile}, '%')
+			</if>
+	</select>
+	
+</mapper>

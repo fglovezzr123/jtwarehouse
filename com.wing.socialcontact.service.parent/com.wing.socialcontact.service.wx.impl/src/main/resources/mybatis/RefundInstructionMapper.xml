@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.RefundInstructionDao">
+
+	<resultMap id="BaseResultMap" type="java.util.HashMap">
+		<result property="id" column="id"  jdbcType="INTEGER"></result>
+		<result property="content" column="content"  jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark"  jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<select id="getclassMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_refund_instruction 
+		where id &lt; 3
+	</select>
+</mapper>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-03-26
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ProjectDao">
+
+	<resultMap id="project" type="com.wing.socialcontact.service.wx.bean.Project">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titles" column="titles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titles2" column="titles2" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjType" column="prj_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjPoster" column="prj_poster" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="financingSubject" column="financing_subject" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="financingPurpose" column="financing_purpose" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="availableData" column="available_data" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="region" column="region" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="industry" column="industry" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="financingAmount" column="financing_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="financingType" column="financing_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjPres" column="prj_pres" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjDesc" column="prj_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="startTime" column="start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="recommendId" column="recommend_id" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="coverImg" column="cover_img" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isApl" column="is_apl" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isRecommend" column="is_recommend" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="showEnable" column="show_enable" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="webinarId" column="webinar_id" javaType="String" jdbcType="VARCHAR"></result>
+		 <result property="webinarSubject" column="webinar_subject" javaType="String" jdbcType="VARCHAR"></result>
+		 <result property="sort" column="sort" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	<resultMap id="BaseResultMap" type="java.util.HashMap">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titles" column="titles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titles2" column="titles2" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjType" column="prj_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjPoster" column="prj_poster" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="financingSubject" column="financing_subject" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="financingPurpose" column="financing_purpose" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="availableData" column="available_data" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="region" column="region" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="industry" column="industry" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="financingAmount" column="financing_amount" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="financingType" column="financing_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjPres" column="prj_pres" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjDesc" column="prj_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="startTime" column="start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="recommendId" column="recommend_id" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="coverImg" column="cover_img" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isApl" column="is_apl" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isRecommend" column="is_recommend" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="showEnable" column="show_enable" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="webinarId" column="webinar_id" javaType="String" jdbcType="VARCHAR"></result>
+		 <result property="webinarSubject" column="webinar_subject" javaType="String" jdbcType="VARCHAR"></result>
+		 <result property="sort" column="sort" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		p.id, p.titles, p.titles2, p.prj_type, p.prj_poster, p.cover_img, p.is_apl, p.is_recommend, p.show_enable,
+		p.financing_subject, p.financing_purpose, p.available_data, p.region, p.sort,
+		p.industry, p.financing_amount, p.financing_type, p.prj_desc, p.prj_pres,
+		p.start_time, p.end_time, p.status, p.recommend_id, 
+		p.create_time, p.create_user_id, p.create_user_name, p.deleted,p.webinar_id,p.webinar_subject webinarSubject
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND p.id=#{id}
+			</if>
+			<if test="isApl!=null">
+				AND p.is_apl=#{isApl}
+			</if>
+			<if test="isRecommend!=null">
+				AND p.is_recommend=#{isRecommend}
+			</if>
+			<if test="showEnable!=null">
+				AND p.show_enable=#{showEnable}
+			</if>
+			<if test="titles!=null and titles!=''">
+				AND (p.titles like concat('%',#{titles},'%') or p.titles2 like concat('%',#{titles},'%'))
+			</if>
+			<if test="titles2!=null and titles2!=''">
+				AND (p.titles like concat('%',#{titles2},'%') or p.titles2 like concat('%',#{titles2},'%'))
+			</if>
+			<if test="prjType!=null and prjType!=''">
+				AND p.prj_type=#{prjType}
+			</if>
+			<if test="prjPoster!=null and prjPoster!=''">
+				AND p.prj_poster=#{prjPoster}
+			</if>
+			<if test="financingSubject!=null and financingSubject!=''">
+				AND p.financing_subject=#{financingSubject}
+			</if>
+			<if test="financingPurpose!=null and financingPurpose!=''">
+				AND p.financing_purpose=#{financingPurpose}
+			</if>
+			<if test="availableData!=null and availableData!=''">
+				AND p.available_data=#{availableData}
+			</if>
+			<if test="region!=null and region!=''">
+				AND p.region=#{region}
+			</if>
+			<if test="industry!=null and industry!=''">
+				AND p.industry=#{industry}
+			</if>
+			<if test="financingAmount!=null">
+				AND p.financing_amount=#{financingAmount}
+			</if>
+			<if test="financingType!=null and financingType!=''">
+				AND p.financing_type=#{financingType}
+			</if>
+			<if test="prjDesc!=null and prjDesc!=''">
+				AND p.prj_desc=#{prjDesc}
+			</if>
+			<if test="startTime!=null">
+				AND p.start_time=#{startTime}
+			</if>
+			<if test="endTime!=null">
+				AND p.end_time=#{endTime}
+			</if>
+			<if test="status!=null">
+				AND p.status=#{status}
+			</if>
+			<if test="recommendId!=null">
+				AND p.recommend_id=#{recommendId}
+			</if>
+			<if test="createTime!=null">
+				AND p.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND p.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+			</if>
+			<if test="createUserId!=null">
+				AND p.create_user_id=#{createUserId}
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND p.create_user_name=#{createUserName}
+			</if>
+			<if test="deleted!=null">
+				AND p.deleted=#{deleted}
+			</if>
+			
+			<if test="gtStartTime!=null">
+				AND p.start_time &gt; #{gtStartTime}
+			</if>
+			<if test="geStartTime!=null">
+				AND p.start_time &gt;= #{geStartTime}
+			</if>
+			<if test="ltStartTime!=null">
+				AND p.start_time &lt; #{ltStartTime}
+			</if>
+			<if test="leStartTime!=null">
+				AND p.start_time &lt;= #{leStartTime}
+			</if>
+			<if test="gtEndTime!=null">
+				AND p.end_time &gt; #{gtEndTime}
+			</if>
+			<if test="geEndTime!=null">
+				AND p.end_time &gt;= #{geEndTime}
+			</if>
+			<if test="ltEndTime!=null">
+				AND p.end_time &lt; #{ltEndTime}
+			</if>
+			<if test="leEndTime!=null">
+				AND p.end_time &lt;= #{leEndTime}
+			</if>
+			<if test="isWilled !=null and isWilled ==1">
+				AND EXISTS (SELECT 1 from tjy_project_will b where b.prj_id=p.id and b.user_id=#{userId})
+			</if>
+			<if test="isAttentioned !=null and isAttentioned ==1">
+				AND EXISTS (SELECT 1 from tjy_attention b where b.fk_id=p.id and b.user_id=#{userId})
+			</if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="project" parameterType="java.util.Map">
+		select 
+			<include refid="field"/>
+		from tjy_project p
+ 		<include refid="dynamicWhere"/>
+ 		<choose>
+ 		<when test="orderBy !=null and orderBy != ''">
+ 		${orderBy}
+ 		</when>
+ 		<otherwise>
+ 		order by p.sort desc,p.create_time desc
+ 		</otherwise>
+ 		</choose>
+	</select>
+	<select id="selectByMeetingId" resultMap="project" parameterType="java.lang.String">
+		select 
+			<include refid="field"/>
+		from tjy_project p
+ 		where p.id in (select project_id from tjy_meeting_project B where b.meeting_id = #{meetingId})
+	</select>
+	<select id="selectByProject" resultMap="project">
+		select 
+			<include refid="field"/>
+		from tjy_project p
+ 		<include refid="dynamicWhere"/>
+ 		<choose>
+ 		<when test="orderBy !=null and orderBy != ''">
+ 		${orderBy}
+ 		</when>
+ 		<otherwise>
+ 		order by p.sort desc,p.create_time desc
+ 		</otherwise>
+ 		</choose>
+	</select>
+	<select id="getTjyProjectByTerm" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select 
+			<include refid="field"/>,count(a.id) cou,at.id attId
+		from tjy_project p 
+		left join tjy_attention a on p.id =a.fk_id
+		left join tjy_attention at on #{userId}=at.user_id and at.fk_id=p.id
+ 		<include refid="dynamicWhere"/>
+		GROUP BY p.id
+ 		order by p.sort desc,p.create_time desc
+ 		limit #{start},#{size}
+	</select>
+	
+</mapper>

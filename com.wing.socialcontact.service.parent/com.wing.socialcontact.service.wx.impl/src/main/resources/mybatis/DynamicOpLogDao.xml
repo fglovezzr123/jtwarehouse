@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-19 14:19:54
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.DynamicOpLogDao">
+
+	<resultMap id="dynamicOpLog" type="com.wing.socialcontact.service.wx.bean.DynamicOpLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="dynamicId" column="dynamic_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="opType" column="op_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="actionTime" column="action_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		DOL.id, DOL.user_id, DOL.dynamic_id, DOL.op_type, 
+		DOL.action_time
+	</sql>
+	<delete id="deleteById">
+		DELETE DOL FROM TJY_DYNAMIC_OP_LOG DOL WHERE DOL.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="dynamicOpLog">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_OP_LOG DOL
+		WHERE DOL.ID = #{id}
+	</select>
+	<!-- 获取转发和点赞数量 -->
+	<select id="getCountByDynamicAndType" resultType="int" parameterType="java.util.HashMap">
+		SELECT count(*)
+		FROM TJY_DYNAMIC_OP_LOG DOL
+		WHERE DOL.dynamic_id = #{dynamicId}
+		and DOL.op_type = #{type}
+	</select>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND DOL.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND DOL.user_id=#{userId}
+		</if>
+		<if test="dynamicId!=null and dynamicId!=''">
+			AND DOL.dynamic_id=#{dynamicId}
+		</if>
+		<if test="opType!=null and opType!=''">
+			AND DOL.op_type=#{opType}
+		</if>
+		<if test="actionTime!=null and actionTime!=''">
+			AND DOL.action_time=#{actionTime}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<select id="selectAllDynamicOpLogMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_OP_LOG DOL
+		<include refid="dynamicWhere" />
+		
+	</select>
+	<select id="selectByParam" resultMap="dynamicOpLog" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_OP_LOG DOL
+    	<include refid="dynamicWhere" />
+	</select>
+	
+</mapper>

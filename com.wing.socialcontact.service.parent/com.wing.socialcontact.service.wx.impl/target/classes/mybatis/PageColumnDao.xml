@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-06-28 16:39:28
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.PageColumnDao">
+
+	<resultMap id="pageColumn" type="com.wing.socialcontact.service.wx.bean.PageColumn">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="columnName" column="column_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="showStyle" column="show_style" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="pageId" column="page_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="moreUrl" column="more_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="columnType" column="column_type" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="columnNum" column="column_num" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="elementKey" column="element_key" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="elementValue" column="element_value" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="columnStatus" column="column_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="pageColumnGlobal" type="com.wing.socialcontact.service.wx.bean.PageColumn">
+		<result property="id" column="PC_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="columnName" column="PC_column_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="showStyle" column="PC_show_style" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="orderNum" column="PC_order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="pageId" column="PC_page_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="moreUrl" column="PC_more_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="columnType" column="PC_column_type" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="columnNum" column="PC_column_num" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="elementKey" column="PC_element_key" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="elementValue" column="PC_element_value" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="columnStatus" column="column_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="remark" column="PC_remark" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		PC.id, PC.column_name, PC.show_style, PC.order_num, 
+		PC.page_id, PC.more_url, PC.column_type, PC.column_num, PC.element_key, PC.element_value, PC.column_status, PC.remark
+	</sql>
+
+	<sql id="fieldGlobal">
+		PC.id PC_id, PC.column_name PC_column_name, 
+		PC.show_style PC_show_style, PC.order_num PC_order_num, 
+		PC.page_id PC_page_id, PC.more_url PC_more_url, PC.column_type PC_column_type, PC.column_num PC_column_num, PC.element_key PC_element_key, PC.element_value PC_element_value, PC.column_status PC.column_status, PC.remark PC_remark
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		PC.id id, PC.column_name columnName, 
+		PC.show_style showStyle, PC.order_num orderNum, 
+		PC.page_id pageId, PC.more_url moreUrl, PC.column_type columnType, PC.column_num columnNum, PC.element_key elementKey, PC.element_value elementValue, PC.column_status columnStatus, PC.remark remark
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND PC.id=#{id}
+		</if>
+		<if test="columnName!=null and columnName!=''">
+			AND PC.column_name=#{columnName}
+		</if>
+		<if test="showStyle!=null">
+			AND PC.show_style=#{showStyle}
+		</if>
+		<if test="orderNum!=null">
+			AND PC.order_num=#{orderNum}
+		</if>
+		<if test="pageId!=null and pageId!=''">
+			AND PC.page_id=#{pageId}
+		</if>
+		<if test="moreUrl!=null and moreUrl!=''">
+			AND PC.more_url=#{moreUrl}
+		</if>
+		<if test="columnType!=null">
+			AND PC.column_type=#{columnType}
+		</if>
+		<if test="columnNum!=null">
+			AND PC.column_num=#{columnNum}
+		</if>
+		<if test="elementKey!=null and elementKey!=''">
+			AND PC.element_key=#{elementKey}
+		</if>
+		<if test="elementValue!=null and elementValue!=''">
+			AND PC.element_value=#{elementValue}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND PC.remark=#{remark}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND PC.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="columnName!=null and columnName!=''">
+				AND PC.column_name LIKE CONCAT('%', #{columnName}, '%')
+			</if>
+			<if test="showStyle!=null">
+				AND PC.show_style=#{showStyle}
+			</if>
+			<if test="orderNum!=null">
+				AND PC.order_num=#{orderNum}
+			</if>
+			<if test="pageId!=null and pageId!=''">
+				AND PC.page_id LIKE CONCAT('%', #{pageId}, '%')
+			</if>
+			<if test="moreUrl!=null and moreUrl!=''">
+				AND PC.more_url LIKE CONCAT('%', #{moreUrl}, '%')
+			</if>
+			<if test="columnType!=null">
+				AND PC.column_type=#{columnType}
+			</if>
+			<if test="columnNum!=null">
+				AND PC.column_num=#{columnNum}
+			</if>
+			<if test="elementKey!=null and elementKey!=''">
+				AND PC.element_key=#{elementKey}
+			</if>
+			<if test="elementValue!=null and elementValue!=''">
+				AND PC.element_value=#{elementValue}
+			</if>
+			<if test="columnStatus!=null and columnStatus!=''">
+				AND PC.column_status=#{columnStatus}
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND PC.remark=#{remark}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				PC.id=#{id}, 
+		   </if>
+           <if test="columnName!=null">
+				PC.column_name=#{columnName}, 
+		   </if>
+           <if test="showStyle!=null">
+				PC.show_style=#{showStyle}, 
+		   </if>
+           <if test="orderNum!=null">
+				PC.order_num=#{orderNum}, 
+		   </if>
+           <if test="pageId!=null">
+				PC.page_id=#{pageId}, 
+		   </if>
+           <if test="moreUrl!=null">
+				PC.more_url=#{moreUrl}, 
+		   </if>
+		   <if test="columnType!=null">
+				PC.column_type=#{columnType},
+			</if>
+			<if test="columnNum!=null">
+				PC.column_num=#{columnNum},
+			</if>
+			<if test="elementKey!=null and elementKey!=''">
+				PC.element_key=#{elementKey},
+			</if>
+			<if test="elementValue!=null and elementValue!=''">
+				PC.element_value=#{elementValue},
+			</if>
+			<if test="columnStatus!=null and columnStatus!=''">
+				PC.column_status=#{columnStatus},
+			</if>
+			<if test="remark!=null and remark!=''">
+				PC.remark=#{remark},
+			</if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE PC FROM TJY_PAGE_COLUMN PC WHERE PC.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_PAGE_COLUMN PC
+		SET 
+		PC.STATUS = -1
+		WHERE PC.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_PAGE_COLUMN PC
+		<include refid="dynamicSet" /> 
+	    WHERE PC.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="pageColumn">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_COLUMN PC
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_PAGE_COLUMN PC
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="pageColumn">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_COLUMN PC
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="pageColumn">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_COLUMN PC
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="pageColumn">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_COLUMN PC
+		WHERE PC.ID = #{id}
+	</select>
+	
+</mapper>

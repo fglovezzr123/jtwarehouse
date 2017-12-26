@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-17 09:54:05
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.DynamicPayLogDao">
+
+	<resultMap id="dynamicPayLog" type="com.wing.socialcontact.service.wx.bean.DynamicPayLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="dynamicId" column="dynamic_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mediaId" column="media_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="payAmount" column="pay_amount" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="actionTime" column="action_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="actionType" column="action_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		DPL.id, DPL.user_id, DPL.dynamic_id, DPL.media_id, 
+		DPL.pay_amount, DPL.action_time,DPL.action_type, DPL.status
+	</sql>
+	<delete id="deleteById">
+		DELETE DPL FROM TJY_DYNAMIC_PAY_LOG DPL WHERE DPL.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="dynamicPayLog">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_PAY_LOG DPL
+		WHERE DPL.ID = #{id}
+	</select>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND DPL.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND DPL.user_id=#{userId}
+		</if>
+		<if test="dynamicId!=null and dynamicId!=''">
+			AND DPL.dynamic_id=#{dynamicId}
+		</if>
+		<if test="mediaId!=null and mediaId!=''">
+			AND DPL.media_id=#{mediaId}
+		</if>
+		<if test="payAmount!=null and payAmount!=''">
+			AND DPL.pay_amount=#{payAmount}
+		</if>
+		<if test="actionTime!=null and actionTime!=''">
+			AND DPL.action_time=#{actionTime}
+		</if>
+		<if test="actionType!=null and actionType!=''">
+			AND DPL.action_type=#{actionType}
+		</if>
+		<if test="status!=null and status!=''">
+			AND DPL.status=#{status}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<select id="selectAllDynamicPayLogMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_PAY_LOG DPL
+		<include refid="dynamicWhere" />
+		
+	</select>
+	<select id="selectByParam" resultMap="dynamicPayLog" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_PAY_LOG DPL
+    	<include refid="dynamicWhere" />
+	</select>
+	
+</mapper>

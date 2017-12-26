@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.wx.dao.OrderItemDao">
+	<resultMap id="orderItem" type="com.tojoy.service.wx.bean.OrderItem">
+		<result property="id" column="id" javaType="long" jdbcType="INTEGER"></result>
+		<result property="order_Id" column="order_id" javaType="String"
+			jdbcType="VARCHAR"></result>
+		<result property="item_Id" column="item_Id" javaType="Long"
+			jdbcType="INTEGER"></result>
+		<result property="num" column="num" javaType="Long"
+			jdbcType="INTEGER"></result>
+		<result property="price" column="price" javaType="Double"
+			jdbcType="DECIMAL"></result>
+		<result property="total_Fee" column="total_Fee" javaType="Double"
+			jdbcType="DECIMAL"></result>
+		<result property="create_Time" column="create_time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+	</resultMap>
+
+	<sql id="orderItem">
+		m.id, m.order_id, m.item_id, m.num,
+		m.price,m.total_fee,m.create_time
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<!-- <if test="id!=null and id!=''"> AND m.id=#{id} </if> -->
+			<if test="order_Id!=null and order_Id!=''">
+				AND m.order_id=#{order_Id}
+			</if>
+			<if test="item_Id!=null and item_Id!=''">
+				AND m.item_id=#{item_Id}
+			</if>
+			<if test="num!=null and num!=''">
+				AND m.num=#{num}
+			</if>
+			<if test="price!=null and price!=''">
+				AND m.price=#{price}
+			</if>
+			<if test="total_Fee!=null and total_Fee!=''">
+				AND m.total_fee=#{total_Fee}
+			</if>
+			<if test="create_Time!=null">
+				AND m.create_time=#{create_Time}
+			</if>
+		</where>
+	</sql>
+	<sql id="dynamicSet">
+		<!-- <if test="id!=null and id!=''"> AND m.id=#{id} </if> -->
+			<if test="order_Id!=null and order_Id!=''">
+				m.order_id=#{order_Id}
+			</if>
+			<if test="item_Id!=null and item_Id!=''">
+				m.item_id=#{item_Id}
+			</if>
+			<if test="num!=null and num!=''">
+				m.num=#{num}
+			</if>
+			<if test="price!=null and price!=''">
+				m.price=#{price}
+			</if>
+			<if test="total_Fee!=null and total_Fee!=''">
+				m.total_fee=#{total_Fee}
+			</if>
+			<if test="create_Time!=null">
+				m.create_time=#{create_Time}
+			</if>
+	</sql>
+	<sql id="fields">
+			<if test="order_Id!=null and order_Id!=''">
+				order_id,
+			</if>
+			<if test="item_Id!=null and item_Id!=''">
+				item_id,
+			</if>
+			<if test="num!=null and num!=''">
+				num,
+			</if>
+			<if test="price!=null and price!=''">
+				price,
+			</if>
+			<if test="total_Fee!=null and total_Fee!=''">
+				total_fee,
+			</if>
+			<if test="create_Time!=null">
+				create_time,
+			</if>
+	</sql>
+	<sql id="values">
+		<if test="order_Id!=null and order_Id!=''">
+				#{order_Id},
+			</if>
+			<if test="item_Id!=null and item_Id!=''">
+				#{item_Id},
+			</if>
+			<if test="num!=null and num!=''">
+				#{num},
+			</if>
+			<if test="price!=null and price!=''">
+				#{price},
+			</if>
+			<if test="total_Fee!=null and total_Fee!=''">
+				#{total_Fee},
+			</if>
+			<if test="create_Time!=null">
+				#{create_Time},
+			</if>
+	</sql>
+
+	<!-- 生成约见订单 -->
+	<insert id="insertOrderItem" parameterType="com.tojoy.service.wx.bean.OrderItem">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_order_item(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+
+	<update id="updateOrderItem" parameterType="java.util.Map">
+		UPDATE tjy_order_item m
+		SET
+		<trim suffixOverrides=",">
+			<include refid="dynamicSet" />
+		</trim>
+		WHERE m.ID = #{id}
+	</update>
+
+	<select id="queryOrderItem" resultType="java.util.HashMap"
+		parameterType="com.tojoy.service.wx.bean.OrderItem">
+		SELECT
+		<include refid="orderItem" />
+		FROM
+		tjy_order_item m
+		<include refid="dynamicWhere" />
+	</select>
+	<select id="getOrderItem" parameterType="String" resultType="com.tojoy.service.wx.bean.OrderItem">
+		SELECT
+		<include refid="orderItem" />
+		FROM
+		tjy_order_item m
+		WHERE m.ID = #{id}
+	</select>
+</mapper>

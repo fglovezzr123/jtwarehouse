@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ProjectImagesDao">
+	<resultMap id="projectImages" type="com.wing.socialcontact.service.wx.bean.ProjectImages">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="projectId" column="project_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imageUrl" column="image_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		pi.id, pi.project_id, pi.image_url, pi.create_time, 
+		pi.deleted
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND pi.id=#{id}
+			</if>
+			<if test="projectid!=null and projectid!=''">
+				AND pi.project_id=#{projectid}
+			</if>
+			<if test="imageurl!=null and imageurl!=''">
+				AND pi.image_url=#{imageurl}
+			</if>
+			<if test="deleted!=null">
+				AND pi.deleted=#{deleted}
+			</if>
+			<if test="ids!=null and ids!=''">
+				AND pi.ID IN (${ids})
+		    </if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="projectImages" parameterType="java.util.Map">
+		select 
+			<include refid="field"/>
+		from tjy_project_images pi
+ 		<include refid="dynamicWhere"/>
+ 		order by pi.create_time asc
+	</select>
+</mapper>

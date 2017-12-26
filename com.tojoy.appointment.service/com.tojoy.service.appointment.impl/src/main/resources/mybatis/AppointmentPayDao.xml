@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.wx.dao.AppointmentPayDao">
+	<resultMap id="appointmentPay" type="com.tojoy.service.wx.bean.AppointmentPay">
+		<result property="id" column="id" javaType="long" jdbcType="INTEGER"></result>
+		<result property="from_Id" column="from_id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="to_Id" column="to_id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="create_Time" column="create_time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="expect_Time" column="expect_time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="estimateTimeLength" column="estimateTimeLength"
+			javaType="long" jdbcType="VARCHAR"></result>
+		<result property="estimateEnd_Time" column="estimateEnd_time"
+			javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="start_time" column="start_time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="duration" column="duration" javaType="long"
+			jdbcType="VARCHAR"></result>
+		<result property="actualEnd_Time" column="actualEnd_time"
+			javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="msg" column="msg" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="appointmentStatus" column="appointmentStatus"
+			javaType="String" jdbcType="CHAR"></result>
+		<result property="type" column="type" javaType="String"
+			jdbcType="CHAR"></result>
+	</resultMap>
+
+	<sql id="appointmentPay">
+		m.id, m.from_id, m.to_id, m.status,
+		m.create_time,m.expect_time, m.estimateTimeLength,
+		m.estimateEnd_time,
+		m.start_time, m.duration, m.actualEnd_time,m.msg,
+		m.appointmentStatus, m.type
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<!-- <if test="id!=null and id!=''"> AND m.id=#{id} </if> -->
+			<if test="from_Id!=null and from_Id!=''">
+				AND m.from_id=#{from_Id}
+			</if>
+			<if test="to_Id!=null and to_Id!=''">
+				AND m.to_id=#{to_Id}
+			</if>
+			<if test="status!=null and status!=''">
+				AND m.status=#{status}
+			</if>
+			<if test="create_Time!=null">
+				AND m.create_time=#{create_Time}
+			</if>
+			<if test="expect_Time!=null">
+				AND m.expect_time=#{expect_Time}
+			</if>
+			<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+				AND m.estimateTimeLength=#{estimateTimeLength}
+			</if>
+			<if test="estimateEnd_Time!=null">
+				AND m.estimateEnd_time=#{estimateEnd_Time}
+			</if>
+			<if test="start_Time !=null">
+				AND m.start_time=#{start_Time}
+			</if>
+			<if test="duration!=null and duration!=''">
+				AND m.duration=#{duration}
+			</if>
+			<if test="actualEnd_Time!=null">
+				AND m.actualEnd_time=#{actualEnd_Time}
+			</if>
+			<if test="msg!=null and msg!=''">
+				AND m.msg=#{msg}
+			</if>
+			<if test="appointmentStatus!=null and appointmentStatus!=''">
+				AND m.appointmentStatus=#{appointmentStatus}
+			</if>
+			<if test="type!=null and type!=''">
+				AND m.type=#{type}
+			</if>
+		</where>
+	</sql>
+	<sql id="dynamicSet">
+		<!-- <if test="id!=null and id!=''"> AND m.id=#{id} </if> -->
+		<if test="from_Id!=null and from_Id!=''">
+			m.from_id=#{from_Id},
+		</if>
+		<if test="to_Id!=null and to_Id!=''">
+			m.to_id=#{to_Id},
+		</if>
+		<if test="status!=null and status!=''">
+			m.status=#{status},
+		</if>
+		<if test="create_Time!=null">
+			m.create_time=#{create_Time},
+		</if>
+		<if test="expect_Time!=null">
+			m.expect_time=#{expect_Time},
+		</if>
+		<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+			m.estimateTimeLength=#{estimateTimeLength},
+		</if>
+		<if test="estimateEnd_Time!=null">
+			m.estimateEnd_time=#{estimateEnd_Time},
+		</if>
+		<if test="start_Time !=null">
+			m.start_time=#{start_Time},
+		</if>
+		<if test="duration!=null and duration!=''">
+			m.duration=#{duration},
+		</if>
+		<if test="actualEnd_Time!=null">
+			m.actualEnd_time=#{actualEnd_Time},
+		</if>
+		<if test="msg!=null and msg!=''">
+			m.msg=#{msg},
+		</if>
+		<if test="appointmentStatus!=null and appointmentStatus!=''">
+			m.appointmentStatus=#{appointmentStatus},
+		</if>
+		<if test="type!=null and type!=''">
+			m.type=#{type},
+		</if>
+	</sql>
+	<sql id="fields">
+		<if test="from_Id!=null and from_Id!=''">
+			from_id,
+		</if>
+		<if test="to_Id!=null and to_Id!=''">
+			to_id,
+		</if>
+		<if test="status!=null and status!=''">
+			status,
+		</if>
+		<if test="expect_Time!=null">
+			expect_time,
+		</if>
+		<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+			estimateTimeLength,
+		</if>
+		<if test="estimateEnd_Time!=null">
+			estimateEnd_time,
+		</if>
+		<if test="start_Time!=null">
+			start_time,
+		</if>
+		<if test="duration!=null and duration!=''">
+			duration,
+		</if>
+		<if test="actualEnd_Time!=null and actualEnd_Time!=''">
+			actualEnd_time,
+		</if>
+		<if test="msg!=null and msg!=''">
+			msg,
+		</if>
+		<if test="appointmentStatus!=null and appointmentStatus!=''">
+			appointmentStatus,
+		</if>
+		<if test="type!=null and type!=''">
+			type,
+		</if>
+	</sql>
+	<sql id="values">
+		<if test="from_Id!=null and from_Id!=''">
+			#{from_Id},
+		</if>
+		<if test="to_Id!=null and to_Id!=''">
+			#{to_Id},
+		</if>
+		<if test="status!=null and status!=''">
+			#{status},
+		</if>
+		<if test="expect_Time!=null">
+			#{expect_Time},
+		</if>
+		<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+			#{estimateTimeLength},
+		</if>
+		<if test="estimateEnd_Time!=null">
+			#{estimateEnd_Time},
+		</if>
+		<if test="start_Time!=null">
+			#{start_Time},
+		</if>
+		<if test="duration!=null and duration!=''">
+			#{duration},
+		</if>
+		<if test="actualEnd_Time!=null and actualEnd_Time!=''">
+			#{actualEnd_Time},
+		</if>
+		<if test="msg!=null and msg!=''">
+			#{msg},
+		</if>
+		<if test="appointmentStatus!=null and appointmentStatus!=''">
+			#{appointmentStatus},
+		</if>
+		<if test="type!=null and type!=''">
+			#{type},
+		</if>
+	</sql>
+
+	<!-- 生成约见订单 -->
+	<insert id="insertAppointmentPay" parameterType="com.tojoy.service.wx.bean.AppointmentPay">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_appointment_pay(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+
+	<update id="updateAppointmentPay" parameterType="java.util.Map">
+		UPDATE tjy_appointment_pay m
+		SET
+		<trim suffixOverrides=",">
+			<include refid="dynamicSet" />
+		</trim>
+		WHERE m.ID = #{id}
+	</update>
+
+	<select id="queryAppointmentPay" resultType="java.util.HashMap"
+		parameterType="com.tojoy.service.wx.bean.AppointmentPay">
+		SELECT
+		<include refid="appointmentPay" />
+		FROM
+		tjy_appointment_pay m
+		<include refid="dynamicWhere" />
+	</select>
+	<select id="getAppointmentPay" parameterType="String" resultType="com.tojoy.service.wx.bean.AppointmentPay">
+		SELECT
+		<include refid="appointmentPay" />
+		FROM
+		tjy_appointment_pay m
+		WHERE m.ID = #{id}
+	</select>
+	<!-- 获取被约见人是自己的待约见 -->
+	<select id="getDyjList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. status,
+		t1.create_time,
+		t1.expect_time,
+		t1.estimateTimeLength,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_appointment_pay
+			WHERE
+				to_id = #{to_Id}
+			AND status = 0
+		) t1
+	LEFT JOIN (
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			t1.list_value AS job,
+			com_name
+		FROM
+			tjy_user t
+		LEFT JOIN list_values t1 ON t.job = t1.id
+	) t2 ON t1.to_id = t2.id
+	ORDER BY
+		create_time DESC
+	</select>
+	<!-- 获取所有待约见 -->
+	<select id="getDyjAllList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. status,
+		t1.create_time,
+		t1.expect_time,
+		t1.estimateTimeLength,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_appointment_pay
+			WHERE
+				status = 0 and
+				(from_id = #{userId}
+			OR to_id = #{userId})
+		) t1
+	LEFT JOIN (
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			t1.list_value AS job,
+			com_name
+		FROM
+			tjy_user t
+		LEFT JOIN list_values t1 ON t.job = t1.id
+	) t2 ON t1.to_id = t2.id
+	ORDER BY
+		create_time DESC
+	</select>
+	<select id="getYyjList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	SELECT
+		t1.id,
+		t1.from_id,
+		t1.to_id,
+		t1. status,
+		t1.create_time,
+		t1.expect_time,
+		t1.msg,
+		t2.nickname,
+		t2.head_portrait,
+		t2.job,
+		t2.com_name
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				tjy_appointment_pay
+			WHERE
+				from_id = #{from_Id}
+			AND (status = 1 OR status = 3)
+		) t1
+	LEFT JOIN (
+		SELECT
+			t.id,
+			t.nickname,
+			t.head_portrait,
+			t1.list_value AS job,
+			com_name
+		FROM
+			tjy_user t
+		LEFT JOIN list_values t1 ON t.job = t1.id
+	) t2 ON t1.to_id = t2.id
+	ORDER BY
+		create_time DESC
+	</select>
+	
+	<!-- 获取用户爱好 -->
+	<select id="getUserHobby" resultType="String" parameterType="String">
+	SELECT
+		hobby
+	FROM
+		(
+			SELECT
+				user_id,
+				GROUP_CONCAT(list_value) AS hobby
+			FROM
+				(
+					SELECT
+						t1.user_id,
+						t2.*
+					FROM
+						(
+							SELECT
+								fav_id,
+								user_id
+							FROM
+								tjy_user_fav
+							WHERE
+								user_id = #{userId}
+						) t1
+					LEFT JOIN list_values t2 ON t1.fav_id = t2.id
+			) o
+	) oo
+	</select>
+</mapper>

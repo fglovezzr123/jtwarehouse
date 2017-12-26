@@ -1,0 +1,95 @@
+@charset "utf-8";
+.Z-content{
+	width: 100%;
+	padding: 0 .30rem;
+	background: #fff;
+	font-size: .30rem;
+	color: #8B8B8B;
+	box-sizing: border-box;
+}
+.Z-content .cphone{
+	width: 100%;
+	height: 1rem;
+	display: flex;
+	justify-content: space-between;
+}
+.Z-content input{
+	font-size:.30rem;
+}
+.Z-content .cphone img{
+	width: .36rem;
+	height: .40rem;
+	margin-top: .30rem;
+}
+.Z-content .cphone .pz{
+	width: 6.24rem;
+	border-bottom: 1px #F2F3F4 solid;
+}
+.Z-content .cphone .zr{
+	display: flex;
+	justify-content: space-between;
+}
+.Z-content .cphone .zr img{
+	width: 1.4rem;
+	height: .52rem;
+}
+.Z-content .cphone .zr span{
+	width: 1.95rem;
+	height: .60rem;
+	border: #0f88eb 1px solid;
+	color: #0f88eb;
+	box-sizing: border-box;
+	text-align: center;
+	line-height: .60rem;
+	border-radius: .2rem;
+	margin-top: .20rem;
+	font-size: .28rem;
+}
+.btn-z{
+	display: block;
+	width: 6.9rem;
+	height: .80rem;
+	color: #fff;
+	background: #0f88eb;
+	text-align: center;
+	line-height: .80rem;
+	border-radius: .40rem;
+	margin: .55rem 0 0 .30rem;
+	font-size: .30rem;
+}
+.Z-content .cphone .zr span.active_A:before{
+	border-radius: .2rem;
+}
+.btn-z.active_A:before{
+	border-radius: .40rem;
+}
+.tip {
+    padding:0 .3rem;
+    display: block;
+    color: #666;
+    font-size: .3rem;
+    margin-top: .18rem;
+    display: flex;
+    align-items: center;
+  }
+  .tip span{
+    margin-left: .1rem;
+  }
+  .tip a{
+    color:#0f88eb
+  }
+  input[type=checkbox] {
+     -webkit-appearance: none;
+     width:.3rem;
+     height:.3rem;
+     border-radius:100%;
+     background:url(../img/icons/check1.png) no-repeat;
+     background-size: 100%;
+  }
+  input[type=checkbox]:checked {
+      background:url(../img/icons/check2.png) no-repeat;
+      background-size: 100%
+  }
+.btn{ text-align:right;color:#fff; display:block; height: .80rem; font-size: .30rem;margin: .20rem .30rem 0 0;} 
+.btn a{ display:block; color:#fff;}
+.btnnobg a{ color:#000; line-height:3em;}

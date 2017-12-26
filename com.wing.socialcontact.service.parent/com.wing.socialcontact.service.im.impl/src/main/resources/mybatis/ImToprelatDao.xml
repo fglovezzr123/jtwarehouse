@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-03 18:37:16
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImToprelatDao">
+
+	<resultMap id="imToprelat" type="com.wing.socialcontact.service.im.bean.ImToprelat">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="subjectId" column="subject_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="subjectType" column="subject_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="relatUser" column="relat_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="topTime" column="top_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		IT.id, IT.subject_id, IT.subject_type, IT.relat_user, 
+		IT.top_time
+	</sql>
+	<delete id="deleteById">
+		DELETE IT FROM TJY_IM_TOPRELAT IT WHERE IT.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imToprelat">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_TOPRELAT IT
+		WHERE IT.ID = #{id}
+	</select>
+	
+	<select id="loadByCondition" resultMap="imToprelat" parameterType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_TOPRELAT IT
+		WHERE IT.subject_id = #{subjectId} and IT.relat_user = #{userId} and IT.subject_type = #{subjectType}
+	</select>
+	
+	<!-- 根据用户id获取置顶列表 -->
+	<select id="loadTopUserListByUserId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.subject_id,
+			t.subject_type,
+			t.relat_user,
+			t.top_time,
+			t1.friend_memo,
+			t2.com_name,
+			t2.head_portrait,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag,
+			t2.job,
+			t3.list_value as job_name
+		FROM
+			TJY_IM_TOPRELAT t
+		JOIN tjy_im_friend t1 ON t.subject_id = t1.user_id
+		AND t.relat_user = t1.friend_user
+		JOIN tjy_user t2 on t.relat_user = t2.id
+		JOIN list_values t3 on t2.job = t3.id and t3.list_type = '12'
+		WHERE
+			t.subject_id = #{userId}
+		AND t.subject_type = 1
+		ORDER BY
+			top_time DESC
+	</select>
+	
+	<!-- 根据用户id 获取置顶群列表 -->
+	<select id="loadTopGroupListByUserId" resultType="java.util.HashMap" parameterType="string">
+	SELECT
+		t.subject_id,
+		t.top_time,
+		t2.id AS group_id,
+		t2.group_no,
+		t2.group_name,
+		t2.group_desc,
+		t2.creator,
+		t2.create_time,
+		t2.group_type,
+		t2.head_portrait,
+		t2.members_max
+	FROM
+		TJY_IM_TOPRELAT t
+	JOIN tjy_im_groupinfo t2 ON t.subject_id = t2.id
+	WHERE
+		t.relat_user = #{userId}
+	AND t.subject_type = 2
+	AND t2.deleted = 0
+	ORDER BY
+		top_time DESC
+	</select>
+	
+	<!-- 根据群id获取置顶列表 -->
+	<select id="loadTopUserListByGroupId" resultType="java.util.HashMap" parameterType="string">
+			SELECT
+			t.subject_id,
+			t.subject_type,
+			t.relat_user,
+			t.top_time,
+			t1.nickname,
+			t2.com_name,
+			t2.head_portrait,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag,
+			t2.job,
+			t3.list_value as job_name
+		FROM
+			TJY_IM_TOPRELAT t
+		JOIN tjy_im_groupusers t1 ON t.subject_id = t1.group_id
+		AND t.relat_user = t1.user_id
+		JOIN tjy_user t2 on t.relat_user = t2.id
+		JOIN list_values t3 on t2.job = t3.id and t3.list_type = '12'
+		WHERE
+			t.subject_id = #{groupId}
+		AND t.subject_type = 2
+		ORDER BY
+			top_time DESC
+	</select>
+	
+</mapper>

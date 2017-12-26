@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-04-14 22:34:36
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserFriendimpressDao">
+
+	<resultMap id="userFriendimpress" type="com.wing.socialcontact.service.wx.bean.UserFriendimpress">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="impressId" column="impress_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="impressCount" column="impress_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="sortno" column="sortno" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="userFriendimpressGlobal" type="com.wing.socialcontact.service.wx.bean.UserFriendimpress">
+		<result property="id" column="UF_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="UF_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="impressId" column="UF_impress_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="impressCount" column="UF_impress_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="sortno" column="UF_sortno" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="UF_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="UF_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="UF_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="UF_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="UF_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UF.id, UF.user_id, UF.impress_id, UF.impress_count, 
+		UF.sortno, UF.type, UF.create_time, UF.create_user_id, 
+		UF.create_user_name, UF.deleted
+	</sql>
+
+	<sql id="fieldGlobal">
+		UF.id UF_id, UF.user_id UF_user_id, 
+		UF.impress_id UF_impress_id, UF.impress_count UF_impress_count, 
+		UF.sortno UF_sortno, UF.type UF_type, 
+		UF.create_time UF_create_time, UF.create_user_id UF_create_user_id, 
+		UF.create_user_name UF_create_user_name, UF.deleted UF_deleted
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UF.id id, UF.user_id userId, 
+		UF.impress_id impressId, UF.impress_count impressCount, 
+		UF.sortno sortno, UF.type type, 
+		UF.create_time createTime, UF.create_user_id createUserId, 
+		UF.create_user_name createUserName, UF.deleted deleted
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UF.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND UF.user_id=#{userId}
+		</if>
+		<if test="impressId!=null and impressId!=''">
+			AND UF.impress_id=#{impressId}
+		</if>
+		<if test="impressCount!=null">
+			AND UF.impress_count=#{impressCount}
+		</if>
+		<if test="sortno!=null">
+			AND UF.sortno=#{sortno}
+		</if>
+		<if test="type!=null">
+			AND UF.type=#{type}
+		</if>
+		<if test="createTime!=null">
+			AND UF.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UF.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND UF.create_user_name=#{createUserName}
+		</if>
+		<if test="deleted!=null">
+			AND UF.deleted=#{deleted}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UF.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND UF.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="impressId!=null and impressId!=''">
+				AND UF.impress_id LIKE CONCAT('%', #{impressId}, '%')
+			</if>
+			<if test="impressCount!=null">
+				AND UF.impress_count=#{impressCount}
+			</if>
+			<if test="sortno!=null">
+				AND UF.sortno=#{sortno}
+			</if>
+			<if test="type!=null">
+				AND UF.type=#{type}
+			</if>
+			<if test="createTime!=null">
+				AND UF.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND UF.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND UF.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND UF.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UF.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				UF.user_id=#{userId}, 
+		   </if>
+           <if test="impressId!=null">
+				UF.impress_id=#{impressId}, 
+		   </if>
+           <if test="impressCount!=null">
+				UF.impress_count=#{impressCount}, 
+		   </if>
+           <if test="sortno!=null">
+				UF.sortno=#{sortno}, 
+		   </if>
+           <if test="type!=null">
+				UF.type=#{type}, 
+		   </if>
+           <if test="createTime!=null">
+				UF.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				UF.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				UF.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				UF.deleted=#{deleted}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+
+	<select id="load" resultMap="userFriendimpress">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FRIENDIMPRESS UF
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_USER_FRIENDIMPRESS UF
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="userFriendimpress">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FRIENDIMPRESS UF
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="userFriendimpress">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FRIENDIMPRESS UF
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="userFriendimpress">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FRIENDIMPRESS UF
+		WHERE UF.ID = #{id}
+	</select>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.*,v.list_value listValue 
+		FROM TJY_USER_FRIENDIMPRESS t 
+		left join list_values v  
+		on t.impress_id = v.id  
+        where 1=1 and v.list_value is not null 
+        <if test="createUserId!=null and createUserId!=''">
+		  and t.create_user_id = #{createUserId}
+		</if>
+        <if test="userId != null and userId != ''">
+		  and  t.user_id = #{userId}
+		</if>
+		<if test="type==0">
+		  and t.type = 0
+	   	 </if>
+		<if test="type==1">
+		  and t.type = 1
+	   	 </if>
+		<if test="type==2">
+		  and t.type = 2
+	   	 </if>
+		order by t.create_time desc
+	</select>
+	
+	<select id="selectcountByUserId" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select o.impress_id,count(o.id) as impresscount,v.list_value from tjy_user_friendimpress o left join list_values v  
+		on o.impress_id = v.id 
+        where 1=1 and v.list_value is not null 
+        <if test="userId != null and userId != ''">
+		  and  o.user_id = #{userId}
+		</if>
+		<if test="type==0">
+		  and o.type = 0
+	   	 </if>
+		<if test="type==1">
+		  and o.type = 1
+	   	 </if>
+		<if test="type==2">
+		  and o.type = 2
+	   	 </if>
+		 GROUP BY o.impress_id
+	</select>
+	
+	<select id="selectByType" resultMap="userFriendimpress" parameterType="java.util.Map">
+		SELECT t.*
+		FROM TJY_USER_FRIENDIMPRESS t 
+ 		WHERE 1=1
+		order by t.order_num
+	</select>
+	
+	<select id="selectAllUserFriendimpressMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM TJY_USER_FRIENDIMPRESS UF
+		where 1=1
+		<if test="userId!=null and userId!=''">
+			AND UF.user_id =#{userId}
+		</if>
+		<if test="impressId!=null and impressId!=''">
+			AND UF.impress_id =#{impressId}
+		</if>
+		<if test="type==0">
+		  and UF.type = 0
+	   	 </if>
+		<if test="type==1">
+		  and UF.type = 1
+	   	 </if>
+		<if test="type==2">
+		  and UF.type = 2
+	   	 </if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UF.create_user_id = #{createUserId}
+		</if>
+		order by UF.sortno  
+	</select>
+	
+	
+	
+</mapper>

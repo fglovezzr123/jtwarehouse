@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-07-04 15:30:54
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserEmpiricalLogDao">
+
+	<resultMap id="userEmpiricalLog" type="com.wing.socialcontact.service.wx.bean.UserEmpiricalLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskCode" column="task_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskName" column="task_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="empiricalType" column="empirical_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="empirical" column="empirical" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="yeEmpirical" column="ye_empirical" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalExplain" column="empirical_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="taskStatus" column="task_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="userEmpiricalLogGlobal" type="com.wing.socialcontact.service.wx.bean.UserEmpiricalLog">
+		<result property="id" column="UEL_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="UEL_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskCode" column="UEL_task_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskName" column="UEL_task_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="empiricalType" column="UEL_empirical_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="empirical" column="UEL_empirical" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="yeEmpirical" column="UEL_ye_empirical" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalExplain" column="UEL_empirical_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="UEL_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="UEL_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="UEL_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="UEL_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="UEL_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="UEL_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="UEL_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="UEL_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="taskStatus" column="UEL_task_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UEL.id, UEL.user_id, UEL.task_code, UEL.task_name, 
+		UEL.empirical_type, UEL.empirical, UEL.ye_empirical, UEL.empirical_explain, 
+		UEL.remark, UEL.create_time, UEL.create_user_id, UEL.create_user_name, 
+		UEL.update_time, UEL.update_user_id, UEL.update_user_name, UEL.deleted, 
+		UEL.task_status
+	</sql>
+
+	<sql id="fieldGlobal">
+		UEL.id UEL_id, UEL.user_id UEL_user_id, 
+		UEL.task_code UEL_task_code, UEL.task_name UEL_task_name, 
+		UEL.empirical_type UEL_empirical_type, UEL.empirical UEL_empirical, 
+		UEL.ye_empirical UEL_ye_empirical, UEL.empirical_explain UEL_empirical_explain, 
+		UEL.remark UEL_remark, UEL.create_time UEL_create_time, 
+		UEL.create_user_id UEL_create_user_id, UEL.create_user_name UEL_create_user_name, 
+		UEL.update_time UEL_update_time, UEL.update_user_id UEL_update_user_id, 
+		UEL.update_user_name UEL_update_user_name, UEL.deleted UEL_deleted, 
+		UEL.task_status UEL_task_status
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UEL.id id, UEL.user_id userId, 
+		UEL.task_code taskCode, UEL.task_name taskName, 
+		UEL.empirical_type empiricalType, UEL.empirical empirical, 
+		UEL.ye_empirical yeEmpirical, UEL.empirical_explain empiricalExplain, 
+		UEL.remark remark, UEL.create_time createTime, 
+		UEL.create_user_id createUserId, UEL.create_user_name createUserName, 
+		UEL.update_time updateTime, UEL.update_user_id updateUserId, 
+		UEL.update_user_name updateUserName, UEL.deleted deleted, 
+		UEL.task_status taskStatus
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UEL.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND UEL.user_id=#{userId}
+		</if>
+		<if test="taskCode!=null and taskCode!=''">
+			AND UEL.task_code=#{taskCode}
+		</if>
+		<if test="taskName!=null and taskName!=''">
+			AND UEL.task_name=#{taskName}
+		</if>
+		<if test="empiricalType!=null and empiricalType!=''">
+			AND UEL.empirical_type=#{empiricalType}
+		</if>
+		<if test="empirical!=null">
+			AND UEL.empirical=#{empirical}
+		</if>
+		<if test="yeEmpirical!=null">
+			AND UEL.ye_empirical=#{yeEmpirical}
+		</if>
+		<if test="empiricalExplain!=null and empiricalExplain!=''">
+			AND UEL.empirical_explain=#{empiricalExplain}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND UEL.remark=#{remark}
+		</if>
+		<if test="createTime!=null">
+			AND UEL.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UEL.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND UEL.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND UEL.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND UEL.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND UEL.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND UEL.deleted=#{deleted}
+		</if>
+		<if test="taskStatus!=null and taskStatus!=''">
+			AND UEL.task_status=#{taskStatus}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UEL.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND UEL.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="taskCode!=null and taskCode!=''">
+				AND UEL.task_code LIKE CONCAT('%', #{taskCode}, '%')
+			</if>
+			<if test="taskName!=null and taskName!=''">
+				AND UEL.task_name LIKE CONCAT('%', #{taskName}, '%')
+			</if>
+			<if test="empiricalType!=null and empiricalType!=''">
+				AND UEL.empirical_type LIKE CONCAT('%', #{empiricalType}, '%')
+			</if>
+			<if test="empirical!=null">
+				AND UEL.empirical=#{empirical}
+			</if>
+			<if test="yeEmpirical!=null">
+				AND UEL.ye_empirical=#{yeEmpirical}
+			</if>
+			<if test="empiricalExplain!=null and empiricalExplain!=''">
+				AND UEL.empirical_explain LIKE CONCAT('%', #{empiricalExplain}, '%')
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND UEL.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND UEL.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND UEL.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND UEL.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND UEL.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND UEL.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND UEL.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND UEL.deleted=#{deleted}
+			</if>
+			<if test="taskStatus!=null and taskStatus!=''">
+				AND UEL.task_status LIKE CONCAT('%', #{taskStatus}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UEL.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				UEL.user_id=#{userId}, 
+		   </if>
+           <if test="taskCode!=null">
+				UEL.task_code=#{taskCode}, 
+		   </if>
+           <if test="taskName!=null">
+				UEL.task_name=#{taskName}, 
+		   </if>
+           <if test="empiricalType!=null">
+				UEL.empirical_type=#{empiricalType}, 
+		   </if>
+           <if test="empirical!=null">
+				UEL.empirical=#{empirical}, 
+		   </if>
+           <if test="yeEmpirical!=null">
+				UEL.ye_empirical=#{yeEmpirical}, 
+		   </if>
+           <if test="empiricalExplain!=null">
+				UEL.empirical_explain=#{empiricalExplain}, 
+		   </if>
+           <if test="remark!=null">
+				UEL.remark=#{remark}, 
+		   </if>
+           <if test="createTime!=null">
+				UEL.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				UEL.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				UEL.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				UEL.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				UEL.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				UEL.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				UEL.deleted=#{deleted}, 
+		   </if>
+           <if test="taskStatus!=null">
+				UEL.task_status=#{taskStatus}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select o.*,t.nickname,t.true_name,t.mobile ,t.com_name,t.address,
+		    t0.level as user_level,
+			t1.list_value AS job_name,
+			t2.list_value AS industry_name,
+			t3.dis_name AS province_name,
+			t4.dis_name AS city_name,
+			t5.dis_name AS county_name
+		from TJY_USER_EMPIRICAL_LOG o 
+		left join tjy_user t ON t.id = o.user_id
+		left join user t0 ON t.id = t0.id
+		left JOIN list_values t1 ON t.job = t1.id
+		left JOIN list_values t2 ON t.industry = t2.id
+		left JOIN sy_district t3 ON t.province = t3.id
+	    left JOIN sy_district t4 ON t.city = t4.id
+	    left JOIN sy_district t5 ON t.county = t5.id
+ 		WHERE 1=1
+    	<if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	    </if>
+	    <if test="mobile!=null  and mobile!=''">
+			and t.mobile  LIKE CONCAT('%', #{mobile}, '%')
+		</if>
+		 <if test="userId!=null  and userId!=''">
+			and o.user_id=#{userId}
+		 </if>
+		order by o.create_time desc
+	</select>
+	
+	<select id="selectOneTimes" resultMap="userEmpiricalLog">
+			SELECT *
+		FROM TJY_USER_EMPIRICAL_LOG UEL
+		WHERE UEL.task_code=#{taskCode} and  UEL.user_id=#{userId} limit 0,1
+	</select>
+	<select id="selectOneDay" resultMap="userEmpiricalLog">
+			SELECT *
+		FROM TJY_USER_EMPIRICAL_LOG UEL
+		WHERE UEL.task_code=#{taskCode} and  UEL.user_id=#{userId}
+		and  to_days(UEL.create_time) = to_days(now()) limit 0,1
+	</select>
+	<select id="selectOneYear" resultMap="userEmpiricalLog">
+			SELECT *
+		FROM TJY_USER_EMPIRICAL_LOG UEL
+		WHERE UEL.task_code=#{taskCode} and  UEL.user_id=#{userId}
+		and  YEAR(UEL.create_time)=YEAR(now())  LIMIT 0,1
+	</select>
+	
+	<select id="selectOneDaySum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT IFNULL(sum(UEL.empirical),0) as empirical
+		FROM TJY_USER_EMPIRICAL_LOG UEL
+		WHERE  1=1
+		<if test="taskCode!=null and taskCode!=''">
+			and UEL.task_code=#{taskCode}
+	    </if>
+		and  UEL.user_id=#{userId}
+		and  to_days(UEL.create_time) = to_days(now()) 
+	</select>
+	
+	<select id="selectOneYearSum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT IFNULL(sum(UEL.empirical),0) as empirical
+		FROM TJY_USER_EMPIRICAL_LOG UEL
+		WHERE   1=1
+		<if test="taskCode!=null and taskCode!=''">
+			and UEL.task_code=#{taskCode}
+	    </if> 
+		and  UEL.user_id=#{userId}
+		and  YEAR(UEL.create_time)=YEAR(now()) 
+	</select>
+	
+
+	
+</mapper>

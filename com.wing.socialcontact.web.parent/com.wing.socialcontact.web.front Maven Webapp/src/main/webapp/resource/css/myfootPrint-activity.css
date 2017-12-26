@@ -1,0 +1,80 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+}
+.wrapper{
+ 
+     width:100%;
+      font-size:0.3rem;
+     
+}
+.clear{
+      clear:both;
+}
+.print-conetnt{
+  background:white;
+  width:100%;
+  position:relative;
+  box-sizing:border-box;
+  padding-bottom:0.3rem;
+  padding-top:0.1rem;
+  padding-left:0.3rem;
+  padding-right:0.3rem;
+  margin-bottom:0.1rem;
+}
+.print-conetnt>div:nth-child(1){
+   width:100%;
+   font-size:0.28rem;
+   font-weight:bold;
+   padding-top:0.3rem;
+   padding-bottom:0.13rem;
+ }
+ .print-conetnt>div:nth-child(2){
+   width:100%;
+   font-size:0.22rem;   
+  color:#808080;
+ }
+
+ .print-conetnt>div:nth-child(3){
+   width:100%;
+   font-size:0.22rem;
+  line-height:0.4rem;
+  color:#808080;
+ }
+.print-conetnt>div:nth-child(4){
+   width:100%;
+   font-size:0.22rem;
+ 
+  
+  color:#808080;
+ }
+ .print-conetnt>div>span{
+     display:inline-block;
+     padding-left:0.3rem;
+ }
+ .print-conetnt>div>span:nth-child(1){
+     background:url(../img/icons/mapPin.png) no-repeat left center;
+     background-size:0.17rem 0.26rem;
+      padding-left:0.2rem;
+      margin-right:1.28rem;
+ }
+ .print-conetnt>div>span:nth-child(2){
+     background:url(../img/icons/calendar.png) no-repeat left center;
+     background-size:0.27rem 0.26rem;
+ }
+ .print-conetnt button{
+     font-size:0.2rem;
+     width:1.20rem;
+     height:0.4rem;
+     line-height:0.4rem;
+     text-align:center;
+     color:white;
+     border-radius:0.1rem;
+     background:#0f88eb;
+     position:absolute;
+     right:0.3rem;
+     top:0.8rem;
+ }

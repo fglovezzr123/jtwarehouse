@@ -1,0 +1,67 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+}
+.wrapper{
+ 
+     width:100%;
+   
+      font-size:0.3rem;
+     
+}
+.print-activity{
+     box-sizing:border-box;
+     padding:0.3rem;
+     width:100%;
+     background:white;
+     margin-bottom:0.12rem;
+}
+.print-activity h3{
+      font-size:0.28rem;
+      text-align:left;
+      position:relative;
+}
+.print-activity h3 div{
+	width:4rem;
+	 white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+ .print-activity h3 i{
+	     width: 4.1rem;
+             display: block;
+  }
+.print-activity h3 span{
+   font-size:0.16rem;
+   color:#808080;
+   font-weight:normal;
+   position:absolute;
+   top:0;
+   right:0;
+}
+.print-activity p span{
+       color:#808080;
+       font-size:0.24rem;
+}
+.print-activity p{
+       color:#3b3b3b;
+       font-size:0.24rem;
+       line-height:0.4rem;
+       margin-top:0.2rem;
+}
+    .jz{
+	position: absolute;
+       left: 50%;
+        top: 50%;
+        width:4rem;
+        height:2rem;
+        margin-left:-2rem;
+       margin-top:-1rem;
+        font-size:0.36rem;
+        text-align:center;
+        line-height:2rem;
+}

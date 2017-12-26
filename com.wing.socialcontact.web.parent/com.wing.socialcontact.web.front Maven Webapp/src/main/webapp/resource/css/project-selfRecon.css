@@ -1,0 +1,141 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 overflow:scroll;
+   height:100%;
+   background:#f3f4f5;
+}
+.wrapper{
+      box-sizing:border-box;
+      width:100%;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:1.2rem;
+}
+
+.clear{
+     clear:both;
+}
+.xiaobiaoti{
+    box-sizing:border-box;
+    width:100%;
+    padding-left:0.4rem;
+    padding-right:0.4rem;
+    font-size:0.3rem;
+    padding-top:0.38rem;
+    padding-bottom:0.27rem;
+    background:#f3f4f5;
+    color:#3b3b3b;
+    text-align:left;
+
+}
+.info-forms{
+    box-sizing:border-box;
+    width:100%;
+    padding-left:0.4rem;
+    padding-right:0.4rem; 
+    font-size:0.28rem;
+    color:#3b3b3b;
+    height:1rem;
+    line-height:1rem;
+    border-bottom:1px solid #e7e7e7;
+    text-align:left;
+    background:white;
+}
+.info-forms input{
+     width:4rem;
+     height:0.44rem;
+     line-height:0.44rem;
+     font-size:0.28rem;
+     color:#3b3b3b;
+}
+.info-forms  input[type="radio"]{
+    width:0.25rem;
+    height:0.25rem;
+    margin-right:0.3rem;
+}
+.info-forms-name{
+     margin-right:0.44rem;
+     display:inline-block;
+}
+.projectDpict{
+   box-sizing:border-box;
+    width:100%;
+    padding-left:0.4rem;
+    padding-right:0.4rem;
+    text-align:left;
+     background:white;
+
+}
+.projectDpict textarea{
+       width:5.3rem;
+       height:2.0rem;
+       float:right;
+       border:none;
+       margin-top:0.34rem;
+       color:#3b3b3b;
+       font-size:0.25rem;
+}
+.projectDpict div{
+  float:left;
+  padding-top:0.3rem;
+}
+.photo{
+      box-sizing:border-box;
+      width:100%;
+      padding:0.4rem 0 0.2rem 0;
+      background:white;
+     /*  display: flex;
+      justify-content: space-around;
+      flex-wrap:wrap; */
+}
+.photo div{
+      height:1.3rem;
+      width:1.3rem;
+      float:left;
+      margin-left:0.48rem;
+}
+ .photo div+div{
+	 margin-bottom:0.2rem;
+}
+.photo .pppppp{
+     background:#e0e0e0;
+     text-align:center;
+     font-size:0.28rem;
+     position: relative;
+}
+.photo .pppppp img {
+    width: 1.3rem;
+    height: 1.3rem;
+}
+.photo .pppppp i {
+    position: absolute;
+    left: 1.1rem;
+    top: -.16rem;
+    width: .40rem;
+    height: .40rem;
+    background-image: url(../img/images/selfRecon.png);
+    background-size: 100%;
+    border-radius: 100%;
+}
+.photo .addPhoto{
+     background:url(../img/images/addphoto.png) no-repeat center;
+     background-size:1.3rem 1.3rem;
+
+}
+.Done-it{
+     width:100%;
+     padding-top:0.14rem;
+     padding-bottom:0.14rem;
+     background:#1087eb;
+     color:white;
+     position:fixed;
+     bottom:0px;
+     left:0px;
+     text-align:center;
+     font-size:0.28rem;
+}
+.Done-it div{
+
+       font-size:0.25rem;
+}

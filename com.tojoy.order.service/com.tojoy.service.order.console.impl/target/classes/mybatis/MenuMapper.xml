@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.console.dao.MenuDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="menu_super_id" property="menuSuperId" jdbcType="VARCHAR" />
+	    <result column="menu_status" property="menuStatus" jdbcType="SMALLINT" />
+	    <result column="menu_sort" property="menuSort" jdbcType="SMALLINT" />
+	    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+	    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+	    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+	    <result column="menu_target" property="menuTarget" jdbcType="VARCHAR" />
+	    <result column="menu_rel" property="menuRel" jdbcType="VARCHAR" />
+	    <result column="menu_open" property="menuOpen" jdbcType="VARCHAR" />
+	    <result column="menu_external" property="menuExternal" jdbcType="VARCHAR" />
+	    <result column="menu_fresh" property="menuFresh" jdbcType="VARCHAR" />
+	</resultMap>
+    <resultMap id="BaseResultMap2" type="com.tojoy.service.console.bean.SyMenu" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="menu_super_id" property="menuSuperId" jdbcType="VARCHAR" />
+	    <result column="menu_status" property="menuStatus" jdbcType="SMALLINT" />
+	    <result column="menu_sort" property="menuSort" jdbcType="SMALLINT" />
+	    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+	    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+	    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+	    <result column="menu_target" property="menuTarget" jdbcType="VARCHAR" />
+	    <result column="menu_rel" property="menuRel" jdbcType="VARCHAR" />
+	    <result column="menu_open" property="menuOpen" jdbcType="VARCHAR" />
+	    <result column="menu_external" property="menuExternal" jdbcType="VARCHAR" />
+	    <result column="menu_fresh" property="menuFresh" jdbcType="VARCHAR" />
+	</resultMap>
+	
+    <select id="selectByMenuSort" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM sy_menu t 
+		WHERE 1=1
+    	<if test="menuStatus != null and menuStatus != ''">
+			AND	t.menu_status = #{menuStatus,jdbcType=SMALLINT}
+		</if>
+ 		order by t.menu_sort asc
+	</select>
+    <select id="findmenubyuserid" resultType="java.util.HashMap" parameterType="java.lang.String">
+		select distinct m.id as id,m.menu_name as menuName,m.menu_super_id as menuSuperId,m.menu_icon as menuIcon
+		,m.menu_super_id as pid,m.menu_url as url,m.menu_external as external,m.menu_fresh as fresh
+		,m.menu_icon as icon,m.menu_open as open,m.menu_rel as rel,m.menu_target as target
+		from   sy_role_menu rm,sy_menu m where rm.menu_id=m.id and m.menu_super_id = '0' and rm.role_id in(select r.id from sy_role r,sy_user_role ur 
+		where ur.user_id=#{userId,jdbcType=VARCHAR} and r.id=ur.role_id) order by m.menu_sort asc
+	</select>
+    <select id="findmenuformainnotdev" resultType="java.util.HashMap" parameterType="java.lang.String">
+		select distinct m.id as id,m.menu_name as menuName,m.menu_super_id as menuSuperId,m.menu_icon as menuIcon
+		,m.menu_super_id as pid,m.menu_url as url,m.menu_external as external,m.menu_fresh as fresh
+		,m.menu_icon as icon,m.menu_open as open,m.menu_rel as rel,m.menu_target as target
+		from   sy_role_menu rm,sy_menu m where rm.menu_id=m.id and m.menu_super_id = '0' and m.menu_status = 1 and rm.role_id in(select r.id from sy_role r,sy_user_role ur 
+		where ur.user_id=#{userId,jdbcType=VARCHAR} and r.id=ur.role_id) order by m.menu_sort asc
+	</select>
+	
+    <select id="findSyMenubyuserid" resultMap="BaseResultMap2" parameterType="java.lang.String">
+		select distinct m.*
+		from   sy_role_menu rm,sy_menu m where rm.menu_id=m.id and m.menu_status = 1 and rm.role_id in(select r.id from sy_role r,sy_user_role ur 
+		where ur.user_id=#{userId,jdbcType=VARCHAR} and r.id=ur.role_id) order by m.menu_sort asc
+<!-- 		select distinct m.id as id,m.menu_name as menuName,m.menu_super_id as menuSuperId,m.menu_icon as menuIcon -->
+<!-- 		from   sy_role_menu rm,sy_menu m where rm.menu_id=m.id and m.menu_status = 1 and rm.role_id in(select r.id from sy_role r,sy_user_role ur  -->
+<!-- 		where ur.user_id=#{userId,jdbcType=VARCHAR} and r.id=ur.role_id) order by m.menu_sort asc -->
+	</select>
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT my.id as id,t.menu_name as name,my.sort as sort
+		FROM sy_menu t,sy_menu_my my 
+ 		WHERE t.id = my.menu_id
+    	<if test="userId != null and userId != ''">
+			AND	my.user_id = #{userId,jdbcType=SMALLINT}
+		</if>
+    	<if test="menuName != null and menuName != ''">
+			AND	t.menu_name like CONCAT('%',#{menuName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+    	<if test="orderStr == null or orderStr == ''">
+			order by my.sort asc
+		</if>
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-06-12 20:37:47
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.RewardDao">
+
+	<resultMap id="reward" type="com.wing.socialcontact.service.wx.bean.Reward">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="question" column="question" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="voType" column="vo_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="startTime" column="start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="allowComment" column="allow_comment" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="reward" column="reward" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="rewardFinish" column="reward_finish" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isShow" column="is_show" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		t.id id, t.question question, 
+		t.vo_type voType, t.start_time startTime, 
+		t.end_time endTime, t.allow_comment allowComment, 
+		t.reward reward, t.reward_finish rewardFinish, 
+		t.is_show isShow, t.remark remark, 
+		t.status status, t.create_time createTime, 
+		t.create_user_id createUserId, t.create_user_name createUserName, 
+		t.deleted deleted
+	</sql>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,c.class_name className,COUNT(a.id) countNum ,u.nickname,u.true_name,u.mobile  
+		FROM tjy_reward t left join tjy_reward_class c on t.vo_type = c.id 
+		left JOIN  tjy_reward_answer a on t.id = a.fk_id 
+		left JOIN tjy_user u on t.create_user_id = u.id
+ 		WHERE 1=1
+    	<if test="question != null and question != ''">
+			AND	t.question like CONCAT('%',#{question,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="voType != null and voType != '0'.toString() ">
+			AND	t.vo_type = #{voType,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null and status != 0">
+			AND	t.status = #{status}
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        
+        <if test="startTimeyx != null and startTimeyx != '' and endTimeyx !=null and endTimeyx != '' ">
+        	AND t.start_time &gt;= concat(#{startTimeyx,jdbcType=VARCHAR},' 00:00:00') AND t.end_time &lt;= concat(#{endTimeyx,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTimeyx != null and startTimeyx != '' and (endTimeyx==null or endTimeyx== '')">
+      		AND t.start_time &gt;= concat(#{startTimeyx,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTimeyx == null or startTimeyx == '') and endTimeyx!=null and endTimeyx!= '' ">
+      		AND t.end_time &lt;= concat(#{endTimeyx,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        <if test="userId != null and userId != '' ">
+			AND	c.create_user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        GROUP BY t.id order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	<select id="selectByParam2" resultType="java.util.HashMap" parameterType="java.util.Map">
+		
+		SELECT <include refid="field"/>,c.class_name className,COUNT(a.id) countNum  ,u.nickname,u.true_name,u.mobile 
+		FROM tjy_attention a1
+		left JOIN  tjy_reward t  on a1.fk_id = t.id 
+		left join tjy_reward_class c on t.vo_type = c.id 
+		left JOIN  tjy_reward_answer a on t.id = a.fk_id 
+		left JOIN tjy_user u on t.create_user_id = u.id
+ 		WHERE 1=1 and  t.create_time is not null
+ 		<if test="userId != null and userId != '' ">
+			AND	a1.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+    	<if test="question != null and question != ''">
+			AND	t.question like CONCAT('%',#{question,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="voType != null and voType != '0'.toString() ">
+			AND	t.vo_type = #{voType,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null and status != 0">
+			AND	t.status = #{status}
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        
+        <if test="startTimeyx != null and startTimeyx != '' and endTimeyx !=null and endTimeyx != '' ">
+        	AND t.start_time &lt;= concat(#{startTimeyx,jdbcType=VARCHAR},' 00:00:00') AND t.end_time &gt;= concat(#{endTimeyx,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTimeyx != null and startTimeyx != '' and (endTimeyx==null or endTimeyx== '')">
+      		AND t.start_time &lt;= concat(#{startTimeyx,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTimeyx == null or startTimeyx == '') and endTimeyx!=null and endTimeyx!= '' ">
+      		AND t.end_time &gt;= concat(#{endTimeyx,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+       
+        GROUP BY t.id order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	<select id="selectFrontByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,COUNT(a.id) countNum,
+        IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,u.com_name comName,
+        IFNULL(u.honor_title, '') AS honor_title,
+        IFNULL(u.honor_flag, '') AS honor_flag,
+        (select lv.list_value from list_values lv where lv.id=u.job) job 
+		FROM tjy_reward t left JOIN tjy_user u on t.create_user_id = u.mall_user 
+		left JOIN  tjy_reward_answer a on t.id = a.fk_id 
+ 		WHERE t.status != 1
+    	<if test="question != null and question != ''">
+			AND	t.question like CONCAT('%',#{question,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="voType != null and voType != '' ">
+			AND	t.vo_type = #{voType,jdbcType=VARCHAR}
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="rewardFinish == 2">
+			AND	t.reward_finish = 2 
+		</if>
+		<if test="curruserId != null and curruserId != '' ">
+		and (t.create_user_id in 
+        (SELECT f.friend_user FROM tjy_im_friend f
+         WHERE f.user_id = #{curruserId,jdbcType=VARCHAR}) or t.is_show = 2 or t.create_user_id = #{curruserId,jdbcType=VARCHAR})
+         </if>
+		GROUP BY t.id 
+		<if test="type == 1">
+			order by t.reward desc
+		</if>
+		<if test="type == 2">
+			order by t.create_time desc
+		</if>
+        <if test="type == 3">
+           ORDER BY COUNT(a.id) desc
+        </if>
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="selectRewardById" resultType="java.util.HashMap" parameterType="java.util.Map">
+	  SELECT <include refid="field"/>,u.nickname nickname,u.head_portrait headPortrait,
+	  IFNULL(u.honor_title, '') AS honor_title,
+      IFNULL(u.honor_flag, '') AS honor_flag,
+	  u.com_name comName,(select lv.list_value from list_values lv where lv.id=u.job) job
+		FROM tjy_reward t left join tjy_user u on t.create_user_id = u.mall_user   
+		where t.id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+		<select id="selectPastReward" resultMap="reward" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_reward t 
+ 		WHERE t.status = 2 and t.end_time &lt; date_format(now(),'%Y-%m-%d')
+	</select>
+		<select id="selectMyAttention" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,
+		IFNULL(u.honor_title, '') AS honor_title,
+      	IFNULL(u.honor_flag, '') AS honor_flag,u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job   
+		FROM tjy_attention a join tjy_reward t on a.fk_id = t.id  
+		left JOIN tjy_user u on t.create_user_id = u.mall_user 
+ 		WHERE a.att_type = 'reward'
+ 		<if test="userId != null and userId != '' ">
+			AND	a.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        order by a.create_time desc 
+        limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+	</select>
+	
+	<select id="selectZjTopList" resultType="java.util.HashMap" parameterType="java.util.Map">
+	   select count(t.create_user_id) zjcount,t.create_user_id createUserId,u.nickname nickname,u.head_portrait headPortrait,
+	   IFNULL(u.honor_title, '') AS honor_title,
+       IFNULL(u.honor_flag, '') AS honor_flag,
+	   u.com_name comName,(select lv.list_value from list_values lv where lv.id=u.job) job from tjy_reward t left join tjy_user u on t.create_user_id = u.mall_user   
+       group by t.create_user_id ORDER BY count(t.create_user_id) desc 
+       limit #{top,jdbcType=INTEGER}
+	</select>
+	<select id="selectXsTopList" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select sum(t.reward) xscount,t.create_user_id createUserId,u.nickname nickname,u.head_portrait headPortrait,
+		IFNULL(u.honor_title, '') AS honor_title,
+        IFNULL(u.honor_flag, '') AS honor_flag,
+	    u.com_name comName,(select lv.list_value from list_values lv where lv.id=u.job) job from tjy_reward t left join tjy_user u on t.create_user_id = u.mall_user   
+		group by t.create_user_id ORDER BY sum(t.reward) DESC
+        limit #{top,jdbcType=INTEGER}
+	</select>
+	<select id="selectYdTopList" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select count(t.create_user_id) ydcount,t.create_user_id createUserId,u.nickname nickname,u.head_portrait headPortrait,
+	    IFNULL(u.honor_title, '') AS honor_title,
+        IFNULL(u.honor_flag, '') AS honor_flag,
+	    u.com_name comName,(select lv.list_value from list_values lv where lv.id=u.job) job from 
+		tjy_reward_answer t left join tjy_user u on t.create_user_id = u.mall_user   
+		group by t.create_user_id order by count(t.create_user_id) DESC
+        limit #{top,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectZjPm" resultType="java.util.HashMap" parameterType="java.util.Map">
+	  SELECT rownum from
+	  (select @rownum:=@rownum+1 AS rownum,u.mall_user userid,count(u.mall_user) zjcount
+	from tjy_user u left join tjy_reward t  on  u.mall_user = t.create_user_id,
+	(SELECT @rownum:=0) r group by u.mall_user
+	ORDER BY count(u.mall_user) desc,u.id)b
+	WHERE userid = #{userId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectXsPm" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT rownum,userid from
+	(select @rownum:=@rownum+1 AS rownum,u.mall_user userid,sum(t.reward) xscount
+	from tjy_user u left join tjy_reward t  on  u.mall_user = t.create_user_id,(SELECT @rownum:=0) r group by u.mall_user
+	ORDER BY sum(t.reward) desc,u.id)b
+	WHERE userid = #{userId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectYdPm" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT rownum,userid from
+	(select @rownum:=@rownum+1 AS rownum,u.mall_user userid,count(u.mall_user) ydcount
+	from tjy_user u left join tjy_reward_answer  t  on  u.mall_user = t.create_user_id ,(SELECT @rownum:=0) r group by u.mall_user
+	ORDER BY count(u.mall_user) desc,u.id)b
+	WHERE userid = #{userId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectMyReward" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select <include refid="field"/>,
+        IFNULL(u.nickname,'匿名') nickname,u.head_portrait headPortrait,
+        IFNULL(u.honor_title, '') AS honor_title,
+        IFNULL(u.honor_flag, '') AS honor_flag,
+        u.com_name comName,
+        (select lv.list_value from list_values lv where lv.id=u.job) job,v.content,v.is_accept  isAccept 
+		from tjy_reward_answer v JOIN tjy_reward t on v.fk_id = t.id 
+        left JOIN tjy_user u on t.create_user_id = u.mall_user where 1=1 
+ 		<if test="userId != null and userId != '' ">
+			AND	v.create_user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        order by t.create_time desc
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+</mapper>

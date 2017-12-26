@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.wx.dao.DistrictDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="super_id" property="superId" jdbcType="VARCHAR" />
+	    <result column="dis_sort" property="disSort" jdbcType="SMALLINT" />
+	    <result column="dis_name" property="disName" jdbcType="VARCHAR" />
+	    <result column="dis_desc" property="disDesc" jdbcType="VARCHAR" />
+	    <result column="type" property="type" jdbcType="VARCHAR" />
+	</resultMap>
+	
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM sy_district t 
+ 		WHERE 1=1
+    	<if test="superId != null and superId != ''">
+			AND	t.super_id = #{superId,jdbcType=VARCHAR}
+		</if>
+    	<if test="disDesc != null and disDesc != ''">
+			AND	t.dis_desc like CONCAT('%',#{disDesc,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="disName != null and disName != ''">
+			AND	t.dis_name like CONCAT('%',#{disName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="dis_sort != null and dis_sort != ''">
+			AND	t.dis_sort like CONCAT('%',#{disSort,jdbcType=SMALLINT},'%')
+		</if>
+		<if test="type != null and type != ''">
+			AND	t.type = #{type,jdbcType=VARCHAR}
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+    	<if test="orderStr == null or orderStr == ''">
+			order by t.dis_sort asc
+		</if>
+	</select>
+	
+	<select id="selectDistrictCount" resultType="int" parameterType="com.tojoy.service.wx.bean.SyDistrict">
+		SELECT
+			count(1)
+		FROM 
+			sy_district t 
+ 		WHERE 1=1
+    	<if test="superId != null and superId != ''">
+			AND	t.super_id = #{superId,jdbcType=VARCHAR}
+		</if>
+    	<if test="disDesc != null and disDesc != ''">
+			AND	t.dis_desc like CONCAT('%',#{disDesc,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="disName != null and disName != ''">
+			AND	t.dis_name like CONCAT('%',#{disName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="type != null and type != ''">
+			AND	t.type = #{type,jdbcType=VARCHAR}
+		</if>
+  </select>
+	
+</mapper>

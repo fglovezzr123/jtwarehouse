@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.NewsDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="news_title" property="newsTitle" jdbcType="VARCHAR" />
+	     <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="types" property="types" jdbcType="VARCHAR" />
+	    <result column="source" property="source" jdbcType="VARCHAR" />
+	    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+	    <result column="is_hot" property="isHot" jdbcType="INTEGER" />
+	    <result column="url" property="url" jdbcType="VARCHAR" />
+	    <result column="sort" property="sort" jdbcType="INTEGER" />
+	    <result column="class_root" property="classRoot" jdbcType="VARCHAR" />
+	    <result column="is_show" property="isShow" jdbcType="INTEGER" />
+	    <result column="update_time" property="updateTime" jdbcType="DATE" /> 
+	    <result column="view_user" property="viewUser" jdbcType="VARCHAR" />
+	    <result column="summary" property="summary" jdbcType="VARCHAR" />
+	    <result property="isRecommend" column="is_recommend"  jdbcType="INTEGER"></result>
+	    <result property="webinarId" column="webinar_id" javaType="String" jdbcType="VARCHAR"></result>
+	    <result property="webinarSubject" column="webinar_subject" javaType="String" jdbcType="VARCHAR"></result>
+	    <result property="lookCount" column="look_count" javaType="Integer" jdbcType="INTEGER"></result>
+	    <result column="url2" property="url2" jdbcType="VARCHAR" />
+	    <result column="charge" property="charge" jdbcType="INTEGER" />
+	    <result property="commentCount" column="comment_count" javaType="Integer" jdbcType="INTEGER"></result>
+	     <result column="is_free" property="isFree" jdbcType="INTEGER" />
+	     
+	</resultMap>
+	<select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_news t 
+ 		WHERE t.is_hot = 0 
+    	<if test="newsTitle != null and newsTitle != ''">
+			AND	t.news_title like CONCAT('%',#{newsTitle,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="classRoot != null and classRoot != ''">
+			AND	t.class_root = #{classRoot,jdbcType=VARCHAR}
+		</if>
+		<if test="isRecommend != null and isRecommend != ''">
+			AND	t.is_recommend = #{isRecommend}
+		</if>
+		<if test="types != null and types != '' ">
+			AND	t.types = #{types,jdbcType=VARCHAR}
+		</if>
+		<if test="viewUser != null and viewUser != ''">
+			AND	t.view_user like CONCAT('%',#{viewUser,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        <if test="isView == null or isView == '' ">
+           order by t.sort desc ,t.create_time desc 
+        </if>
+        <if test="isView == 1">
+         order by t.is_recommend asc,t.sort desc ,t.create_time desc  
+        </if>
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="selectHotByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_news t 
+ 		WHERE 1=1   and  t.create_time &lt; SYSDATE() 
+ 		<if test="isHot != null">
+ 		   and t.is_hot = #{isHot}
+ 		</if>
+    	<if test="newsTitle != null and newsTitle != ''">
+			AND	t.news_title like CONCAT('%',#{newsTitle,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        <if test="isHot == 2">
+		order by t.sort asc ,t.create_time  desc
+ 		</if>
+        <if test="isHot != 2">
+		order by t.sort desc,t.create_time  desc
+ 		</if>
+	</select>
+	
+	<select id="selectNewsById" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.news_title newsTitle,t.content,t.source,t.image_path imagePath,t.look_count lookCount,
+		date_format(t.create_time,'%Y-%m-%d %H:%i') createTime,t.class_root classRoot,t.types,c.tag_name tagName,t.url,t.is_show isShow,
+		t.view_user viewUser,t.summary,t.is_recommend  isRecommend,t.webinar_id  webinarId,t.webinar_subject webinarSubject,
+		date_format(t.update_time,'%Y-%m-%d %H:%i') updateTime,t.url2,t.charge,t.comment_count commentCount,
+		t.is_free isFree  
+		from tjy_news t LEFT JOIN tjy_news_class c on t.types = c.id  
+		where t.id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectNewsByIdHt" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select t.id,t.create_time createTime,t.create_user_id createUserId,t.create_user_name createUserName,
+		t.news_title newsTitle,t.content,t.source,t.image_path imagePath,t.is_hot isHot,t.look_count lookCount, 
+		t.sort,t.update_time updateTime,t.charge,t.comment_count commentCount,t.is_free isFree,
+		t.create_time createTime,t.class_root classRoot,t.types,c.tag_name tagName,t.url,t.is_show isShow,
+		t.view_user viewUser,t.summary,t.is_recommend  isRecommend,t.webinar_id  webinarId,t.webinar_subject webinarSubject 
+		from tjy_news t LEFT JOIN tjy_news_class c on t.types = c.id  
+		where t.id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByParamFront" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.id,t.news_title newsTitle,t.source,t.image_path imagePath,COUNT(c.id) countNum,
+		t.summary,t.charge,t.comment_count commentCount,t.is_free isFree,t.is_hot isHot,
+		date_format(t.create_time,'%Y-%m-%d %H:%i') createTime, date_format(t.update_time,'%Y-%m-%d %H:%i') updateTime 
+		FROM tjy_news t left JOIN tjy_comment c on t.id = c.fk_id  
+ 		WHERE 1=1   and  t.create_time &lt; SYSDATE() 
+ 		<if test="isHot != null">
+ 		   and t.is_hot = #{isHot}
+ 		</if>
+    	<if test="newsTitle != null and newsTitle != ''">
+			AND	(t.news_title like CONCAT('%',#{newsTitle,jdbcType=VARCHAR},'%') or t.content like CONCAT('%',#{newsTitle,jdbcType=VARCHAR},'%'))
+		</if>
+		<if test="classRoot != null and classRoot != ''">
+			AND	t.class_root = #{classRoot,jdbcType=VARCHAR}
+		</if>
+		<if test="types != null and types != ''">
+			AND	t.types = #{types,jdbcType=VARCHAR}
+		</if>
+		GROUP BY t.id 
+		<if test="isHot == 2">
+		order by t.sort asc ,t.create_time  desc
+ 		</if>
+        <if test="isHot != 2">
+		order by t.sort desc,t.create_time  desc
+ 		</if>
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="selectHtmlByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_news t 
+ 		WHERE t.is_hot = 0    and  t.create_time &lt; SYSDATE() 
+    	<if test="types != null and types != ''">
+			AND	t.types = #{types,jdbcType=VARCHAR}
+		</if>
+		order by t.sort desc ,t.create_time desc
+	</select>
+</mapper>

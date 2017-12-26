@@ -1,0 +1,127 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	  background:#f0f0f0;
+    overflow:scroll;
+}
+.wrapper{
+      width:100%;
+      font-size:0.28rem;
+      background:#f0f0f0;
+}
+ .F-ROW{
+   		width: 100%;
+   		padding: 0 .3rem .35rem;
+   		box-sizing: border-box;
+   		background: #fff;
+   		display: flex;
+   		font-size: .20rem;
+   		flex-wrap: wrap;
+   	}
+   	.F-ROW .icons{
+   		display: flex;
+   		flex-direction: column;
+   		width: 20%;
+   		align-items: center;
+   		margin-top: .35rem;
+   	}
+   	.F-ROW .icons img{
+   		width: 0.91rem;
+   		height: 0.91rem;
+   		margin-bottom: .10rem;
+   	}
+   	.F-ROW .icons i{
+   		width: 0.91rem;
+   		overflow: hidden;
+   		white-space: nowrap;
+   		text-overflow: ellipsis;
+   	    text-align: center;
+   	}
+
+.content{
+	    width:100%;
+	    background:white;
+	    margin-top:0.16rem;
+	    margin-bottom:0.16rem;
+       font-size:0.28rem;
+}
+.content .content-item{
+        height:0.8rem;
+        line-height:0.8rem;
+        position:relative;
+        width:90%;
+          padding-left:5%;
+       padding-right:5%;
+}
+.content-item .switchBtm{
+     width:0.94rem;
+     height:0.54rem;
+     background:url(../img/icons/OFF.png) no-repeat center;
+     background-size:contain;
+     float:right;
+     margin-top:0.14rem;
+}
+.content-item .on{
+	background:url(../img/icons/oN.png) no-repeat center;
+	 width:0.94rem;
+     height:0.54rem;
+     background-size:contain;
+     float:right;
+     margin-top:0.14rem;
+}
+.content-item .con-l{
+     width:30%;
+     float:left;
+     text-align:left;
+}
+.content-item .con-r{
+     width:60%;
+     text-align:right;
+     float:right;
+    background:url(../img/icons/arrow.png) no-repeat center right;
+    height:100%;
+    background-size:0.36rem 0.36rem;
+    padding-right:10%;
+}
+.con-r input{
+	font-size: .28rem;
+	text-align: right;
+	height:.80rem;
+}
+.clearRecord{
+	    width:100%;
+	    height:0.94rem;
+	    line-height:0.94rem;
+	    text-align:center;
+	    background:#fff;
+	    color:#3b3b3b;
+}
+.deleteAndQuit{
+      width:90%;
+      margin:0 auto;
+      text-align:center;
+      background:#ff3b2f;
+      height:0.92rem;
+      line-height:0.92rem;
+      color:white;
+      border-radius:0.2rem;
+      margin-top:0.4rem;
+}
+
+.bottom-border{
+	border-bottom:1px solid #efeef4
+}
+.clear{
+	 clear:both;
+}
+.layui-layer-btn {
+    text-align: right;
+    padding: 0 ;
+    pointer-events: auto;
+    font-size: .24rem;
+    text-align: center;
+}
+.layui-layer-dialog .layui-layer-content {
+    text-align: center;
+}
+

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-07-20 20:28:03
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.OpenHzbOrderDao">
+
+	<resultMap id="openHzbOrder" type="com.wing.socialcontact.service.wx.bean.OpenHzbOrder">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="level" column="level" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="SMALLINT"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastTime" column="last_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastUserId" column="last_user_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="openHzbOrderGlobal" type="com.wing.socialcontact.service.wx.bean.OpenHzbOrder">
+		<result property="id" column="OHO_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="OHO_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="level" column="OHO_level" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="status" column="OHO_status" javaType="Integer" jdbcType="SMALLINT"></result>
+		<result property="createTime" column="OHO_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastTime" column="OHO_last_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastUserId" column="OHO_last_user_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		OHO.id, OHO.user_id, OHO.level, OHO.status, 
+		OHO.create_time, OHO.last_time ,OHO.last_user_id
+	</sql>
+
+	<sql id="fieldGlobal">
+		OHO.id OHO_id, OHO.user_id OHO_user_id, 
+		OHO.level OHO_level, OHO.status OHO_status, 
+		OHO.create_time OHO_create_time, OHO.last_time OHO_last_time, OHO.last_user_id OHO_last_user_id
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		OHO.id id, OHO.user_id userId, 
+		OHO.level level, OHO.status status, 
+		OHO.create_time createTime, OHO.last_time lastTime, OHO.last_user_id lastUserId
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND OHO.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND OHO.user_id=#{userId}
+		</if>
+		<if test="level!=null">
+			AND OHO.level=#{level}
+		</if>
+		<if test="status!=null">
+			AND OHO.status=#{status}
+		</if>
+		<if test="createTime!=null">
+			AND OHO.create_time=#{createTime}
+		</if>
+		<if test="lastTime!=null">
+			AND OHO.last_time=#{lastTime}
+		</if>
+		<if test="lastUserId!=null">
+			AND OHO.last_user_id=#{lastUserId}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND OHO.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND OHO.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="level!=null">
+				AND OHO.level=#{level}
+			</if>
+			<if test="status!=null">
+				AND OHO.status=#{status}
+			</if>
+			<if test="createTime!=null">
+				AND OHO.create_time=#{createTime}
+			</if>
+			<if test="lastTime!=null">
+				AND OHO.last_time=#{lastTime}
+			</if>
+			<if test="lastUserId!=null">
+				AND OHO.last_user_id=#{lastUserId}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				OHO.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				OHO.user_id=#{userId}, 
+		   </if>
+           <if test="level!=null">
+				OHO.level=#{level}, 
+		   </if>
+           <if test="status!=null">
+				OHO.status=#{status}, 
+		   </if>
+           <if test="createTime!=null">
+				OHO.create_time=#{createTime}, 
+		   </if>
+           <if test="lastTime!=null">
+				OHO.last_time=#{lastTime}, 
+		   </if>
+           <if test="lastUserId!=null">
+				OHO.last_user_id=#{lastUserId}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE OHO FROM TJY_OPEN_HZB_ORDER OHO WHERE OHO.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_OPEN_HZB_ORDER OHO
+		SET 
+		OHO.STATUS = -1
+		WHERE OHO.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_OPEN_HZB_ORDER OHO
+		<include refid="dynamicSet" /> 
+	    WHERE OHO.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="openHzbOrder">
+		SELECT <include refid="field"/>
+		FROM TJY_OPEN_HZB_ORDER OHO
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_OPEN_HZB_ORDER OHO
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="openHzbOrder">
+		SELECT <include refid="field"/>
+		FROM TJY_OPEN_HZB_ORDER OHO
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,wu.hzb_open_flag as hzbOpenFlag,u.nickname as nickName,u.com_name as comName,wu.mobile as mobile,wu.hzb_amount as hzbAmount,ifnull((select sum(log.fk_money) from tjy_open_hzb_pay_log log where log.order_id=OHO.id and log.sh_status=1),0) as yfk
+		FROM TJY_OPEN_HZB_ORDER OHO left join tjy_user u on u.id=OHO.user_id left join user wu on wu.id=OHO.user_id
+		WHERE 1=1
+		<if test="keyword!=null and keyword!=''">
+			AND (u.nickname LIKE CONCAT('%', #{keyword}, '%') OR u.com_name LIKE CONCAT('%', #{keyword}, '%')) 
+		</if>
+		<if test="level!=null">
+			AND OHO.level=#{level}
+	   	</if>
+        <if test="status!=null">
+			AND OHO.status=#{status}
+	   	</if>
+	   	<if test="createTime!=null">
+			AND DATEDIFF(OHO.create_time, #{createTime})=0 
+	    </if>
+	    <if test="stime != null ">
+			and   OHO.create_time &gt;= #{stime,jdbcType=DATE}
+		</if>
+		<if test="etime != null ">
+			and   OHO.create_time &lt;= #{etime,jdbcType=DATE}
+		</if>
+	   	<if test="dfklow!=null">
+	   	
+	   	and( (OHO.level=1 AND (200000-ifnull((select sum(log.fk_money) from tjy_open_hzb_pay_log log where log.order_id=OHO.id and log.sh_status=1),0)) &gt;= #{dfklow}) or (OHO.level=2 AND (500000-ifnull((select sum(log.fk_money) from tjy_open_hzb_pay_log log where log.order_id=OHO.id and log.sh_status=1),0)) &gt;= #{dfklow}) or (OHO.level=3 AND (1000000-ifnull((select sum(log.fk_money) from tjy_open_hzb_pay_log log where log.order_id=OHO.id and log.sh_status=1),0)) &gt;= #{dfklow}) ) 
+	    </if>
+	   	<if test="dfkhigh!=null">
+	   	and( (OHO.level=1 AND (200000-ifnull((select sum(log.fk_money) from tjy_open_hzb_pay_log log where log.order_id=OHO.id and log.sh_status=1),0)) &lt;= #{dfkhigh}) or (OHO.level=2 AND (500000-ifnull((select sum(log.fk_money) from tjy_open_hzb_pay_log log where log.order_id=OHO.id and log.sh_status=1),0)) &lt;= #{dfkhigh}) or (OHO.level=3 AND (1000000-ifnull((select sum(log.fk_money) from tjy_open_hzb_pay_log log where log.order_id=OHO.id and log.sh_status=1),0)) &lt;= #{dfkhigh}) ) 
+	    </if>
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="openHzbOrder">
+		SELECT <include refid="field"/>
+		FROM TJY_OPEN_HZB_ORDER OHO
+		WHERE OHO.ID = #{id}
+	</select>
+	
+	<select id="queryByUserId" resultMap="openHzbOrder">
+		SELECT <include refid="field"/>
+		FROM TJY_OPEN_HZB_ORDER OHO
+		WHERE OHO.USER_ID = #{userId}
+		ORDER BY OHO.create_time desc
+	</select>
+	
+</mapper>

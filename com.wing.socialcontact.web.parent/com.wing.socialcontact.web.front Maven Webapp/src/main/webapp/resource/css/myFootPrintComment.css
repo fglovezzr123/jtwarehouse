@@ -1,0 +1,67 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+}
+.wrapper{
+ 
+     width:100%;
+   
+      font-size:0.3rem;
+     
+}
+.clear{
+      clear:both;
+}
+.print-comment{
+      box-sizing:border-box;
+      width:100%;
+      background:white;
+      padding-left:0.3rem;
+      padding-right:0.3rem;
+      height:1.2rem;
+      line-height:1.2rem;
+      margin-bottom:0.07rem;
+}
+.print-comment>div:nth-child(1){
+      float:left;
+      width:17%;
+      background:url(../img/icons/print1.png) no-repeat left center;
+      height:0.78rem;
+      margin-top:0.22rem;
+      background-size:0.78rem 0.78rem;
+}
+.print-comment>div:nth-child(2){
+      float:right;
+      width:83%;
+      background:url(../img/icons/arrow.png) no-repeat right center;
+      background-size:0.36rem 0.36rem;
+       
+}
+.print-comment>#com2{
+       float:left;
+      width:17%;
+      background:url(../img/icons/print2.jpg) no-repeat left center;
+      height:0.78rem;
+      margin-top:0.22rem;
+       background-size:0.78rem 0.78rem;
+}
+
+.print-comment>#com3{
+       float:left;
+      width:17%;
+      background:url(../img/icons/print3.jpg) no-repeat left center;
+      height:0.78rem;
+      margin-top:0.22rem;
+       background-size:0.78rem 0.78rem;
+}
+.print-comment>#com4{
+       float:left;
+      width:17%;
+      background:url(../img/icons/print4.jpg) no-repeat left center;
+      height:0.78rem;
+      margin-top:0.22rem;
+       background-size:0.78rem 0.78rem;
+}

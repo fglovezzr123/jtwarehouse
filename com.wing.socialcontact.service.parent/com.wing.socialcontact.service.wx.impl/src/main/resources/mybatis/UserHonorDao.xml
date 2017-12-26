@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-04-14 22:34:37
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserHonorDao">
+
+	<resultMap id="userHonor" type="com.wing.socialcontact.service.wx.bean.UserHonor">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="honorId" column="honor_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortno" column="sortno" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="userHonorGlobal" type="com.wing.socialcontact.service.wx.bean.UserHonor">
+		<result property="id" column="UH_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="UH_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="honorId" column="UH_honor_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortno" column="UH_sortno" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="UH_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="UH_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="UH_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="UH_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UH.id, UH.user_id, UH.honor_id, UH.sortno, 
+		UH.create_time, UH.create_user_id, UH.create_user_name, UH.deleted
+	</sql>
+
+	<sql id="fieldGlobal">
+		UH.id UH_id, UH.user_id UH_user_id, 
+		UH.honor_id UH_honor_id, UH.sortno UH_sortno, 
+		UH.create_time UH_create_time, UH.create_user_id UH_create_user_id, 
+		UH.create_user_name UH_create_user_name, UH.deleted UH_deleted
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UH.id id, UH.user_id userId, 
+		UH.honor_id honorId, UH.sortno sortno, 
+		UH.create_time createTime, UH.create_user_id createUserId, 
+		UH.create_user_name createUserName, UH.deleted deleted
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UH.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND UH.user_id=#{userId}
+		</if>
+		<if test="honorId!=null and honorId!=''">
+			AND UH.honor_id=#{honorId}
+		</if>
+		<if test="sortno!=null">
+			AND UH.sortno=#{sortno}
+		</if>
+		<if test="createTime!=null">
+			AND UH.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UH.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND UH.create_user_name=#{createUserName}
+		</if>
+		<if test="deleted!=null">
+			AND UH.deleted=#{deleted}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UH.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND UH.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="honorId!=null and honorId!=''">
+				AND UH.honor_id LIKE CONCAT('%', #{honorId}, '%')
+			</if>
+			<if test="sortno!=null">
+				AND UH.sortno=#{sortno}
+			</if>
+			<if test="createTime!=null">
+				AND UH.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND UH.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND UH.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND UH.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UH.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				UH.user_id=#{userId}, 
+		   </if>
+           <if test="honorId!=null">
+				UH.honor_id=#{honorId}, 
+		   </if>
+           <if test="sortno!=null">
+				UH.sortno=#{sortno}, 
+		   </if>
+           <if test="createTime!=null">
+				UH.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				UH.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				UH.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				UH.deleted=#{deleted}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+
+	<select id="load" resultMap="userHonor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_HONOR UH
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_USER_HONOR UH
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="userHonor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_HONOR UH
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="userHonor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_HONOR UH
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="userHonor">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_HONOR UH
+		WHERE UH.ID = #{id}
+	</select>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.*,h.title ,h.pic_path 
+		FROM TJY_USER_HONOR t left join tjy_honor h on h.id=t.honor_id
+        where 1=1
+         <if test="userId!=null and userId!=''">
+			and t.user_id  =  #{userId}
+	   	 </if>
+	   	 <if test="honorId!=null and honorId!=null!=''">
+			and t.honor_id = #{honorId}, 
+		  </if>
+		order by t.create_time desc
+	</select>
+	<select id="selectByType" resultMap="userHonor" parameterType="java.util.Map">
+		SELECT t.*
+		FROM TJY_USER_HONOR t 
+	</select>
+	<select id="selectByUserIdAndHonorId" resultMap="userHonor">
+			SELECT t.*
+		FROM TJY_USER_HONOR t 
+ 		WHERE 1=1
+		and t.user_id=#{userId} and  t.honor_id=#{honorId} limit 0,1
+	</select>
+	<select id="selectByUserId" resultType="java.util.HashMap">
+			SELECT t.*,h.title,h.honor_code 
+			FROM TJY_USER_HONOR t 
+			left join tjy_honor h on h.id = t.honor_id
+			WHERE 1=1
+			and t.user_id=#{userId} 
+			and h.hornor_type = '1'
+			order by t.create_time desc
+	</select>
+</mapper>

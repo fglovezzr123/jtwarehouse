@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.sys.dao.SystemLogDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+	    <result column="action_time" property="actionTime" jdbcType="TIMESTAMP" />
+	    <result column="action_content" property="actionContent" jdbcType="VARCHAR" />
+	    <result column="action_ip" property="actionIp" jdbcType="VARCHAR" />
+	    <result column="action_ip_info" property="actionIpInfo" jdbcType="VARCHAR" />
+	    <result column="action_desc" property="actionDesc" jdbcType="VARCHAR" />
+	</resultMap>
+	
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *,u.user_name userName
+		FROM sy_log t 
+		left join sy_users u on t.user_id = u.id
+ 		WHERE 1=1
+    	<if test="userId != null and userId != ''">
+			AND	t.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+    	<if test="actionIp != null and actionIp != ''">
+			AND	t.action_ip like CONCAT('%',#{actionIp,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="startDate != null and startDate != ''">
+			 
+			<![CDATA[ AND UNIX_TIMESTAMP(t.action_time) >= #{startDate,jdbcType=BIGINT}]]> 
+		</if>
+    	<if test="endDate != null and endDate != ''">
+			<![CDATA[ AND UNIX_TIMESTAMP(t.action_time) <= #{endDate,jdbcType=BIGINT}]]> 
+			
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+    	<if test="orderStr == null or orderStr == ''">
+			order by t.action_time desc
+		</if>
+		
+	</select>
+	
+	
+</mapper>

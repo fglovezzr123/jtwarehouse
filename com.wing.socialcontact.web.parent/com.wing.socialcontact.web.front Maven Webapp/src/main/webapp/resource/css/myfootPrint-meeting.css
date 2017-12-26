@@ -1,0 +1,64 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+}
+.wrapper{
+      width:100%;
+      font-size:0.3rem;
+}
+.clear{
+      clear:both;
+}
+.print-meeting-box{
+    box-sizing:border-box;
+    padding-left:0.3rem;
+    padding-right:0.3rem;
+    width:100%;
+    background:white;
+    padding-top:0.23rem;
+    padding-bottom:0.3rem;
+    margin-bottom:0.07rem;
+}
+.print-meeting-box>div:nth-child(1){
+  width:100%;
+  float:left;
+}
+.print-meeting-box>div:nth-child(2){
+   width:59%;
+   float:right;
+}
+.print-meeting-box>div>img{
+    width:2.55rem;
+    height:1.35rem;
+}
+.print-meeting-box>div>div>span{
+    display:inline-block;
+}
+.print-meeting-box>div>div>span:nth-child(1){
+   font-size:0.16rem;
+   color:#808080;
+   float:left;
+   line-height:0.54rem;
+}
+.print-meeting-box>div>div>span:nth-child(2){
+  font-size:0.20rem;
+  color:white;
+  background:#1087eb;
+  height:0.54rem;
+  width:1.11rem;
+  line-height:0.54rem;
+  text-align:center;
+  border-radius:0.1rem;
+  float:right;
+  line-height:0.54rem;
+}
+.print-meeting-box>div>h3{
+  font-size:0.27rem;
+  color:#3b3b3b;
+}
+.print-meeting-box>div>div{
+    margin-top:0.36rem;
+}

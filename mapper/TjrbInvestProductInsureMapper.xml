@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wing.socialcontact.sys.dao.TjrbInvestProductInsureDao">
+	<!-- 查询全部 -->	
+ 	<resultMap type="com.wing.socialcontact.sys.bean.TjrbInvestProductInsure" id="TjrbInvestProductInsureMap">
+		<id column="id" property="id"></id>
+		<result column="product_status" property="productStatus"/>
+		<result column="product_detail" property="productDetail"/>
+		<result column="product_name" property="productName"/>
+		<result column="start_point" property="startPoint"/>
+		<result column="introduce" property="introduce"/>
+		<result column="invest_type" property="investType"/>
+		<result column="consultant" property="consultant"/>
+		<result column="org_name" property="orgName"/>
+		<result column="strengths1" property="strengths1"/>
+		<result column="strengths2" property="strengths2"/>
+		<result column="strengths3" property="strengths3"/>
+		<result column="strengths4" property="strengths4"/>
+		<result column="org_no" property="orgNo"/>
+		<result column="crowd_type" property="crowdType"/>
+		<result column="expected_return" property="expectedReturn"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="create_date" property="createDate"/>
+		<result column="is_recommend" property="isRecommend"/>
+		<result column="is_show" property="isShow"/>
+	</resultMap>
+	<select id="selectTjrbInvestProductInsure" resultMap="TjrbInvestProductInsureMap">
+		select * from tjrb_invest_product_insure
+	</select>
+	
+ 	<!-- 单行查询 -->
+	<select id="selectTjrbInvestProductInsureById" resultType="com.wing.socialcontact.sys.bean.TjrbInvestProductInsure">
+		select * from tjrb_invest_product_insure where id=#{id}
+	</select>
+	
+
+	<delete id="deleteTjrbInvestProductInsureById">
+		delete from tjrb_invest_product_insure where id=#{id}
+	</delete>
+
+
+	<update id="updateTjrbInvestProductInsure">
+		update tjrb_invest_product_insure 
+		set 
+		product_status=#{productSatus},product_detail=#{productDetail},product_name=#{productName},
+		start_point=#{startPoint},introduce=#{introduce},invest_type=#{inverstType},
+		consultant=#{consultant},org_name=#{orgName},strengths1=#{strengths1},
+		strengths2=#{strengths2},strengths3=#{strengths3},strengths4=#{strengths4},org_no=#{orgNo},crowd_type=#{crowdType},expected_return=#{expectedReturn},
+		update_date=#{updateDate},create_date=#{creatDate},is_recommend=#{isRecommend},is_show=#{isShow}
+		where id=#{id}
+	</update>
+	
+
+	<insert id="saveTjrbInvestProductInsure">
+		insert into 
+		tjrb_invest_product_insure(product_status,product_detail,product_name,start_point,introduce,invest_type,consultant,org_name,strengths1,strengths2,strengths3,strengths4,org_no,crowd_type,expected_return,update_date,create_date,is_recommend,is_show)
+		values(#{productSatus},#{productDetail},#{productName},#{startPoint},#{introduce},#{inverstType},#{consultant},#{orgName},#{strengths1},#{strengths2},#{strengths3},#{strengths4},#{orgNo},#{crowdType},#{expectedReturn},#{updateDate},#{creatDate},#{isRecommend},#{isShow})
+	</insert>
+	
+    <select id="selectTjrbInvestProductInsureLike" resultType="com.wing.socialcontact.sys.bean.TjrbInvestProductInsure">
+		SELECT * FROM tjrb_invest_product_insure WHERE 1=1
+    	<if test="productName != null and productName != ''">
+			AND	product_name like concat('%',#{productName},'%')
+		</if>
+    	<if test="orgName != null and orgName != ''">
+			AND	org_name like concat('%',#{orgName},'%')
+		</if>
+		<if test="crowdType!=null">
+			 and crowd_type like concat('%',#{crowdType},'%') 
+		</if>
+		<if test="isShow!=null">
+			 and is_show like concat('%',#{isShow},'%') 
+		</if>
+		<if test="isRecommend!=null">
+			 and is_Recommend like concat('%',#{isRecommend},'%') 
+		</if>
+	</select>
+	
+</mapper>

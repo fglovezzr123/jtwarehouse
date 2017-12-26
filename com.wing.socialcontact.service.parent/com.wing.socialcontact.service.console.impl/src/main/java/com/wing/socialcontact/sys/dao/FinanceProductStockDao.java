@@ -1,7 +1,6 @@
-package com.wing.enterprise.service.dao;
+package com.wing.socialcontact.sys.dao;
 
-import org.com.wing.enterprise.bean.FinanceProduct;
-import org.com.wing.enterprise.bean.FinanceProductStock;
+import com.wing.socialcontact.sys.bean.FinanceProductStock;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 

@@ -1,12 +1,10 @@
-package org.com.wing.enterprise.service;
+package com.wing.socialcontact.sys.service;
 
 import com.wing.socialcontact.common.model.DataGrid;
 import com.wing.socialcontact.common.model.PageParam;
-import org.com.wing.enterprise.bean.FinanceProduct;
-import org.com.wing.enterprise.bean.QuickDetailBanner;
+import com.wing.socialcontact.sys.bean.FinanceProductStock;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by fenggang on 12/25/17.
@@ -14,9 +12,9 @@ import java.util.Map;
  * @author fenggang
  * @date 12/25/17
  */
-public interface FinanceProductService {
+public interface FinanceProductStockService {
 
-    List<FinanceProduct> findAll();
+    List<FinanceProductStock> findAll();
 
     /**
      * 条件查询
@@ -24,29 +22,27 @@ public interface FinanceProductService {
      * @param role
      * @return
      */
-    DataGrid selectFinanceProduct(PageParam param, FinanceProduct financeProduct);
+    DataGrid selectFinanceProductStock(PageParam param, FinanceProductStock financeProductStock);
 
     /**
      *
      * //TODO 获取所有的幻灯片所属的快捷入口
      * @return
      */
-    List selectAllFinanceProduct();
+    List selectAllFinanceProductStock();
     /**
      *
      * //TODO 新增
-     * @param QuickDoor
      * @return
      */
-    String addFinanceProduct(FinanceProduct financeProduct);
+    String addFinanceProductStock(FinanceProductStock financeProductStock);
 
     /**
      *
      * //TODO 更新
-     * @param QuickDoor
      * @return
      */
-    String updateFinanceProduct(FinanceProduct financeProduct);
+    String updateFinanceProductStock(FinanceProductStock financeProductStock);
 
     /**
      *
@@ -54,14 +50,13 @@ public interface FinanceProductService {
      * @param key
      * @return
      */
-    FinanceProduct selectByPrimaryKey(Long key);
+    FinanceProductStock selectByPrimaryKey(Long key);
 
     /**
      * 删除
      * //TODO 添加方法功能描述
-     * @param id
      * @return
      */
-    boolean deleteFinanceProduct(String[] ids);
+    boolean deleteFinanceProductStock(String[] ids);
 
 }

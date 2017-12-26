@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wing.enterprise.service.dao.FinanceProductDao">
-    <resultMap id="financeProduct" type="java.util.HashMap">
+<mapper namespace="com.wing.socialcontact.sys.dao.FinanceProductStockDao">
+    <resultMap id="financeProductStock" type="java.util.HashMap">
         <result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
         <result property="createDate" column="create_date"  jdbcType="DATE"></result>
     </resultMap>

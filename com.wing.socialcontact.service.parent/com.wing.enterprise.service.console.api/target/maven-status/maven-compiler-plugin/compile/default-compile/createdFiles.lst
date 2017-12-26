@@ -9,14 +9,12 @@ org/com/wing/enterprise/bean/EntryImgs.class
 org/com/wing/enterprise/bean/QuickDetailBanner.class
 org/com/wing/enterprise/service/IEntryStaticClickService.class
 org/com/wing/enterprise/bean/QuickDoor.class
-org/com/wing/enterprise/service/FinanceProductService.class
 org/com/wing/enterprise/bean/EnterPriseBaseBean.class
 org/com/wing/enterprise/bean/EntryPrise.class
 org/com/wing/enterprise/bean/SysMessage.class
 org/com/wing/enterprise/service/IEntryPhoneAddressService.class
 org/com/wing/enterprise/service/IEntryImgsService.class
 org/com/wing/enterprise/service/IMySysMessageService.class
-org/com/wing/enterprise/service/FinanceProductStockService.class
 org/com/wing/enterprise/service/IEntryTagService.class
 org/com/wing/enterprise/bean/EntryTags.class
 org/com/wing/enterprise/bean/EntryServiceTag.class
@@ -29,11 +27,9 @@ org/com/wing/enterprise/bean/EntryServiceClass.class
 org/com/wing/enterprise/bean/EntryDescConfig.class
 org/com/wing/enterprise/service/IQfyConfigService.class
 org/com/wing/enterprise/bean/EntryClass.class
-org/com/wing/enterprise/bean/FinanceProductStock.class
 org/com/wing/enterprise/service/IEntryHotService.class
 org/com/wing/enterprise/bean/MySysMessage.class
 org/com/wing/enterprise/service/IPhoneAddressStaticService.class
-org/com/wing/enterprise/bean/FinanceProduct.class
 org/com/wing/enterprise/service/IEntryQuickDetailClassService.class
 org/com/wing/enterprise/bean/PhoneAdressStatic.class
 org/com/wing/enterprise/service/IEntryPriseService.class

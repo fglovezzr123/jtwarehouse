@@ -3,12 +3,14 @@ package com.wing.enterprise.action;
 import com.wing.socialcontact.common.model.DataGrid;
 import com.wing.socialcontact.common.model.PageParam;
 import com.wing.socialcontact.sys.action.BaseAction;
+import com.wing.socialcontact.sys.bean.FinanceProduct;
+import com.wing.socialcontact.sys.service.FinanceProductService;
+import com.wing.socialcontact.sys.service.OrgConsultantService;
+import com.wing.socialcontact.sys.service.OrganizationService;
 import com.wing.socialcontact.util.ServletUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.com.wing.enterprise.bean.EntryServiceTag;
-import org.com.wing.enterprise.bean.FinanceProduct;
 import org.com.wing.enterprise.bean.QuickDetailBanner;
-import org.com.wing.enterprise.service.FinanceProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +35,10 @@ public class FinanceProductAction extends BaseAction {
 
     @Autowired
     private FinanceProductService financeProductService;
+    @Autowired
+    private OrganizationService organizationService;
+    @Autowired
+    private OrgConsultantService orgConsultantService;
 
     @RequestMapping("querys")
     @ResponseBody
@@ -68,6 +74,8 @@ public class FinanceProductAction extends BaseAction {
      */
     @RequestMapping("addPage")
     public String financeProductAddPage(ModelMap map){
+        List org = organizationService.selectAll();
+        map.addAttribute("org",org);
         return "finance/add";
     }
 
@@ -91,6 +99,11 @@ public class FinanceProductAction extends BaseAction {
     public String financeProductUpdatePage(Long id,ModelMap map){
         FinanceProduct financeProduct = financeProductService.selectByPrimaryKey(id);
         map.addAttribute("financeProduct", financeProduct);
+        List org = organizationService.selectAll();
+        map.addAttribute("org",org);
+        List orgc = orgConsultantService.selectAll();
+        map.addAttribute("orgc",orgc);
+
         return "finance/update";
     }
 

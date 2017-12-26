@@ -1,8 +1,8 @@
-package org.com.wing.enterprise.service;
+package com.wing.socialcontact.sys.service;
 
 import com.wing.socialcontact.common.model.DataGrid;
 import com.wing.socialcontact.common.model.PageParam;
-import org.com.wing.enterprise.bean.FinanceProductStock;
+import com.wing.socialcontact.sys.bean.FinanceProduct;
 
 import java.util.List;
 
@@ -12,37 +12,36 @@ import java.util.List;
  * @author fenggang
  * @date 12/25/17
  */
-public interface FinanceProductStockService {
+public interface FinanceProductService {
 
-    List<FinanceProductStock> findAll();
+    List<FinanceProduct> findAll();
 
     /**
      * 条件查询
      * @param param
-     * @param role
      * @return
      */
-    DataGrid selectFinanceProductStock(PageParam param, FinanceProductStock financeProductStock);
+    DataGrid selectFinanceProduct(PageParam param, FinanceProduct financeProduct);
 
     /**
      *
      * //TODO 获取所有的幻灯片所属的快捷入口
      * @return
      */
-    List selectAllFinanceProductStock();
+    List selectAllFinanceProduct();
     /**
      *
      * //TODO 新增
      * @return
      */
-    String addFinanceProductStock(FinanceProductStock financeProductStock);
+    String addFinanceProduct(FinanceProduct financeProduct);
 
     /**
      *
      * //TODO 更新
      * @return
      */
-    String updateFinanceProductStock(FinanceProductStock financeProductStock);
+    String updateFinanceProduct(FinanceProduct financeProduct);
 
     /**
      *
@@ -50,14 +49,13 @@ public interface FinanceProductStockService {
      * @param key
      * @return
      */
-    FinanceProductStock selectByPrimaryKey(Long key);
+    FinanceProduct selectByPrimaryKey(Long key);
 
     /**
      * 删除
      * //TODO 添加方法功能描述
-     * @param id
      * @return
      */
-    boolean deleteFinanceProductStock(String[] ids);
+    boolean deleteFinanceProduct(String[] ids);
 
 }

@@ -59,8 +59,10 @@
 	<import resource="../../applicationContext-threadpool.xml"/>
 	
 	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:service interface="org.com.wing.enterprise.service.FinanceProductService" ref="financeProductServiceImpl" timeout="${dubbo.service.timeout}"/>
-	<dubbo:service interface="org.com.wing.enterprise.service.FinanceProductStockService" ref="financeProductStockServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.FinanceProductService" ref="financeProductServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.FinanceProductStockService" ref="financeProductStockServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.OrgConsultantService" ref="orgConsultantServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.wing.socialcontact.sys.service.OrganizationService" ref="organizationServiceImpl" timeout="${dubbo.service.timeout}"/>
 
 
 	<dubbo:service interface="com.wing.socialcontact.sys.service.IDataPermissionsService" ref="dataPermissionsServiceImpl" timeout="${dubbo.service.timeout}"/>

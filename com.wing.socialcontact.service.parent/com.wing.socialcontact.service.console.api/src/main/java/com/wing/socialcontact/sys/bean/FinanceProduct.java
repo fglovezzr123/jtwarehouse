@@ -1,4 +1,4 @@
-package org.com.wing.enterprise.bean;
+package com.wing.socialcontact.sys.bean;
 
 import javax.persistence.*;
 import java.io.Serializable;

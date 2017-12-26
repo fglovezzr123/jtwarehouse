@@ -29,8 +29,10 @@
 	</context:component-scan> -->
 
 	<!-- 服务消费者配置 -->
-	<dubbo:reference id="financeProductService" interface="org.com.wing.enterprise.service.FinanceProductService" />
-	<dubbo:reference id="financeProductStockService" interface="org.com.wing.enterprise.service.FinanceProductStockService" />
+	<dubbo:reference id="financeProductService" interface="com.wing.socialcontact.sys.service.FinanceProductService" />
+	<dubbo:reference id="financeProductStockService" interface="com.wing.socialcontact.sys.service.FinanceProductStockService" />
+	<dubbo:reference interface="com.wing.socialcontact.sys.service.OrgConsultantService" id="orgConsultantService" />
+	<dubbo:reference interface="com.wing.socialcontact.sys.service.OrganizationService" id="organizationService" />
 
 
 	<dubbo:reference id="dataPermissionsService" interface="com.wing.socialcontact.sys.service.IDataPermissionsService" />

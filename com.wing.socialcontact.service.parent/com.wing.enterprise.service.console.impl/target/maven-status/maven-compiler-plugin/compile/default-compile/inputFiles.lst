@@ -4,7 +4,6 @@
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryStaticClickDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryTagsDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryTagsServiceImpl.java
-/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/FinanceProductStockServiceImpl.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryPhoneAddressServiceImpl.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/SysMessageDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryPriseDao.java
@@ -24,12 +23,10 @@
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/QfyConfigServiceImpl.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryServiceClassDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryQuickDetailClassImpl.java
-/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/FinanceProductServiceImpl.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryCustomerDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryServiceTagDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryPhoneAdressDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryCustomerServiceImpl.java
-/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/FinanceProductDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryServiceTagImpl.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryImgsServiceImpl.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryQuickDoorImpl.java
@@ -40,4 +37,3 @@
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/EntryImgsDao.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/PhoneAddressStaticServiceImpl.java
 /Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/impl/EntryStaticClickServiceImpl.java
-/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.enterprise.service.console.impl/src/main/java/com/wing/enterprise/service/dao/FinanceProductStockDao.java

@@ -1,15 +1,13 @@
-package com.wing.enterprise.service.impl;
+package com.wing.socialcontact.sys.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wing.enterprise.service.base.BaseServiceImpl;
-import com.wing.enterprise.service.dao.FinanceProductDao;
 import com.wing.socialcontact.common.model.DataGrid;
 import com.wing.socialcontact.common.model.PageParam;
 import com.wing.socialcontact.config.MsgConfig;
-import org.com.wing.enterprise.bean.FinanceProduct;
-import org.com.wing.enterprise.bean.QuickDetailBanner;
-import org.com.wing.enterprise.service.FinanceProductService;
+import com.wing.socialcontact.sys.bean.FinanceProduct;
+import com.wing.socialcontact.sys.dao.FinanceProductDao;
+import com.wing.socialcontact.sys.service.FinanceProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

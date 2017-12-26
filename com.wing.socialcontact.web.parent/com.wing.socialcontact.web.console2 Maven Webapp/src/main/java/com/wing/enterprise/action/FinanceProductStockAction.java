@@ -2,11 +2,10 @@ package com.wing.enterprise.action;
 
 import com.wing.socialcontact.common.model.PageParam;
 import com.wing.socialcontact.sys.action.BaseAction;
-import org.com.wing.enterprise.bean.EntryServiceTag;
-import org.com.wing.enterprise.bean.FinanceProduct;
-import org.com.wing.enterprise.bean.FinanceProductStock;
-import org.com.wing.enterprise.service.FinanceProductService;
-import org.com.wing.enterprise.service.FinanceProductStockService;
+import com.wing.socialcontact.sys.bean.FinanceProductStock;
+import com.wing.socialcontact.sys.service.FinanceProductStockService;
+import com.wing.socialcontact.sys.service.OrgConsultantService;
+import com.wing.socialcontact.sys.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,6 +29,10 @@ public class FinanceProductStockAction extends BaseAction {
 
     @Autowired
     private FinanceProductStockService financeProductStockService;
+    @Autowired
+    private OrganizationService organizationService;
+    @Autowired
+    private OrgConsultantService orgConsultantService;
 
     @RequestMapping("querys")
     @ResponseBody
@@ -65,6 +68,8 @@ public class FinanceProductStockAction extends BaseAction {
      */
     @RequestMapping("addPage")
     public String financeProductStockAddPage(ModelMap map){
+        List org = organizationService.selectAll();
+        map.addAttribute("org",org);
         return "finance/stock/add";
     }
 
@@ -88,6 +93,10 @@ public class FinanceProductStockAction extends BaseAction {
     public String financeProductStockUpdatePage(Long id,ModelMap map){
         FinanceProductStock financeProductStock = financeProductStockService.selectByPrimaryKey(id);
         map.addAttribute("financeProduct", financeProductStock);
+        List org = organizationService.selectAll();
+        map.addAttribute("org",org);
+        List orgc = orgConsultantService.selectAll();
+        map.addAttribute("orgc",orgc);
         return "finance/stock/update";
     }
 

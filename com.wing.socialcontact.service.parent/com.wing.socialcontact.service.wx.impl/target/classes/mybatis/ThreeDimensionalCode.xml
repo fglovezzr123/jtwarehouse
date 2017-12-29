@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ThreeDimensionalCodeDao">
+	<resultMap id="threeDimensionalCode"
+		type="com.wing.socialcontact.service.wx.bean.ThreeDimensionalCode">
+		<result property="id" column="id" javaType="long" jdbcType="INTEGER"></result>
+		<result property="td_Id" column="td_Id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="user_Id" column="user_Id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="create_Time" column="create_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="tdcreate_Time" column="tdcreate_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="picPath" column="picPath" javaType="String"
+			jdbcType="VARCHAR"></result>
+	</resultMap>
+	<sql id="fields">
+		<if test="td_Id!=null and td_Id!=''">
+			td_Id,
+		</if>
+		<if test="user_Id!=null and user_Id!=''">
+			user_Id,
+		</if>
+
+		<if test="tdcreate_Time!=null">
+			tdcreate_Time,
+		</if>
+		<if test="picPath!=null and picPath!=''">
+			picPath,
+		</if>
+	</sql>
+	<sql id="values">
+		<if test="td_Id!=null and td_Id!=''">
+			#{td_Id},
+		</if>
+		<if test="user_Id!=null and user_Id!=''">
+			#{user_Id},
+		</if>
+		<if test="tdcreate_Time!=null">
+			#{tdcreate_Time},
+		</if>
+		<if test="picPath!=null and picPath!=''">
+			#{picPath},
+		</if>
+	</sql>
+	<sql id="appointmentRecord">
+		t.id,
+		t.td_id,
+		t.user_id,
+		t.create_time,
+		t.tdcreate_time,
+		t.picPath
+	</sql>
+	<!-- 生成约见订单 -->
+	<insert id="insertTDCode"
+		parameterType="com.wing.socialcontact.service.wx.bean.ThreeDimensionalCode">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_threedimensionalcode(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+	
+	<!-- 修改三维码 -->
+	<update id="updateTDCode"
+		parameterType="com.wing.socialcontact.service.wx.bean.ThreeDimensionalCode">
+		UPDATE tjy_threedimensionalcode t
+		SET
+		
+		<trim suffixOverrides=",">
+		<if test="tdcreate_Time!=null">
+			t.tdcreate_Time = #{tdcreate_Time},
+		</if>
+		
+		<if test="picPath!=null and picPath!=''">
+			t.picPath=#{picPath},
+		</if>
+		</trim>
+		
+		
+		WHERE t.td_id = #{td_Id} and t.user_id = #{user_Id}
+	</update>
+</mapper>

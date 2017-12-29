@@ -1,0 +1,64 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 overflow:scroll;
+   height:100%;
+   background:#f3f4f6;
+}
+.wrapper{
+      width:100%;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:1.2rem;
+}
+.right-signal{
+    width:3.6rem;
+    height:0.46rem;
+    margin:0 auto;
+    margin-top:0.86rem;
+    padding-left:0.7rem;
+    background:url(../img/icons/register.png) no-repeat left center;
+    line-height:0.46rem;
+    background-size:0.47rem 0.47rem;
+    text-align:center;
+    background-position-x:0.4rem;
+    font-size:0.35rem;
+}
+
+.name-info{
+      width:6.9rem;
+      height:2.44rem;
+      box-sizing:border-box;
+      border:1px solid #e6e6e6;
+      margin:0 auto;
+      background:white;
+      border-radius:0.1rem;
+      margin-top:0.83rem;
+}
+.name-head{
+     height:0.8rem;
+     width:6.26rem;
+     border-bottom:1px solid #e6e6e6;
+     line-height:0.8rem;
+     margin:0 auto;
+     color:#808080;
+}
+.name-head1{
+    box-sizing:border-box;
+    padding-left:2rem;
+    line-height:0.7rem;
+    text-align:left;
+    padding-top:0.1rem;
+    
+}
+.name-btn{
+      background:#0f88eb;
+      width:6.9rem;
+      height:0.78rem;
+      line-height:0.78rem;
+      margin:0 auto;
+      text-align:center;
+      border-radius:0.36rem;
+      margin-top:0.48rem;
+      color:white;
+}

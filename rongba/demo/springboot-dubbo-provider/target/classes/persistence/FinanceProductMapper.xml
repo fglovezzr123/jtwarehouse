@@ -1,0 +1,72 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.springboot_dubbo_provider.mapper.FinanceProductMapper">
+	
+	<sql id="financeProductColumns">
+		a.id AS "id",
+		a.ad_pic_url  AS "adPicUrl",
+		a.product_id  AS "productId",
+		a.ad_position AS "adPosition",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="financeProductJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.FinanceProduct">
+		SELECT 
+			<include refid="financeProductColumns"/>
+		FROM tjrb_bp_person a
+		<include refid="financeProductJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.FinanceProduct">
+		SELECT 
+			<include refid="financeProductColumns"/>
+		FROM tjrb_bp_person a
+		<include refid="financeProductJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="adPosition != null">
+				AND a.ad_position = #{adPosition}
+			</if>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO lzr_financeProduct(
+			ad_pic_url,
+			product_id,
+			ad_position,
+			create_date,
+			update_date
+		) VALUES (
+			#{adPicUrl},
+			#{productId},
+			#{adPosition},
+			#{createDate},
+			#{updateDate}		
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tjrb_bp_person SET 	
+			ad_pic_url = #{adPicUrl},
+			product_id = #{productId},
+			ad_position = #{adPosition},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_bp_person SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>

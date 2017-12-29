@@ -1,0 +1,91 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 
+    overflow:scroll;
+    background:#f3f4f6;
+}
+.wrapper{
+      font-family:"微软雅黑"; 
+      width:100%;
+      font-size:0.3rem;
+      color:#3b3b3b;
+}
+  input{
+    
+       width:3.5rem;
+  }
+ button{
+     height:0.55rem;
+     width:1.17rem;
+     border-radius:0.1rem;
+     background:#e4e4e4;
+     color:#808080;
+ }   
+.comPre{
+       height:0.28rem;
+       width:90%;
+       text-align:left;
+       border-left:0.04rem solid #0f88eb;
+       line-height:0.28rem;
+         margin:0 auto;
+       margin-top:0.46rem;
+       margin-bottom:0.46rem;
+       font-size:0.3rem;
+       text-indent:0.17rem;
+       color:#0f88eb;
+      
+       font-weight:bold;
+
+}
+.clear{
+      clear:both;
+}
+.items{
+        height:0.8rem;
+        line-height:0.7rem;
+       margin:0 auto;
+       font-size:0.3rem;
+       padding-top:0.15rem;
+       padding-bottom:0.04rem;
+       padding-left:0.4rem;
+       padding-right:0.4rem;
+       border-bottom:1px solid #e6e6e6;
+}
+.items div:nth-child(1){
+     float:left;
+     width:20%;
+     text-align:left;
+     font-weight:bold;
+     color:#3b3b3b;
+}
+.items div:nth-child(2){
+     float:left;
+     width:75%;
+     text-align:right;
+     padding-right:5%;
+     color:#808080;
+}
+.hasBG{
+      background-color:white;
+}
+.hasArrow{
+
+      background:url(../img/icons/arrow.png) no-repeat center right;
+      background-size:0.15rem 0.35rem;
+      background-position-x:95%;
+}
+.hasArrow2{
+
+      background:url(../img/icons/positions.png) no-repeat center right;
+      background-size:0.26rem 0.35rem;
+      background-position-x:95%;
+}
+.article{
+
+      width:90%;
+      margin:0 auto;
+    
+      padding-bottom:0.2rem;
+      color:#808080;
+}

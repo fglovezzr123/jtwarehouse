@@ -1,0 +1,241 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 overflow:scroll;
+   height:100%;
+   background:#f3f4f6;
+}
+.wrapper{
+
+      width:100%;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:1.2rem;
+   
+      font-family:"微软雅黑";
+      background:white;
+
+  
+}
+
+a{
+      ;
+}
+.clear{
+
+     clear:both;
+}
+.itemss{
+     margin-top:0.38rem;
+     border-bottom:0.08rem solid #f3f4f6;
+
+}
+
+.itemss ul{
+   width:25%;
+   text-align:center;
+  float:left;
+  margin-bottom:0.38rem;
+
+
+}
+.itemss ul li{
+     display:block;
+}
+.itemss ul li:nth-child(1){
+      width:0.53rem;
+      height:0.56rem;
+      position:relative;
+}
+.itemss ul li:nth-child(2){
+     margin-top:0.3rem;
+}
+.itemss ul li img{
+        width:100%;
+        height:100%;
+        margin-left:0.7rem;
+}
+.tabBar{
+     width:100%;
+    padding: 0 .4rem;
+     border-bottom:1px solid #f4f4f4;
+     height:0.66rem;
+     line-height:0.66rem;
+     background:white;
+     box-sizing: border-box;
+     margin-bottom:0.1rem;
+}
+
+.tabBar a{
+
+     width:37.5%;
+     display:inline-block;
+     float:left;
+     text-align:center;
+   
+
+}
+.tabBar a:nth-child(2){
+       margin-left:12.5%;
+       margin-right:12.5%;
+}
+.hasBorder{
+  border-bottom:2px solid #0f88eb;
+  color:#0f88eb;
+}
+
+.btms{
+     height:1rem;
+     line-height:0.5rem;
+     text-align:center;
+     font-size:0.30rem;
+     /* box-shadow:0px -2px 2px 2px #f4f4f4; */
+     position:fixed;
+     width:100%;
+     bottom:-0.11rem;
+     left:0;
+}
+.btms span{
+    font-size:0.24rem;
+}
+
+.btms div:nth-child(1){
+     width:100%;
+    
+     background:#1087eb;
+     color:white;
+}
+.alcontent{
+    width:90%;
+    padding-left:5%;
+     padding-right:5%;
+}
+.alcontent img{
+      width:100%;
+}
+.head-img{
+     width:100%;
+     height:0.46rem;
+     background:url(../img/images/jianjie.png) no-repeat left center;  
+     background-size:1.35rem 0.46rem;
+     margin-top:0.3rem;
+     margin-bottom:0.3rem;  
+}
+.head-iii{
+        width:100%;
+        height:0.46rem;
+        background:url(../img/images/chanpintese.png) no-repeat left center;  
+        background-size:1.35rem 0.46rem;  
+        margin-top:0.3rem;
+        margin-bottom:0.3rem;  
+}
+.item{
+     background:white;
+     padding-top:0.1rem;
+     padding-bottom:0.1rem;
+     width:97%;
+     padding-left:1.5%;
+     padding-right:1.5%;
+     border-bottom:1px solid #f4f4f4;
+}
+.item>div:nth-child(2){
+      height:2rem;
+      width:3.16rem;
+      background:url(../img/images/bosss2.png) no-repeat center;
+      background-size:3.16rem 2rem;
+      float:left;
+}
+.item>div:nth-child(1){
+    width:4rem;
+    float:right;
+    position:relative;
+    height:2rem;
+
+}
+.item>div>p{
+    width:100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.item>div>p:nth-child(2){
+    font-size:0.2rem; 
+    position:absolute;
+   bottom:0.1rem;
+   color:#acacac;
+   
+}
+.item>div>p span{
+     display:inline-block;
+     padding-left:0.4rem;
+
+}
+.item>div>p span:nth-child(1){
+    background:url(../img/icons/booo1.png) no-repeat left center;
+    background-size:0.3rem 0.3rem;
+}
+.item>div>p span:nth-child(2){
+    background:url(../img/icons/booo.png) no-repeat left center;
+    background-size:0.3rem 0.3rem;
+
+}
+
+
+.self-recom{
+  width:100%;
+  height:1.1rem;
+  line-height:1.1rem;
+  background:white;
+  text-align:center;
+  border-top:0.1rem solid #f4f4f6;
+  border-bottom:0.1rem solid #f4f4f6;
+
+}
+.self-recom a{
+    color:#ffaa0f;
+    display:inline-block;
+    padding-left:0.7rem;
+    background:url(../img/icons/zhengji.jpg) no-repeat center left;
+    background-size:0.69rem 0.59rem;
+
+}
+.enterFor {
+  width:100%;
+ 
+  height:1.4rem;
+}
+.enterFor div{
+    box-sizing:border-box;
+    width:50%;
+    float:left;
+    padding-left:0.4rem;
+    padding-right:0.4rem;
+    line-height:0.7rem;
+}
+.enterFor div span{
+  color:#feaa0c;
+  font-family:"微软雅黑";
+  font-weight:bold;
+  font-size:0.34rem;
+
+}
+.enterFor div:nth-child(1){
+    border-right:1px solid #f2f1f6;
+}
+p strong{
+    color:#fe9900;
+}
+.item>div>p span:nth-child(3) {
+    background: url(../img/icons/booo.png) no-repeat left center;
+    background-size: 0.3rem 0.3rem}
+    .item>div>p span {
+    display: block;
+    padding-left: 0.4rem;
+    margin-top: -0.15rem;
+}
+.item>div>p span b {
+    color: #fe9a00;
+    font-weight: bold;
+}

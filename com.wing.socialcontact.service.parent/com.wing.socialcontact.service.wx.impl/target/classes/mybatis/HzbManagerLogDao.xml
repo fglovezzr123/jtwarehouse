@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-07-22 18:21:15
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.HzbManagerLogDao">
+
+	<resultMap id="hzbManagerLog" type="com.wing.socialcontact.service.wx.bean.HzbManagerLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerUser" column="manager_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerTime" column="manager_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerMoney" column="manager_money" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="currYe" column="curr_ye" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="pdType" column="pd_type" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="hzbManagerLogGlobal" type="com.wing.socialcontact.service.wx.bean.HzbManagerLog">
+		<result property="id" column="HML_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="HML_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userId" column="HML_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerUser" column="HML_manager_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerTime" column="HML_manager_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="remark" column="HML_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerMoney" column="HML_manager_money" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="currYe" column="HML_curr_ye" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="pdType" column="HML_pd_type" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		HML.id, HML.type, HML.user_id, HML.manager_user, 
+		HML.manager_time, HML.remark, HML.manager_money, HML.curr_ye, HML.pd_type
+	</sql>
+
+	<sql id="fieldGlobal">
+		HML.id HML_id, HML.type HML_type, 
+		HML.user_id HML_user_id, HML.manager_user HML_manager_user, 
+		HML.manager_time HML_manager_time, HML.remark HML_remark, HML.manager_money HML_manager_money, HML.curr_ye HML_curr_ye, HML.pd_type HML_pd_type
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		HML.id id, HML.type type, 
+		HML.user_id userId, HML.manager_user managerUser, 
+		HML.manager_time managerTime, HML.remark remark, HML.manager_money managerMoney, HML.curr_ye currYe, HML.pd_type pdType
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND HML.id=#{id}
+		</if>
+		<if test="type!=null">
+			AND HML.type=#{type}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND HML.user_id=#{userId}
+		</if>
+		<if test="managerUser!=null and managerUser!=''">
+			AND HML.manager_user=#{managerUser}
+		</if>
+		<if test="managerTime!=null">
+			AND HML.manager_time=#{managerTime}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND HML.remark=#{remark}
+		</if>
+		<if test="managerMoney!=null and managerMoney!=''">
+			AND HML.manager_money=#{managerMoney}
+		</if>
+		<if test="currYe!=null and currYe!=''">
+			AND HML.curr_ye=#{currYe}
+		</if>
+		<if test="pdType!=null and pdType!=''">
+			AND HML.pd_type=#{pdType}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND HML.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="type!=null">
+				AND HML.type=#{type}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND HML.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="managerUser!=null and managerUser!=''">
+				AND HML.manager_user LIKE CONCAT('%', #{managerUser}, '%')
+			</if>
+			<if test="managerTime!=null">
+				AND HML.manager_time=#{managerTime}
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND HML.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="managerMoney!=null and managerMoney!=''">
+				AND HML.manager_money=#{managerMoney}
+			</if>
+			<if test="currYe!=null and currYe!=''">
+				AND HML.curr_ye=#{currYe}
+			</if>
+			<if test="pdType!=null and pdType!=''">
+				AND HML.pd_type=#{pdType}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				HML.id=#{id}, 
+		   </if>
+           <if test="type!=null">
+				HML.type=#{type}, 
+		   </if>
+           <if test="userId!=null">
+				HML.user_id=#{userId}, 
+		   </if>
+           <if test="managerUser!=null">
+				HML.manager_user=#{managerUser}, 
+		   </if>
+           <if test="managerTime!=null">
+				HML.manager_time=#{managerTime}, 
+		   </if>
+           <if test="remark!=null">
+				HML.remark=#{remark}, 
+		   </if>
+		   <if test="managerMoney!=null and managerMoney!=''">
+				HML.manager_money=#{managerMoney},
+			</if>
+			<if test="currYe!=null and currYe!=''">
+				HML.curr_ye=#{currYe},
+			</if>
+			<if test="pdType!=null and pdType!=''">
+				HML.pd_type=#{pdType},
+			</if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+	
+	<delete id="deleteById">
+		DELETE HML FROM mall.TJY_HZB_MANAGER_LOG HML WHERE HML.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE mall.TJY_HZB_MANAGER_LOG HML
+		SET 
+		HML.STATUS = -1
+		WHERE HML.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE mall.TJY_HZB_MANAGER_LOG HML
+		<include refid="dynamicSet" /> 
+	    WHERE HML.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="hzbManagerLog">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_HZB_MANAGER_LOG HML
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM mall.TJY_HZB_MANAGER_LOG HML
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="hzbManagerLog">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM mall.TJY_HZB_MANAGER_LOG HML
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,SU.true_name as managerUserName
+		FROM mall.TJY_HZB_MANAGER_LOG HML LEFT JOIN SY_USERS SU ON SU.id=HML.manager_user
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="queryByQt" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,SU.true_name as managerUserName
+		FROM mall.TJY_HZB_MANAGER_LOG HML LEFT JOIN SY_USERS SU ON SU.id=HML.manager_user
+		<include refid="dynamicWhere" />
+		AND HML.type in(4,5,7,8,9)
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="hzbManagerLog">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_HZB_MANAGER_LOG HML
+		WHERE HML.ID = #{id}
+	</select>
+	
+	<select id="queryHzbLcjeByUserIdAndTime" resultType="java.lang.Double">
+		SELECT IFNULL(SUM(IFNULL(HML.manager_money,0)),0) as lc
+		FROM mall.TJY_HZB_MANAGER_LOG HML
+		WHERE HML.user_id = #{userId} AND HML.type in(4,7) AND HML.manager_time BETWEEN #{startDate} AND #{endDate}
+	</select>
+	<select id="queryHzbLxjeByUserIdAndTime" resultType="java.lang.Double">
+		SELECT IFNULL(SUM(IFNULL(HML.manager_money,0)),0) as lc
+		FROM mall.TJY_HZB_MANAGER_LOG HML
+		WHERE HML.user_id = #{userId} AND HML.type=8 AND HML.manager_time BETWEEN #{startDate} AND #{endDate}
+	</select>
+	
+</mapper>

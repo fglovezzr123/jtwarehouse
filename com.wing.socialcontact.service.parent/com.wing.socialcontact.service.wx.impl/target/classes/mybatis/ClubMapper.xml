@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ClubDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+	    <result column="status" property="updateTime" jdbcType="VARCHAR" />
+	    <result column="update_time" property="updateTime" jdbcType="DATE" />
+	    <result column="title" property="title" jdbcType="VARCHAR" />
+	    <result column="class_id" property="classId" jdbcType="VARCHAR" />
+	    <result column="imgpath" property="imgpath" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="phone" property="phone" jdbcType="VARCHAR" />
+	    <result column="address" property="address" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.*,c.name
+		FROM tjy_club t  left join tjy_club_class c on t.class_id = c.id
+ 		WHERE 1=1  and t.deleted=0
+ 		<if test="title != null and title != ''">
+			AND	t.title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+		</if>
+		<if test='classId != null and classId != "" and classId != "0"'>
+			AND	t.class_id = #{classId,jdbcType=VARCHAR}
+		</if>
+		order by t.create_time desc
+	</select>
+	<select id="getClubByclassid" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_club t 
+ 		WHERE t.deleted = 0  and t.class_id = #{classid,jdbcType=VARCHAR}
+		order by t.create_time desc
+	</select>
+	<select id="getClubByTerm" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_club t 
+ 		WHERE 1=1  and t.deleted=0
+		<if test="title != null and title != ''">
+			AND	t.title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+		</if>
+ 		<if test="classId != null and classId != ''">
+			AND	t.class_id = #{classId,jdbcType=VARCHAR}
+		</if>
+		limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	<select id="selectClubByid" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_club t 
+ 		WHERE  t.id = #{clubid,jdbcType=VARCHAR}  and t.deleted=0
+	</select>
+</mapper>

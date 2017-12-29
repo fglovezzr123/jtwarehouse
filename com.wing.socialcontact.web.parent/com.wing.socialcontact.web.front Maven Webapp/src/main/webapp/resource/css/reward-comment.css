@@ -1,0 +1,133 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+      font-family:"微软雅黑";
+}
+.wrapper{
+ 
+     width:100%;
+   
+      font-size:0.3rem;   
+}
+.clear{
+      clear:both;
+}
+.reward-commentBox{
+       width:100%;
+       box-sizing:border-box;
+       padding-left:0.3rem;
+       padding-right:0.3rem;
+       padding-top:0.2rem;
+       padding-bottom:0.2rem;
+       background:white;
+       border-top:0.14rem solid #f0f0f0;
+}
+.reward-commentBox>div:nth-child(1){
+    float:left;
+    width:13%;
+}
+.reward-commentBox>div:nth-child(2){
+    float:right;
+    width:87%;
+}
+.reward-commentBox>div .userIcon{
+    height:0.7rem;
+    width:0.7rem;
+    border-radius:50%;
+    background:url(../img/icons/user-incon.png) no-repeat center;
+    background-size:0.7rem 0.7rem;
+}
+.reward-commentBox>div>h3{
+       font-size:0.3rem;
+       display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.reward-commentBox>div>h3>span{
+      font-size:0.18rem;
+      font-weight:normal;
+      max-width: 2.2rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.reward-commentBox>div>h3>em{
+      font-size:0.18rem;
+      font-weight:normal;
+}
+.title{
+     font-size:0.2rem;
+     line-height:0.8rem;
+     text-align:start;
+}
+.reward-commentBox>div>p{
+     line-height:0.5rem;
+     border-bottom:1px solid #e6e6e6;
+     padding-bottom:0.3rem;
+}
+.reward-commentBox>div>p>img{
+   width:100%;
+}
+.reward-comment-cotent span{
+      color:#808080;
+      font-size:0.26rem;
+}
+.reward-comment-cotent{
+     font-size:0.3rem;
+     line-height:0.5rem;
+     margin-top:0.1rem;
+     padding-bottom:0.27rem;
+}
+/*文章部分*/
+     		.item{
+     			padding: 0rem .15rem;
+     			background: #F2F3F4;
+     			display: flex;
+   			    height: 1.05rem;	
+     		}
+     		.item .it-img{
+     			width: 36.23%;
+     		}
+     		.item .it-img img{
+     			width: 100%;
+     		}
+     		.item .it-cont{
+     			/*width: 4.4rem;*/
+     			width: 63.77%;
+     			font-size: .26rem;
+     			padding-left: .15rem;
+     			position: relative;
+     			box-sizing: border-box;
+     		}
+     		.item .it-cont h3{
+     			font-size: .25rem;
+     			font-weight: normal;
+     			
+			    word-break: break-all;
+			     text-overflow: ellipsis;
+			     display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+			     -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+			     -webkit-line-clamp: 2; /** 显示的行数 **/
+			     overflow: hidden;  /** 隐藏超出的内容 **/
+			     line-height: .27rem;
+     		}
+     		.item .it-cont .bot{
+     			width: 100%;
+     			display: flex;
+     			justify-content: space-between;
+     			font-size: .24rem;
+     			position: absolute;
+     			/* bottom: 0; */
+     			left: 0;
+     			padding-left: .15rem;
+     			box-sizing: border-box;
+     		}
+     		.item .it-cont .bot span{
+     			line-height: 2.5;
+     		}
+     		.ul-hide li {
+              height:auto;
+               }

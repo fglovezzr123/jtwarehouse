@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.AppInviteLogDao">
+	<resultMap id="maillistversion" type="com.wing.socialcontact.service.wx.bean.AppInviteLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time"  jdbcType="DATE"></result>
+	</resultMap>
+	<select id="selectByUserIdAndMobile" resultMap="maillistversion" parameterType="java.util.HashMap">
+		SELECT id,user_id,mobile,creata_time
+		FROM tjy_app_invite_log
+		WHERE user_id = #{uid} and mobile=#{mobile}
+	</select>
+</mapper>

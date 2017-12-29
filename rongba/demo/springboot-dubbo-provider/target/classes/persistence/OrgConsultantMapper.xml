@@ -1,0 +1,69 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.springboot_dubbo_provider.mapper.OrgConsultantMapper">
+	
+	<sql id="orgConsultantColumns">
+		a.id AS "id",
+		a.title  AS "title",
+		a.consultant  AS "consultant",
+		a.org_name  AS "orgName",
+		a.org_no  AS "orgNo",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="orgConsultantJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.OrgConsultant">
+		SELECT 
+			<include refid="orgConsultantColumns"/>
+		FROM tjrb_org_consultant a
+		<include refid="orgConsultantJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.OrgConsultant">
+		SELECT 
+			<include refid="orgConsultantColumns"/>
+		FROM tjrb_org_consultant a
+		<include refid="orgConsultantJoins"/>
+		<where>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO tjrb_org_consultant(
+			ad_pic_url,
+			product_id,
+			ad_position,
+			create_date,
+			update_date
+		) VALUES (
+			#{adPicUrl},
+			#{productId},
+			#{adPosition},
+			#{createDate},
+			#{updateDate}		
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tjrb_org_consultant SET 	
+			ad_pic_url = #{adPicUrl},
+			product_id = #{productId},
+			ad_position = #{adPosition},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_org_consultant SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>

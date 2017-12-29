@@ -1,0 +1,129 @@
+@charset "utf-8";
+body{
+	background:#f2f3f4;
+}
+/*.wrapper*/
+.wrapper{
+	margin-bottom:0;
+}
+/*title*/
+ ::-webkit-scrollbar{
+             display: none;
+            }
+         .top_menu_bar{
+ position:fixed;
+ top:0;
+ left:0;
+  z-index:100;
+  width:100%;
+  background:#fff;
+}
+
+.top_menu_bar .top_menu_list{
+   line-height:.74rem;
+          height:0.76rem;
+          font-size:.28rem;
+         overflow: hidden;
+   overflow-x: scroll;
+   -webkit-overflow-scrolling: touch;
+   white-space: nowrap;
+   display:none;
+ }
+ .top_menu_bar .top_menu_list a{
+   display:inline-block;
+   padding:0 .3rem;
+ 
+ }
+			 
+.top_menu_list a.title-t-active{
+	color: #0f88eb;
+	border-bottom: .04rem solid #0f88eb;
+}
+/*content*/
+.content{
+	width: 100%;
+	margin: .2rem 0 0 0;
+	box-sizing: border-box;
+}
+.content .content-p{
+	background: #fff;
+	padding:  0 .3rem;
+	padding-top: .18rem;
+	margin-bottom: .02rem;
+}
+.content .c-title{
+	width:100%;
+	height: .48rem;
+	font-size: .30rem;
+	line-height: .48rem;
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+.content .c-der{
+	height: .40rem;
+	font-size: .20rem;
+	color: #8B8B8B;
+	line-height: .40rem;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+	margin-top:0.08rem;
+}
+.content .imgBox1{
+	height: 1.52rem;
+	margin: .16rem 0 .08rem 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.content .imgBox1 img{
+	width: 2.26rem;
+	height: 1.52rem;
+}
+.content .imgBox2{
+	/* height: 3.45rem; */
+	margin: .3rem 0;
+}
+.content .imgBox2 img{
+	width: 100%;
+	/* height: 100%; */
+}
+.content .info{
+	height: .64rem;
+	font-size: .20rem;
+	line-height: .64rem;
+}
+.content .info span+span{
+	display: inline-block;
+	margin: 0 0 0 .2rem;
+}
+.tonghao{
+	width: 100%;
+	padding: 0 .12rem;
+	box-sizing: border-box;
+	background:#fff;
+	border-top:1px solid #e6e6e6
+           }
+.tonghao .th{
+	display: flex;
+	height: .65rem;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 .16rem;
+	box-sizing: border-box;
+}
+.tonghao .th h2{
+	font-size: .30rem;
+	font-weight: 500;
+	color:#000000;
+}
+.tonghao .th .th-a{
+	font-size: .24rem;
+	color: #666;
+}
+.tonghao .th .th-a .iconfont{
+	font-size: .24rem;
+	color: #666;
+}

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-04-11 15:34:07
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserFavDao">
+
+	<resultMap id="userFav" type="com.wing.socialcontact.service.wx.bean.UserFav">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="favId" column="fav_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortno" column="sortno" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="userFavGlobal" type="com.wing.socialcontact.service.wx.bean.UserFav">
+		<result property="id" column="UF_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="UF_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="favId" column="UF_fav_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortno" column="UF_sortno" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UF.id, UF.user_id, UF.fav_id, UF.sortno
+	</sql>
+
+	<sql id="fieldGlobal">
+		UF.id UF_id, UF.user_id UF_user_id, 
+		UF.fav_id UF_fav_id, UF.sortno UF_sortno
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UF.id id, UF.user_id userId, 
+		UF.fav_id favId, UF.sortno sortno
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UF.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND UF.user_id=#{userId}
+		</if>
+		<if test="favId!=null and favId!=''">
+			AND UF.fav_id=#{favId}
+		</if>
+		<if test="sortno!=null">
+			AND UF.sortno=#{sortno}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UF.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND UF.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="favId!=null and favId!=''">
+				AND UF.fav_id LIKE CONCAT('%', #{favId}, '%')
+			</if>
+			<if test="sortno!=null">
+				AND UF.sortno=#{sortno}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UF.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				UF.user_id=#{userId}, 
+		   </if>
+           <if test="favId!=null">
+				UF.fav_id=#{favId}, 
+		   </if>
+           <if test="sortno!=null">
+				UF.sortno=#{sortno}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+
+	<select id="load" resultMap="userFav">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FAV UF
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_USER_FAV UF
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="userFav">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FAV UF
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="userFav">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FAV UF
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="userFav">
+		SELECT <include refid="field"/>
+		FROM TJY_USER_FAV UF
+		WHERE UF.ID = #{id}
+	</select>
+	
+	<select id="selectAllUserFavMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM TJY_USER_FAV UF
+		<include refid="dynamicWhere" />
+		order by UF.sortno  
+	</select>
+	<select id="selectAllUserFavMap2" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select UF.* ,o.list_value as fav_name from TJY_USER_FAV UF
+         left join list_values o on o.id=uf.fav_id
+		where 1=1
+		<if test="userId!=null and userId!=''">
+			AND UF.user_id=#{userId}
+		</if>
+		<if test="favId!=null and favId!=''">
+			AND UF.fav_id=#{favId}
+		</if>
+		<if test="sortno!=null">
+			AND UF.sortno=#{sortno}
+		</if>
+		and  o.list_value is not null
+		order by UF.sortno  
+	</select>
+	<select id="selectByParam" resultMap="userFav" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM TJY_USER_FAV UF 
+    	<include refid="dynamicWhere" />
+	</select>
+	
+</mapper>

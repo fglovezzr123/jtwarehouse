@@ -1,0 +1,1 @@
+consumerFilter=com.wing.socialcontact.filter.DubboConsumerFilter

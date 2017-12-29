@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.AppointmentDetailsDao">
+	<resultMap id="userAppointmentRecordDetails"
+		type="com.wing.socialcontact.service.wx.bean.UserAppointmentRecordDetails">
+		<result property="id" column="id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="ar_Id" column="ar_Id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="create_Time" column="create_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="start_Time" column="start_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="end_Time" column="end_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="duration" column="duration" javaType="long"
+			jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	
+	<sql id="fields">
+		<if test="ar_Id!=null and ar_Id!=''">
+			ar_id,
+		</if>
+		<if test="status!=null and status!=''">
+			status,
+		</if>
+		<if test="create_Time!=null">
+			create_time,
+		</if>
+		<if test="start_Time!=null">
+			start_time,
+		</if>
+		<if test="end_Time!=null">
+			end_time,
+		</if>
+		<if test="duration!=null and duration!=''">
+			duration,
+		</if>
+	</sql>
+	<sql id="values">
+		<if test="ar_Id!=null and ar_Id!=''">
+			#{ar_Id},
+		</if>
+		<if test="status!=null and status!=''">
+			#{status},
+		</if>
+		<if test="create_Time!=null">
+			#{create_Time},
+		</if>
+		<if test="start_Time!=null">
+			#{start_Time},
+		</if>
+		<if test="end_Time!=null">
+			#{end_Time},
+		</if>
+		<if test="duration!=null and duration!=''">
+			#{duration},
+		</if>
+	</sql>
+	<sql id="appointmentRecord">
+		t.id,
+		t.ar_id,
+		t.status,
+		t.create_time,
+		t.start_time,
+		t.end_time,
+		t.duration
+	</sql>
+	<insert id="addAppointmentRecordDetails"
+		parameterType="com.wing.socialcontact.service.wx.bean.UserAppointmentRecordDetails">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_user_appointment_record_details(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+	<!-- 修改 -->
+	<update id="updateAppointmentDetails"
+		parameterType="com.wing.socialcontact.service.wx.bean.UserAppointmentRecordDetails">
+		UPDATE tjy_user_appointment_record_details t
+		SET
+		t.STATUS =
+		#{status},
+		t.end_time =
+		#{end_Time},
+		t.duration =
+		#{duration}
+		WHERE t.ID = #{id}
+	</update>
+	<select id="getAppointmentRecordDetails"
+		resultType="com.wing.socialcontact.service.wx.bean.UserAppointmentRecordDetails"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record_details t
+		WHERE id=#{id}
+	</select>
+	
+	
+	<select id="getAppointmentRecordDetailsList" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record_details t
+		WHERE ar_id = #{id}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<sql id="condition">
+		<where>
+			<if test="id!=null and id!=''">
+				AND t.id=#{id}
+			</if>
+		</where>
+	</sql>
+	<!-- 生成约见订单 -->
+	<insert id="insertAPPointmentRecord"
+		parameterType="com.wing.socialcontact.service.wx.bean.UserAppointmentRecord">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_user_appointment_record(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+	<!-- 根据用户id获取约见订单 -->
+	
+	
+	<!-- 根据userId获取已约见订单 -->
+	<select id="findHaveAppointmentRecord" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE from_id=#{userId} and status=2
+	</select>
+	<!-- 根据userId获取待约见订单 -->
+	<select id="findWaitAppointmentRecord" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE from_id=#{userId} and status=0
+	</select>
+	<!-- 根据userId获取被约见订单 -->
+	<select id="findByAppointmentRecord" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE to_id=#{userId} and status=0
+	</select>
+	<!-- 根据期望约见时间获取约见订单 -->
+	<select id="getUserAppointmentRecordByExpecttime" resultType="java.util.HashMap"
+		parameterType="String">
+		SELECT
+		<include refid="appointmentRecord" />
+		FROM
+		tjy_user_appointment_record t
+		WHERE expect_time=#{expecttime}
+		and
+		status = 0 or status = 1
+	</select>
+</mapper>

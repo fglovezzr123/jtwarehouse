@@ -1,0 +1,100 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	  background:#f0f0f0;
+    overflow:scroll;
+}
+
+
+.content{
+        width:100%;
+	    background:white;
+	    margin-bottom:0.16rem;
+       font-size:0.26rem;
+}
+.content .content-item{
+        height:0.8rem;
+        line-height:0.8rem;
+        position:relative;
+        padding-left:0.4rem;
+        padding-right:0.4rem;
+
+}
+
+
+
+.content-item .con-l{
+     width:20%;
+     float:left;
+     text-align:left;
+     color:#3b3b3b;
+}
+.content-item .con-r{
+     width:60%;
+     text-align:right;
+     float:right;
+    background:url(../img/icons/arrow.png) no-repeat center right;
+    height:100%;
+    background-size:0.36rem 0.36rem;
+    padding-right:0.3rem;
+    color:#808080;
+    font-size:0.26rem;
+	align-content: center;
+	margin-bottom: .02rem;	
+}
+.content-item .aa{
+	width:90%
+}
+.bottom-border{
+	border-bottom:1px solid #efeef4
+}
+.clear{
+	 clear:both;
+}
+#con-r{
+
+      width:16%;
+     text-align:right;
+     float:right;
+    background:none;
+    height:100%;
+   
+    padding-right:0;
+}
+.con-r input {
+	font-size: .26rem;
+	color: #8B8B8B;
+	text-align: end;
+}
+#con-r img{
+     width:0.4rem;
+}
+
+#lovedoing{
+
+        padding-top:0.24rem;
+        padding-bottom:0.24rem;
+}
+#addFavorite{
+       background:none;
+       border:1px solid #b4d7f7;
+       color:#b4d7f7;
+       font-size:0.4rem;
+}
+.lovedoing{
+      height:0.5rem;
+      line-height:0.5rem;
+     background:#b4d7f7;
+     float:left;
+     margin-left:0.09rem;
+     margin-right:0.09rem;
+     padding-right:0.3rem;
+     padding-left:0.3rem;
+     color:#808080;
+     margin-bottom:0.2rem;
+}
+#personalIcon{
+     padding-top:0.5rem;
+     padding-bottom:0.5rem;
+ 
+}

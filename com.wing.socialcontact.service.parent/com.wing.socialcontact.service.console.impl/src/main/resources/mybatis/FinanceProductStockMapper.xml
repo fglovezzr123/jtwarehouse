@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.sys.dao.FinanceProductStockDao">
+    <resultMap id="financeProductStock" type="java.util.HashMap">
+        <result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+        <result property="createDate" column="create_date"  jdbcType="DATE"></result>
+        <result property="productStatus" column="product_status"  />
+        <result property="productDetail" column="product_detail"  />
+        <result property="productName" column="product_name" />
+        <result property="ratio" column="ratio" />
+        <result property="isRecommend" column="is_recommend" />
+        <result property="isShow" column="is_show" />
+        <result property="orgName" column="org_name" />
+        <result property="orgNo" column="org_no"/>
+        <result property="expectedAmount" column="expected_amount"/>
+        <result property="introduce" column="introduce"/>
+        <result property="cooperationType" column="cooperation_type"/>
+        <result property="region" column="region"/>
+        <result property="contractName" column="contract_name"/>
+        <result property="contractPhone" column="contract_phone"/>
+        <result property="descPicUrl" column="desc_pic_url"/>
+        <result property="industry" column="industry"/>
+        <result property="teamDesc" column="team_desc"/>
+        <result property="strengths" column="strengths"/>
+
+        <result column="company_name" property="companyName"/>
+        <result column="build_date" property="buildDate"/>
+        <result column="reg_location" property="regLocation"/>
+        <result column="law_person" property="lawPerson"/>
+        <result column="bp_book_url" property="bpBookUrl"/>
+        <result column="road_show_url" property="roadShowUrl"/>
+        <result column="invest_org_name" property="investOrgName"/>
+        <result column="invest_amount" property="investAmount"/>
+        <result column="consulant_title" property="consulantTitle"/>
+        <result column="consulan" property="consulan"/>
+        <result column="consulant_org_name" property="consulantOrgName"/>
+        <result column="consulant_profile_url" property="consulantProfileUrl"/>
+        <result column="evlu_amount" property="evluAmount"/>
+        <result column="invest_amount_min" property="investAmountMin"/>
+        <result column="project_profile_url" property="projectProfileUrl"/>
+    </resultMap>
+
+
+    <select id="selectByParam" resultMap="financeProductStock" parameterType="java.util.Map">
+        select t.* from tjrb_finance_product_stock t
+    </select>
+</mapper>
+

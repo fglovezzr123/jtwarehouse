@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-04-07 01:41:58
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ReconPhotosDao">
+
+	<resultMap id="reconPhotos" type="com.wing.socialcontact.service.wx.bean.ReconPhotos">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgName" column="img_name" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="reconPhotosGlobal" type="com.wing.socialcontact.service.wx.bean.ReconPhotos">
+		<result property="id" column="RP_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="RP_type" javaType="Integer" jdbcType="VARCHAR"></result>
+		<result property="userId" column="RP_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgUrl" column="RP_img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgName" column="RP_img_name" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		RP.id, RP.type, RP.user_id, RP.img_url, 
+		RP.img_name
+	</sql>
+
+	<sql id="fieldGlobal">
+		RP.id RP_id, RP.type RP_type, 
+		RP.user_id RP_user_id, RP.img_url RP_img_url, 
+		RP.img_name RP_img_name
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		RP.id id, RP.type type, 
+		RP.user_id userId, RP.img_url imgUrl, 
+		RP.img_name imgName
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND RP.id=#{id}
+		</if>
+		<if test="type!=null and type!=''">
+			AND RP.type=#{type}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND RP.user_id=#{userId}
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			AND RP.img_url=#{imgUrl}
+		</if>
+		<if test="imgName!=null and imgName!=''">
+			AND RP.img_name=#{imgName}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND RP.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="type!=null and type!=''">
+				AND RP.type LIKE CONCAT('%', #{type}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND RP.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND RP.img_url LIKE CONCAT('%', #{imgUrl}, '%')
+			</if>
+			<if test="imgName!=null and imgName!=''">
+				AND RP.img_name LIKE CONCAT('%', #{imgName}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				RP.id=#{id}, 
+		   </if>
+           <if test="type!=null">
+				RP.type=#{type}, 
+		   </if>
+           <if test="userId!=null">
+				RP.user_id=#{userId}, 
+		   </if>
+           <if test="imgUrl!=null">
+				RP.img_url=#{imgUrl}, 
+		   </if>
+           <if test="imgName!=null">
+				RP.img_name=#{imgName}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE RP FROM TJY_RECON_PHOTOS RP WHERE RP.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_RECON_PHOTOS RP
+		SET 
+		RP.STATUS = -1
+		WHERE RP.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_RECON_PHOTOS RP
+		<include refid="dynamicSet" /> 
+	    WHERE RP.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="reconPhotos">
+		SELECT <include refid="field"/>
+		FROM TJY_RECON_PHOTOS RP
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_RECON_PHOTOS RP
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="reconPhotos">
+		SELECT <include refid="field"/>
+		FROM TJY_RECON_PHOTOS RP
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="reconPhotos">
+		SELECT <include refid="field"/>
+		FROM TJY_RECON_PHOTOS RP
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="reconPhotos">
+		SELECT <include refid="field"/>
+		FROM TJY_RECON_PHOTOS RP
+		WHERE RP.ID = #{id}
+	</select>
+	
+</mapper>

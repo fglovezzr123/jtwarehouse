@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-04-18 21:18:06
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.BusinessClassDao">
+
+	<resultMap id="businessClass" type="com.wing.socialcontact.service.wx.bean.BusinessClass">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="className" column="class_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="classNum" column="class_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isRecommend" column="is_recommend" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="selectAllClassMap" resultMap="businessClass" parameterType="java.util.Map">
+		SELECT t.* 
+		FROM tjy_business_class t where 1=1
+		<if test="isRecommend == 1">
+		   and t.is_recommend = 1
+		</if> 
+		order by t.class_num  asc,t.create_time desc
+		<if test="queryRows != null" >
+        limit  #{queryRows,jdbcType=INTEGER}
+        </if>
+	</select>
+	<select id="selectByParam" resultMap="businessClass" parameterType="java.util.Map">
+		SELECT t.*
+		FROM tjy_business_class t 
+ 		WHERE 1=1
+    	<if test="className != null and className != ''">
+			AND	t.class_name like CONCAT('%',#{className,jdbcType=VARCHAR},'%')
+		</if>
+		order by t.class_num
+	</select>
+	
+</mapper>

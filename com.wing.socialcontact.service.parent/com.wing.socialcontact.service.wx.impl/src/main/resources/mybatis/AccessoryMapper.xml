@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-03-27 11:24:18
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.AccessoryDao">
+
+	<resultMap id="accessory" type="com.wing.socialcontact.service.wx.bean.Accessory">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="superId" column="super_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ext" column="ext" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="height" column="height" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="width" column="width" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="size" column="size" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="originalName" column="original_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="info" column="info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="newName" column="new_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="path" column="path" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="accessoryGlobal" type="com.wing.socialcontact.service.wx.bean.Accessory">
+		<result property="id" column="A_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="A_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="superId" column="A_super_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ext" column="A_ext" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="height" column="A_height" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="width" column="A_width" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="size" column="A_size" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="originalName" column="A_original_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="info" column="A_info" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="newName" column="A_new_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="path" column="A_path" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="A_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="A_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="A_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="A_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="A_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="A_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="A_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="A_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		A.id, A.user_id, A.super_id, A.ext, 
+		A.height, A.width, A.size, A.original_name, 
+		A.info, A.new_name, A.path, A.status, 
+		A.create_time, A.create_user_id, A.create_user_name, A.update_time, 
+		A.update_user_id, A.update_user_name, A.deleted
+	</sql>
+
+	<sql id="fieldGlobal">
+		A.id A_id, A.user_id A_user_id, 
+		A.super_id A_super_id, A.ext A_ext, 
+		A.height A_height, A.width A_width, 
+		A.size A_size, A.original_name A_original_name, 
+		A.info A_info, A.new_name A_new_name, 
+		A.path A_path, A.status A_status, 
+		A.create_time A_create_time, A.create_user_id A_create_user_id, 
+		A.create_user_name A_create_user_name, A.update_time A_update_time, 
+		A.update_user_id A_update_user_id, A.update_user_name A_update_user_name, 
+		A.deleted A_deleted
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		A.id id, A.user_id userId, 
+		A.super_id superId, A.ext ext, 
+		A.height height, A.width width, 
+		A.size size, A.original_name originalName, 
+		A.info info, A.new_name newName, 
+		A.path path, A.status status, 
+		A.create_time createTime, A.create_user_id createUserId, 
+		A.create_user_name createUserName, A.update_time updateTime, 
+		A.update_user_id updateUserId, A.update_user_name updateUserName, 
+		A.deleted deleted
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND A.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND A.user_id=#{userId}
+		</if>
+		<if test="superId!=null and superId!=''">
+			AND A.super_id=#{superId}
+		</if>
+		<if test="ext!=null and ext!=''">
+			AND A.ext=#{ext}
+		</if>
+		<if test="height!=null">
+			AND A.height=#{height}
+		</if>
+		<if test="width!=null">
+			AND A.width=#{width}
+		</if>
+		<if test="size!=null">
+			AND A.size=#{size}
+		</if>
+		<if test="originalName!=null and originalName!=''">
+			AND A.original_name=#{originalName}
+		</if>
+		<if test="info!=null and info!=''">
+			AND A.info=#{info}
+		</if>
+		<if test="newName!=null and newName!=''">
+			AND A.new_name=#{newName}
+		</if>
+		<if test="path!=null and path!=''">
+			AND A.path=#{path}
+		</if>
+		<if test="status!=null">
+			AND A.status=#{status}
+		</if>
+		<if test="createTime!=null">
+			AND A.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND A.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND A.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND A.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND A.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND A.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND A.deleted=#{deleted}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND A.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND A.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="superId!=null and superId!=''">
+				AND A.super_id LIKE CONCAT('%', #{superId}, '%')
+			</if>
+			<if test="ext!=null and ext!=''">
+				AND A.ext LIKE CONCAT('%', #{ext}, '%')
+			</if>
+			<if test="height!=null">
+				AND A.height=#{height}
+			</if>
+			<if test="width!=null">
+				AND A.width=#{width}
+			</if>
+			<if test="size!=null">
+				AND A.size=#{size}
+			</if>
+			<if test="originalName!=null and originalName!=''">
+				AND A.original_name LIKE CONCAT('%', #{originalName}, '%')
+			</if>
+			<if test="info!=null and info!=''">
+				AND A.info LIKE CONCAT('%', #{info}, '%')
+			</if>
+			<if test="newName!=null and newName!=''">
+				AND A.new_name LIKE CONCAT('%', #{newName}, '%')
+			</if>
+			<if test="path!=null and path!=''">
+				AND A.path LIKE CONCAT('%', #{path}, '%')
+			</if>
+			<if test="status!=null">
+				AND A.status=#{status}
+			</if>
+			<if test="createTime!=null">
+				AND A.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND A.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND A.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND A.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND A.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND A.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND A.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				A.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				A.user_id=#{userId}, 
+		   </if>
+           <if test="superId!=null">
+				A.super_id=#{superId}, 
+		   </if>
+           <if test="ext!=null">
+				A.ext=#{ext}, 
+		   </if>
+           <if test="height!=null">
+				A.height=#{height}, 
+		   </if>
+           <if test="width!=null">
+				A.width=#{width}, 
+		   </if>
+           <if test="size!=null">
+				A.size=#{size}, 
+		   </if>
+           <if test="originalName!=null">
+				A.original_name=#{originalName}, 
+		   </if>
+           <if test="info!=null">
+				A.info=#{info}, 
+		   </if>
+           <if test="newName!=null">
+				A.new_name=#{newName}, 
+		   </if>
+           <if test="path!=null">
+				A.path=#{path}, 
+		   </if>
+           <if test="status!=null">
+				A.status=#{status}, 
+		   </if>
+           <if test="createTime!=null">
+				A.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				A.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				A.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				A.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				A.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				A.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				A.deleted=#{deleted}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+
+	<select id="load" resultMap="accessory">
+		SELECT <include refid="field"/>
+		FROM TJY_ACCESSORY A
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_ACCESSORY A
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="accessory">
+		SELECT <include refid="field"/>
+		FROM TJY_ACCESSORY A
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="accessory">
+		SELECT <include refid="field"/>
+		FROM TJY_ACCESSORY A
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="accessory">
+		SELECT <include refid="field"/>
+		FROM TJY_ACCESSORY A
+		WHERE A.ID = #{id}
+	</select>
+	
+	<select id="selectAllTemplateMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM tjy_accessory a order by a.create_time  
+	</select>
+	<select id="selectByParam" resultMap="accessory" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_accessory a 
+    	<include refid="queryWhere" />
+	</select>
+	<delete id="deleteByTerm"  parameterType="java.util.Map">
+		delete a
+		FROM tjy_accessory a 
+    	<include refid="queryWhere" />
+	</delete>
+	
+</mapper>

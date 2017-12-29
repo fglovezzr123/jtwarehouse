@@ -1,0 +1,98 @@
+@charset "utf-8";
+body{
+	  height:100%;
+	  overflow:scroll;
+	  background:#f0f0f0;
+}
+.clear{clear:both;}
+.wrapper{
+    width:100%;
+}
+.cooperate-item{
+	  width:100%;
+	  height:1.4rem;
+	  background:white;
+	  box-sizing:border-box;
+	  margin-bottom:0.08rem;
+	  padding-left:0.3rem;
+	  padding-right:0.3rem;
+}
+.cooperate-item .cooperate-item-l{
+	   width:16%;
+       float:left;
+       height:100%;
+       line-height:100%;
+}
+.cooperate-item .cooperate-item-r{
+	 width:84%;
+	 float:left;
+	 height:100%;
+	 background:url(../img/icons/arrow.png) no-repeat center right;
+     background-size:0.36rem 0.36rem;
+	}
+
+.cooperate-item-l div{
+	  height:0.78rem;
+	  width:0.78rem;
+	  background:#ffbf7f;
+	  font-size:0.36rem;
+	  font-weight:bold;
+	  text-align:center;
+	  line-height:0.78rem;
+	  border-radius:50%;
+	  color:white;
+	  margin-top:0.33rem;
+}
+.cooperate-item .cooperate-item-r h3{
+	    font-size:0.3rem;
+	    width:95%;
+	    margin-top:0.33rem;
+	    overflow: hidden;
+       text-overflow: ellipsis;
+       white-space: nowrap;
+}
+.cooperate-item .cooperate-item-r div{
+	  width:100%;
+	  margin-top:0.15rem;
+}
+.cooperate-item .cooperate-item-r div span{
+	   display:inline-block;
+	   float:left;
+	   font-size:0.24rem;
+	   color:#808080;
+	   padding-left:0.3rem;
+}
+.cooperate-item .cooperate-item-r div span:nth-child(1){
+     background:url(../img/icons/booo1.png) no-repeat left center;
+     background-size:0.23rem 0.23rem;
+     margin-right:0.4rem;
+}
+.cooperate-item .cooperate-item-r div span:nth-child(2){
+     background:url(../img/icons/booo.png) no-repeat left center;
+     background-size:0.23rem 0.23rem;
+}
+
+.cooperate-item-l .asking{
+	  background:#7fcbff;
+}
+.cooper-btn{
+	  width:100%;
+	  height:1rem;
+	  line-height:1rem;
+	  font-size:0.3rem;
+	  text-align:center;
+	  position:fixed;
+	  left:0;
+	  bottom:0;
+}
+.cooper-btn div:nth-child(1){
+   float:left;
+   width:35%;
+   background:white;
+}
+.cooper-btn div:nth-child(2){
+  float:left;
+  width:65%;
+  background:#ff811b;
+  color:white;	   
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.sys.dao.FinanceProductDao">
+    <resultMap id="financeProduct" type="java.util.HashMap">
+        <result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+        <result property="createDate" column="create_date"  jdbcType="DATE"></result>
+        <result property="productStatus" column="product_status"  />
+        <result property="productDetail" column="product_detail"  />
+        <result property="productName" column="product_name" />
+        <result property="financeType" column="finance_type"  />
+        <result property="financeAmount" column="finance_amount" />
+        <result property="financePeriod" column="finance_period" />
+        <result property="introduce" column="introduce"/>
+        <result property="investType" column="invest_type" />
+        <result property="consultant" column="consultant" />
+        <result property="orgName" column="org_name" />
+        <result property="orgNo" column="org_no"/>
+        <result property="material" column="material" />
+        <result property="conditions" column="conditions" />
+        <result property="monthSupply" column="month_supply" />
+        <result property="interest" column="interest" />
+        <result property="ratio" column="ratio" />
+        <result property="isRecommend" column="is_recommend" />
+        <result property="isShow" column="is_show" />
+        <result property="financeAmount2" column="finance_amount_end"/>
+        <result property="bright2" column="bright2"/>
+        <result property="bright1" column="bright1"/>
+    </resultMap>
+<!--private Long id;
+    private Date updateDate;
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @Column(name = "ratio")
+    private int ratio;
+    @Column(name = "is_show")
+    private int isShow;
+    @Column(name = "is_recommend")
+    private int isRecommend;-->
+
+    <select id="selectByParam" resultMap="financeProduct" parameterType="java.util.Map">
+        select t.* from tjrb_finance_product t where status=1
+    </select>
+</mapper>
+

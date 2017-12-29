@@ -1,0 +1,17 @@
+com/wing/socialcontact/service/im/bean/ImToprelat.class
+com/wing/socialcontact/service/im/api/IImFollowService.class
+com/wing/socialcontact/service/im/bean/ImGroupfav.class
+com/wing/socialcontact/service/im/api/IImFriendrequestService.class
+com/wing/socialcontact/service/im/api/IImGroupinfoService.class
+com/wing/socialcontact/service/im/bean/ImFriend.class
+com/wing/socialcontact/service/im/api/IImGrouprequestService.class
+com/wing/socialcontact/service/im/api/App.class
+com/wing/socialcontact/service/im/bean/ImGroupinfo.class
+com/wing/socialcontact/service/im/bean/ImFriendrequest.class
+com/wing/socialcontact/service/im/api/IImGroupusersService.class
+com/wing/socialcontact/service/im/bean/ImGroupusers.class
+com/wing/socialcontact/service/im/api/IImFriendService.class
+com/wing/socialcontact/service/im/api/IImGroupfavService.class
+com/wing/socialcontact/service/im/bean/ImFollow.class
+com/wing/socialcontact/service/im/bean/ImGrouprequest.class
+com/wing/socialcontact/service/im/api/IImToprelatService.class

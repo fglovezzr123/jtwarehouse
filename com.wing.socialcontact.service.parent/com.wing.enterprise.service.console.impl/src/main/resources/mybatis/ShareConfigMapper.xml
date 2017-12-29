@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.enterprise.service.dao.ShareConfigDao">
+
+	<resultMap id="shareConfig" type="java.util.HashMap">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="title" column="title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="link" column="link" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imagePath" column="image_path" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+</mapper>
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.sys.dao.SyActionDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="menu_id" property="menuId" jdbcType="VARCHAR" />
+	    <result column="action_sort" property="actionSort" jdbcType="SMALLINT" />
+	    <result column="action_name" property="actionName" jdbcType="VARCHAR" />
+	    <result column="action_url" property="actionUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	
+    <select id="findurlbyroleid" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT   distinct t.action_url actionUrl
+		FROM sy_action t ,sy_role_action ra
+ 		WHERE t.id=ra.action_id and ra.role_id=#{roldId,jdbcType=VARCHAR} 
+ 		order by t.action_sort asc
+	</select>
+    <select id="selectByActionSort" resultMap="BaseResultMap">
+		SELECT *
+		FROM sy_action t 
+ 		order by t.action_sort asc
+	</select>
+	<select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM sy_action t 
+ 		WHERE 1=1
+    	<if test="menuId != null and menuId != ''">
+			AND	t.menu_id = #{menuId,jdbcType=VARCHAR}
+		</if>
+    	<if test="actionName != null and actionName != ''">
+			AND	t.action_name like CONCAT('%',#{actionName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="actionUrl != null and actionUrl != ''">
+			AND	t.action_url like CONCAT('%',#{actionUrl,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+    	<if test="orderStr == null or orderStr == ''">
+			order by t.action_sort
+		</if>
+	</select>
+</mapper>

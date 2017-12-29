@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	wangyansheng
+	date	:	2017-11-27
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.TbLogDao">
+
+	<resultMap id="tbLog" type="com.wing.socialcontact.service.wx.bean.TbLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="tableName" column="table_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comment" column="comment" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="trueName" column="true_name" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<sql id="field">
+         l.id,l.user_id,l.type,l.table_name,l.comment,l.create_time,CASE  WHEN u.true_name is null then su.true_name ELSE u.true_name END as true_name
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<if test="tableName!=null and tableName!=''">
+				AND (l.table_name like concat('%',#{tableName},'%') or l.comment like concat('%',#{tableName},'%'))
+			</if>
+			<if test="trueName!=null and trueName!=''">
+				AND (u.true_name like concat('%',#{trueName},'%') or su.true_name like concat('%',#{trueName},'%'))
+ 			</if>
+			<if test="type!=null">
+				AND l.type = #{type}
+			</if>
+			<if test="createTime!=null">
+				AND l.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND l.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectByParam" resultMap="tbLog" parameterType="java.util.Map">
+		select
+			<include refid="field"/>
+		from tjy_tb_log l
+		LEFT JOIN tjy_user u ON l.user_id = u.id
+		LEFT JOIN sy_users su ON l.user_id = su.id
+ 		<include refid="dynamicWhere"/>
+		order by l.create_time desc
+	</select>
+
+	<select id="selectById" resultMap="tbLog" parameterType="java.lang.String">
+		select
+		<include refid="field"/>
+		from tjy_tb_log l
+		LEFT JOIN tjy_user u ON l.user_id = u.id
+		LEFT JOIN sy_users su ON l.user_id = su.id
+		where l.id = #{id}
+	</select>
+
+</mapper>

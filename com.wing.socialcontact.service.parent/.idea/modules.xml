@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/com.wing.enterprise.service.console.api/com.wing.enterprise.service.console.api.iml" filepath="$PROJECT_DIR$/com.wing.enterprise.service.console.api/com.wing.enterprise.service.console.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.enterprise.service.console.impl/com.wing.enterprise.service.console.impl.iml" filepath="$PROJECT_DIR$/com.wing.enterprise.service.console.impl/com.wing.enterprise.service.console.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.console.api/com.wing.socialcontact.service.console.api.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.console.api/com.wing.socialcontact.service.console.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.console.impl/com.wing.socialcontact.service.console.impl.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.console.impl/com.wing.socialcontact.service.console.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.core/com.wing.socialcontact.service.core.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.core/com.wing.socialcontact.service.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.dubbostart/com.wing.socialcontact.service.dubbostart.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.dubbostart/com.wing.socialcontact.service.dubbostart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.im.api/com.wing.socialcontact.service.im.api.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.im.api/com.wing.socialcontact.service.im.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.im.impl/com.wing.socialcontact.service.im.impl.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.im.impl/com.wing.socialcontact.service.im.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.parent.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.wx.api/com.wing.socialcontact.service.wx.api.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.wx.api/com.wing.socialcontact.service.wx.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.service.wx.impl/com.wing.socialcontact.service.wx.impl.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.service.wx.impl/com.wing.socialcontact.service.wx.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.wing.socialcontact.util/com.wing.socialcontact.util.iml" filepath="$PROJECT_DIR$/com.wing.socialcontact.util/com.wing.socialcontact.util.iml" />
+    </modules>
+  </component>
+</project>

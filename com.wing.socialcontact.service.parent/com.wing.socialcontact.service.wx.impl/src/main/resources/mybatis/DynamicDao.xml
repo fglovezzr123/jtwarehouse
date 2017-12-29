@@ -1,0 +1,1281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-17 09:54:05
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.DynamicDao">
+
+	<resultMap id="dynamic" type="com.wing.socialcontact.service.wx.bean.Dynamic">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="issuedDate" column="issued_date" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="dyContent" column="dy_content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mediaId" column="media_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mediaPrice" column="media_price" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="mediaSeconds" column="media_seconds" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="visitQuantity" column="visit_quantity" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="visitType" column="visit_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="visitUrl" column="visit_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="adUrl" column="ad_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="dyType" column="dyType" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="articleid" column="articleid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="atitle" column="atitle" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="aclassname" column="aclassname" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="aimgpath" column="aimgpath" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="adate" column="adate" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="allowReword" column="allow_reword" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="allowComment" column="allow_comment" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isStick" column="is_stick" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		D.articleid,D.id, D.user_id, D.issued_date, D.dy_content, D.create_time,D.is_stick,
+		D.media_id, D.media_price, D.media_seconds,D.visit_quantity, D.visit_type,D.visit_url, D.status,D.ad_url, D.dy_type,D.allow_reword,D.allow_comment
+	</sql>
+	<delete id="deleteById">
+		DELETE D FROM TJY_DYNAMIC D WHERE D.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="dynamic">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC D
+		WHERE D.ID = #{id}
+	</select>
+	
+	<select id="selectByParam" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			t.id,
+			t.is_stick,
+			t.create_time,
+			t.articleid,
+			t.atitle,
+			t.aclassname,
+			t.aimgpath,
+			t.adate,
+			t2.nickname,
+			t2.mobile,
+			t2.com_name,
+			t2.com_profile,
+			t3.list_value AS job_name,
+			t.user_id,
+			t.issued_date,
+			t.dy_content,
+			t.media_id,
+			t.ad_url,
+			t.dy_type,
+			t.media_price,
+			t.media_seconds,
+			IFNULL(t.visit_quantity, 0) AS visit_quantity,
+			t.visit_type,
+			t2.user_profile,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag,
+			t4.dis_name AS province_name,
+			t5.dis_name AS city_name,
+			t6.dis_name AS county_name,
+			t7.list_value AS industry,
+			t2.head_portrait,
+			IFNULL(t8.lickCount, 0) AS lickCount,
+			IFNULL(T9.commentCount, 0) AS commentCount,
+			IFNULL(t10.forwardCount, 0) AS forwardCount,
+			IFNULL(t11.rewardCount, 0) AS rewardCount,
+			IFNULL(t.allow_reword, 1) AS allow_reword,
+			IFNULL(t.allow_comment, 1) AS allow_comment
+		FROM
+			tjy_dynamic t
+		JOIN tjy_user t2 ON t.user_id = t2.id
+		LEFT JOIN list_values t3 ON t2.job = t3.id
+		LEFT JOIN sy_district t4 ON t2.province = t4.id
+		LEFT JOIN sy_district t5 ON t2.city = t5.id
+		LEFT JOIN sy_district t6 ON t2.county = t6.id
+		LEFT JOIN list_values t7 ON t2.industry = t7.id
+		LEFT JOIN (
+			SELECT
+				dynamic_id,
+				COUNT(*) AS lickCount
+			FROM
+				`tjy_dynamic_op_log`
+			WHERE
+				op_type = 1
+			GROUP BY
+				dynamic_id
+		) t8 ON t.id = t8.dynamic_id
+		LEFT JOIN (
+			SELECT
+				fk_id,
+				cme_type,
+				count(*) AS commentCount
+			FROM
+				`tjy_comment`
+			WHERE
+				cme_type = 5
+			GROUP BY
+				fk_id,
+				cme_type
+		) T9 ON T.id = T9.fk_id
+		LEFT JOIN (
+			SELECT
+				dynamic_id,
+				COUNT(*) AS forwardCount
+			FROM
+				`tjy_dynamic_op_log`
+			WHERE
+				op_type = 2
+			GROUP BY
+				dynamic_id
+		) t10 ON t.id = t10.dynamic_id
+		LEFT JOIN (
+			SELECT
+				dynamic_id,
+				COUNT(*) AS rewardCount
+			FROM
+				tjy_dynamic_pay_log
+			WHERE
+				action_type = 1
+			AND `status` = 1
+			group by dynamic_id
+		) t11 ON t.id = t11.dynamic_id
+		WHERE
+			t.`status` = 1 
+			<if test="dyType!=null and dyType!=''">
+				AND t.dy_type = #{dyType}
+			</if>
+			<if test="dyContent!=null and dyContent!=''">
+				AND t.dy_content LIKE CONCAT('%', #{dyContent}, '%')
+			</if>
+			<if test="userName!=null and userName!=''">
+				AND t2.nickname LIKE CONCAT('%', #{userName}, '%')
+			</if>
+			<if test="visitQuantity!=null and visitQuantity!=''">
+				AND IFNULL(t.visit_quantity, 0) = #{visitQuantity}
+			</if>
+			<if test="issuedDate!=null and issuedDate!=''">
+				AND DATE_FORMAT(t.issued_date,'%Y-%m-%d') = #{issuedDate}
+			</if>
+			<if test="dynamicId!=null and dynamicId!=''">
+				AND t.id = #{dynamicId}
+			</if>
+			<if test="user_id!=null and user_id!=''">
+				AND t.user_id = #{user_id}
+			</if>
+		ORDER BY  t.is_stick desc,
+		t.issued_date DESC
+	</select>
+	
+	<select id="selectByParam2" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			t.id,
+			t.is_stick,
+			t.create_time,
+			t.articleid,
+			t.atitle,
+			t.aclassname,
+			t.aimgpath,
+			t.adate,
+			t2.nickname,
+			t2.mobile,
+			t2.com_name,
+			t2.com_profile,
+			t3.list_value AS job_name,
+			t.user_id,
+			t.issued_date,
+			t.dy_content,
+			t.media_id,
+			t.ad_url,
+			t.dy_type,
+			t.media_price,
+			t.media_seconds,
+			IFNULL(t.visit_quantity, 0) AS visit_quantity,
+			t.visit_type,
+			t2.user_profile,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag,
+			t4.dis_name AS province_name,
+			t5.dis_name AS city_name,
+			t6.dis_name AS county_name,
+			t7.list_value AS industry,
+			t2.head_portrait,
+			IFNULL(t8.lickCount, 0) AS lickCount,
+			IFNULL(T9.commentCount, 0) AS commentCount
+		FROM
+			tjy_dynamic t
+		JOIN tjy_user t2 ON t.user_id = t2.id
+		LEFT JOIN list_values t3 ON t2.job = t3.id
+		LEFT JOIN sy_district t4 ON t2.province = t4.id
+		LEFT JOIN sy_district t5 ON t2.city = t5.id
+		LEFT JOIN sy_district t6 ON t2.county = t6.id
+		LEFT JOIN list_values t7 ON t2.industry = t7.id
+		LEFT JOIN (
+			SELECT
+				dynamic_id,
+				COUNT(*) AS lickCount
+			FROM
+				`tjy_dynamic_op_log`
+			WHERE
+				op_type = 1
+			GROUP BY
+				dynamic_id
+		) t8 ON t.id = t8.dynamic_id
+		LEFT JOIN (
+			SELECT
+				fk_id,
+				cme_type,
+				count(*) AS commentCount
+			FROM
+				`tjy_comment`
+			WHERE
+				cme_type = 5
+			GROUP BY
+				fk_id,
+				cme_type
+		) T9 ON T.id = T9.fk_id
+		WHERE
+			t.`status` = 1 and t.dy_type = '1'
+			<if test="dyContent!=null and dyContent!=''">
+				AND t.dy_content LIKE CONCAT('%', #{dyContent}, '%')
+			</if>
+			<if test="userName!=null and userName!=''">
+				AND t2.nickname LIKE CONCAT('%', #{userName}, '%')
+			</if>
+			<if test="visitQuantity!=null and visitQuantity!=''">
+				AND IFNULL(t.visit_quantity, 0) = #{visitQuantity}
+			</if>
+			<if test="issuedDate!=null and issuedDate!=''">
+				AND DATE_FORMAT(t.issued_date,'%Y-%m-%d') = #{issuedDate}
+			</if>
+			<if test="dynamicId!=null and dynamicId!=''">
+				AND t.id = #{dynamicId}
+			</if>
+			<if test="user_id!=null and user_id!=''">
+				AND t.user_id = #{user_id}
+			</if>
+		ORDER BY   t.is_stick desc,
+		t.issued_date DESC
+	</select>
+	
+	<select id="selectFriendUserDynamicByUserId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.*, date_format(
+				t.issued_date,
+				'%Y-%c-%d %H:%i'
+			) AS minute_flag
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t1.friend_memo,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+			        t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_im_friend t1 ON t.user_id = t1.friend_user
+				AND t1.user_id = #{userId}
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				WHERE
+					t.`status` = 1
+				ORDER BY   t.is_stick desc,
+					t.issued_date DESC
+			) t  where t.issued_date &lt; SYSDATE()
+	</select>
+	
+	<select id="selectFollowUserDynamicByUserId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.*, date_format(
+				t.issued_date,
+				'%Y-%c-%d %H:%i'
+			) AS minute_flag,CASE
+				WHEN TIMESTAMPDIFF(
+					MINUTE,
+					DATE_FORMAT(t.issued_date, '%Y-%m-%d %H:%i:%s'),
+					DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
+				) / 60 >= 72 THEN
+					1
+				ELSE
+					0
+				END AS overtime_flag
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+			        t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					(case when t8.id is null then 0 else 1 end ) pay_flag,
+					0 as my_flag,
+					(case when t9.id is null then 0 else 1 end ) as like_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_im_follow t1 ON t.user_id = t1.follow_user 
+				AND t1.user_id = #{userId}
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t 
+					WHERE
+						t.action_type = 2 and t.user_id = #{userId}
+				
+				) t8 on t.id = t8.dynamic_id
+				left join tjy_dynamic_op_log t9 on t9.op_type = 1 AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1 and t1.status = 2
+				ORDER BY   t.is_stick desc,
+					t.issued_date DESC
+			) t where t.issued_date &lt; SYSDATE()
+	</select>
+	
+	<select id="selectDynamicById" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.*, date_format(
+				t.issued_date,
+				'%Y-%c-%d %H:%i'
+			) AS minute_flag,CASE
+				WHEN TIMESTAMPDIFF(
+					MINUTE,
+					DATE_FORMAT(t.issued_date, '%Y-%m-%d %H:%i:%s'),
+					DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
+				) / 60 >= 72 THEN
+					1
+				ELSE
+					0
+				END AS overtime_flag
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t2.nickname AS friend_memo,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+			        t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					(
+						CASE
+						WHEN t8.id IS NULL THEN
+							0
+						ELSE
+							1
+						END
+					) pay_flag,
+					0 AS my_flag,
+					(
+						CASE
+						WHEN t9.id IS NULL THEN
+							0
+						ELSE
+							1
+						END
+					) AS like_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t
+					WHERE
+						t.action_type = 2
+					AND t.user_id = #{userId}
+				) t8 ON t.id = t8.dynamic_id
+				LEFT JOIN tjy_dynamic_op_log t9 ON t9.op_type = 1
+				AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1
+				AND t.id = #{dynamicId}
+			) t
+	</select>
+	
+	<select id="selectMyDynamicByUserId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.*, date_format(
+				t.issued_date,
+				'%Y-%c-%d %H:%i'
+			) AS minute_flag,
+			CASE
+		WHEN TIMESTAMPDIFF(
+			MINUTE,
+			DATE_FORMAT(
+				t.issued_date,
+				'%Y-%m-%d %H:%i:%s'
+			),
+			DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
+		) / 60 >= 72 THEN
+			1
+		ELSE
+			0
+		END AS overtime_flag
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t2.nickname AS friend_memo,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+					t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					- 1 AS pay_flag,
+					1 AS my_flag,
+					(
+						CASE
+						WHEN t9.id IS NULL THEN
+							0
+						ELSE
+							1
+						END
+					) AS like_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t
+					WHERE
+						t.action_type = 2
+					AND t.user_id =  #{userId}
+				) t8 ON t.id = t8.dynamic_id
+				LEFT JOIN tjy_dynamic_op_log t9 ON t9.op_type = 1
+				AND t9.user_id =  #{userId}
+				AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1
+				AND t.user_id =  #{userId}
+			) t  
+		where t.issued_date &lt; SYSDATE()
+		ORDER BY  t.is_stick desc,
+			t.issued_date DESC
+	</select>
+	
+	<select id="selectAllUserDynamicByUserId" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.*, date_format(
+				t.issued_date,
+				'%Y-%c-%d %H:%i'
+			) AS minute_flag,	
+			CASE
+				WHEN TIMESTAMPDIFF(
+					MINUTE,
+					DATE_FORMAT(t.issued_date, '%Y-%m-%d %H:%i:%s'),
+					DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
+				) / 60 >= 72 THEN
+					1
+				ELSE
+					0
+				END AS overtime_flag
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t1.friend_memo,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+					t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					(case when t8.id is null then 0 else 1 end ) pay_flag,
+					0 as my_flag,
+					(case when t9.id is null then 0 else 1 end ) as like_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_im_friend t1 ON t.user_id = t1.friend_user
+				AND t1.user_id = #{userId}
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t 
+					WHERE
+						t.action_type = 2 and t.user_id = #{userId}
+				
+				) t8 on t.id = t8.dynamic_id
+				left join tjy_dynamic_op_log t9 on t9.op_type = 1 AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1
+				AND t.visit_type = 1
+				<if test="dynamicloadtime!=null">
+					AND unix_timestamp(t.issued_date) <![CDATA[ <= ]]>  #{dynamicloadtime}
+				</if>
+				UNION
+					SELECT
+						t.id,
+						t.is_stick,
+						t.create_time,
+						t.articleid,
+						t.atitle,
+						t.aclassname,
+						t.aimgpath,
+						t.adate,
+						t2.nickname,
+						t2.nickname,
+						t2.com_name,
+						t2.com_profile,
+						t3.list_value AS job_name,
+						t.user_id,
+						t.issued_date,
+						round(
+							(
+								UNIX_TIMESTAMP(
+									date_format(now(), '%Y-%c-%d %H:%i:%s')
+								) - UNIX_TIMESTAMP(
+									date_format(
+										t.issued_date,
+										'%Y-%c-%d %H:%i:%s'
+									)
+								)
+							) / 60 / 60
+						) AS hourCount,
+						t.dy_content,
+						t.media_id,
+						t.ad_url,
+					    t.dy_type,
+						t.media_price,
+						t.media_seconds,
+						t.visit_quantity,
+						t.visit_type,
+						t2.user_profile,
+						t4.dis_name AS province_name,
+						t5.dis_name AS city_name,
+						t6.dis_name AS county_name,
+						t7.list_value AS industry,
+						t2.head_portrait,
+						IFNULL(t2.honor_title, '') AS honor_title,
+					    IFNULL(t2.honor_flag, '') AS honor_flag,
+						(case when t8.id is null then 0 else 1 end ) pay_flag,
+						0 as my_flag,
+						(case when t9.id is null then 0 else 1 end ) as like_flag,
+						IFNULL(t.allow_reword, 1) AS allow_reword,
+						IFNULL(t.allow_comment, 1) AS allow_comment
+					FROM
+						tjy_dynamic t
+					JOIN tjy_user t2 ON t.user_id = t2.id
+					LEFT JOIN list_values t3 ON t2.job = t3.id
+					LEFT JOIN sy_district t4 ON t2.province = t4.id
+					LEFT JOIN sy_district t5 ON t2.city = t5.id
+					LEFT JOIN sy_district t6 ON t2.county = t6.id
+					LEFT JOIN list_values t7 ON t2.industry = t7.id
+					LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t 
+					WHERE
+						t.action_type = 2 and t.user_id = #{userId}
+				) t8 on t.id = t8.dynamic_id
+				left join tjy_dynamic_op_log t9 on t9.op_type = 1 AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+					WHERE
+						t.`status` = 1 and t.user_id != #{userId}
+					AND t.visit_type = 2
+					<if test="dynamicloadtime!=null">
+						AND unix_timestamp(t.issued_date) <![CDATA[ <= ]]>  #{dynamicloadtime}
+					</if>
+				UNION
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t2.nickname,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+					t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					-1 as pay_flag,
+					1 as my_flag,
+					(case when t9.id is null then 0 else 1 end ) as like_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t
+					WHERE
+						t.action_type = 2
+					AND t.user_id = #{userId}
+				) t8 ON t.id = t8.dynamic_id
+				left join tjy_dynamic_op_log t9 on t9.op_type = 1 AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1
+				AND t.user_id = #{userId}
+				<if test="dynamicloadtime!=null">
+					AND unix_timestamp(t.issued_date) <![CDATA[ <= ]]>  #{dynamicloadtime}
+				</if>
+			) t  
+			where t.issued_date &lt; SYSDATE()
+			<if test="dyContent!=null and dyContent!=''">
+				and t.dy_content LIKE CONCAT('%', #{dyContent}, '%')
+			</if>
+		ORDER BY   t.is_stick desc,
+			t.issued_date DESC
+	</select>
+	
+	<select id="selectAllDynamic" resultType="java.util.HashMap" >
+		SELECT
+			t.*, date_format(
+				t.issued_date,
+				'%Y-%c-%d %H:%i'
+			) AS minute_flag,
+			0 AS overtime_flag
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t2.true_name AS friend_memo,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+					t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					1 AS my_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				WHERE
+					t.`status` = 1
+			) t
+		 where t.issued_date &lt; SYSDATE()
+		ORDER BY   t.is_stick desc,
+			t.issued_date DESC
+	</select>
+	
+	<select id="selectVisitUserDynamicByParam" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			t.*, date_format(
+				t.issued_date,
+				'%Y-%c-%d %H:%i'
+			) AS minute_flag,
+			CASE
+		WHEN TIMESTAMPDIFF(
+			MINUTE,
+			DATE_FORMAT(
+				t.issued_date,
+				'%Y-%m-%d %H:%i:%s'
+			),
+			DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')
+		) / 60 >= 72 THEN
+			1
+		ELSE
+			0
+		END AS overtime_flag
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t2.nickname AS friend_memo,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+					t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					IFNULL(t2.honor_title, '') AS honor_title,
+					IFNULL(t2.honor_flag, '') AS honor_flag,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					(case when t8.id is null then 0 else 1 end ) pay_flag,
+					0 as my_flag,
+					(case when t9.id is null then 0 else 1 end ) as like_flag,
+					IFNULL(t.allow_reword, 1) AS allow_reword,
+					IFNULL(t.allow_comment, 1) AS allow_comment
+				FROM
+					tjy_dynamic t
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t
+					WHERE
+						t.action_type = 2
+					AND t.user_id = #{userId}
+				) t8 ON t.id = t8.dynamic_id
+				LEFT JOIN tjy_dynamic_op_log t9 ON t9.op_type = 1
+				AND t9.user_id = #{userId}
+				AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1
+				AND t.user_id = #{visitUserId}
+				<if test="isFriend!=null and isFriend=='0'">
+					AND t.visit_type = 2
+				</if>
+			) t
+		where t.issued_date &lt; SYSDATE()
+		ORDER BY  t.is_stick desc,
+			t.issued_date DESC
+	</select>
+	
+	<select id="selectCountAllUserDynamicByUserId" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+		SELECT
+			count(*)
+		FROM
+			(
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t1.friend_memo,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+					t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					(case when t8.id is null then 0 else 1 end ) pay_flag,
+					0 as my_flag,
+					(case when t9.id is null then 0 else 1 end ) as like_flag
+				FROM
+					tjy_dynamic t
+				JOIN tjy_im_friend t1 ON t.user_id = t1.friend_user
+				AND t1.user_id = #{userId}
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t 
+					WHERE
+						t.action_type = 2 and t.user_id = #{userId}
+				
+				) t8 on t.id = t8.dynamic_id
+				left join tjy_dynamic_op_log t9 on t9.op_type = 1 AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1
+				AND t.visit_type = 1
+				<if test="dynamicloadtime!=null">
+					AND unix_timestamp(t.issued_date) <![CDATA[ > ]]>  #{dynamicloadtime}
+				</if>
+				UNION
+					SELECT
+						t.id,
+						t.is_stick,
+						t.create_time,
+						t.articleid,
+						t.atitle,
+						t.aclassname,
+						t.aimgpath,
+						t.adate,
+						t2.nickname,
+						t2.nickname,
+						t2.com_name,
+						t2.com_profile,
+						t3.list_value AS job_name,
+						t.user_id,
+						t.issued_date,
+						round(
+							(
+								UNIX_TIMESTAMP(
+									date_format(now(), '%Y-%c-%d %H:%i:%s')
+								) - UNIX_TIMESTAMP(
+									date_format(
+										t.issued_date,
+										'%Y-%c-%d %H:%i:%s'
+									)
+								)
+							) / 60 / 60
+						) AS hourCount,
+						t.dy_content,
+						t.media_id,
+						t.ad_url,
+					    t.dy_type,
+						t.media_price,
+						t.media_seconds,
+						t.visit_quantity,
+						t.visit_type,
+						t2.user_profile,
+						t4.dis_name AS province_name,
+						t5.dis_name AS city_name,
+						t6.dis_name AS county_name,
+						t7.list_value AS industry,
+						t2.head_portrait,
+						(case when t8.id is null then 0 else 1 end ) pay_flag,
+						0 as my_flag,
+						(case when t9.id is null then 0 else 1 end ) as like_flag
+					FROM
+						tjy_dynamic t
+					JOIN tjy_user t2 ON t.user_id = t2.id
+					LEFT JOIN list_values t3 ON t2.job = t3.id
+					LEFT JOIN sy_district t4 ON t2.province = t4.id
+					LEFT JOIN sy_district t5 ON t2.city = t5.id
+					LEFT JOIN sy_district t6 ON t2.county = t6.id
+					LEFT JOIN list_values t7 ON t2.industry = t7.id
+					LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t 
+					WHERE
+						t.action_type = 2 and t.user_id = #{userId}
+				) t8 on t.id = t8.dynamic_id
+				left join tjy_dynamic_op_log t9 on t9.op_type = 1 AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+					WHERE
+						t.`status` = 1 and t.user_id != #{userId}
+					AND t.visit_type = 2
+					<if test="dynamicloadtime!=null">
+						AND unix_timestamp(t.issued_date) <![CDATA[ > ]]>  #{dynamicloadtime}
+					</if>
+				UNION
+				SELECT
+					t.id,
+					t.is_stick,
+					t.create_time,
+					t.articleid,
+					t.atitle,
+					t.aclassname,
+					t.aimgpath,
+					t.adate,
+					t2.nickname,
+					t2.nickname,
+					t2.com_name,
+					t2.com_profile,
+					t3.list_value AS job_name,
+					t.user_id,
+					t.issued_date,
+					round(
+						(
+							UNIX_TIMESTAMP(
+								date_format(now(), '%Y-%c-%d %H:%i:%s')
+							) - UNIX_TIMESTAMP(
+								date_format(
+									t.issued_date,
+									'%Y-%c-%d %H:%i:%s'
+								)
+							)
+						) / 60 / 60
+					) AS hourCount,
+					t.dy_content,
+					t.media_id,
+					t.ad_url,
+					t.dy_type,
+					t.media_price,
+					t.media_seconds,
+					t.visit_quantity,
+					t.visit_type,
+					t2.user_profile,
+					t4.dis_name AS province_name,
+					t5.dis_name AS city_name,
+					t6.dis_name AS county_name,
+					t7.list_value AS industry,
+					t2.head_portrait,
+					-1 as pay_flag,
+					1 as my_flag,
+					(case when t9.id is null then 0 else 1 end ) as like_flag
+				FROM
+					tjy_dynamic t
+				JOIN tjy_user t2 ON t.user_id = t2.id
+				LEFT JOIN list_values t3 ON t2.job = t3.id
+				LEFT JOIN sy_district t4 ON t2.province = t4.id
+				LEFT JOIN sy_district t5 ON t2.city = t5.id
+				LEFT JOIN sy_district t6 ON t2.county = t6.id
+				LEFT JOIN list_values t7 ON t2.industry = t7.id
+				LEFT JOIN (
+					SELECT
+						*
+					FROM
+						tjy_dynamic_pay_log t
+					WHERE
+						t.action_type = 2
+					AND t.user_id = #{userId}
+				) t8 ON t.id = t8.dynamic_id
+				left join tjy_dynamic_op_log t9 on t9.op_type = 1 AND t9.user_id = #{userId} AND t.id = t9.dynamic_id
+				WHERE
+					t.`status` = 1
+				AND t.user_id = #{userId}
+				<if test="dynamicloadtime!=null">
+					AND unix_timestamp(t.issued_date) <![CDATA[ > ]]>  #{dynamicloadtime}
+				</if>
+			) t where   t.issued_date &lt; SYSDATE()
+			<if test="dyContent!=null and dyContent!=''">
+				and t.dy_content LIKE CONCAT('%', #{dyContent}, '%')
+			</if>
+		ORDER BY 
+		 t.is_stick desc,t.issued_date DESC
+	</select>
+</mapper>

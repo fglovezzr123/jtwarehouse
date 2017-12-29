@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tojoy.business.common.dao.CommentDao">
+
+	<sql id="field">
+		c.id,c.parent_id as parentId,c.user_id as userId,c.fk_id as fkId,
+		c.comment_desc as commentDesc,c.anonymous,
+		c.img_url as imgUrl,c.status,c.create_time as createTime,
+		c.create_user_id as createUserId,c.update_time as updateTime,
+		c.update_user_id as updateUserId,c.deleted
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND c.id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND c.user_id=#{userId}
+			</if>
+			<if test="fkId!=null and fkId!=''">
+				AND c.fk_id=#{fkId}
+			</if>
+			<if test="parentId!=null and parentId!=''">
+				AND c.parent_id=#{parentId}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="com.tojoy.business.common.bean.Comment">
+		INSERT INTO tjy_comment_${keyWord} (id,
+		parent_id,
+		user_id,
+		fk_id,
+		comment_desc,
+		img_url,
+		status,
+		create_time,
+		create_user_id,
+		update_time,
+		update_user_id,
+		deleted)
+		VALUES   (#{id},
+		#{parentId},
+		#{userId},
+		#{fkId},
+		#{commentDesc},
+		#{imgUrl},
+		#{status},
+		#{createTime},
+		#{createUserId},
+		#{updateTime},
+		#{updateUserId},
+		#{deleted})
+	</insert>
+
+	<delete id="delete" parameterType="com.tojoy.business.common.bean.Comment">
+		DELETE FROM tjy_comment_${keyWord} WHERE id = #{id}
+	</delete>
+
+	<select id="selectCommentList" resultType="java.util.HashMap" parameterType="com.tojoy.business.common.bean.Comment">
+		SELECT
+		<include refid="field"/>
+		FROM tjy_comment_${keyWord} c
+		<include refid="dynamicWhere"/>
+		order by c.create_time desc
+	</select>
+
+	<select id="selectById" resultType="java.util.HashMap" parameterType="com.tojoy.business.common.bean.Comment">
+		SELECT
+		<include refid="field"/>
+		FROM tjy_comment_${keyWord} c
+		where deleted = 0 and id =#{id}
+	</select>
+
+	<select id="queryCommentByPId" resultType="java.util.HashMap" parameterType="com.tojoy.business.common.bean.Comment">
+		SELECT
+		<include refid="field"/>,U.nick_name as nickName
+		FROM tjy_comment_${keyWord} c  left join User U on U.id=C.User_id
+		where c.deleted = 0 and c.parent_id = #{parentId}
+	</select>
+
+	<select id="queryCount" resultType="Integer" parameterType="com.tojoy.business.common.bean.Comment">
+		SELECT
+		COUNT(c.id)
+		FROM tjy_comment_${keyWord}  c
+		<include refid="dynamicWhere"/>
+	</select>
+
+</mapper>

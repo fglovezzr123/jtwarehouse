@@ -1,0 +1,273 @@
+@charset "utf-8";
+
+#wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	bottom: .90rem;
+	left: 0;
+	width: 100%;
+	overflow: auto;
+}
+#scroller {
+	position: relative;
+	width: 100%;
+	padding: 0;
+	margin-bottom:.90rem;
+	padding-bottom:1rem;
+}
+.yourFriend {
+	width: 100%;
+	padding: 0 0 0 .2rem;
+	height: auto;
+	display: flex;
+	margin: .20rem 0 0 0;
+	box-sizing: border-box;
+	box-sizing: border-box;
+	background: url(../img/icons/white-left.png) no-repeat center right;
+	background-position-x: 1.18rem;
+	background-size: 0.14rem 0.25rem;
+	background-position-y: 0.3rem;
+}
+.yourFriend ._head {
+	width: .91rem;
+	height: .91rem;
+	border-radius: 100%;
+}
+
+.yourFriend span {
+	padding: .2rem .14rem;
+	background: #fff;
+	font-size: .28rem;
+	position: relative;
+	margin: 0 0 0 .2rem;
+	border-radius: 0.1rem;
+	max-width: 4.5rem;
+}
+
+.yourFriend span .icon {
+	font-size: .36rem;
+	position: absolute;
+	left: -.20rem;
+	top: .26rem;
+}
+
+.myself {
+	width: 100%;
+	padding: 0 .2em 0 0;
+	height: auto;
+	display: flex;
+	justify-content: flex-end;
+	margin: .20rem 0 0 0;
+	box-sizing: border-box;
+	background: url(../img/icons/blue-right.png) no-repeat center right;
+	background-position-x: 6.18rem;
+	background-position-y: 0.3rem;
+	background-size: 0.1rem 0.24rem;
+}
+
+.myself ._head {
+	width: .91rem;
+	height: .91rem;
+	border-radius: 100%;
+}
+
+.myself span {
+	padding: .2rem .14rem;
+	background: #a0e75a;
+	font-size: .28rem;
+	position: relative;
+	margin: 0 .2rem 0;
+	border-radius: .1rem;
+	max-width: 4.5rem;
+}
+
+.myself span .icon {
+	font-size: .36rem;
+	position: absolute;
+	right: -.40rem;
+	top: .26rem;
+}
+
+.myself .messageIMGS {
+	/* width: 2rem;
+	height: auto;
+	border-radius: 0 */
+}
+
+.yourFriend .messageIMGS {
+	/* width: auto;
+	height: 0.91rem;
+	border-radius: 0 */
+}
+
+
+
+/* #btn {
+	position: absolute;
+	right: 0.2rem;
+	top: 0.1rem
+}
+
+#btn img {
+	height: 0.5rem;
+	width: 0.5rem;
+} */
+
+.yourFriend .emotioneee {
+	height: 0.3rem;
+	width: 0.3rem;
+}
+
+.myself .emotioneee {
+	height: 0.3rem;
+	width: 0.3rem;
+}
+.cfooter{
+	width: 100%;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	background: #f5f5f7;
+	z-index:1002;
+}
+.footer-top{
+	display: flex;
+	width: 100%;
+	height: .88rem;
+	justify-content: space-around;
+	align-items: center;
+	border: 0;
+}
+.footer-top #t-content{
+	width: 5.26rem;
+	height:0.6rem;
+	min-height: .60rem;
+	font-size: .33rem;
+	border-radius:0.1rem;
+	border:1px solid #e5e5e7;
+	overflow: visible;
+	padding-left:0.2rem;
+	padding-right:0.2rem;
+	line-height:0.6rem;
+}
+.footer-top .iconfont{
+	font-size: .55rem;
+}
+.footer-top .send{
+	font-size: .24rem;
+	color: #fff;
+	width: .70rem;
+	height: .50rem;
+	text-align: center;
+	line-height: .50rem;
+	background: #1aac19;
+	display: none;
+}
+.iconfont1{
+	width: 0.8rem;
+	height: 0.8rem;
+	background: url(../img/icons/photo_03.png) no-repeat center white;
+	background-size: 70%;
+	border:1px solid #e6e6e6;
+	border-radius: 0.1rem;
+	margin-top:0.35rem;
+}
+.hidePh{
+	display: none;
+	width: 100%;
+	border-top:1px solid #e6e6e6;
+	/* padding-top:0.3rem; */
+	height:1.5rem;
+}
+.hidePh>div{
+	display:inline-block;
+	float:left;
+}
+.sz{
+	width: 0.8rem;
+	height: 0.8rem;
+	font-size: .30rem;
+	text-align: center;
+	line-height: .60rem;
+	border: 1px solid #e6e6e6;
+	margin-left: .40rem;
+	border-radius: 0.1rem;
+	background:url(../img/icons/setion.png) no-repeat center white;
+	background-size:70%;
+	margin-top:0.35rem;
+}
+/* .sz .iconfont{
+	height:0.55rem;
+	width:0.55rem; 
+	
+}
+ */
+/*新添加  */
+input{ -webkit-appearance: none;}
+.imKey{
+        height:0.5rem;
+        width:0.5rem;
+        background:url(../img/images/imKeyboard.png) no-repeat center;
+        background-size:100%;
+        
+    }
+    .imboard{
+        height:0.5rem;
+        width:0.5rem;
+        background:url(../img/images/imaudio.png) no-repeat center;
+        background-size:100%;
+    }
+    .imFace{
+        height:0.5rem;
+        width:0.5rem;
+        background:url(../img/images/imFace.png) no-repeat center;
+        background-size:100%;
+    }
+    .imgSpred{
+        height:0.5rem;
+        width:0.5rem;
+        background:url(../img/images/imAdd.png) no-repeat center;
+        background-size:100%;
+    }
+    #pressRecord{
+                box-sizing:border-box;
+                width: 5.26rem;
+			    min-height: .60rem;
+			    font-size: .30rem;
+			    border-radius: 0.1rem;
+			   border: 1px solid #cececf;
+			   line-height:.6rem;
+              background: #f5f5f6;
+              text-align:center
+    } 
+    #recordIcon{
+        position:absolute;
+        top:30%;
+        width:100%;
+        height:3rem;
+        text-align:center;
+        display:none;
+        z-index:100000;
+       
+    }
+    #recordIcon img{
+        height:1.4rem;
+        width:1.4rem;
+        margin-top:0.8rem;
+    }
+    #recordIcon div{
+        width:3rem;
+        height:3rem;
+        opacity:0.5;
+        line-height:3rem;
+        background:#9d9d9d;
+        margin:0 auto;
+        border-radius:0.2rem;
+    }
+    #file_button_1{
+       margin-left:0.4rem;
+    }
+  #pressRecord  .startrecod{
+       background:#cacaca;
+    }.iconfont1

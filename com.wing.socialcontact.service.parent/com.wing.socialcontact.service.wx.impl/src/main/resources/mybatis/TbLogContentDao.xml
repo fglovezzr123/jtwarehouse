@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	wangyansheng
+	date	:	2017-11-27
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.TbLogContentDao">
+
+	<resultMap id="tbLogContent" type="com.wing.socialcontact.service.wx.bean.TbLogContent">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="logId" column="log_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="tbKey" column="tb_key" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comment" column="comment" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="oldTbValue" column="old_tb_value" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="currentTbValue" column="current_tb_value" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<sql id="field">
+         lc.id,lc.log_id,lc.tb_key,lc.old_tb_value,lc.current_tb_value,lc.comment
+	</sql>
+
+	<select id="selectByParam" resultMap="tbLogContent" parameterType="java.util.Map">
+		select
+			<include refid="field"/>
+		from tjy_tb_log_content lc
+ 	    where lc.log_id = #{logId}
+	</select>
+
+</mapper>

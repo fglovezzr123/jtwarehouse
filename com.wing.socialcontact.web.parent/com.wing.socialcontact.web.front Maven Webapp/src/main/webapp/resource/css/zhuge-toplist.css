@@ -1,0 +1,166 @@
+﻿@charset "utf-8";
+
+/* CSS Document */
+
+body {
+	overflow: scroll;
+	height: 100%;
+}
+.wrapper {
+	width: 100%;
+	font-size: 0.3rem;
+	margin: 0 auto;
+	padding-bottom: 0.9rem;
+}
+
+.tabBar {
+	padding: 0 0.3rem;
+	font-size: 0.3rem;
+	color: #3b3b3b;
+	height: 0.8rem;
+	line-height: 0.8rem;
+}
+
+.tabBar div {
+	float: left;
+	width: 28.5%;
+	margin-left: 2.4%;
+	margin-right: 2.4%;
+	text-align: center;
+	box-sizing: border-box
+}
+
+.hasborder {
+	color: #0f88eb;
+	border-bottom: 0.04rem solid #0f88eb;
+}
+.tab-content {
+	width: 100%;
+}
+.clear {
+	clear: both;
+}
+
+.toCall {
+	width: 100%;
+	height: 1.5rem;
+	background: #f3f4f6;
+	padding: 0.2rem 0;
+}
+.toCall a {
+	width: 100%;
+	display: block;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	background: url(../img/icons/goldcup.png) no-repeat left center;
+	background-size: 0.9rem 0.87rem;
+	background-position-x: 0.5rem;
+	text-align: center;
+	padding-left:1rem ;
+	box-sizing: border-box;		
+}
+
+.toCall div {
+	width: 100%;
+	box-sizing: border-box;
+	padding:  0 0.3rem;
+	height: 100%;
+	background: white;
+}
+
+.toCall a {
+	color: #3b3b3b;
+}
+
+.tab-item {
+	padding: 0.3rem;
+	border-bottom: 1px solid #f6f6f6;
+	position: relative;
+}
+
+.first {
+	background: url(../img/icons/first.png) no-repeat center left;
+	background-size: 0.42rem 0.51rem;
+	background-position-x: 0.3rem;
+}
+
+.second {
+	background: url(../img/icons/second.png) no-repeat center left;
+	background-size: 0.42rem 0.51rem;
+	background-position-x: 0.3rem;
+}
+
+.third {
+	background: url(../img/icons/third.png) no-repeat center left;
+	background-size: 0.42rem 0.51rem;
+	background-position-x: 0.3rem;
+}
+
+.user-image {
+	height: 0.64rem;
+	width: 0.64rem;
+	position: absolute;
+	left: 1rem;
+	background-size: 0.64rem 0.64rem;
+	border-radius: 0.32rem;
+}
+
+.tab-item ul li {
+	display: block;
+	line-height: 0.28rem;
+	padding-left: 24%;
+	color: #808080;
+	width: 100%;
+    box-sizing: border-box;
+}
+
+.tab-item ul li:nth-child(2) {
+	color: #e7443b;
+	font-size: 0.24rem;
+	text-align: right;
+}
+
+.tab-item ul li span {
+	font-size: 0.30rem;
+	color: #3b3b3b;
+}
+
+.serial {
+	width: 20%;
+	position: absolute;
+	top: 33%;
+	text-indent: 0.1rem;
+	text-align: left;
+}
+
+.i-top {
+	width: 100%;
+	display: flex;
+}
+
+.i-top img {
+	height: 0.64rem;
+	width: 0.64rem;
+	position: absolute;
+	left: 1rem;
+	background-size: 0.64rem 0.64rem;
+	border-radius: 0.32rem;
+}
+
+.i-top .t-right {
+	color: #B8B8B8;
+	padding-left: 0.2rem;
+}
+
+.i-top .t-right p:nth-of-type(1) {
+	color: #3b3b3b;
+	line-height: .46rem;
+}
+
+.i-top .t-right p:nth-of-type(1) em {
+	padding-left: .30rem;
+}
+
+.i-top .t-right p:nth-of-type(2) {
+	line-height: .40rem;
+}

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-06-28 16:39:28
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.PageAggregateDao">
+
+	<resultMap id="pageAggregate" type="com.wing.socialcontact.service.wx.bean.PageAggregate">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pageName" column="page_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pageUrl" column="page_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="lbtFlag" column="lbt_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="lbtId" column="lbt_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="kjrkFlag" column="kjrk_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="tyUrl" column="ty_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pageType" column="page_type" javaType="Integer" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="pageAggregateGlobal" type="com.wing.socialcontact.service.wx.bean.PageAggregate">
+		<result property="id" column="PA_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pageName" column="PA_page_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pageUrl" column="PA_page_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="lbtFlag" column="PA_lbt_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="lbtId" column="PA_lbt_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="kjrkFlag" column="PA_kjrk_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="PA_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="tyUrl" column="PA_ty_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="PA_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="PA_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="PA_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="PA_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="pageType" column="PA_page_type" javaType="Integer" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		PA.id, PA.page_name, PA.page_url, PA.lbt_flag, 
+		PA.lbt_id, PA.kjrk_flag, PA.status, PA.ty_url, 
+		PA.create_time, PA.create_user_id, PA.update_time, PA.update_user_id, PA.page_type
+	</sql>
+
+	<sql id="fieldGlobal">
+		PA.id PA_id, PA.page_name PA_page_name, 
+		PA.page_url PA_page_url, PA.lbt_flag PA_lbt_flag, 
+		PA.lbt_id PA_lbt_id, PA.kjrk_flag PA_kjrk_flag, 
+		PA.status PA_status, PA.ty_url PA_ty_url, 
+		PA.create_time PA_create_time, PA.create_user_id PA_create_user_id, 
+		PA.update_time PA_update_time, PA.update_user_id PA_update_user_id, PA.page_type PA_page_type 
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		PA.id id, PA.page_name pageName, 
+		PA.page_url pageUrl, PA.lbt_flag lbtFlag, 
+		PA.lbt_id lbtId, PA.kjrk_flag kjrkFlag, 
+		PA.status status, PA.ty_url tyUrl, 
+		PA.create_time createTime, PA.create_user_id createUserId, 
+		PA.update_time updateTime, PA.update_user_id updateUserId,
+		PA.page_type pageType
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND PA.id=#{id}
+		</if>
+		<if test="pageName!=null and pageName!=''">
+			AND PA.page_name=#{pageName}
+		</if>
+		<if test="pageUrl!=null and pageUrl!=''">
+			AND PA.page_url=#{pageUrl}
+		</if>
+		<if test="lbtFlag!=null">
+			AND PA.lbt_flag=#{lbtFlag}
+		</if>
+		<if test="lbtId!=null and lbtId!=''">
+			AND PA.lbt_id=#{lbtId}
+		</if>
+		<if test="kjrkFlag!=null">
+			AND PA.kjrk_flag=#{kjrkFlag}
+		</if>
+		<if test="status!=null">
+			AND PA.status=#{status}
+		</if>
+		<if test="tyUrl!=null and tyUrl!=''">
+			AND PA.ty_url=#{tyUrl}
+		</if>
+		<if test="createTime!=null">
+			AND PA.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND PA.create_user_id=#{createUserId}
+		</if>
+		<if test="updateTime!=null">
+			AND PA.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND PA.update_user_id=#{updateUserId}
+		</if>
+		<if test="pageType!=null">
+			AND PA.page_type=#{pageType}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND PA.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="pageName!=null and pageName!=''">
+				AND PA.page_name LIKE CONCAT('%', #{pageName}, '%')
+			</if>
+			<if test="pageUrl!=null and pageUrl!=''">
+				AND PA.page_url LIKE CONCAT('%', #{pageUrl}, '%')
+			</if>
+			<if test="lbtFlag!=null">
+				AND PA.lbt_flag=#{lbtFlag}
+			</if>
+			<if test="lbtId!=null and lbtId!=''">
+				AND PA.lbt_id LIKE CONCAT('%', #{lbtId}, '%')
+			</if>
+			<if test="kjrkFlag!=null">
+				AND PA.kjrk_flag=#{kjrkFlag}
+			</if>
+			<if test="status!=null">
+				AND PA.status=#{status}
+			</if>
+			<if test="tyUrl!=null and tyUrl!=''">
+				AND PA.ty_url LIKE CONCAT('%', #{tyUrl}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND PA.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND PA.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND PA.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND PA.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="pageType!=null">
+				AND PA.page_type=#{pageType}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				PA.id=#{id}, 
+		   </if>
+           <if test="pageName!=null">
+				PA.page_name=#{pageName}, 
+		   </if>
+           <if test="pageUrl!=null">
+				PA.page_url=#{pageUrl}, 
+		   </if>
+           <if test="lbtFlag!=null">
+				PA.lbt_flag=#{lbtFlag}, 
+		   </if>
+           <if test="lbtId!=null">
+				PA.lbt_id=#{lbtId}, 
+		   </if>
+           <if test="kjrkFlag!=null">
+				PA.kjrk_flag=#{kjrkFlag}, 
+		   </if>
+           <if test="status!=null">
+				PA.status=#{status}, 
+		   </if>
+           <if test="tyUrl!=null">
+				PA.ty_url=#{tyUrl}, 
+		   </if>
+           <if test="createTime!=null">
+				PA.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				PA.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="updateTime!=null">
+				PA.update_time=#{updateTime}, 
+		   </if>
+           <if test="pageType!=null">
+				PA.page_type=#{pageType},
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+	
+	<delete id="deleteById">
+		DELETE PA FROM TJY_PAGE_AGGREGATE PA WHERE PA.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_PAGE_AGGREGATE PA
+		SET 
+		PA.STATUS = -1
+		WHERE PA.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_PAGE_AGGREGATE PA
+		<include refid="dynamicSet" /> 
+	    WHERE PA.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="pageAggregate">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_AGGREGATE PA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_PAGE_AGGREGATE PA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="pageAggregate">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_AGGREGATE PA
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="pageAggregate">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_AGGREGATE PA
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="queryByName" resultMap="pageAggregate">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_AGGREGATE PA
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="pageAggregate">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_AGGREGATE PA
+		WHERE PA.ID = #{id}
+	</select>
+	
+</mapper>

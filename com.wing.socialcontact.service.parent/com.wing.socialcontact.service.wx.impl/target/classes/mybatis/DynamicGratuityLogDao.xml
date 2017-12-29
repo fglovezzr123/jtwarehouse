@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-17 09:54:05
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.DynamicGratuityLogDao">
+
+	<resultMap id="dynamicGratuityLog" type="com.wing.socialcontact.service.wx.bean.DynamicGratuityLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="useId" column="use_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="dynamicId" column="dynamic_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="qratuityAmount" column="qratuity_amount" javaType="Long" jdbcType="BIGINT"></result>
+		<result property="actionTime" column="action_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		DGL.id, DGL.use_id, DGL.dynamic_id, DGL.qratuity_amount, 
+		DGL.action_time, DGL.status
+	</sql>
+	<delete id="deleteById">
+		DELETE DGL FROM TJY_DYNAMIC_GRATUITY_LOG DGL WHERE DGL.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="dynamicGratuityLog">
+		SELECT <include refid="field"/>
+		FROM TJY_DYNAMIC_GRATUITY_LOG DGL
+		WHERE DGL.ID = #{id}
+	</select>
+	
+</mapper>

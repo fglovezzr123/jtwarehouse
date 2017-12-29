@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.rongba.provider.mapper.BpPersonProjectMapper">
+	
+	<sql id="bpPersonProjectColumns">
+		a.id AS "id",
+		a.bp_id  AS "bpId",
+		a.product_id  AS "productId",
+		a.action_type AS "actionType",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="bpPersonProjectJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.rongba.api.entity.BpPersonProject">
+		SELECT 
+			<include refid="bpPersonProjectColumns"/>
+		FROM tjrb_bp_person_project a
+		<include refid="bpPersonProjectJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.rongba.api.entity.BpPersonProject">
+		SELECT 
+			<include refid="bpPersonProjectColumns"/>
+		FROM tjrb_bp_person_project a
+		<include refid="bpPersonProjectJoins"/>
+		<where>
+			<if test="tendency != null">
+				AND a.tendency = #{tendency}
+			</if>
+			<if test="focusOn != null">
+				AND a.focus_on = #{focusOn}
+			</if>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO tjrb_bp_person_project(
+			bp_id,
+			product_id,
+			action_type,
+			create_date,
+			update_date
+		) VALUES (
+			#{bpId},
+			#{productId},
+			#{actionType},
+			#{createDate},
+			#{updateDate}		
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tjrb_bp_person_project SET 	
+			ad_pic_url = #{adPicUrl},
+			product_id = #{productId},
+			ad_position = #{adPosition},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_bp_person_project SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>

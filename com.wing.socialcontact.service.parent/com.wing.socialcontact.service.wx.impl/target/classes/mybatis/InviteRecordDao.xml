@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-07-13 09:51:06
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.InviteRecordDao">
+
+	<resultMap id="inviteRecord" type="com.wing.socialcontact.service.wx.bean.InviteRecord">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="byqOpenId" column="byq_open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="byqNickName" column="byq_nick_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isIntegral" column="is_integral" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<resultMap id="inviteRecordGlobal" type="com.wing.socialcontact.service.wx.bean.InviteRecord">
+		<result property="id" column="IR_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="IR_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="byqOpenId" column="IR_byq_open_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="byqNickName" column="IR_byq_nick_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isIntegral" column="IR_is_integral" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="IR_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		IR.id, IR.user_id, IR.byq_open_id, IR.create_time,IR.is_integral, IR.byq_nick_name
+	</sql>
+
+	<sql id="fieldGlobal">
+		IR.id IR_id, IR.user_id IR_user_id, 
+		IR.byq_open_id IR_byq_open_id, IR.create_time IR_create_time,IR.byq_nick_name IR_byq_nick_name,IR.is_integral
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		IR.id id, IR.user_id userId, 
+		IR.byq_open_id byqOpenId, IR.create_time createTime,IR.byq_nick_name byqNickName,IR.is_integral isIntegral
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND IR.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND IR.user_id=#{userId}
+		</if>
+		<if test="byqOpenId!=null and byqOpenId!=''">
+			AND IR.byq_open_id=#{byqOpenId}
+		</if>
+		<if test="byqNickName!=null and byqNickName!=''">
+			AND IR.byq_nick_name=#{byqNickName}
+		</if>
+		<if test="isIntegral!=null and isIntegral!=''">
+			AND IR.is_integral=#{isIntegral}
+		</if>
+		<if test="createTime!=null">
+			AND IR.create_time=#{createTime}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND IR.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND IR.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="byqOpenId!=null and byqOpenId!=''">
+				AND IR.byq_open_id LIKE CONCAT('%', #{byqOpenId}, '%')
+			</if>
+			<if test="byqNickName!=null and byqNickName!=''">
+				AND IR.byq_nick_name LIKE CONCAT('%', #{byqNickName}, '%')
+			</if>
+			<if test="isIntegral!=null and isIntegral!=''">
+				AND IR.is_integral LIKE CONCAT('%', #{isIntegral}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND IR.create_time=#{createTime}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				IR.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				IR.user_id=#{userId}, 
+		   </if>
+           <if test="byqOpenId!=null">
+				IR.byq_open_id=#{byqOpenId}, 
+		   </if>
+		   <if test="byqNickName!=null and byqNickName!=''">
+				IR.byq_nick_name=#{byqNickName},
+		   </if>
+		   <if test="isIntegral!=null and isIntegral!=''">
+				 IR.is_integral =#{isIntegral},
+			</if>
+           <if test="createTime!=null">
+				IR.create_time=#{createTime}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE IR FROM mall.TJY_INVITE_RECORD IR WHERE IR.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE mall.TJY_INVITE_RECORD IR
+		SET 
+		IR.STATUS = -1
+		WHERE IR.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE mall.TJY_INVITE_RECORD IR
+		<include refid="dynamicSet" /> 
+	    WHERE IR.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="inviteRecord">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INVITE_RECORD IR
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM mall.TJY_INVITE_RECORD IR
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="inviteRecord">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INVITE_RECORD IR
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="inviteRecord">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INVITE_RECORD IR
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="queryByUserId" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,U.id as uid,U.nickname as nickName,U.recon_status as reconStatus 
+		FROM mall.TJY_INVITE_RECORD IR LEFT JOIN TJY_USER U ON U.open_id=IR.byq_open_id
+		where IR.user_id = #{userId} order by IR.create_time asc
+	</select>
+	
+	<select id="queryByOpenId" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,U.id as uid,U.nickname as nickName,U.recon_status as reconStatus 
+		FROM mall.TJY_INVITE_RECORD IR LEFT JOIN TJY_USER U ON U.open_id=IR.byq_open_id
+		where IR.byq_open_id = #{openId} order by IR.create_time asc
+	</select>
+
+	<select id="loadById" resultMap="inviteRecord">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INVITE_RECORD IR
+		WHERE IR.ID = #{id}
+	</select>
+	
+</mapper>

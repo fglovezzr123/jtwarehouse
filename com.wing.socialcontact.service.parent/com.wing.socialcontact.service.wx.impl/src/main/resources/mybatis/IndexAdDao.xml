@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-07-07 15:45:48
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.IndexAdDao">
+
+	<resultMap id="indexAd" type="com.wing.socialcontact.service.wx.bean.IndexAd">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="adType" column="ad_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userRange" column="user_range" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userLevel" column="user_level" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userLevelName" column="user_level_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconUserFlag" column="recon_user_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="regUserFlag" column="reg_user_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="imgUrl" column="img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgName" column="img_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgLink" column="img_link" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<resultMap id="indexAdGlobal" type="com.wing.socialcontact.service.wx.bean.IndexAd">
+		<result property="id" column="IA_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="adType" column="IA_ad_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userRange" column="IA_user_range" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userLevel" column="IA_user_level" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userLevelName" column="IA_user_level_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconUserFlag" column="IA_recon_user_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="regUserFlag" column="IA_reg_user_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="imgUrl" column="IA_img_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgName" column="IA_img_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgLink" column="IA_img_link" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="IA_order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="IA_status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createUserId" column="IA_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="IA_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		IA.id, IA.ad_type, IA.user_range, IA.user_level, 
+		IA.recon_user_flag, IA.reg_user_flag, IA.img_url, IA.img_name, 
+		IA.img_link, IA.order_num, IA.status, IA.create_user_id, 
+		IA.create_time, IA.user_level_name
+	</sql>
+
+	<sql id="fieldGlobal">
+		IA.id IA_id, IA.ad_type IA_ad_type, 
+		IA.user_range IA_user_range, IA.user_level IA_user_level, 
+		IA.recon_user_flag IA_recon_user_flag, IA.reg_user_flag IA_reg_user_flag, 
+		IA.img_url IA_img_url, IA.img_name IA_img_name, 
+		IA.img_link IA_img_link, IA.order_num IA_order_num, 
+		IA.status IA_status, IA.create_user_id IA_create_user_id, 
+		IA.create_time IA_create_time, IA.user_level_name IA_user_level_name
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		IA.id id, IA.ad_type adType, 
+		IA.user_range userRange, IA.user_level userLevel, 
+		IA.recon_user_flag reconUserFlag, IA.reg_user_flag regUserFlag, 
+		IA.img_url imgUrl, IA.img_name imgName, 
+		IA.img_link imgLink, IA.order_num orderNum, 
+		IA.status status, IA.create_user_id createUserId, 
+		IA.create_time createTime, IA.user_level_name userLevelName
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND IA.id=#{id}
+		</if>
+		<if test="adType!=null">
+			AND IA.ad_type=#{adType}
+		</if>
+		<if test="userRange!=null">
+			AND IA.user_range=#{userRange}
+		</if>
+		<if test="userLevel!=null and userLevel!=''">
+			AND IA.user_level=#{userLevel}
+		</if>
+		<if test="userLevelName!=null and userLevelName!=''">
+			AND IA.user_level_name=#{userLevelName}
+		</if>
+		<if test="reconUserFlag!=null">
+			AND IA.recon_user_flag=#{reconUserFlag}
+		</if>
+		<if test="regUserFlag!=null">
+			AND IA.reg_user_flag=#{regUserFlag}
+		</if>
+		<if test="imgUrl!=null and imgUrl!=''">
+			AND IA.img_url=#{imgUrl}
+		</if>
+		<if test="imgName!=null and imgName!=''">
+			AND IA.img_name=#{imgName}
+		</if>
+		<if test="imgLink!=null and imgLink!=''">
+			AND IA.img_link=#{imgLink}
+		</if>
+		<if test="orderNum!=null">
+			AND IA.order_num=#{orderNum}
+		</if>
+		<if test="status!=null">
+			AND IA.status=#{status}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND IA.create_user_id=#{createUserId}
+		</if>
+		<if test="createTime!=null">
+			AND IA.create_time=#{createTime}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND IA.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="adType!=null">
+				AND IA.ad_type=#{adType}
+			</if>
+			<if test="userRange!=null">
+				AND IA.user_range=#{userRange}
+			</if>
+			<if test="userLevel!=null and userLevel!=''">
+				AND IA.user_level LIKE CONCAT('%', #{userLevel}, '%')
+			</if>
+			<if test="userLevelName!=null and userLevelName!=''">
+				AND IA.user_level_name LIKE CONCAT('%', #{userLevelName}, '%')
+			</if>
+			<if test="reconUserFlag!=null">
+				AND IA.recon_user_flag=#{reconUserFlag}
+			</if>
+			<if test="regUserFlag!=null">
+				AND IA.reg_user_flag=#{regUserFlag}
+			</if>
+			<if test="imgUrl!=null and imgUrl!=''">
+				AND IA.img_url LIKE CONCAT('%', #{imgUrl}, '%')
+			</if>
+			<if test="imgName!=null and imgName!=''">
+				AND IA.img_name LIKE CONCAT('%', #{imgName}, '%')
+			</if>
+			<if test="imgLink!=null and imgLink!=''">
+				AND IA.img_link LIKE CONCAT('%', #{imgLink}, '%')
+			</if>
+			<if test="orderNum!=null">
+				AND IA.order_num=#{orderNum}
+			</if>
+			<if test="status!=null">
+				AND IA.status=#{status}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND IA.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND IA.create_time=#{createTime}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				IA.id=#{id}, 
+		   </if>
+           <if test="adType!=null">
+				IA.ad_type=#{adType}, 
+		   </if>
+           <if test="userRange!=null">
+				IA.user_range=#{userRange}, 
+		   </if>
+           <if test="userLevel!=null">
+				IA.user_level=#{userLevel}, 
+		   </if>
+           <if test="userLevelName!=null">
+				IA.user_level_name=#{userLevelName}, 
+		   </if>
+           <if test="reconUserFlag!=null">
+				IA.recon_user_flag=#{reconUserFlag}, 
+		   </if>
+           <if test="regUserFlag!=null">
+				IA.reg_user_flag=#{regUserFlag}, 
+		   </if>
+           <if test="imgUrl!=null">
+				IA.img_url=#{imgUrl}, 
+		   </if>
+           <if test="imgName!=null">
+				IA.img_name=#{imgName}, 
+		   </if>
+           <if test="imgLink!=null">
+				IA.img_link=#{imgLink}, 
+		   </if>
+           <if test="orderNum!=null">
+				IA.order_num=#{orderNum}, 
+		   </if>
+           <if test="status!=null">
+				IA.status=#{status}, 
+		   </if>
+           <if test="createUserId!=null">
+				IA.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createTime!=null">
+				IA.create_time=#{createTime}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+	
+	<delete id="deleteById">
+		DELETE IA FROM mall.TJY_INDEX_AD IA WHERE IA.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE mall.TJY_INDEX_AD IA
+		SET 
+		IA.STATUS = -1
+		WHERE IA.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE mall.TJY_INDEX_AD IA
+		<include refid="dynamicSet" /> 
+	    WHERE IA.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="indexAd">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INDEX_AD IA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM mall.TJY_INDEX_AD IA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="indexAd">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INDEX_AD IA
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="indexAd">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INDEX_AD IA
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="indexAd">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_INDEX_AD IA
+		WHERE IA.ID = #{id}
+	</select>
+	
+</mapper>

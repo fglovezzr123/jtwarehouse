@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-07-04 15:30:56
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserIntegralLogDao">
+
+	<resultMap id="userIntegralLog" type="com.wing.socialcontact.service.wx.bean.UserIntegralLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskCode" column="task_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskName" column="task_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="integralType" column="integral_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="integral" column="integral" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="yeIntegral" column="ye_integral" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralExplain" column="integral_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="taskStatus" column="task_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="userIntegralLogGlobal" type="com.wing.socialcontact.service.wx.bean.UserIntegralLog">
+		<result property="id" column="UIL_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="UIL_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskCode" column="UIL_task_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskName" column="UIL_task_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="integralType" column="UIL_integral_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="integral" column="UIL_integral" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="yeIntegral" column="UIL_ye_integral" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralExplain" column="UIL_integral_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="UIL_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="UIL_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="UIL_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="UIL_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="UIL_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="UIL_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="UIL_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="UIL_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="taskStatus" column="UIL_task_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UIL.id, UIL.user_id, UIL.task_code, UIL.task_name, 
+		UIL.integral_type, UIL.integral, UIL.ye_integral, UIL.integral_explain, 
+		UIL.remark, UIL.create_time, UIL.create_user_id, UIL.create_user_name, 
+		UIL.update_time, UIL.update_user_id, UIL.update_user_name, UIL.deleted, 
+		UIL.task_status
+	</sql>
+
+	<sql id="fieldGlobal">
+		UIL.id UIL_id, UIL.user_id UIL_user_id, 
+		UIL.task_code UIL_task_code, UIL.task_name UIL_task_name, 
+		UIL.integral_type UIL_integral_type, UIL.integral UIL_integral, 
+		UIL.ye_integral UIL_ye_integral, UIL.integral_explain UIL_integral_explain, 
+		UIL.remark UIL_remark, UIL.create_time UIL_create_time, 
+		UIL.create_user_id UIL_create_user_id, UIL.create_user_name UIL_create_user_name, 
+		UIL.update_time UIL_update_time, UIL.update_user_id UIL_update_user_id, 
+		UIL.update_user_name UIL_update_user_name, UIL.deleted UIL_deleted, 
+		UIL.task_status UIL_task_status
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UIL.id id, UIL.user_id userId, 
+		UIL.task_code taskCode, UIL.task_name taskName, 
+		UIL.integral_type integralType, UIL.integral integral, 
+		UIL.ye_integral yeIntegral, UIL.integral_explain integralExplain, 
+		UIL.remark remark, UIL.create_time createTime, 
+		UIL.create_user_id createUserId, UIL.create_user_name createUserName, 
+		UIL.update_time updateTime, UIL.update_user_id updateUserId, 
+		UIL.update_user_name updateUserName, UIL.deleted deleted, 
+		UIL.task_status taskStatus
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UIL.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND UIL.user_id=#{userId}
+		</if>
+		<if test="taskCode!=null and taskCode!=''">
+			AND UIL.task_code=#{taskCode}
+		</if>
+		<if test="taskName!=null and taskName!=''">
+			AND UIL.task_name=#{taskName}
+		</if>
+		<if test="integralType!=null and integralType!=''">
+			AND UIL.integral_type=#{integralType}
+		</if>
+		<if test="integral!=null">
+			AND UIL.integral=#{integral}
+		</if>
+		<if test="yeIntegral!=null">
+			AND UIL.ye_integral=#{yeIntegral}
+		</if>
+		<if test="integralExplain!=null and integralExplain!=''">
+			AND UIL.integral_explain=#{integralExplain}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND UIL.remark=#{remark}
+		</if>
+		<if test="createTime!=null">
+			AND UIL.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UIL.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND UIL.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND UIL.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND UIL.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND UIL.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND UIL.deleted=#{deleted}
+		</if>
+		<if test="taskStatus!=null and taskStatus!=''">
+			AND UIL.task_status=#{taskStatus}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UIL.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND UIL.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="taskCode!=null and taskCode!=''">
+				AND UIL.task_code LIKE CONCAT('%', #{taskCode}, '%')
+			</if>
+			<if test="taskName!=null and taskName!=''">
+				AND UIL.task_name LIKE CONCAT('%', #{taskName}, '%')
+			</if>
+			<if test="integralType!=null and integralType!=''">
+				AND UIL.integral_type LIKE CONCAT('%', #{integralType}, '%')
+			</if>
+			<if test="integral!=null">
+				AND UIL.integral=#{integral}
+			</if>
+			<if test="yeIntegral!=null">
+				AND UIL.ye_integral=#{yeIntegral}
+			</if>
+			<if test="integralExplain!=null and integralExplain!=''">
+				AND UIL.integral_explain LIKE CONCAT('%', #{integralExplain}, '%')
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND UIL.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND UIL.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND UIL.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND UIL.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND UIL.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND UIL.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND UIL.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND UIL.deleted=#{deleted}
+			</if>
+			<if test="taskStatus!=null and taskStatus!=''">
+				AND UIL.task_status LIKE CONCAT('%', #{taskStatus}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UIL.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				UIL.user_id=#{userId}, 
+		   </if>
+           <if test="taskCode!=null">
+				UIL.task_code=#{taskCode}, 
+		   </if>
+           <if test="taskName!=null">
+				UIL.task_name=#{taskName}, 
+		   </if>
+           <if test="integralType!=null">
+				UIL.integral_type=#{integralType}, 
+		   </if>
+           <if test="integral!=null">
+				UIL.integral=#{integral}, 
+		   </if>
+           <if test="yeIntegral!=null">
+				UIL.ye_integral=#{yeIntegral}, 
+		   </if>
+           <if test="integralExplain!=null">
+				UIL.integral_explain=#{integralExplain}, 
+		   </if>
+           <if test="remark!=null">
+				UIL.remark=#{remark}, 
+		   </if>
+           <if test="createTime!=null">
+				UIL.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				UIL.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				UIL.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				UIL.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				UIL.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				UIL.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				UIL.deleted=#{deleted}, 
+		   </if>
+           <if test="taskStatus!=null">
+				UIL.task_status=#{taskStatus}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+	
+	
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select o.*,t.nickname,t.true_name,t.mobile ,t.com_name,t.address,
+		    t0.level as user_level,
+			t1.list_value AS job_name,
+			t2.list_value AS industry_name,
+			t3.dis_name AS province_name,
+			t4.dis_name AS city_name,
+			t5.dis_name AS county_name
+		from TJY_USER_INTEGRAL_LOG o 
+		left join tjy_user t ON t.id = o.user_id
+		left join user t0 ON t.id = t0.id
+		left JOIN list_values t1 ON t.job = t1.id
+		left JOIN list_values t2 ON t.industry = t2.id
+		left JOIN sy_district t3 ON t.province = t3.id
+	    left JOIN sy_district t4 ON t.city = t4.id
+	    left JOIN sy_district t5 ON t.county = t5.id
+ 		WHERE 1=1
+    	<if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	    </if>
+	    <if test="mobile!=null  and mobile!=''">
+			and t.mobile  LIKE CONCAT('%', #{mobile}, '%')
+		</if>
+		<if test="userId!=null   and userId!=''">
+			and o.user_id=#{userId} 
+		</if>
+		ORDER BY o.create_time desc
+	</select>
+	
+	<select id="selectOneTimes" resultMap="userIntegralLog">
+			SELECT *
+		FROM TJY_USER_INTEGRAL_LOG UIL
+		WHERE UIL.task_code=#{taskCode} and  UIL.user_id=#{userId} limit 0,1
+	</select>
+	<select id="selectOneDay" resultMap="userIntegralLog">
+			SELECT *
+		FROM TJY_USER_INTEGRAL_LOG UIL
+		WHERE UIL.task_code=#{taskCode} and  UIL.user_id=#{userId}
+		and  to_days(UIL.create_time) = to_days(now()) limit 0,1
+	</select>
+	<select id="selectOneYear" resultMap="userIntegralLog">
+			SELECT *
+		FROM TJY_USER_INTEGRAL_LOG UIL
+		WHERE UIL.task_code=#{taskCode} and  UIL.user_id=#{userId}
+		and  YEAR(UIL.create_time)=YEAR(now())  LIMIT 0,1
+	</select>
+	
+	<select id="selectOneDaySum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT IFNULL(sum(UIL.integral),0) as integral
+		FROM TJY_USER_INTEGRAL_LOG UIL
+		WHERE 1=1
+		<if test="taskCode!=null and taskCode!=''">
+			and UIL.task_code=#{taskCode}
+	    </if>
+		 and  UIL.user_id=#{userId}
+		and  to_days(UIL.create_time) = to_days(now()) 
+	</select>
+	
+	<select id="selectOneYearSum" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT IFNULL(sum(UIL.integral),0) as integral
+		FROM TJY_USER_INTEGRAL_LOG UIL
+		WHERE  1=1
+		<if test="taskCode!=null and taskCode!=''">
+			and UIL.task_code=#{taskCode}
+	    </if>
+		and  UIL.user_id=#{userId}
+		and  YEAR(UIL.create_time)=YEAR(now()) 
+	</select>
+	
+	
+</mapper>

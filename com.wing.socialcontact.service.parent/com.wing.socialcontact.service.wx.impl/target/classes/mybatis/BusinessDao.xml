@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-04-18 12:01:50
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.BusinessDao">
+
+	<resultMap id="business" type="com.wing.socialcontact.service.wx.bean.Business">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titles" column="titles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="bizType" column="biz_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="appealType" column="appeal_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="appealSummary" column="appeal_summary" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="appealRemark" column="appeal_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="startTime" column="start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="allowComment" column="allow_comment" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="reward" column="reward" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="appealDesc" column="appeal_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isRecommend" column="is_recommend" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="lookCount" column="look_count" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="rewardFinish" column="reward_finish" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isShow" column="is_show" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		t.id id, t.titles titles, 
+		t.biz_type bizType, t.appeal_type appealType, 
+		t.appeal_summary appealSummary, t.appeal_remark appealRemark, 
+		t.start_time startTime, t.end_time endTime, 
+		t.allow_comment allowComment, t.reward reward, 
+		t.status status, t.create_time createTime, 
+		t.create_user_id createUserId, t.create_user_name createUserName, 
+		t.deleted deleted, t.appeal_desc appealDesc,t.is_recommend isRecommend,
+		t.look_count lookCount,t.reward_finish rewardFinish,t.is_show isShow
+	</sql>
+	
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,c.class_name className ,u.nickname userName,u.mobile mobile 
+		FROM tjy_business t 
+		left join tjy_business_class c on t.biz_type = c.id 
+		left join  tjy_user u on t.create_user_id = u.id  
+ 		WHERE 1=1
+    	<if test="titles != null and titles != ''">
+			AND	t.titles like CONCAT('%',#{titles,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="bizType != null and bizType != '0'.toString() ">
+			AND	t.biz_type = #{bizType,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null and status != 0">
+			AND	t.status = #{status}
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	<select id="selectByParam2" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,c.class_name className ,u.true_name userName
+		FROM tjy_business t 
+		left join tjy_attention a  on a.fk_id = t.id  
+		left join tjy_business_class c on t.biz_type = c.id 
+		left join  tjy_user u on t.create_user_id = u.id  
+ 		WHERE a.att_type = '2'
+ 		<if test="userId != null and userId != '' ">
+			AND	a.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        <if test="titles != null and titles != ''">
+			AND	t.titles like CONCAT('%',#{titles,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="bizType != null and bizType != '0'.toString() ">
+			AND	t.biz_type = #{bizType,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null and status != 0">
+			AND	t.status = #{status}
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	
+	<select id="selectFrontByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM tjy_business t 
+ 		WHERE t.status = 2 
+    	<if test="titles != null and titles != ''">
+			AND	t.titles like CONCAT('%',#{titles,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="bizType != null and bizType != '' ">
+			AND	t.biz_type = #{bizType,jdbcType=VARCHAR}
+		</if>
+		<if test="createUserId != null and createUserId != '' ">
+			AND	t.create_user_id = #{createUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="isRecommend != null">
+			AND	t.is_recommend = #{isRecommend}
+		</if>
+		<if test="isReward == 1">
+			AND	t.reward != 0
+		</if>
+		<if test="isReward == 2">
+			AND	t.reward = 0
+		</if>
+		<if test="curruserId != null and curruserId != '' ">
+		and (t.create_user_id in 
+        (SELECT f.friend_user FROM tjy_im_friend f
+         WHERE f.user_id = #{curruserId,jdbcType=VARCHAR}) or t.is_show = 2 or t.create_user_id = #{curruserId,jdbcType=VARCHAR})
+         </if>
+         <if test="isReward == 1">
+           order by t.reward desc
+         </if>
+         <if test="isReward == null">
+          order by t.create_time desc
+         </if>
+		<if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+	<select id="selectBusinessById" resultType="java.util.HashMap" parameterType="java.util.Map">
+	  SELECT t.id id, t.titles titles, 
+		t.biz_type bizType, t.appeal_type appealType, 
+		t.appeal_summary appealSummary, t.appeal_remark appealRemark, 
+		date_format(t.start_time,'%Y-%m-%d') startTime,date_format(t.end_time,'%Y-%m-%d') endTime, 
+		t.allow_comment allowComment, t.reward reward, 
+		t.status status, date_format(t.create_time,'%Y-%m-%d') createTime, 
+		t.create_user_id createUserId, t.create_user_name createUserName, 
+		t.deleted deleted, t.appeal_desc appealDesc,t.is_recommend isRecommend,c.class_name className,
+		t.look_count lookCount,COUNT(a.id) countNum,t.reward_finish rewardFinish    
+		FROM tjy_business t left join tjy_business_class c on t.biz_type = c.id  
+		left JOIN tjy_attention a on t.id = a.fk_id 
+		where t.id = #{id,jdbcType=VARCHAR}
+	</select>
+	<select id="selectMyAttention" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>,c.class_name className  
+		FROM tjy_attention a join tjy_business t on a.fk_id = t.id  
+		left join tjy_business_class c on t.biz_type = c.id 
+ 		WHERE a.att_type = '2'
+ 		<if test="userId != null and userId != '' ">
+			AND	a.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+        order by a.create_time desc 
+        limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+	</select>
+	<select id="selectPastBusiness" resultMap="business" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_business t 
+ 		WHERE t.reward_finish = 2 and t.end_time &lt; date_format(now(),'%Y-%m-%d')
+	</select>
+</mapper>

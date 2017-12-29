@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.IIntegralGoodsDao">
+
+    <resultMap id="BaseResultMap" type="com.wing.socialcontact.service.wx.bean.IntegralGoods">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="addTime" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="deleteStatus" jdbcType="BIT" property="deleteStatus"/>
+        <result column="ig_begin_time" jdbcType="TIMESTAMP" property="ig_begin_time"/>
+        <result column="ig_click_count" jdbcType="INTEGER" property="ig_click_count"/>
+        <result column="ig_content" jdbcType="VARCHAR" property="ig_content"/>
+        <result column="ig_end_time" jdbcType="TIMESTAMP" property="ig_end_time"/>
+        <result column="ig_exchange_count" jdbcType="INTEGER" property="ig_exchange_count"/>
+        <result column="ig_goods_count" jdbcType="INTEGER" property="ig_goods_count"/>
+        <result column="ig_goods_integral" jdbcType="INTEGER" property="ig_goods_integral"/>
+        <result column="ig_goods_name" jdbcType="VARCHAR" property="ig_goods_name"/>
+        <result column="ig_goods_price" jdbcType="DECIMAL" property="ig_goods_price"/>
+        <result column="ig_goods_sn" jdbcType="VARCHAR" property="ig_goods_sn"/>
+        <result column="ig_goods_tag" jdbcType="VARCHAR" property="ig_goods_tag"/>
+        <result column="ig_limit_count" jdbcType="INTEGER" property="ig_limit_count"/>
+        <result column="ig_limit_type" jdbcType="BIT" property="ig_limit_type"/>
+        <result column="ig_recommend" jdbcType="BIT" property="ig_recommend"/>
+        <result column="ig_seo_description" jdbcType="VARCHAR" property="ig_seo_description"/>
+        <result column="ig_seo_keywords" jdbcType="VARCHAR" property="ig_seo_keywords"/>
+        <result column="ig_sequence" jdbcType="INTEGER" property="ig_sequence"/>
+        <result column="ig_show" jdbcType="BIT" property="ig_show"/>
+        <result column="ig_time_type" jdbcType="BIT" property="ig_time_type"/>
+        <result column="ig_transfee" jdbcType="DECIMAL" property="ig_transfee"/>
+        <result column="ig_transfee_type" jdbcType="INTEGER" property="ig_transfee_type"/>
+        <result column="ig_goods_img_id" jdbcType="INTEGER" property="ig_goods_img_id"/>
+    </resultMap>
+
+    <select id="selectList" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        a.*,
+        b.name AS imgName,
+        b.path AS imgPath
+        FROM
+        integral_goods a
+        LEFT JOIN accessory b ON a.ig_goods_img_id = b.id
+        WHERE 1=1 and ig_show=true
+     </select>
+</mapper>

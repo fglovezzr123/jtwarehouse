@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ProjectSupermarketImagesDao" >
+
+  <resultMap id="resultMap" type="com.wing.socialcontact.service.wx.bean.ProjectSupermarketImages" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="field">
+    p.id,p.project_id,p.image_url,p.create_time
+  </sql>
+
+  <sql id="dynamicWhere">
+    <where>
+      <if test="projectId!=null and projectId!=''">
+        AND p.project_id = #{projectId}
+      </if>
+      <if test="title!=null and title!=''">
+        AND p.titles like concat('%',#{title},'%')
+      </if>
+      <if test="isShow!=null">
+        AND p.is_show=#{isShow}
+      </if>
+      <if test="createTime!=null">
+        AND p.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+        AND p.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByParam" resultMap="resultMap" parameterType="java.util.Map">
+    select
+    <include refid="field"/>
+    from tjy_project_supermarket_images p
+    <include refid="dynamicWhere"/>
+    <choose>
+      <when test="orderBy !=null and orderBy != ''">
+        ${orderBy}
+      </when>
+      <otherwise>
+        order by p.sort desc,p.create_time desc
+      </otherwise>
+    </choose>
+  </select>
+
+</mapper>

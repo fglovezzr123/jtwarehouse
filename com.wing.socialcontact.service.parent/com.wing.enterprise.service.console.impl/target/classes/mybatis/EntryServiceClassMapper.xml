@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.enterprise.service.dao.EntryServiceClassDao">
+
+	<resultMap id="entryServiceClass" type="java.util.HashMap">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time"  jdbcType="DATE"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="className" column="class_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="parentId" column="parent_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortNum" column="sort_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isShow" column="is_show" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<select id="selectByParam" resultMap="entryServiceClass" parameterType="java.util.Map">
+		select t.* from qfy_service_class t where t.status = 0 
+		
+		<if test="isShow != null and isShow != ''">  
+			AND	t.is_show = #{isShow,jdbcType=VARCHAR}
+		</if> 
+		<if test="searchName != null and searchName != ''">  
+			AND	t.class_name like CONCAT('%',#{searchName,jdbcType=VARCHAR},'%')
+		</if> 
+ 		<if test="parentId != null and parentId != '' and parentId != 'one'">
+			AND	t.parent_id = #{parentId,jdbcType=VARCHAR}
+		</if>
+ 		<if test="parentId != null and parentId != '' and parentId == 'one'">
+			AND	t.parent_id = ''
+		</if>
+ 		<if test="className != null and className != ''">
+			AND	t.class_name like CONCAT('%',#{className,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="createTime != null">
+				AND t.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime,jdbcType=DATE},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND t.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime,jdbcType=DATE},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+		</if>
+		order by t.sort_num asc
+	</select>
+	<select id="selectSecond" resultMap="entryServiceClass" parameterType="java.util.Map">
+		select t.* from qfy_service_class t where t.status = 0 and t.is_show = 0 and (t.parent_id != '' and t.parent_id is not null)
+		order by t.sort_num asc
+	</select>
+</mapper>

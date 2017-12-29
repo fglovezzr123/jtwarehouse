@@ -1,0 +1,70 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.springboot_dubbo_provider.mapper.InvestPersonMapper">
+	
+	<sql id="investPersonColumns">
+		a.id AS "id",
+		a.invest_name AS "investName",
+		a.no_relief AS "noRelief",
+		a.accreditated_finance AS "accreditatedFinance",
+		a.accreditated_invset AS "accreditatedInvset",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="investPersonJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.InvestPerson">
+		SELECT 
+			<include refid="investPersonColumns"/>
+		FROM tjrb_invest_person a
+		<include refid="investPersonJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.InvestPerson">
+		SELECT 
+			<include refid="investPersonColumns"/>
+		FROM tjrb_invest_person a
+		<include refid="investPersonJoins"/>
+		<where>
+			<if test="id != null">
+				AND a.id = #{id}
+			</if>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO tjrb_invest_person(
+			ad_pic_url,
+			product_id,
+			ad_position,
+			create_date,
+			update_date
+		) VALUES (
+			#{adPicUrl},
+			#{productId},
+			#{adPosition},
+			#{createDate},
+			#{updateDate}		
+		)
+	</insert>
+	
+	<update id="updateAccreditatedInvset">
+		UPDATE tjrb_invest_person SET 	
+			accreditated_invset = #{accreditatedInvset},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_bp_person SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>

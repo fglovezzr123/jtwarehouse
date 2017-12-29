@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-04-28 23:41:19
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.LeaveMsgDao">
+
+	<resultMap id="leaveMsg" type="com.wing.socialcontact.service.wx.bean.LeaveMsg">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="source" column="source" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="leaveMsgGlobal" type="com.wing.socialcontact.service.wx.bean.LeaveMsg">
+		<result property="id" column="LM_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="LM_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="LM_content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="LM_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="deleted" column="LM_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="type" column="LM_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="source" column="LM_source" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		LM.id, LM.user_id, LM.content, LM.create_time, 
+		LM.deleted,LM.type,LM.source
+	</sql>
+
+	<sql id="fieldGlobal">
+		LM.id LM_id, LM.user_id LM_user_id, 
+		LM.content LM_content, LM.create_time LM_create_time, 
+		LM.deleted LM_deleted,LM.type LM_type,LM.source LM_source
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		LM.id id, LM.user_id userId, 
+		LM.content content, LM.create_time createTime, 
+		LM.deleted deleted,LM.type type,LM.source source
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND LM.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND LM.user_id=#{userId}
+		</if>
+		<if test="content!=null and content!=''">
+			AND LM.content=#{content}
+		</if>
+		<if test="createTime!=null">
+			AND LM.create_time=#{createTime}
+		</if>
+		<if test="deleted!=null">
+			AND LM.deleted=#{deleted}
+		</if>
+		<if test="type!=null">
+			AND LM.type=#{type}
+		</if>
+		<if test="source!=null">
+			AND LM.source=#{source}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND LM.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND LM.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="content!=null and content!=''">
+				AND LM.content LIKE CONCAT('%', #{content}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND LM.create_time=#{createTime}
+			</if>
+			<if test="deleted!=null">
+				AND LM.deleted=#{deleted}
+			</if>
+			<if test="type!=null">
+				AND LM.type=#{type}
+			</if>
+			<if test="source!=null">
+				AND LM.source=#{source}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				LM.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				LM.user_id=#{userId}, 
+		   </if>
+           <if test="content!=null">
+				LM.content=#{content}, 
+		   </if>
+           <if test="createTime!=null">
+				LM.create_time=#{createTime}, 
+		   </if>
+           <if test="deleted!=null">
+				LM.deleted=#{deleted}, 
+		   </if>
+		   <if test="type!=null">
+				LM.type=#{type},
+		   </if>
+		   <if test="source!=null">
+				LM.source=#{source},
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE LM FROM TJY_LEAVE_MSG LM WHERE LM.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_LEAVE_MSG LM
+		SET 
+		LM.STATUS = -1
+		WHERE LM.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_LEAVE_MSG LM
+		<include refid="dynamicSet" /> 
+	    WHERE LM.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="leaveMsg">
+		SELECT <include refid="field"/>
+		FROM TJY_LEAVE_MSG LM
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_LEAVE_MSG LM
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="leaveMsg">
+		SELECT <include refid="field"/>
+		FROM TJY_LEAVE_MSG LM
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="leaveMsg">
+		SELECT <include refid="field"/>
+		FROM TJY_LEAVE_MSG LM
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="leaveMsg">
+		SELECT <include refid="field"/>
+		FROM TJY_LEAVE_MSG LM
+		WHERE LM.ID = #{id}
+	</select>
+	
+	
+	<select id="selectLeaveMsgs" resultType="java.util.HashMap" parameterType="java.util.Map">
+		select o.*,t.nickname,t.mobile,t.true_name from TJY_LEAVE_MSG o 
+        JOIN tjy_user t ON t.id= o.user_id
+ 		WHERE 1=1 and o.deleted = 0 
+    	<if test="nickname!=null and nickname!=''">
+			and t.nickname LIKE CONCAT('%', #{nickname}, '%')
+	    </if>
+    	<if test="type!=null and type!=''">
+			and o.type = #{type}
+	    </if>
+    	<if test="source!=null and source!=''">
+			and o.source = #{source}
+	    </if>
+		order by o.create_time desc
+	</select>
+	
+</mapper>

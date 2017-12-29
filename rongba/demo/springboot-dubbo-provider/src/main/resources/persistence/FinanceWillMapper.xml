@@ -1,0 +1,80 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.rongba.provider.mapper.FinanceWillMapper">
+	
+	<sql id="financeWillColumns">
+		a.id AS "id",
+		a.org_no  AS "orgNo",
+		a.will_amount AS "willAmount",
+		a.will_period AS "willPeriod",
+		a.product_id AS "productId",
+		a.person_name AS "personName",
+		a.person AS "person",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="financeWillJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.rongba.api.entity.FinanceWill">
+		SELECT 
+			<include refid="financeWillColumns"/>
+		FROM tjrb_finance_Will a
+		<include refid="financeWillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.rongba.api.entity.FinanceWill">
+		SELECT 
+			<include refid="financeWillColumns"/>
+		FROM tjrb_finance_Will a
+		<include refid="financeWillJoins"/>
+		<where>
+			<if test="type != null">
+				AND a.type = #{type}
+			</if>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO tjrb_finance_will(
+			org_no,
+			will_amount,
+			will_period,
+			product_id,
+			person_name,
+			person,
+			create_date,
+			update_date
+		) VALUES (
+			#{orgNo},
+			#{willAmount},
+			#{willPeriod},
+			#{productId},
+			#{personName},
+			#{person},
+			#{createDate},
+			#{updateDate}		
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tjrb_finance_will SET 	
+			ad_pic_url = #{adPicUrl},
+			product_id = #{productId},
+			ad_position = #{adPosition},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_finance_will SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>

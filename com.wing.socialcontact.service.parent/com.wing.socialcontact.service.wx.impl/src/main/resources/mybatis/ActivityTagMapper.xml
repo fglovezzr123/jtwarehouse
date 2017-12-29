@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ActivityTagDao">
+
+	<resultMap id="BaseResultMap" type="java.util.HashMap">
+		<result property="id" column="id"  jdbcType="VARCHAR"></result>
+		<result property="name" column="name"  jdbcType="VARCHAR"></result>
+		<result property="classId" column="class_id"  jdbcType="VARCHAR"></result>
+		<result property="imagePath" column="image_path"  jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time"  jdbcType="DATE"></result>
+		<result property="createUserId" column="create_user_id"  jdbcType="VARCHAR"></result>
+		<result property="sort" column="sort"  jdbcType="INTEGER"></result>
+		<result property="recommend" column="recommend"  jdbcType="INTEGER"></result>
+	</resultMap>
+	<resultMap id="activityTag" type="java.util.HashMap">
+		<result property="id" column="id"  jdbcType="VARCHAR"></result>
+		<result property="name" column="name"  jdbcType="VARCHAR"></result>
+		<result property="classId" column="class_id"  jdbcType="VARCHAR"></result>
+		<result property="imagePath" column="image_path"  jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time"  jdbcType="DATE"></result>
+		<result property="createUserId" column="create_user_id"  jdbcType="VARCHAR"></result>
+		<result property="sort" column="sort"  jdbcType="INTEGER"></result>
+		<result property="recommend" column="recommend"  jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<select id="getclassMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.*
+		FROM tjy_activity_tag t
+ 		WHERE 1=1
+    	<if test="name != null and name != ''">
+			AND	t.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="classId != null and classId != ''">
+			AND	t.class_id = #{classId,jdbcType=VARCHAR}
+		</if>
+    	order by t.recommend desc ,t.sort asc,t.create_time desc
+	</select>
+	<select id="selTags" resultMap="activityTag" parameterType="java.util.Map">
+		SELECT t.*
+		FROM tjy_activity_tag t 
+ 		WHERE 1=1
+    	<if test="classId != null and classId != ''">
+			AND	t.class_id = #{classId,jdbcType=VARCHAR}
+		</if>
+		
+		order by t.recommend desc,t.sort asc ,t.create_time desc
+	</select>
+	
+</mapper>

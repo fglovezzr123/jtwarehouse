@@ -1,0 +1,57 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.rongba.provider.mapper.OrgMapper">
+	
+	<sql id="orgColumns">
+		a.id AS "id",
+		a.org_no  AS "orgNo",
+		a.org_name  AS "orgName",
+		a.org_profile  AS "orgProfile",
+		a.org_logo  AS "orgLogo",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="orgJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.rongba.api.entity.Org">
+		SELECT 
+			<include refid="orgColumns"/>
+		FROM tjrb_org a
+		<include refid="orgJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.rongba.api.entity.Org">
+		SELECT 
+			<include refid="orgColumns"/>
+		FROM tjrb_org a
+		<include refid="orgJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="adPosition != null">
+				AND a.ad_position = #{adPosition}
+			</if>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<update id="update">
+		UPDATE tjrb_org SET 	
+			ad_pic_url = #{adPicUrl},
+			product_id = #{productId},
+			ad_position = #{adPosition},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_org SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Copyright 1999-2011 Alibaba Group. - - Licensed under the Apache License, 
+	Version 2.0 (the "License"); - you may not use this file except in compliance 
+	with the License. - You may obtain a copy of the License at - - http://www.apache.org/licenses/LICENSE-2.0 
+	- - Unless required by applicable law or agreed to in writing, software - 
+	distributed under the License is distributed on an "AS IS" BASIS, - WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. - See the 
+	License for the specific language governing permissions and - limitations 
+	under the License. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="location" value="classpath:dubbo.properties"/>
+    </bean>
+    
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="${dubbo.application.name}"/>
+	<dubbo:registry   address="${dubbo.registry.address}" check="${dubbo.registry.check}" protocol="zookeeper"/> <!--group="meeting" -->
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+<!-- 	serialization="${dubbo.protocol.serialization}" -->
+<!-- 	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" host="${dubbo.protocol.host}"/> -->
+
+	<!-- dispatcher all所有请求都发到线程池处理，threadpool fixed固定线程池大小，初始化后不进行伸缩，threads 线程池内线程个数 -->
+	<!-- <dubbo:protocol accesslog="true" />开启访问日志记录 -->
+	<!-- <dubbo:protocol accesslog="http://10.20.160.198/wiki/display/dubbo/foo/bar.log" />规定访问日志的路径 -->
+	<!-- <dubbo:protocol name="dubbo" connections="2" accepts="1000"/> dubbo协议使用长连接和nio，这里connections=2表示同时建立两个长连接（要在provier和consumer同时写上）
+		accepts=1000  表示为了防止同时过来大量连接而被干掉，限制最大为1000-->
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" host="${dubbo.protocol.host}" dispatcher="all" threadpool="fixed" threads="300" />
+	<!-- deplay=”-1”使Dubbo在Spring容器初始化完后，再暴露服务有错 -->
+	<!-- timeout="1000" 1秒超时 -->
+	<dubbo:provider  timeout="3000" retries="0"/>
+
+	<!-- 加入spring注解扫描 -->
+	<context:component-scan base-package="com.tojoy.*"/>
+
+	<!-- mybatis 相关 -->
+	<import resource="../../applicationContext.xml"/>
+	<!-- redis缓存配置 -->
+	<import resource="../../applicationContext-cache-redis.xml"/>
+
+	<!-- 声明需要暴露的服务接口 -->
+	<dubbo:service interface="com.tojoy.business.common.api.ISwitchCnfService" ref="switchCnfServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.tojoy.business.common.api.ICollectionService" ref="collectionServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.tojoy.business.common.api.IThumbUpService" ref="thumbUpServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.tojoy.business.common.api.ICommentService" ref="commentServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.tojoy.business.common.api.ICommentThumbUpService" ref="commentThumbUpServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.tojoy.business.common.api.IShareService" ref="shareServiceImpl" timeout="${dubbo.service.timeout}"/>
+	<dubbo:service interface="com.tojoy.business.common.api.IRewardService" ref="rewardServiceImpl" timeout="${dubbo.service.timeout}"/>
+</beans>

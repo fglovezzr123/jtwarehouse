@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-07-04 15:30:55
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserIntegralDao">
+
+	<resultMap id="userIntegral" type="com.wing.socialcontact.service.wx.bean.UserIntegral">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="code" column="code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskSystem" column="task_system" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="empiricalTotal" column="empirical_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralTotal" column="integral_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralExplain" column="integral_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="taskStatus" column="task_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="userIntegralGlobal" type="com.wing.socialcontact.service.wx.bean.UserIntegral">
+		<result property="id" column="UI_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="code" column="UI_code" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="taskSystem" column="UI_task_system" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="empiricalTotal" column="UI_empirical_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralTotal" column="UI_integral_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralExplain" column="UI_integral_explain" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="UI_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="UI_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="UI_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="UI_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="UI_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="UI_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="UI_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="UI_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="taskStatus" column="UI_task_status" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UI.id, UI.code, UI.task_system, UI.empirical_total, 
+		UI.integral_total, UI.integral_explain, UI.remark, UI.create_time, 
+		UI.create_user_id, UI.create_user_name, UI.update_time, UI.update_user_id, 
+		UI.update_user_name, UI.deleted, UI.task_status
+	</sql>
+
+	<sql id="fieldGlobal">
+		UI.id UI_id, UI.code UI_code, 
+		UI.task_system UI_task_system, UI.empirical_total UI_empirical_total, 
+		UI.integral_total UI_integral_total, UI.integral_explain UI_integral_explain, 
+		UI.remark UI_remark, UI.create_time UI_create_time, 
+		UI.create_user_id UI_create_user_id, UI.create_user_name UI_create_user_name, 
+		UI.update_time UI_update_time, UI.update_user_id UI_update_user_id, 
+		UI.update_user_name UI_update_user_name, UI.deleted UI_deleted, 
+		UI.task_status UI_task_status
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UI.id id, UI.code code, 
+		UI.task_system taskSystem, UI.empirical_total empiricalTotal, 
+		UI.integral_total integralTotal, UI.integral_explain integralExplain, 
+		UI.remark remark, UI.create_time createTime, 
+		UI.create_user_id createUserId, UI.create_user_name createUserName, 
+		UI.update_time updateTime, UI.update_user_id updateUserId, 
+		UI.update_user_name updateUserName, UI.deleted deleted, 
+		UI.task_status taskStatus
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UI.id=#{id}
+		</if>
+		<if test="code!=null and code!=''">
+			AND UI.code=#{code}
+		</if>
+		<if test="taskSystem!=null and taskSystem!=''">
+			AND UI.task_system=#{taskSystem}
+		</if>
+		<if test="empiricalTotal!=null">
+			AND UI.empirical_total=#{empiricalTotal}
+		</if>
+		<if test="integralTotal!=null">
+			AND UI.integral_total=#{integralTotal}
+		</if>
+		<if test="integralExplain!=null and integralExplain!=''">
+			AND UI.integral_explain=#{integralExplain}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND UI.remark=#{remark}
+		</if>
+		<if test="createTime!=null">
+			AND UI.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UI.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND UI.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND UI.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND UI.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND UI.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND UI.deleted=#{deleted}
+		</if>
+		<if test="taskStatus!=null and taskStatus!=''">
+			AND UI.task_status=#{taskStatus}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UI.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="code!=null and code!=''">
+				AND UI.code LIKE CONCAT('%', #{code}, '%')
+			</if>
+			<if test="taskSystem!=null and taskSystem!=''">
+				AND UI.task_system LIKE CONCAT('%', #{taskSystem}, '%')
+			</if>
+			<if test="empiricalTotal!=null">
+				AND UI.empirical_total=#{empiricalTotal}
+			</if>
+			<if test="integralTotal!=null">
+				AND UI.integral_total=#{integralTotal}
+			</if>
+			<if test="integralExplain!=null and integralExplain!=''">
+				AND UI.integral_explain LIKE CONCAT('%', #{integralExplain}, '%')
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND UI.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND UI.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND UI.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND UI.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND UI.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND UI.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND UI.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND UI.deleted=#{deleted}
+			</if>
+			<if test="taskStatus!=null and taskStatus!=''">
+				AND UI.task_status LIKE CONCAT('%', #{taskStatus}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UI.id=#{id}, 
+		   </if>
+           <if test="code!=null">
+				UI.code=#{code}, 
+		   </if>
+           <if test="taskSystem!=null">
+				UI.task_system=#{taskSystem}, 
+		   </if>
+           <if test="empiricalTotal!=null">
+				UI.empirical_total=#{empiricalTotal}, 
+		   </if>
+           <if test="integralTotal!=null">
+				UI.integral_total=#{integralTotal}, 
+		   </if>
+           <if test="integralExplain!=null">
+				UI.integral_explain=#{integralExplain}, 
+		   </if>
+           <if test="remark!=null">
+				UI.remark=#{remark}, 
+		   </if>
+           <if test="createTime!=null">
+				UI.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				UI.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				UI.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				UI.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				UI.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				UI.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				UI.deleted=#{deleted}, 
+		   </if>
+           <if test="taskStatus!=null">
+				UI.task_status=#{taskStatus}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<select id="selectByParam" resultMap="userIntegral" parameterType="java.util.Map">
+		SELECT *
+		FROM TJY_USER_INTEGRAL UI
+    	<include refid="dynamicWhere" />
+		order by UI.create_time desc
+	</select>
+	
+	<select id="selectByCode" resultMap="userIntegral">
+			SELECT *
+		FROM TJY_USER_INTEGRAL UI
+		WHERE UI.code=#{code} 
+	</select>
+	
+
+	
+</mapper>

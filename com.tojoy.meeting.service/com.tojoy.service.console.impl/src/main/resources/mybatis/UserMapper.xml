@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.console.dao.UserDao">
+    <resultMap id="BaseResultMap2" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+	    <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+	    <result column="last_login_ip" property="disName" jdbcType="VARCHAR" />
+	    <result column="error_count" property="disDesc" jdbcType="SMALLINT" />
+	    <result column="user_status" property="disDesc" jdbcType="SMALLINT" />
+	    <result column="error_count" property="errorCount" jdbcType="SMALLINT" />
+	    <result column="user_status" property="userStatus" jdbcType="SMALLINT" />
+	    <result column="user_sex" property="userSex" jdbcType="SMALLINT" />
+	    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+	    <result column="true_name" property="trueName" jdbcType="VARCHAR" />
+	    <result column="user_desc" property="userDesc" jdbcType="VARCHAR" />
+	    <result column="register_uid" property="registerUid" jdbcType="VARCHAR" />
+	    <result column="mobile_phone_number" property="mobilePhoneNumber" jdbcType="VARCHAR" />
+	    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+	    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+	    <result column="error_time" property="errorTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<select id="findrolebyuserID"   resultMap="BaseResultMap2" parameterType="java.lang.String">
+		<![CDATA[
+		select r.* from sy_role r,sy_user_role ur 
+		where ur.user_id=#{userId,jdbcType=VARCHAR} and r.id=ur.role_id 
+		]]>
+	</select> 
+	<select  id="findRoleIdByUserId" resultType="java.lang.String"  parameterType="java.lang.String">
+		<![CDATA[ 
+		select ur.role_id id from sy_user_role ur 
+		where ur.user_id=#{userId,jdbcType=VARCHAR}  
+		]]>
+	</select>
+    <select id="getuserinfoMap" resultMap="BaseResultMap2" parameterType="java.util.Map">
+		select u.id as id,u.user_name as userName,u.register_time as registerTime,u.user_status as userStatus,
+		u.dept_id as deptId,u.true_name as trueName,u.user_sex as userSex  from sy_users u where 1=1 
+				
+    	<if test="userName != null and userName != ''">
+			AND	u.user_name like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="trueName != null and trueName != ''">
+			AND	u.true_name like   CONCAT('%',#{trueName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="userSex != null ">
+			AND	u.user_sex =  #{userSex,jdbcType=SMALLINT}
+		</if>
+    	<if test="deptId != null  and deptId != '' ">
+			AND	u.dept_id =  #{deptId,jdbcType=VARCHAR}
+		</if>
+    	<if test="userStatus != null and userStatus != ''">
+			AND	u.user_status =  #{userStatus,jdbcType=VARCHAR}
+		</if>
+	</select>
+    <select id="selectUsersLookUp" resultMap="BaseResultMap2" parameterType="java.util.Map">
+		select u.id as id,u.user_name as userName,u.user_status as userStatus,
+		u.dept_id as deptId,u.true_name as trueName,u.user_sex as userSex  from sy_users u where 1=1 
+    	<if test="trueName != null and trueName != ''">
+			AND	u.true_name like   CONCAT('%',#{trueName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="deptId != null and deptId != ''">
+			AND	u.dept_id =  #{deptId,jdbcType=VARCHAR}
+		</if>
+    	<if test="deptId != null and deptId != ''">
+			AND	u.dept_id =  #{deptId,jdbcType=VARCHAR}
+		</if>
+    	<if test="userSex != null and userSex != ''">
+			AND	u.user_sex =  #{userSex,jdbcType=VARCHAR}
+		</if>
+    	<if test="userStatus != null and userStatus != ''">
+			AND	u.user_status =  #{userStatus,jdbcType=VARCHAR}
+		</if>
+	</select>
+  
+  <select id="selectUserByNotInRoleIdParm" resultMap="BaseResultMap2" parameterType="java.util.Map">
+		SELECT DISTINCT u.id as id,u.user_name as userName,u.user_status as userStatus,u.true_name as trueName,u.user_sex as userSex,u.dept_id as deptId,d.dept_name as deptName
+		FROM sy_users u,sy_dept d,sy_user_role ur 
+ 		WHERE u.id=ur.user_id and u.dept_id=d.id
+    	<if test="roleId != null and roleId != ''">
+			<!-- AND	u.id not in (select ur.user_id from sy_user_role ur where ur.role_id = #{roleId,jdbcType=VARCHAR}) -->
+			AND not exists(select ur.user_id from sy_user_role ur where ur.role_id = #{roleId,jdbcType=VARCHAR} and ur.user_id=u.id)
+		</if>
+    	<if test="userName != null and userName != ''">
+			AND	u.user_name like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="trueName != null and trueName != ''">
+			AND	u.true_name like CONCAT('%',#{trueName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="deptId != null and deptId != ''">
+			AND	u.dept_id = #{deptId,jdbcType=VARCHAR}
+		</if>
+    	<if test="userSex != null and userSex != ''">
+			AND	u.user_sex = #{userSex,jdbcType=SMALLINT}
+		</if>
+    	<if test="userStatus != null and userStatus != ''">
+			AND	u.user_status = #{userStatus,jdbcType=SMALLINT}
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+		
+	</select>
+	
+	<select id="selectUserByRoleIdParm" resultMap="BaseResultMap2" parameterType="java.util.Map">
+		SELECT u.id as id,u.user_name as userName,u.user_status as userStatus,u.true_name as trueName,u.user_sex as userSex,u.dept_id as deptId,d.dept_name as deptName
+		FROM sy_users u,sy_user_role ur,sy_dept d
+ 		WHERE u.id=ur.user_id and u.dept_id=d.id
+    	<if test="roleId != null and roleId != ''">
+			AND	ur.role_id = #{roleId,jdbcType=VARCHAR}
+		</if>
+    	<if test="userName != null and userName != ''">
+			AND	u.user_name like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="trueName != null and trueName != ''">
+			AND	u.true_name like CONCAT('%',#{trueName,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="deptId != null and deptId != ''">
+			AND	u.dept_id = #{deptId,jdbcType=VARCHAR}
+		</if>
+    	<if test="userSex != null and userSex != ''">
+			AND	u.user_sex = #{userSex,jdbcType=SMALLINT}
+		</if>
+    	<if test="userStatus != null and userStatus != ''">
+			AND	u.user_status = #{userStatus,jdbcType=SMALLINT}
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<delete id="deleteuserrole" parameterType="java.lang.String">
+	delete from sy_user_role  where user_id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<update id="updatedeptleader" parameterType="java.lang.String" >
+	UPDATE  sy_dept s set s.lead_uid = NULL where s.lead_uid = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	
+</mapper>

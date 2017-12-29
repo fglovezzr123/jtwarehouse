@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-03-29 17:08:39
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImGrouprequestDao">
+
+	<resultMap id="imGrouprequest" type="com.wing.socialcontact.service.im.bean.ImGrouprequest">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="groupId" column="group_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="askmessage" column="askmessage" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		IG.id, IG.user_id, IG.group_id, IG.askmessage, 
+		IG.status, IG.create_time, IG.update_time
+	</sql>
+	<delete id="deleteById">
+		DELETE IG FROM TJY_IM_GROUPREQUEST IG WHERE IG.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imGrouprequest">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPREQUEST IG
+		WHERE IG.ID = #{id}
+	</select>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND IG.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND IG.user_id=#{userId}
+		</if>
+		<if test="groupId!=null and groupId!=''">
+			AND IG.group_id=#{groupId}
+		</if>
+		<if test="status!=null and status!=''">
+			AND IG.status=#{status}
+		</if>
+		<if test="createTime!=null and createTime!=''">
+			AND IG.create_time=#{createTime}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<select id="findGroupRequestByUserid" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.id,
+			t.group_no,
+			t.group_name,
+			t1.id as request_id,
+			t1.`status`,
+			t1.user_id,
+			t1.create_time,
+			t1.askmessage,
+			t2.nickname,
+			t2.head_portrait,
+			IFNULL(t2.honor_title, '') AS honor_title,
+			IFNULL(t2.honor_flag, '') AS honor_flag,
+			t2.com_name,
+			t2.job,
+			t3.list_value AS job_name
+		FROM
+			tjy_im_groupinfo t
+			JOIN tjy_im_grouprequest t1 on t.id = t1.group_id
+			JOIN tjy_user t2 on t1.user_id = t2.id
+			JOIN list_values t3 ON t2.job = t3.id
+		WHERE
+			t.creator = #{userId}
+		ORDER BY create_time DESC
+	</select>
+	
+	<select id="findNewGroupRequestCountByUserid" resultType="java.lang.Integer" parameterType="string">
+		SELECT
+			count(*)
+		FROM
+			tjy_im_groupinfo t
+			JOIN tjy_im_grouprequest t1 on t.id = t1.group_id
+			JOIN tjy_user t2 on t1.user_id = t2.id
+			JOIN list_values t3 ON t2.job = t3.id
+		WHERE
+			t.creator = #{userId} and t1.`status` = 1
+	</select>
+	
+	<select id="selectAllImGrouprequest" resultMap="imGrouprequest" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPREQUEST IG
+		<include refid="dynamicWhere" />
+	</select>
+	
+</mapper>

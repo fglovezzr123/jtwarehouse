@@ -1,0 +1,180 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 overflow:scroll;
+   height:100%;
+   background:#f0f0f0;
+}
+.wrapper{
+      width:100%;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:0.9rem;
+}
+.jiutianSearch{
+    width:100%;
+    box-sizing:border-box;
+    padding-left:0.13rem;
+    padding-right:0.13rem;
+    height:0.75rem;
+    background:#f0f0f0;
+    line-height:0.75rem;
+    position:relative;
+}
+.jiutianSearch input[type="button"]{
+    font-size:0.5rem;
+    height:0.5rem;
+    color:#9e9e9e;
+    width:0.5rem;
+    line-height:0.5rem;
+    text-align:center;
+    background:#f0f0f0;
+    float:right;
+    margin-top:0.11rem;
+}
+.jiutianSearch input[type="text"]{
+    font-size:0.3rem;
+    height:0.5rem;
+    color:#9e9e9e;
+    width:100%;
+    line-height:0.5rem;
+    text-align:center;
+    background:white;
+    float:left;
+     margin-top:0.125rem;
+     border-radius:0.1rem;
+  
+}
+.clear{
+    clear:both;
+}
+.jiutianSearch img{
+    width:0.3rem;
+    height:0.3rem;
+    position:absolute;
+    left:10%;
+    top:0.225rem;
+}
+.club-content{
+    width:100%;
+    border-top:0.13rem solid #f0f0f0;
+    background:white;
+}
+.club-bar{
+     height:0.73rem;
+     line-height:0.73rem;
+}
+.club-bar div{
+    width:50%;
+    float:left;
+    text-align:center;
+    border-bottom:3px solid #e6e6e6;
+}
+.club-bar .current{
+     border-bottom:0.04rem solid #0f88eb;
+}
+.club-bar div:nth-child(1){
+     background:url(../img/icons/truangles.png) no-repeat right center;
+     background-position-x:78%;
+}
+.club-bar div:nth-child(2){
+    color:#808080;    
+}
+.club-head{
+    box-sizing:border-box;
+    width:100%;
+    text-align:left;
+    padding-left:0.3rem;
+    padding-right:0.3rem;
+    color:#fe821e;
+    padding-top:0.24rem;
+    margin-bottom:.2rem
+}
+.club-position{
+     box-sizing:border-box;
+    width:100%;
+    
+    padding-left:0.3rem;
+    padding-right:0.3rem;
+}
+.club-position div{
+    width:1.12rem;
+    height:0.52rem;
+    text-align:center;
+    line-height:0.52rem;
+    float:left;
+    background:#f0f0f0;
+    font-size:0.24rem;
+    border-radius:0.1rem;
+    margin-bottom:0.1rem;
+}
+.club-position div:nth-of-type(even){
+    margin-left:0.325rem;
+    margin-right:0.325rem;
+}
+.contactMethod{
+   box-sizing:border-box;
+    width:100%;
+    text-align:right;
+    padding-left:0.3rem;
+    padding-right:0.3rem;
+    color:#808080;
+    font-size:0.2rem;
+    line-height:0.6rem;
+}
+#banner1{
+    padding-top:0.2rem;
+    margin-left:4%;
+}
+.club-present{
+    box-sizing:border-box;
+    width:100%;
+    
+    padding-left:0.3rem;
+    padding-right:0.3rem;
+   
+    background:white;
+    border-top:0.2rem solid #f0f0f0;
+    text-align:center;
+}
+.club-present img{
+      width:100%;
+      margin-top:0.2rem;
+      height:2.4rem;
+}
+.club-present h1{
+     font-size:0.27rem;
+     margin-top:.27rem;
+     text-align:center
+}
+.club-present div{
+     width:100%;
+     text-align:right;
+     color:#808080;
+     font-size:0.2rem;
+     line-height:0.61rem;
+}
+#banner2{
+    margin:0 auto;
+}
+.club-tab-content{
+	  background:white;
+}
+#returnToAll{
+    width: 1.8rem;
+    height: 0.52rem;
+    text-align: center;
+    line-height: 0.52rem;
+    margin-left:0.3rem;
+    background: #f0f0f0;
+    font-size: 0.24rem;
+    border-radius: 0.1rem;
+    margin-bottom: 0.1rem;	
+    margin-top:0.1rem;
+}
+.searchInfo{
+	padding-top:1rem;
+	width:100%;
+	height:0.5rem;
+	text-align:center;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.rongba.provider.mapper.FinanceTipsMapper">
+	
+	<sql id="financeTipsColumns">
+		a.id AS "id",
+		a.tips_type AS "tipsType",
+		a.tips_content AS "tipsContent",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="financeTipsJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.rongba.api.entity.FinanceTips">
+		SELECT 
+			<include refid="financeTipsColumns"/>
+		FROM tjrb_finance_tips a
+		<include refid="financeTipsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.rongba.api.entity.FinanceTips">
+		SELECT 
+			<include refid="financeTipsColumns"/>
+		FROM tjrb_finance_tips a
+		<include refid="financeTipsJoins"/>
+		<where>
+			<if test="tipsType != null">
+				AND a.tips_type = #{tipsType}
+			</if>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO tjrb_finance_tips(
+			ad_pic_url,
+			product_id,
+			ad_position,
+			create_date,
+			update_date
+		) VALUES (
+			#{adPicUrl},
+			#{productId},
+			#{adPosition},
+			#{createDate},
+			#{updateDate}		
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tjrb_finance_tips SET 	
+			ad_pic_url = #{adPicUrl},
+			product_id = #{productId},
+			ad_position = #{adPosition},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_finance_tips SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>

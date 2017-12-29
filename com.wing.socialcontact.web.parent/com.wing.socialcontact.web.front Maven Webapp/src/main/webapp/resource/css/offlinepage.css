@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+.wrapper1{
+      width:100%;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:1.2rem;
+}
+.right-signal1{
+    width:5.6rem;
+    height:0.46rem;
+    margin:0 auto;
+    margin-top:1.86rem;
+    line-height:0.46rem;
+    text-align:center;
+    font-size:0.35rem;
+}
+.name-btn1{
+	  margin-top:2.5rem;
+      background:#ff811b;
+      width:3.9rem;
+      height:0.78rem;
+      line-height:0.78rem;
+      margin:0 auto;
+      text-align:center;
+      border-radius:0.36rem;
+      margin-top:0.48rem;
+      color:white;
+}

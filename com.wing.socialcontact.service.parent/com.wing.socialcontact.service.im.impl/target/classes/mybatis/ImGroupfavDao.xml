@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-03 18:37:16
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.im.dao.ImGroupfavDao">
+
+	<resultMap id="imGroupfav" type="com.wing.socialcontact.service.im.bean.ImGroupfav">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="groupId" column="group_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="favId" column="fav_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortno" column="sortno" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<sql id="field">
+		IG.id, IG.group_id, IG.fav_id, IG.sortno
+	</sql>
+	<delete id="deleteById">
+		DELETE IG FROM TJY_IM_GROUPFAV IG WHERE IG.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="imGroupfav">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPFAV IG
+		WHERE IG.ID = #{id}
+	</select>
+	
+	<!-- 获取组标签列表-->
+	<select id="findGroupFavsByGroupId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t.group_id,
+			t.fav_id,
+			t.sortno,
+			t1.list_value
+		FROM
+			tjy_im_groupfav t
+		JOIN list_values t1 ON t.fav_id = t1.id
+		AND t1.list_type = '8002'
+		WHERE
+			t.group_id = #{groupId}
+		ORDER BY
+			t.sortno
+	</select>
+	<!-- 根据组id删除组标签信息 -->
+	<delete id="delFavsByGroupId" parameterType="string">
+		DELETE IG FROM TJY_IM_GROUPFAV IG WHERE IG.group_id = #{groupId} 
+	</delete>
+	
+	<!-- 根据组id和标签id获取 -->
+	<select id="loadByGroupIdAndFavId" resultMap="imGroupfav" parameterType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		FROM TJY_IM_GROUPFAV IG
+		WHERE IG.group_id = #{groupId} and IG.fav_id = #{favId}
+	</select>
+	
+	<!-- 检查爱好是否在数据字典表中-->
+	<select id="findListValueByFavId" resultType="java.util.HashMap" parameterType="string">
+		SELECT
+			t1.id,
+			t1.list_type,
+			t1.list_value
+		FROM
+			list_values t1
+		WHERE
+			t1.list_type = '8002'
+		AND t1.id = #{favId}
+	</select>
+	
+</mapper>

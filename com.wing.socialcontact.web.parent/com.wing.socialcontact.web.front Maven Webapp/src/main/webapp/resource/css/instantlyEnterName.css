@@ -1,0 +1,208 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 overflow:scroll;
+   height:100%;
+   background:#f3f4f6;
+}
+.wrapper{
+      width:100%;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:1.2rem;
+  
+}
+.meeting-head{
+      box-sizing:border-box;
+      width:100%;
+      padding:0 .3rem;
+      padding-top:0.24rem;
+      padding-bottom:0.24rem;
+      background:white;
+}
+.meeting-head div:nth-child(1){
+   float:left;
+   height:1.35rem;
+   width:2.7rem;
+   text-align:center;
+   line-height:1.35rem;
+   color:white;
+}
+.meeting-head div:nth-child(2){
+   box-sizing:border-box; 
+   padding-left:0.2rem;
+   float:right;
+   height:1.35rem;
+   width : 4.1rem;
+   background:white;
+   
+}
+.clear{
+     clear:both;
+}
+h2{
+    font-size:0.28rem;
+    width:100%;
+    margin-top:0.15rem;
+}
+.meeting-head span{
+    font-size:0.18rem;
+    color:#808080;
+}
+.meeting2{
+    box-sizing:border-box;
+    width:100%;
+     padding:0 .3rem;
+    background:white;
+    line-height:0.8rem;
+    margin-bottom:0.17rem;
+}
+.meeting2>div{
+     width:100%;
+     border-top:1px solid #e6e6e6;
+     height:0.8rem;
+     line-height:0.8rem;
+}
+.meeting2>div div{
+    float:left;
+}
+.meeting2>div div:nth-child(1){
+    width:65%;
+    text-align:left;
+}
+.meeting2>div div:nth-child(2){
+    width:35%;
+    text-align:right;
+}
+.meeting2>div>div button{
+      width:0.78rem;
+    padding-top:0.01rem;
+    text-align:center;
+    height:0.32rem;
+    color:#808080;
+     padding-bottom:0.01rem;      
+      font-size:0.15rem;
+      border-radius:0.05rem;
+}
+.meeting2>div>div span{
+    color:#e70000;
+}
+.meeting3{
+    box-sizing:border-box;
+    width:100%;
+     padding:0 .3rem;
+    background:white;
+    line-height:0.8rem;
+    margin-bottom:0.17rem;
+}
+.meeting3>div{
+     width:100%;
+     border-top:1px solid #e6e6e6;
+     height:0.8rem;
+     line-height:0.8rem;
+}
+.meeting3>div>input{
+     width:80%;
+     border-top:1px solid #e6e6e6;
+     height:0.8rem;
+     line-height:0.8rem;
+}
+.meeting3>div div{
+    float:left;
+}
+.meeting3>div div:nth-child(1){
+    width:100%;
+    text-align:left;
+}
+.meeting3>div>div button{
+      width:0.78rem;
+    padding-top:0.01rem;
+    text-align:center;
+    height:0.32rem;
+    color:#808080;
+    padding-bottom:0.01rem;      
+      font-size:0.15rem;
+      border-radius:0.05rem;
+}
+.meeting3>div>div span{
+    color:#e70000;
+}
+.editor{
+    box-sizing:border-box;
+    padding-right:0.4rem;
+    background:url(../img/icons/edition.png) no-repeat right center;
+    background-size:0.35rem 0.35rem;
+}
+.meeting-redund{
+     width:100%;
+     box-sizing:border-box;
+      padding-left:0.4rem;
+    padding-right:0.4rem;
+     background:white;
+}
+.meeting-redund p{
+    line-height:0.4rem;
+    font-size:0.24rem;
+     padding-bottom:0.24rem;
+     padding-top:0.24rem;
+     color:#808080;
+}
+.meeting-redund div{
+   height:0.8rem;
+   line-height:0.8rem;
+   border-bottom:1px solid #e6e6e6;
+}
+.meeting3{
+   width:100%;
+     box-sizing:border-box;
+    padding:0 .3rem;
+    height:0.66rem;
+    line-height:0.66rem;
+}
+.pay-meet{
+  width:100%;
+     box-sizing:border-box;
+    padding:0 .3rem;
+    height:0.8rem;
+    line-height:0.80rem;
+    background:white;
+   
+}
+.pay-meet div{
+    width:100%;
+     height:0.8rem;
+     background:url(../img/icons/wechats.png) no-repeat center left;
+     background-size:0.51rem 0.43rem;
+}
+
+.pay-meet div input{
+    float:right;
+    margin-top:0.3rem;
+}
+.pay-meet div label{
+    float:left;
+    width:70%;
+    margin-left:0.9rem;
+}
+.meetingBtm{
+    height:1rem;
+    line-height:1rem;
+    width:100%;
+    font-size:0.3rem;
+    text-align:center;
+    position:fixed;
+    left:0;
+    bottom:0;
+}
+.meetingBtm div:nth-child(1){
+    float:left;
+    width:50%;
+    background:white;
+}
+.meetingBtm div:nth-child(2){
+    float:right;
+    width:50%;
+    background:#0f88eb;
+    color:white;
+    height:1rem;
+}

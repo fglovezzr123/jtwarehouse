@@ -1,0 +1,116 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+ overflow:scroll;
+   height:100%;
+   background:#f3f4f6;
+}
+.wrapper{
+      width:100%;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:1.2rem;
+}
+.modify-btn{
+      background:#1087eb;
+      width:6.9rem;
+      height:0.78rem;
+      line-height:0.78rem;
+      margin:0 auto;
+      text-align:center;
+      border-radius:0.36rem;
+      margin-top:0.48rem;
+      color:white;
+      font-size:0.3rem;
+}
+.meeting-search{
+     width:100%;
+     box-sizing:border-box;
+     padding:0.15rem 0.3rem;
+     background:white;
+}
+.meeting-search>div:nth-child(1){
+    box-sizing:border-box;
+    float:left;
+    width:5.4rem;
+    height:0.6rem;
+    position:relative;
+}
+.meeting-search img{
+    position:absolute;
+    height:0.26rem;
+    width:0.26rem;
+    left:0.17rem;
+    top:0.17rem;
+}
+.meeting-search>div:nth-child(2){
+    box-sizing:border-box;
+    float:right;
+	line-height: 0.6rem;
+    color: #0f88eb;
+    font-size:.26rem;
+}
+.meeting-search>div #search{
+	color:#3b3b3b
+}
+.meeting-search input{
+    width:100%;
+    height:0.6rem;
+    border-radius:0.08rem;
+    background:#f2f3f4;
+    line-height:0.6rem;
+    padding-left:.60rem;
+    font-size:.26rem;
+}
+.clear{
+     clear:both;
+}
+.hot-search{
+     box-sizing:border-box;
+     padding-left:0.3rem;
+     padding-right:0.3rem;
+     width:100%;
+     height:0.6rem;
+     line-height:0.6rem;
+     font-size:0.3rem;
+}
+.hot-search-content{
+     box-sizing:border-box;
+     padding-left:0.3rem;
+     padding-right:0.3rem;
+     color:white;
+     width:100%;
+     padding-top:0.23rem;
+     padding-bottom:0.23rem;
+     background:white; 
+     border-top:1px solid #e6e6e6;
+     font-size:0.3rem;
+}
+.hot-search-content div{
+    float:left;
+    padding-left:0.26rem;
+    padding-right:0.26rem;
+    height:0.45rem;
+    line-height:0.45rem;
+    border-radius:0.225rem;
+    font-size:0.24rem;
+    margin-right:0.2rem;
+}
+.hot-search-content div:nth-of-type(odd){
+      background:#ffbf7f;
+}
+.hot-search-content div:nth-of-type(even){
+      background:#7fcbff;
+}
+.search-history{
+    font-size:0.3rem;
+     background:white;
+}
+.search-history div{
+     box-sizing:border-box;
+     width:100%;
+     padding-left:0.3rem;
+     padding-right:0.3rem;
+     border-bottom:1px solid #e6e6e6;
+     line-height:0.78rem;
+}

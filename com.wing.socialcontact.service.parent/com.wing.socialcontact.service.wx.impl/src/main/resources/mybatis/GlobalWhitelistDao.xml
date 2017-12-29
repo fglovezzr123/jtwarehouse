@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.GlobalWhitelistDao">
+
+	<resultMap id="globalWhitelist" type="com.wing.socialcontact.service.wx.bean.GlobalWhitelist">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="types" column="types" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userName" column="user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comName" column="com_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		gw.id, gw.types, gw.user_id, 
+		gw.create_time, tu.true_name as user_name, 
+		tu.com_name, tu.mobile, tu.nickname
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND gw.id=#{id}
+			</if>
+			<if test="types!=null and types!=''">
+				AND gw.types=#{types}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND gw.user_id=#{userId}
+			</if>
+			<if test="userName!=null and userName!=''">
+				AND tu.true_name like concat('%', #{userName}, '%')
+			</if>
+			<if test="nickname!=null and nickname!=''">
+				AND tu.nickname like concat('%', #{nickname}, '%')
+			</if>
+			<if test="comName!=null and comName!=''">
+				AND tu.com_name like concat('%', #{comName}, '%')
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND tu.mobile like concat('%', #{mobile}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND gw.create_time= #{createTime}
+		   	</if>
+		   	<if test="gtcreateTime!=null">
+				AND gw.create_time &gt;= #{gtcreateTime}
+		   	</if>
+		   	<if test="gecreateTime!=null">
+				AND gw.create_time &gt;= #{gecreateTime}
+		   	</if>
+		   	<if test="ltcreateTime!=null">
+				AND gw.create_time &lt;= #{ltcreateTime}
+		   	</if>
+		   	<if test="lecreateTime!=null">
+				AND gw.create_time &lt;= #{lecreateTime}
+		   	</if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="globalWhitelist">
+		select 
+			<include refid="field"/>
+		from tjy_global_whitelist gw left join tjy_user tu on gw.user_id = tu.id
+ 		<include refid="dynamicWhere"/>
+ 		order by gw.create_time desc
+	</select>
+</mapper>

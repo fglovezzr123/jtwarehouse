@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tojoy.business.common.dao.CollectionDao">
+
+	<resultMap id="collection" type="com.tojoy.business.common.bean.Collection">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		c.id, c.user_id, c.fk_id,c.create_time
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND c.id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND c.user_id=#{userId}
+			</if>
+			<if test="fkId!=null and fkId!=''">
+				AND c.fk_id=#{fkId}
+			</if>
+			<if test="createTime!=null">
+				AND c.create_time=#{createTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="com.tojoy.business.common.bean.Collection">
+		INSERT INTO tjy_collection_${keyWord} (id,
+		user_id,
+		fk_id,
+		create_time)
+		VALUES   (#{id},
+		#{userId},
+		#{fkId},
+		#{createTime})
+	</insert>
+
+	<delete id="delete" parameterType="com.tojoy.business.common.bean.Collection">
+		DELETE FROM tjy_collection_${keyWord} WHERE user_id = #{userId} and fk_id = #{fkId}
+	</delete>
+
+	<select id="queryByFkIdUserId" resultMap="collection" parameterType="com.tojoy.business.common.bean.Collection">
+		SELECT
+		<include refid="field"/>
+		FROM tjy_collection_${keyWord} c
+		<include refid="dynamicWhere"/>
+		limit 1
+	</select>
+
+	<select id="queryCollectionCount" resultType="Integer" parameterType="collection">
+		SELECT
+		COUNT(c.id)
+		FROM tjy_collection_${keyWord}  c
+		<include refid="dynamicWhere"/>
+	</select>
+
+</mapper>

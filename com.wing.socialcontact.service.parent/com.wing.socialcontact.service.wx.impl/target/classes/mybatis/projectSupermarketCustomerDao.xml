@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	wangyansheng
+	date	:	2017-11-01
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ProjectSupermarketCustomerDao">
+
+	<resultMap id="projectCustomer" type="com.wing.socialcontact.service.wx.bean.ProjectSupermarketCustomer">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isHandle" column="is_handle" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="create_user_id" column="createUserId" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="trueName" column="true_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="comName" column="com_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="jobName" column="jobName" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="kfTelephone" column="kf_telephone" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<sql id="field">
+         pc.id,ps.name,u.true_name,u.mobile,u.com_name,u.kf_telephone,pc.is_handle,pc.fk_id,pc.user_id,pc.create_time,l.list_value as jobName
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<if test="fkId!=null and fkId!=''">
+				AND pc.fk_id = #{fkId}
+			</if>
+			<if test="name!=null and name!=''">
+				AND pc.name like concat('%',#{name},'%')
+			</if>
+			<if test="trueName!=null and trueName!=''">
+				AND u.true_name like concat('%',#{trueName},'%')
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND u.mobile like concat('%',#{mobile},'%')
+			</if>
+			<if test="isHandle!=null">
+				AND pc.is_handle=#{isHandle}
+			</if>
+			<if test="createTime!=null">
+				AND pc.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND pc.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+			</if>
+			<if test="deleted!=null">
+				AND pc.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectByParam" resultMap="projectCustomer" parameterType="java.util.Map">
+		select 
+			<include refid="field"/>
+		from tjy_project_supermarket_customer pc
+		LEFT JOIN tjy_project_supermarket ps ON pc.fk_id = ps.id
+		LEFT JOIN tjy_user u ON  pc.user_id = u.id
+		LEFT JOIN list_values l ON  l.id = u.job
+ 		<include refid="dynamicWhere"/>
+		order by pc.create_time desc
+	</select>
+
+</mapper>

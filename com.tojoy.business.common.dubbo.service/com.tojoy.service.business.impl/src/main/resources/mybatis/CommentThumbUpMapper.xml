@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tojoy.business.common.dao.CommentThumbUpDao">
+
+	<sql id="field">
+		c.id as id,  c.user_id as userId, c.fk_id as fkId,
+		c.create_time as createTime, c.create_user_id as createUserId,
+		c.update_time as updateTime,c.update_user_id as updateUserId
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND c.id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND c.user_id=#{userId}
+			</if>
+			<if test="fkId!=null and fkId!=''">
+				AND c.fk_id=#{fkId}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="com.tojoy.business.common.bean.CommentThumbUp">
+		INSERT INTO tjy_comment_thumb_up_${keyWord} (id,
+		user_id,
+		fk_id,
+		create_time,
+		create_user_id,
+		update_time,
+		update_user_id)
+		VALUES   (#{id},
+		#{userId},
+		#{fkId},
+		#{createTime},
+		#{createUserId},
+		#{updateTime},
+		#{updateUserId})
+	</insert>
+
+	<delete id="delete" parameterType="com.tojoy.business.common.bean.CommentThumbUp">
+		DELETE FROM tjy_comment_thumb_up_${keyWord} WHERE id = #{id}
+	</delete>
+
+	<select id="queryList"  resultType="java.util.HashMap" parameterType="com.tojoy.business.common.bean.CommentThumbUp">
+		SELECT
+		<include refid="field"/>
+		FROM tjy_comment_thumb_up_${keyWord} c
+		<include refid="dynamicWhere"/>
+		order by c.create_time desc
+	</select>
+
+	<select id="queryById"  resultType="java.util.HashMap" parameterType="String">
+		SELECT
+		<include refid="field"/>
+		FROM tjy_comment_thumb_up_${keyWord} c
+		where  id =#{id}
+	</select>
+
+	<select id="queryCount" resultType="Integer" parameterType="com.tojoy.business.common.bean.CommentThumbUp">
+		SELECT
+		COUNT(c.id)
+		FROM tjy_comment_thumb_up_${keyWord}  c
+		<include refid="dynamicWhere"/>
+	</select>
+
+</mapper>

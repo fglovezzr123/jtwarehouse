@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.wx.dao.MeetingSignupRemindDao">
+
+	<resultMap id="meetingSignupRemind" type="com.tojoy.service.wx.bean.MeetingSignupRemind">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remindTime" column="remind_time" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contents" column="contents" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="isRemind" column="is_remind" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		msr.id, msr.fk_id, msr.user_id, msr.remind_time, 
+		msr.contents, msr.is_remind
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND msr.id=#{id}
+			</if>
+			<if test="fkId!=null and fkId!=''">
+				AND msr.fk_id=#{fkId}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND msr.user_id=#{userId}
+			</if>
+			<if test="contents!=null and contents!=''">
+				AND msr.contents=#{contents}
+			</if>
+			<if test="isRemind!=null">
+				AND msr.is_remind=#{isRemind}
+			</if>
+	</where>
+	</sql>
+	<select id="selectByParam" resultMap="meetingSignupRemind">
+		select 
+			msr.id, msr.fk_id, msr.user_id, msr.remind_time, 
+			msr.contents, msr.is_remind,
+			tu.open_id as openId,
+			u.wx_user_id as wxUserId,
+			tu.true_name as trueName,
+			tm.titles,
+			tm.end_signup_time as endSignupTime,
+			tu.mobile,
+      		tu.com_name as comName,
+      		l1.list_value as job,
+			concat(concat(ifnull(sd1.dis_name,''),' '),concat(ifnull(sd2.dis_name,''),' '),concat(ifnull(sd3.dis_name,''),' ')) as region
+		from tjy_meeting_signup_remind msr 
+			inner join tjy_user tu on msr.user_id=tu.id
+			inner join tjy_meeting tm on msr.fk_id=tm.id
+			inner join user u on tu.id = u.id
+			left join list_values l1 on l1.id=tu.job
+      		left join sy_district sd1 on tu.province=sd1.id
+			left join sy_district sd2 on tu.city=sd2.id
+      		left join sy_district sd3 on tu.region=sd3.id
+      	where 1=1
+			<if test="fkId!=null and fkId!=''">
+				AND msr.fk_id=#{fkId}
+			</if>
+			<if test="trueName!=null and trueName!=''">
+				AND tu.true_name like concat('%',#{trueName},'%') 
+			</if>
+			<if test="mobile!=null and mobile!=''">
+				AND tu.mobile like concat('%',#{mobile},'%') 
+			</if>
+			<if test="titles !=null and titles !=''">
+				AND tm.titles like concat('%',#{titles},'%') 
+			</if>
+			<if test="job !=null and job !=''">
+				AND l1.list_value like concat('%',#{job},'%')
+			</if>
+			<if test="region !=null and region !=''">
+				AND (
+					concat(
+						ifnull(sd1.dis_name, ''),
+						ifnull(sd2.dis_name, ''),
+						ifnull(sd3.dis_name, '')
+					) 
+					like concat('%',#{region},'%')
+				)
+			</if>
+			<if test="isRemind!=null">
+				AND msr.is_remind=#{isRemind}
+			</if>
+	</select>
+	<select id="selectMeetingRemind" resultMap="meetingSignupRemind">
+		select 
+			msr.id, msr.fk_id, msr.user_id, msr.remind_time, 
+			msr.contents, msr.is_remind,
+			tu.open_id as openId,
+			u.wx_user_id as wxUserId,
+			tu.true_name as trueName,
+			tm.titles,
+			tm.end_signup_time endSignupTime,
+			tm.start_signup_time startSignupTime	
+		from tjy_meeting_signup_remind msr 
+			inner join tjy_user tu on msr.user_id=tu.id
+			inner join tjy_meeting tm on msr.fk_id=tm.id
+			inner join user u on tu.id = u.id
+   		WHERE tm.start_signup_time is not null and msr.is_remind=0
+         and date_format(date_sub(tm.start_signup_time,interval +1 day),'%Y%m%d') = date_format(NOW(),'%Y%m%d')
+	</select>
+	<select id="selectByMeetingIdAndUserId" resultMap="meetingSignupRemind">
+		select 
+			msr.id, msr.fk_id, msr.user_id, msr.remind_time, 
+			msr.contents, msr.is_remind,
+			tu.open_id as openId,
+			u.wx_user_id as wxUserId,
+			tm.titles
+		from tjy_meeting_signup_remind msr 
+			inner join tjy_user tu on msr.user_id=tu.id
+			inner join tjy_meeting tm on msr.fk_id=tm.id
+			inner join user u on tu.id = u.id
+		where msr.user_id = #{userId} and tm.id=#{meetingId} limit 0,1
+	</select>
+</mapper>

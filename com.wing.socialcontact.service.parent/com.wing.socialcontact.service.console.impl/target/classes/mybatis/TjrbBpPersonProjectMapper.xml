@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wing.socialcontact.sys.dao.TjrbBpPersonProjectDao">
+
+    <resultMap id="TjrbBpPerson" type="java.util.Map">
+        <result column="id" property="id"/>
+        <result column="update_date" property="updateDate"/>
+        <result column="create_date" property="createDate"/>
+        <result column="bp_id" property="bpId"/>
+        <result column="product_id" property="productId"/>
+        <result column="action_type" property="actionType"/>
+
+    </resultMap>
+
+    <select id="selectByParam" resultMap="TjrbBpPerson" parameterType="java.util.Map">
+        select * from tjrb_bp_person_project
+    </select>
+	
+</mapper>

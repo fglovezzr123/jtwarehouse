@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://code.alibabatech.com/schema/dubbo  
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="${dubbo.application.name}" />
+
+	<!-- 注册中心暴露服务地址 -->
+	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
+
+	<!-- 暴露服务 -->
+	<dubbo:reference id="investProductService" interface="org.tojoycloud.dubbo.rongba.api.service.InvestProductService"/>
+	<dubbo:reference id="investTypeService" interface="org.tojoycloud.dubbo.rongba.api.service.InvestTypeService"/>
+	<dubbo:reference id="investWillService" interface="org.tojoycloud.dubbo.rongba.api.service.InvestWillService"/>
+	<dubbo:reference id="investTipsService" interface="org.tojoycloud.dubbo.rongba.api.service.InvestTipsService"/>
+	<dubbo:reference id="investPersonService" interface="org.tojoycloud.dubbo.rongba.api.service.InvestPersonService"/>
+	<dubbo:reference id="investProductInsureService" interface="org.tojoycloud.dubbo.rongba.api.service.InvestProductInsureService"/>
+	<dubbo:reference id="financeProductService" interface="org.tojoycloud.dubbo.rongba.api.service.FinanceProductService"/>
+	<dubbo:reference id="financeProductStockService" interface="org.tojoycloud.dubbo.rongba.api.service.FinanceProductStockService"/>
+	<dubbo:reference id="financeTipsService" interface="org.tojoycloud.dubbo.rongba.api.service.FinanceTipsService"/>
+	<dubbo:reference id="financeWillService" interface="org.tojoycloud.dubbo.rongba.api.service.FinanceWillService"/>
+	<dubbo:reference id="orgService" interface="org.tojoycloud.dubbo.rongba.api.service.OrgService"/>
+	<dubbo:reference id="orgConsultantService" interface="org.tojoycloud.dubbo.rongba.api.service.OrgConsultantService"/>
+</beans>

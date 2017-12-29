@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.sys.dao.SysAppointmentDao">
+	<resultMap id="sysAppointment"
+		type="com.wing.socialcontact.sys.bean.SysAppointment">
+		<result property="id" column="id" javaType="long" jdbcType="INTEGER"></result>
+		<result property="from_Id" column="from_Id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="to_Id" column="to_id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="create_Time" column="create_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="start_Time" column="start_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="expect_Time" column="expect_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="estimateTimeLength" column="estimateTimeLength"
+			javaType="long" jdbcType="INTEGER"></result>
+		<result property="duration" column="duration" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="msg" column="msg" javaType="String"
+			jdbcType="VARCHAR"></result>
+		<result property="module" column="module" javaType="String"
+			jdbcType="CHAR"></result>
+	</resultMap>
+	<select id="selectByParam" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	SELECT
+		*
+	FROM
+		(
+			SELECT
+				t.id,
+				t.create_time,
+				t.start_time,
+				t.from_id,
+				t.to_id,
+				t.duration,
+				CASE t. STATUS
+			WHEN '0' THEN
+				'待约见'
+			WHEN '1' THEN
+				'已约见'
+			WHEN '2' THEN
+				'完成'
+			WHEN '3' THEN
+				'取消'
+			ELSE
+				'其他'
+			END AS status,
+			t1.true_name AS from_name,
+			t1.mobile AS from_mobile,
+			t2.true_name AS to_name,
+			t2.mobile AS to_mobile
+		FROM
+			tjy_user_appointment_record t
+		LEFT JOIN tjy_user t1 ON t.from_id = t1.id
+		LEFT JOIN tjy_user t2 ON t.to_id = t2.id
+		) o where 1=1
+		<if test="fromName!=null and fromName!=''">
+			and from_name like CONCAT('%',#{fromName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="fromTel!=null and fromTel!=''">
+			and from_mobile like CONCAT('%',#{fromTel,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="toName!=null and toName!=''">
+			and to_name like CONCAT('%',#{toName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="toTel!=null and toTel!=''">
+			and to_mobile like CONCAT('%',#{toTel,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="status!=null and status!=''">
+			and status like CONCAT('%',#{status,jdbcType=VARCHAR},'%')
+		</if>
+		order by create_time desc
+	</select>
+	<select id="loadById" resultMap="sysAppointment">
+		SELECT t.*
+		FROM tjy_user_appointment_record t
+		WHERE t.ID = #{id}
+	</select>
+	<update id="update">
+		UPDATE tjy_user_appointment_record t
+		set t.status = #{status}
+	    WHERE t.ID = #{id}
+	</update>
+</mapper>

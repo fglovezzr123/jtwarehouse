@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-07-06 16:30:23
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.MessageBulkDao">
+
+	<resultMap id="messageBulk" type="com.wing.socialcontact.service.wx.bean.MessageBulk">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="toUserIds" column="to_user_ids" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="names" column="names" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobiles" column="mobiles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sendType" column="send_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="msgType" column="msg_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="fromUserId" column="from_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sendTime" column="send_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="sendStatus" column="send_status" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="templateId" column="template_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="messageBulkGlobal" type="com.wing.socialcontact.service.wx.bean.MessageBulk">
+		<result property="id" column="MB_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="MB_content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="toUserIds" column="MB_to_user_ids" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="names" column="MB_names" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobiles" column="MB_mobiles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sendType" column="MB_send_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="msgType" column="MB_msg_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="MB_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="MB_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="MB_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="MB_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="MB_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="MB_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="MB_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="fromUserId" column="MB_from_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sendTime" column="MB_send_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="sendStatus" column="MB_send_status" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="templateId" column="MB_template_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		MB.id, MB.content, MB.to_user_ids, MB.names, 
+		MB.mobiles, MB.send_type, MB.msg_type, MB.create_time, 
+		MB.create_user_id, MB.create_user_name, MB.update_time, MB.update_user_id, 
+		MB.update_user_name, MB.deleted, MB.from_user_id, MB.send_time, 
+		MB.send_status, MB.template_id
+	</sql>
+
+	<sql id="fieldGlobal">
+		MB.id MB_id, MB.content MB_content, 
+		MB.to_user_ids MB_to_user_ids, MB.names MB_names, 
+		MB.mobiles MB_mobiles, MB.send_type MB_send_type, 
+		MB.msg_type MB_msg_type, MB.create_time MB_create_time, 
+		MB.create_user_id MB_create_user_id, MB.create_user_name MB_create_user_name, 
+		MB.update_time MB_update_time, MB.update_user_id MB_update_user_id, 
+		MB.update_user_name MB_update_user_name, MB.deleted MB_deleted, 
+		MB.from_user_id MB_from_user_id, MB.send_time MB_send_time, 
+		MB.send_status MB_send_status, MB.template_id MB_template_id
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		MB.id id, MB.content content, 
+		MB.to_user_ids toUserIds, MB.names names, 
+		MB.mobiles mobiles, MB.send_type sendType, 
+		MB.msg_type msgType, MB.create_time createTime, 
+		MB.create_user_id createUserId, MB.create_user_name createUserName, 
+		MB.update_time updateTime, MB.update_user_id updateUserId, 
+		MB.update_user_name updateUserName, MB.deleted deleted, 
+		MB.from_user_id fromUserId, MB.send_time sendTime, 
+		MB.send_status sendStatus, MB.template_id templateId
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND MB.id=#{id}
+		</if>
+		<if test="content!=null and content!=''">
+			AND MB.content=#{content}
+		</if>
+		<if test="toUserIds!=null and toUserIds!=''">
+			AND MB.to_user_ids=#{toUserIds}
+		</if>
+		<if test="names!=null and names!=''">
+			AND MB.names=#{names}
+		</if>
+		<if test="mobiles!=null and mobiles!=''">
+			AND MB.mobiles=#{mobiles}
+		</if>
+		<if test="sendType!=null and sendType!=''">
+			AND MB.send_type=#{sendType}
+		</if>
+		<if test="msgType!=null and msgType!=''">
+			AND MB.msg_type=#{msgType}
+		</if>
+		<if test="createTime!=null">
+			AND MB.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND MB.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND MB.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND MB.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND MB.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND MB.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND MB.deleted=#{deleted}
+		</if>
+		<if test="fromUserId!=null and fromUserId!=''">
+			AND MB.from_user_id=#{fromUserId}
+		</if>
+		<if test="sendTime!=null">
+			AND MB.send_time=#{sendTime}
+		</if>
+		<if test="sendStatus!=null and sendStatus!=''">
+			AND MB.send_status=#{sendStatus}
+		</if>
+		<if test="templateId!=null and templateId!=''">
+			AND MB.template_id=#{templateId}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND MB.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="content!=null and content!=''">
+				AND MB.content LIKE CONCAT('%', #{content}, '%')
+			</if>
+			<if test="toUserIds!=null and toUserIds!=''">
+				AND MB.to_user_ids LIKE CONCAT('%', #{toUserIds}, '%')
+			</if>
+			<if test="names!=null and names!=''">
+				AND MB.names LIKE CONCAT('%', #{names}, '%')
+			</if>
+			<if test="mobiles!=null and mobiles!=''">
+				AND MB.mobiles LIKE CONCAT('%', #{mobiles}, '%')
+			</if>
+			<if test="sendType!=null and sendType!=''">
+				AND MB.send_type LIKE CONCAT('%', #{sendType}, '%')
+			</if>
+			<if test="msgType!=null and msgType!=''">
+				AND MB.msg_type LIKE CONCAT('%', #{msgType}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND MB.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND MB.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND MB.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND MB.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND MB.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND MB.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND MB.deleted=#{deleted}
+			</if>
+			<if test="fromUserId!=null and fromUserId!=''">
+				AND MB.from_user_id LIKE CONCAT('%', #{fromUserId}, '%')
+			</if>
+			<if test="sendTime!=null">
+				AND MB.send_time=#{sendTime}
+			</if>
+			<if test="sendStatus!=null and sendStatus!=''">
+				AND MB.send_status LIKE CONCAT('%', #{sendStatus}, '%')
+			</if>
+			<if test="templateId!=null and templateId!=''">
+				AND MB.template_id LIKE CONCAT('%', #{templateId}, '%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				MB.id=#{id}, 
+		   </if>
+           <if test="content!=null">
+				MB.content=#{content}, 
+		   </if>
+           <if test="toUserIds!=null">
+				MB.to_user_ids=#{toUserIds}, 
+		   </if>
+           <if test="names!=null">
+				MB.names=#{names}, 
+		   </if>
+           <if test="mobiles!=null">
+				MB.mobiles=#{mobiles}, 
+		   </if>
+           <if test="sendType!=null">
+				MB.send_type=#{sendType}, 
+		   </if>
+           <if test="msgType!=null">
+				MB.msg_type=#{msgType}, 
+		   </if>
+           <if test="createTime!=null">
+				MB.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				MB.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				MB.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				MB.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				MB.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				MB.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				MB.deleted=#{deleted}, 
+		   </if>
+           <if test="fromUserId!=null">
+				MB.from_user_id=#{fromUserId}, 
+		   </if>
+           <if test="sendTime!=null">
+				MB.send_time=#{sendTime}, 
+		   </if>
+           <if test="sendStatus!=null">
+				MB.send_status=#{sendStatus}, 
+		   </if>
+           <if test="templateId!=null">
+				MB.template_id=#{templateId}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	
+	<select id="selectByParam" resultMap="messageBulk" parameterType="java.util.Map">
+		SELECT *
+		FROM tjy_message_bulk MB 
+		where 1=1
+		 <if test="msgType!=null  and msgType != ''">
+				AND	MB.msg_type=#{msgType}
+		   </if>
+    	 <if test="content != null and content != ''">
+			AND	MB.content like CONCAT('%',#{content,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND MB.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND MB.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND MB.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+		order by MB.create_time desc
+	</select>
+	
+	
+</mapper>

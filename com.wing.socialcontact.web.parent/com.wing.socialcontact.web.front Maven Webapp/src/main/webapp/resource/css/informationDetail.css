@@ -1,0 +1,202 @@
+@charset "utf-8";
+.titleview{
+	width: 100%;
+	font-size: .30rem;
+	background: #fff;
+	text-align: center;
+	line-height: .40rem;
+    padding:0.3rem;
+    box-sizing:border-box;
+}
+.msgBox{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: .40rem .30rem 0 .30rem;
+	box-sizing: border-box;
+}
+.msgBox .msg-l{
+	width: .72rem;
+	height: .73rem;
+	background-image: url(../img/images/hyxx_03.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	border-radius: 100%;
+}
+.msgBox .msg-r{
+	width: 6.07rem;
+}
+.msgBox .msg-r .t{
+	width: 100%;
+	height: .42rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.msgBox .msg-r .t h2{
+	font-size: .30rem;
+	font-weight: bold;
+}
+.msgBox .msg-r .t span{
+	font-size: .24rem;
+	color: #999;
+}
+
+.msgBox .msg-r .ph{
+	font-size: .24rem;
+	color: #666;
+	line-height: .44rem;
+}
+.msgBox .msg-r h3{
+	font-size: .30rem;
+	line-height: .50rem;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/* white-space: nowrap; */
+}
+.msgBox .msg-r .imgBox_1 img{
+	 /* width: 100%; */
+	margin-top: .26rem;
+}
+.msgBox .msg-r .imgBox_3{
+	width: 100%;
+	height: 2rem;
+	margin-top: .26rem;
+	display: flex;
+	position:relative;
+	/* justify-content: space-between; */
+}
+.msgBox .msg-r .imgBox_3 img{
+	/* width: 1.96rem; */
+	height: 2rem;
+	/* margin-right:0.05rem; */
+}
+.msgBox .msg-r .insideIMGbox{
+	width: 1.96rem;
+	height: 2rem;
+	margin-right:0.05rem;
+	position:relative;
+}
+.msgBox .msg-r .tubiao{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: .30rem;
+	color: #666;
+	height: .50rem;
+}
+.tubiao .mri{
+	margin-right: .1rem;
+}
+.msgBox .msg-r .tubiao .iconfont{
+	font-size: .36rem;
+}
+.msgBox .msg-r .pl{
+	width: 100%;
+	background: #f3f7fa;
+	padding-left:.1rem;
+	box-sizing: border-box;
+	padding-top: .20rem;
+	padding-bottom: .20rem;
+}
+.msgBox .msg-r .pl p{
+	font-size: .24rem;
+	line-height: .36rem;
+}
+.msgBox .msg-r .pl .c b{
+	font-style: normal;
+	color: #52a1c0;
+}
+.msgBox .msg-r .pl .more{
+	color: #52a1c0;
+}
+.msgBox .msg-r .tubiao .iconfont1{
+	/*font-size: .24rem;*/
+	display: inline-block;
+	width: 0.26rem;
+	height: 0.26rem;
+	background-image: url(../img/icons/zhuge-a9.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.msgBox .msg-r .tubiao .iconfont2{
+	display: inline-block;
+	width: 0.32rem;
+	height: 0.29rem;
+	background-image: url(../img/icons/good.jpg);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.msgBox .msg-r .tubiao .iconfont-bad{
+	display: inline-block;
+	width: 0.32rem;
+	height: 0.29rem;
+	background-image: url(../img/icons/bad.jpg);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.msgBox .msg-r .tubiao .iconfont3{
+	display: inline-block;
+	width: 0.30rem;
+	height: 0.27rem;
+	background-image: url(../img/icons/fenxiang.jpg);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.msgBox .msg-r .tubiao .iconfont4{
+	display: inline-block;
+	width: 0.31rem;
+	height: 0.31rem;
+	background-image: url(../img/icons/shang.jpg);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+.msgBox .msg-r .tubiao .iconfont5{
+	display: inline-block;
+	width: 0.31rem;
+	height: 0.31rem;
+	background-image: url(../img/icons/shangchu_03.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+.tips-s-img{position:fixed;z-index:999; top:0; right:20px; background:url(../img/icons/tips_s_img.png) no-repeat; background-size:253px 312px; width:253px; height:312px; }
+
+/*	遮罩层	*/
+.com-backdrop-top{position:fixed;z-index:998;top:0;right:0;bottom:0;left:0;background-color:rgba(0,0,0,.5);}/*top页专用*/
+.com-backdrop{position:fixed;z-index:998;top:0;right:0;bottom:0;left:0;background-color:rgba(0,0,0,.5);}
+.share-tips{position:fixed;z-index:999; top:0; right:20px; background:url(../images/share_tips.png) no-repeat; background-size:209px 240px; width:209px; height:240px; }
+
+ .share{
+      width:100%;
+      height:0.9rem;   
+      line-height:0.9rem;
+      position:fixed;
+      bottom:0;
+      left:0;
+      background:white;
+      font-size:0.3rem;
+      text-align:center;
+}
+.share div{
+      font-size:0.30rem;
+      height:100%;
+      text-align:center;
+      float:left;
+}
+.share div:nth-child(1){
+    width:50%;
+    background:url(../img/icons/hollowStar.png) no-repeat center left;
+    background-size:0.4rem 0.4rem;
+    background-position-x:20%;
+}
+.share div:nth-child(2){
+    color:white;
+    background:#1087eb;
+    width:50%;
+}
+#tocollect img {
+	height: 0.3rem;
+	width: 0.3rem;
+}

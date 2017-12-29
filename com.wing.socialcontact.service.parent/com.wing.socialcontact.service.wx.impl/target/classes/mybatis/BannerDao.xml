@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-03-31 17:43:02
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.BannerDao">
+
+	<resultMap id="banner" type="com.wing.socialcontact.service.wx.bean.Banner">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="title" column="title" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="jumpUrl" column="jump_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="picPath" column="pic_path" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="columnType" column="column_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="jumpType" column="jump_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userRange" column="user_range" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="userLevel" column="user_level" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userLevelName" column="user_level_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="reconUserFlag" column="recon_user_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="regUserFlag" column="reg_user_flag" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isguide" column="isguide" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT t.id,t.title,t.jump_url jumpUrl,t.jump_type jumpType,t.order_num orderNum,t.create_time createTime,
+		t.user_range userRange,t.user_level userLevel,t.user_level_name userLevelName,
+		t.recon_user_flag reconUserFlag,t.reg_user_flag regUserFlag,
+		v.list_value listValue FROM tjy_banner t left join list_values v  
+		on t.column_type = v.id where 1=1 and isguide = #{isguide}
+		<if test="columnType != null and columnType != ''">
+		  AND  t.column_type = #{columnType,jdbcType=VARCHAR}
+		</if>
+		order by t.order_num asc, t.create_time desc
+	</select>
+	<select id="selectByType" resultMap="banner" parameterType="java.util.Map">
+		SELECT t.*
+		FROM tjy_banner t 
+ 		WHERE 1=1
+    	<if test="columnType != null and columnType != ''">
+			AND	t.column_type = #{columnType,jdbcType=VARCHAR}
+		</if>
+		order by  t.order_num 
+	</select>
+	
+	
+</mapper>

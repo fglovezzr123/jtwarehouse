@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	xuxinyuan
+	date	:	2017-04-19 14:19:54
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.LibraryOpLogDao">
+
+	<resultMap id="libraryOpLog" type="com.wing.socialcontact.service.wx.bean.LibraryOpLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="opType" column="op_type" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="actionTime" column="action_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="type" column="type" javaType="Integer" jdbcType="INTEGER"></result>
+		
+	</resultMap>
+	
+	
+	<sql id="field">
+		DOL.id, DOL.user_id, DOL.fk_id, DOL.op_type, 
+		DOL.action_time,DOL.type
+	</sql>
+	<delete id="deleteById">
+		DELETE DOL FROM TJY_LIBRARY_OP_LOG DOL WHERE DOL.ID = #{id} 
+	</delete>
+	
+	<select id="loadById" resultMap="libraryOpLog">
+		SELECT <include refid="field"/>
+		FROM TJY_LIBRARY_OP_LOG DOL
+		WHERE DOL.ID = #{id}
+	</select>
+	<!-- 获取转发和点赞数量 -->
+	<select id="getCountByFkIdAndType" resultType="int" parameterType="java.util.HashMap">
+		SELECT count(*)
+		FROM TJY_LIBRARY_OP_LOG DOL
+		WHERE DOL.fk_id = #{fkId}
+		and DOL.op_type = #{opType}
+		and DOL.type = #{type}
+	</select>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND DOL.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND DOL.user_id=#{userId}
+		</if>
+		<if test="fkId!=null and fkId!=''">
+			AND DOL.fk_id=#{fkId}
+		</if>
+		<if test="opType!=null and opType!=''">
+			AND DOL.op_type=#{opType}
+		</if>
+		<if test="actionTime!=null and actionTime!=''">
+			AND DOL.action_time=#{actionTime}
+		</if>
+		<if test="type!=null and type!=''">
+			AND DOL.type=#{type}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<select id="selectAllOpLogMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM TJY_LIBRARY_OP_LOG DOL
+		<include refid="dynamicWhere" />
+		 
+	</select>
+	<select id="selectByParam" resultMap="libraryOpLog" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		FROM TJY_LIBRARY_OP_LOG DOL
+    	<include refid="dynamicWhere" />
+	</select>
+	
+</mapper>

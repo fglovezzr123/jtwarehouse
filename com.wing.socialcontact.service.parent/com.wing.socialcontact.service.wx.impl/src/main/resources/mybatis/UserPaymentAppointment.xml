@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.PaymentAppointmentDao">
+	<resultMap id="userPaymentAppointment"
+		type="com.wing.socialcontact.service.wx.bean.UserPaymentAppointment">
+		<result property="id" column="id" javaType="long" jdbcType="INTEGER"></result>
+		<result property="user_Id" column="user_Id" javaType="long"
+			jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="create_Time" column="create_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="isPayment" column="isPayment" javaType="String"
+			jdbcType="CHAR"></result>
+		<result property="msg" column="msg" javaType="String"
+			jdbcType="VARCHAR"></result>
+		<result property="expect_Time" column="expect_Time" javaType="Date"
+			jdbcType="TIMESTAMP"></result>
+		<result property="estimateTimeLength" column="estimateTimeLength" javaType="long"
+			jdbcType="INTEGER"></result>
+	</resultMap>
+	<sql id="fields">
+		<if test="user_Id!=null and user_Id!=''">
+			user_Id,
+		</if>
+		<if test="status!=null and status!=''">
+			status,
+		</if>
+		<if test="isPayment!=null and isPayment!=''">
+			isPayment,
+		</if>
+		<if test="msg!=null and msg!=''">
+			msg,
+		</if>
+		<if test="expect_Time!=null">
+			expect_Time,
+		</if>
+		<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+			estimateTimeLength,
+		</if>
+	</sql>
+	<sql id="values">
+		<if test="user_Id!=null and user_Id!=''">
+			#{user_Id},
+		</if>
+		<if test="status!=null and status!=''">
+			#{status},
+		</if>
+		<if test="isPayment!=null and isPayment!=''">
+			#{isPayment},
+		</if>
+		<if test="msg!=null and msg!=''">
+			#{msg},
+		</if>
+		<if test="expect_Time!=null">
+			#{expect_Time},
+		</if>
+		<if test="estimateTimeLength!=null and estimateTimeLength!=''">
+			#{estimateTimeLength},
+		</if>
+	</sql>
+	<insert id="addPaymentAppointment"
+		parameterType="com.wing.socialcontact.service.wx.bean.UserPaymentAppointment">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT into tjy_user_payment_appointment(
+		<trim suffixOverrides=",">
+			<include refid="fields" />
+		</trim>
+
+		)VALUES(
+		<trim suffixOverrides=",">
+			<include refid="values" />
+		</trim>
+		)
+	</insert>
+
+	<select id="getUnpaidByUserId" resultType="java.util.HashMap"
+		parameterType="String">
+		SELECT
+			<include refid="paymentAppointment" />
+		FROM
+			tjy_user_payment_appointment t
+		WHERE
+			user_id = #{userId} and isPayment=1
+	</select>
+	
+	<!-- 根据id获取订单 -->
+	<select id="getUnpaidById"
+		resultType="com.wing.socialcontact.service.wx.bean.UserPaymentAppointment"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="paymentAppointment" />
+		FROM
+		tjy_user_payment_appointment t
+		WHERE id=#{id}
+	</select>
+	<sql id="paymentAppointment">
+		t.id,
+		t.user_id,
+		t.status,
+		t.create_time,
+		t.isPayment
+	</sql>
+	<!-- 根据订单id修改订单 -->
+	<update id="updateUnpaidById"
+		parameterType="com.wing.socialcontact.service.wx.bean.UserPaymentAppointment">
+		UPDATE tjy_user_payment_appointment t
+		SET
+		t.STATUS = #{status}
+		WHERE t.ID = #{id}
+	</update>
+	
+</mapper>

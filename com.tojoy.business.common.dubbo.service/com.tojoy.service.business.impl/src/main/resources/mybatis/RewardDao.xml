@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tojoy.business.common.dao.RewardDao">
+
+	<insert id="insert" parameterType="com.tojoy.business.common.bean.Reward">
+		INSERT INTO tjy_reward_${keyWord} (id,
+		user_id,
+		fk_id,
+		jb_amount,
+		create_time)
+		VALUES   (#{id},
+		#{userId},
+		#{fkId},
+		#{jbAmount},
+		#{createTime})
+	</insert>
+
+</mapper>

@@ -1,0 +1,44 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+     height:100%;
+     overflow:scroll;
+	  background:#f0f0f0;
+      font-family:"微软雅黑";
+}
+.wrapper{
+ 
+     width:100%;
+  	 background:#fff;
+      font-size:0.3rem;
+      margin-bottom:1.5rem;
+     
+}
+.clear{
+      clear:both;
+}
+.activeClassList{
+  box-sizing:border-box;
+  width:100%;
+  padding-left:0.24rem;
+  padding-right:0.24rem;
+  display:flex;
+  /* background:#fff; */
+  /* justify-content:space-around;
+  align-items:center; */
+   flex-wrap:wrap;
+ 
+
+}
+.activeClassList a{
+   margin-top:0.25rem;
+  flex-wrap:nowrap;
+  display:block;
+  width:2.2rem;
+  height:1.5rem;
+  text-align:center;
+  line-height:0.5rem;
+
+  color:white;
+  background:url(../img/images/activityList2.jpg) no-repeat center;
+}

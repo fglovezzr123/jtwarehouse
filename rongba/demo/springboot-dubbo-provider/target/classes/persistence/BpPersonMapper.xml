@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.springboot_dubbo_provider.mapper.BpPersonMapper">
+	
+	<sql id="bpPersonColumns">
+		a.org_no AS "orgNo",
+		a.bp_name  AS "bpName",
+		a.tendency  AS "tendency",
+		a.orgName AS "orgName",
+		a.focus_on AS "focusOn",
+		a.curriculum_vitae ="curriculumVitae",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="bpPersonJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.BpPerson">
+		SELECT 
+			<include refid="bpPersonColumns"/>
+		FROM tjrb_bp_person a
+		<include refid="bpPersonJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.BpPerson">
+		SELECT 
+			<include refid="bpPersonColumns"/>
+		FROM tjrb_bp_person a
+		<include refid="bpPersonJoins"/>
+				ORDER BY a.id DESC
+	</select>
+	
+</mapper>

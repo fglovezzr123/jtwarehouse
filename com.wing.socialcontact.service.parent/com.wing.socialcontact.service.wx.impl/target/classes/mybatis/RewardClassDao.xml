@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-06-12 13:25:02
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.RewardClassDao">
+
+	<resultMap id="rewardClass" type="com.wing.socialcontact.service.wx.bean.RewardClass">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="className" column="class_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="classNum" column="class_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="isRecommend" column="is_recommend" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="field">
+		RC.id id, RC.class_name className, 
+		RC.class_num classNum, RC.is_recommend isRecommend, 
+		RC.status status, RC.create_time createTime, 
+		RC.create_user_id createUserId, RC.create_user_name createUserName, 
+		RC.deleted deleted
+	</sql>
+	
+	<select id="selectAllClassMap" resultMap="rewardClass" parameterType="java.util.Map">
+		SELECT t.* 
+		FROM tjy_reward_class t where 1=1
+		<if test="isRecommend == 1">
+		   and t.is_recommend = 1 
+		</if>
+		order by t.class_num 
+		<if test="queryRows != null" >
+        limit  #{queryRows,jdbcType=INTEGER}
+        </if>
+	</select>
+	<select id="selectByParam" resultMap="rewardClass" parameterType="java.util.Map">
+		SELECT t.*
+		FROM tjy_reward_class t 
+ 		WHERE 1=1
+    	<if test="className != null and className != ''">
+			AND	t.class_name like CONCAT('%',#{className,jdbcType=VARCHAR},'%')
+		</if>
+		order by t.class_num
+	</select>
+	
+
+	
+	
+</mapper>

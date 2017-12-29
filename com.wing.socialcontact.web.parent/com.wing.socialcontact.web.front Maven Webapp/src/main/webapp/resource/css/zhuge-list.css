@@ -1,0 +1,124 @@
+﻿@charset "utf-8";
+
+/* CSS Document */
+
+body {
+	background: #F3F4F5;
+}
+
+ul.title {
+	width: 100%;
+	padding: 0 0.3rem;
+	height: .62rem;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	font-size: .28rem;
+	background: #fff;
+}
+
+.title li {
+	width: 2.05rem;
+	box-sizing: border-box;
+	line-height: 0.62rem;
+	text-align: center;
+}
+
+li.tit-bor {
+	border-bottom: #1087eb solid 0.04rem;
+	color: #1087eb;
+}
+
+.items {
+	width: 100%;
+	background: #fff;
+	margin-top: 0.2rem;
+	padding-top: .25rem;
+}
+
+.items .i-top {
+	width: 100%;
+	height: .54rem;
+	box-sizing: border-box;
+	padding: 0 0.3rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.items .i-top img {
+	width: .54rem;
+	height: .54rem;
+	border-radius: 100%;
+}
+
+.items .i-top p:nth-of-type(1) {
+	/* width: 4.3rem; */
+	line-height: .54rem;
+	font-size: .20rem;
+	color: #6d6761;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	flex: 1;
+    margin-left: 0.1rem;
+}
+
+.items .i-top p:nth-of-type(1) b {
+	font-size: .28rem;
+	color: #535353;
+	-webkit-transform: scale(1);
+}
+
+.items .i-top p:nth-of-type(2) {
+	line-height: .54rem;
+	font-size: .24rem;
+	color: #B8B8B8;
+}
+.items h2 {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.2rem 0.3rem;
+	line-height: .50rem;
+	/* text-align: center; */
+	font-size: .28rem;
+	border-bottom: 1px #B8B8B8 solid;
+}
+
+.items .icon {
+	width: 100%;
+	height: .70rem;
+	font-size: .24rem;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 0 0.3rem;
+}
+
+.items .icon span+span {
+	margin-left: .50rem;
+}
+
+.items .icon span:nth-of-type(1) {
+	background: url(../img/icons/zhuge-a8.png) no-repeat left
+		center;
+	background-size: 0.33rem;
+	color: #f8ce61;
+	padding-left: .40rem;
+}
+
+.items .icon span:nth-of-type(2) {
+	background: url(../img/icons/zhuge-a9.png) no-repeat left
+		center;
+	background-size: 0.26rem;
+	padding-left: .40rem;
+}
+
+.items .icon span:nth-of-type(3) {
+	
+		center;
+	background-size: 0.27rem .21rem;
+	padding-left: .40rem;
+}

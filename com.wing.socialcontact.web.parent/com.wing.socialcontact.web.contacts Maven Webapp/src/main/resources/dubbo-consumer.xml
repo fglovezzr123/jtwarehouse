@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:property-placeholder location="classpath:*.properties" />
+
+    <!--dubbo配置-->
+    <dubbo:application name="${dubbo.application.name}" />
+    <dubbo:consumer retries="0" timeout="12000" check="false" />
+    <dubbo:registry protocol="${dubbo.consumer.registry.protocol}" address="${dubbo.consumer.registry.address}" />
+
+    <!-- 服务消费者配置 -->
+    <dubbo:reference id="tjyUserService" interface="com.wing.socialcontact.service.wx.api.ITjyUserService"/>
+    <dubbo:reference id="tjyContactsService" interface="com.wing.socialcontact.service.wx.api.ITjyContactsService"/>
+    <dubbo:reference id="appInviteLogService" interface="com.wing.socialcontact.service.wx.api.IAppInviteLogService"/>
+</beans>

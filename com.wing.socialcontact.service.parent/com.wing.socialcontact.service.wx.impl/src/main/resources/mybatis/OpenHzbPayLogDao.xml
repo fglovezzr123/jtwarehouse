@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-07-20 20:28:03
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.OpenHzbPayLogDao">
+
+	<resultMap id="openHzbPayLog" type="com.wing.socialcontact.service.wx.bean.OpenHzbPayLog">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderId" column="order_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkType" column="fk_type" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="xsFkType" column="xs_fk_type" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="fkTime" column="fk_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="fkMoney" column="fk_money" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="fkStatus" column="fk_status" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="shStatus" column="sh_status" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="shTime" column="sh_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="shUserId" column="sh_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkPz" column="fk_pz" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkSn" column="fk_sn" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="logType" column="log_type" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<resultMap id="openHzbPayLogGlobal" type="com.wing.socialcontact.service.wx.bean.OpenHzbPayLog">
+		<result property="id" column="OHPL_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderId" column="OHPL_order_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkType" column="OHPL_fk_type" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="xsFkType" column="OHPL_xs_fk_type" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="fkTime" column="OHPL_fk_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="fkMoney" column="OHPL_fk_money" javaType="Double" jdbcType="DECIMAL"></result>
+		<result property="fkStatus" column="OHPL_fk_status" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="shStatus" column="OHPL_sh_status" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="shTime" column="OHPL_sh_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="shUserId" column="OHPL_sh_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkPz" column="OHPL_fk_pz" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkSn" column="OHPL_fk_sn" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="remark" column="OHPL_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="logType" column="OHPL_log_type" javaType="Short" jdbcType="SMALLINT"></result>
+		<result property="userId" column="OHPL_user_id" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		OHPL.id, OHPL.order_id, OHPL.fk_type, OHPL.xs_fk_type, 
+		OHPL.fk_time, OHPL.fk_money, OHPL.fk_status, OHPL.sh_status, 
+		OHPL.sh_time, OHPL.sh_user_id, OHPL.fk_pz, OHPL.fk_sn, OHPL.remark, OHPL.log_type, OHPL.user_id
+	</sql>
+
+	<sql id="fieldGlobal">
+		OHPL.id OHPL_id, OHPL.order_id OHPL_order_id, 
+		OHPL.fk_type OHPL_fk_type, OHPL.xs_fk_type OHPL_xs_fk_type, 
+		OHPL.fk_time OHPL_fk_time, OHPL.fk_money OHPL_fk_money, 
+		OHPL.fk_status OHPL_fk_status, OHPL.sh_status OHPL_sh_status, 
+		OHPL.sh_time OHPL_sh_time, OHPL.sh_user_id OHPL_sh_user_id, 
+		OHPL.fk_pz OHPL_fk_pz, OHPL.fk_sn OHPL_fk_sn, OHPL.remark OHPL_remark, OHPL.log_type OHPL_log_type, OHPL.user_id OHPL_user_id
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		OHPL.id id, OHPL.order_id orderId, 
+		OHPL.fk_type fkType, OHPL.xs_fk_type xsFkType, 
+		OHPL.fk_time fkTime, OHPL.fk_money fkMoney, 
+		OHPL.fk_status fkStatus, OHPL.sh_status shStatus, 
+		OHPL.sh_time shTime, OHPL.sh_user_id shUserId, 
+		OHPL.fk_pz fkPz, OHPL.fk_sn fkSn, OHPL.remark remark,OHPL.log_type logType, OHPL.user_id userId
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND OHPL.id=#{id}
+		</if>
+		<if test="orderId!=null and orderId!=''">
+			AND OHPL.order_id=#{orderId}
+		</if>
+		<if test="fkType!=null">
+			AND OHPL.fk_type=#{fkType}
+		</if>
+		<if test="xsFkType!=null">
+			AND OHPL.xs_fk_type=#{xsFkType}
+		</if>
+		<if test="fkTime!=null">
+			AND OHPL.fk_time=#{fkTime}
+		</if>
+		<if test="fkMoney!=null">
+			AND OHPL.fk_money=#{fkMoney}
+		</if>
+		<if test="fkStatus!=null">
+			AND OHPL.fk_status=#{fkStatus}
+		</if>
+		<if test="shStatus!=null">
+			AND OHPL.sh_status=#{shStatus}
+		</if>
+		<if test="shTime!=null">
+			AND OHPL.sh_time=#{shTime}
+		</if>
+		<if test="shUserId!=null and shUserId!=''">
+			AND OHPL.sh_user_id=#{shUserId}
+		</if>
+		<if test="fkPz!=null and fkPz!=''">
+			AND OHPL.fk_pz=#{fkPz}
+		</if>
+		<if test="fkSn!=null and fkSn!=''">
+			AND OHPL.fk_sn=#{fkSn}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND OHPL.remark=#{remark}
+		</if>
+		<if test="logType!=null and logType!=''">
+			AND OHPL.log_type=#{logType}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND OHPL.user_id=#{userId}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND OHPL.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="orderId!=null and orderId!=''">
+				AND OHPL.order_id LIKE CONCAT('%', #{orderId}, '%')
+			</if>
+			<if test="fkType!=null">
+				AND OHPL.fk_type=#{fkType}
+			</if>
+			<if test="xsFkType!=null">
+				AND OHPL.xs_fk_type=#{xsFkType}
+			</if>
+			<if test="fkTime!=null">
+				AND OHPL.fk_time=#{fkTime}
+			</if>
+			<if test="fkMoney!=null">
+				AND OHPL.fk_money=#{fkMoney}
+			</if>
+			<if test="fkStatus!=null">
+				AND OHPL.fk_status=#{fkStatus}
+			</if>
+			<if test="shStatus!=null">
+				AND OHPL.sh_status=#{shStatus}
+			</if>
+			<if test="shTime!=null">
+				AND OHPL.sh_time=#{shTime}
+			</if>
+			<if test="shUserId!=null and shUserId!=''">
+				AND OHPL.sh_user_id LIKE CONCAT('%', #{shUserId}, '%')
+			</if>
+			<if test="fkPz!=null and fkPz!=''">
+				AND OHPL.fk_pz LIKE CONCAT('%', #{fkPz}, '%')
+			</if>
+			<if test="fkSn!=null and fkSn!=''">
+				AND OHPL.fk_sn LIKE CONCAT('%', #{fkSn}, '%')
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND OHPL.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="logType!=null and logType!=''">
+				AND OHPL.log_type=#{logType}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND OHPL.user_id=#{userId}
+			</if>
+			<if test="keyword!=null and keyword!=''">
+				AND (U.nickname LIKE CONCAT('%', #{keyword}, '%') OR U.com_name LIKE CONCAT('%', #{keyword}, '%') OR U.mobile LIKE CONCAT('%', #{keyword}, '%')) 
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				OHPL.id=#{id}, 
+		   </if>
+           <if test="orderId!=null">
+				OHPL.order_id=#{orderId}, 
+		   </if>
+           <if test="fkType!=null">
+				OHPL.fk_type=#{fkType}, 
+		   </if>
+           <if test="xsFkType!=null">
+				OHPL.xs_fk_type=#{xsFkType}, 
+		   </if>
+           <if test="fkTime!=null">
+				OHPL.fk_time=#{fkTime}, 
+		   </if>
+           <if test="fkMoney!=null">
+				OHPL.fk_money=#{fkMoney}, 
+		   </if>
+           <if test="fkStatus!=null">
+				OHPL.fk_status=#{fkStatus}, 
+		   </if>
+           <if test="shStatus!=null">
+				OHPL.sh_status=#{shStatus}, 
+		   </if>
+           <if test="shTime!=null">
+				OHPL.sh_time=#{shTime}, 
+		   </if>
+           <if test="shUserId!=null">
+				OHPL.sh_user_id=#{shUserId}, 
+		   </if>
+           <if test="fkPz!=null">
+				OHPL.fk_pz=#{fkPz}, 
+		   </if>
+           <if test="fkSn!=null">
+				OHPL.fk_sn=#{fkSn}, 
+		   </if>
+           <if test="remark!=null">
+				OHPL.remark=#{remark}, 
+		   </if>
+		   <if test="logType!=null and logType!=''">
+				OHPL.log_type=#{logType},
+		   </if>
+		   <if test="userId!=null and userId!=''">
+				OHPL.user_id=#{userId},
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE OHPL FROM TJY_OPEN_HZB_PAY_LOG OHPL WHERE OHPL.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_OPEN_HZB_PAY_LOG OHPL
+		SET 
+		OHPL.STATUS = -1
+		WHERE OHPL.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_OPEN_HZB_PAY_LOG OHPL
+		<include refid="dynamicSet" /> 
+	    WHERE OHPL.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="openHzbPayLog">
+		SELECT <include refid="field"/>
+		FROM TJY_OPEN_HZB_PAY_LOG OHPL
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_OPEN_HZB_PAY_LOG OHPL
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="openHzbPayLog">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM TJY_OPEN_HZB_PAY_LOG OHPL
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,SU.true_name as shUserName
+		,U.nickname as nickName
+		,U.com_name as comName
+		,U.mobile as mobile
+		FROM TJY_OPEN_HZB_PAY_LOG OHPL LEFT JOIN SY_USERS SU ON SU.id=OHPL.sh_user_id LEFT JOIN TJY_USER U ON U.id=OHPL.user_id
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="openHzbPayLog">
+		SELECT <include refid="field"/>
+		FROM TJY_OPEN_HZB_PAY_LOG OHPL
+		WHERE OHPL.ID = #{id}
+	</select>
+	
+</mapper>

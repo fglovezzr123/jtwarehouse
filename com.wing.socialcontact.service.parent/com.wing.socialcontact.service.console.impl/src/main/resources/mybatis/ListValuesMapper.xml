@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.sys.dao.ListValuesDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="list_type" property="listType" jdbcType="VARCHAR" />
+	    <result column="list_value" property="listValue" jdbcType="VARCHAR" />
+	    <result column="list_desc" property="listDesc" jdbcType="VARCHAR" />
+	    <result column="sortno" property="sortno" jdbcType="INTEGER" />
+	    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+	</resultMap>
+	
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *
+		FROM list_values t 
+ 		WHERE t.deleted = 0
+    	<if test="listType != null and listType != ''">
+			AND	t.list_type = #{listType,jdbcType=VARCHAR}
+		</if>
+    	<if test="listValue != null and listValue != ''">
+			AND	t.list_value like CONCAT('%',#{listValue,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+		order by t.sortno asc
+	</select>
+	
+	<select id="selectDistrictCount" resultType="int" parameterType="com.wing.socialcontact.sys.bean.SyDistrict">
+		SELECT
+			count(1)
+		FROM 
+			sy_district t 
+ 		WHERE t.deleted = 0
+    	<if test="superId != null and superId != ''">
+			AND	t.super_id = #{superId,jdbcType=VARCHAR}
+		</if>
+    	<if test="disDesc != null and disDesc != ''">
+			AND	t.dis_desc like CONCAT('%',#{disDesc,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="disName != null and disName != ''">
+			AND	t.dis_name like CONCAT('%',#{disName,jdbcType=VARCHAR},'%')
+		</if>
+  </select>
+	
+</mapper>

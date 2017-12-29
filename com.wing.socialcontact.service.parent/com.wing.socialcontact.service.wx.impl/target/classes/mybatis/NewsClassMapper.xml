@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.NewsClassDao">
+    <resultMap id="BaseResultMap" type="com.wing.socialcontact.service.wx.bean.TjyNewsClass" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+	    <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
+	    <result column="tag_type" property="tagType" jdbcType="VARCHAR" />
+	    <result column="tag_num" property="tagNum" jdbcType="INTEGER" />
+	    <result column="is_show" property="isShow" jdbcType="INTEGER" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+	     <result column="is_free" property="isFree" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="selectAllNewsClassMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.* 
+		FROM tjy_news_class t order by t.tag_num 
+	</select>
+	<select id="selectByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT t.*
+		FROM tjy_news_class t 
+ 		WHERE 1=1
+    	<if test="tagName != null and tagName != ''">
+			AND	t.tag_name like CONCAT('%',#{tagName,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="parentId != null and parentId != ''">
+			AND	t.parent_id = #{parentId,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null and status != 0">
+			AND	t.status = #{status}
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+	</select>
+	<select id="selectAllclassMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT 
+		t.id,t.tag_name tagName,t.parent_id parentId
+		FROM tjy_news_class t where 1 = 1
+		<if test="classRoot != null and classRoot != ''">
+			AND	t.parent_id = #{classRoot,jdbcType=VARCHAR}
+		</if>
+		order by t.tag_num
+	</select>
+	<select id="selectFrontClass" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT 
+		t.id,t.tag_name tagName,t.parent_id parentId
+		FROM tjy_news_class t where t.is_show = 1
+		<if test="classRoot != null and classRoot != ''">
+			AND	t.parent_id = #{classRoot,jdbcType=VARCHAR}
+		</if>
+		order by t.tag_num
+	</select>
+	<select id="selectNewsclassMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT 
+		t.id,t.tag_name tagName,t.parent_id parentId
+		FROM tjy_news_class t where t.id !='fe4790ad85264d0eaf3388eff383dd64' and t.id!='3c1821af5fa8472c89ac716ed5f002ff'
+		order by t.tag_num
+	</select>
+</mapper>

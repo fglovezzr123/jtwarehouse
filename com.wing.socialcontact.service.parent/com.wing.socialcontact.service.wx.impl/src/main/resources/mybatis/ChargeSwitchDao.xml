@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.ChargeSwitchDao">
+
+	<resultMap id="chargeSwitch" type="com.wing.socialcontact.service.wx.bean.ChargeSwitch">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sign" column="sign" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="platformFee" column="platform_fee" javaType="Double" jdbcType="DECIMAL"></result>
+	</resultMap>
+	
+	
+	
+	<sql id="field">
+		IA.id, IA.sign, IA.name, IA.status, IA.create_user_id, 
+		IA.create_time,IA.order_num,IA.platform_fee
+	</sql>
+
+	
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND IA.id=#{id}
+		</if>
+		<if test="name!=null and name!=''">
+			AND IA.name=#{name}
+		</if>
+		<if test="sign!=null and sign!=''">
+			AND IA.sign=#{sign}
+		</if>
+		<if test="status!=null">
+			AND IA.status=#{status}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND IA.create_user_id=#{createUserId}
+		</if>
+		<if test="createTime!=null">
+			AND IA.create_time=#{createTime}
+		</if>
+		<if test="orderNum!=null">
+			AND IA.order_num=#{orderNum}
+		</if>
+		<if test="platformFee">
+			AND IA.platform_fee=#{platformFee}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND IA.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="name!=null and name!=''">
+				AND IA.name LIKE CONCAT('%', #{name}, '%')
+			</if>
+			<if test="sign!=null and sign!=''">
+				AND IA.sign LIKE CONCAT('%', #{sign}, '%')
+			</if>
+			<if test="status!=null">
+				AND IA.status=#{status}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND IA.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND IA.create_time=#{createTime}
+			</if>
+			<if test="orderNum!=null">
+				AND IA.order_num=#{orderNum}
+			</if>
+			<if test="platformFee!=null">
+				AND IA.platform_fee=#{platformFee}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				IA.id=#{id}, 
+		   </if>
+		   <if test="name!=null">
+				IA.name=#{name}, 
+		   </if>
+		   <if test="sign!=null">
+				IA.sign=#{sign}, 
+		   </if>
+           <if test="status!=null">
+				IA.status=#{status}, 
+		   </if>
+           <if test="createUserId!=null">
+				IA.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createTime!=null">
+				IA.create_time=#{createTime}, 
+		   </if>
+		   <if test="orderNum!=null">
+				IA.order_num=#{orderNum}, 
+		   </if>
+		   <if test="platformFee!=null">
+				IA.platform_fee=#{platformFee}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+	
+	<delete id="deleteById">
+		DELETE IA FROM mall.TJY_CHARGE_SWITCH IA WHERE IA.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE mall.TJY_CHARGE_SWITCH IA
+		SET 
+		IA.STATUS = -1
+		WHERE IA.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE mall.TJY_CHARGE_SWITCH IA
+		<include refid="dynamicSet" /> 
+	    WHERE IA.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="chargeSwitch">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CHARGE_SWITCH IA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM mall.TJY_CHARGE_SWITCH IA
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="chargeSwitch">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CHARGE_SWITCH IA
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="chargeSwitch">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CHARGE_SWITCH IA
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="chargeSwitch">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_CHARGE_SWITCH IA
+		WHERE IA.ID = #{id}
+	</select>
+	<select id="selectChargeSwitchList" resultType="java.util.HashMap">
+		SELECT <include refid="field"/>
+		 FROM mall.TJY_CHARGE_SWITCH IA
+		 where status = '1'
+		<include refid="dynamicWhere" />
+	</select>
+	
+	<select id="getChargeSwitchBySign" resultMap="chargeSwitch" parameterType="java.util.Map">
+		SELECT <include refid="field"/>
+		 FROM mall.TJY_CHARGE_SWITCH IA
+		 where sign = #{sign}
+	</select>
+</mapper>

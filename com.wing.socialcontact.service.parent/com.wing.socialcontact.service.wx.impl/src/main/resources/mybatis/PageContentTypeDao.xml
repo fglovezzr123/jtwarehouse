@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-06-28 16:39:29
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.PageContentTypeDao">
+
+	<resultMap id="pageContentType" type="com.wing.socialcontact.service.wx.bean.PageContentType">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentKey" column="content_key" jdbcType="VARCHAR"></result>
+		<result property="listUrl" column="list_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="detailUrl" column="detail_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="order_num" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="pageContentTypeGlobal" type="com.wing.socialcontact.service.wx.bean.PageContentType">
+		<result property="id" column="PCT_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="name" column="PCT_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contentKey" column="content_key" jdbcType="VARCHAR"></result>
+		<result property="listUrl" column="PCT_list_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="detailUrl" column="PCT_detail_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="orderNum" column="PCT_order_num" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		PCT.id, PCT.name, PCT.content_key ,PCT.list_url, PCT.detail_url,
+		PCT.order_num
+	</sql>
+
+	<sql id="fieldGlobal">
+		PCT.id PCT_id, PCT.name PCT_name, 
+		PCT.list_url PCT_list_url, PCT.detail_url PCT_detail_url, 
+		PCT.order_num PCT_order_num
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		PCT.id id, PCT.name name, 
+		PCT.list_url listUrl, PCT.detail_url detailUrl, 
+		PCT.order_num orderNum
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND PCT.id=#{id}
+		</if>
+		<if test="name!=null and name!=''">
+			AND PCT.name=#{name}
+		</if>
+		<if test="listUrl!=null and listUrl!=''">
+			AND PCT.list_url=#{listUrl}
+		</if>
+		<if test="detailUrl!=null and detailUrl!=''">
+			AND PCT.detail_url=#{detailUrl}
+		</if>
+		<if test="orderNum!=null">
+			AND PCT.order_num=#{orderNum}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND PCT.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="name!=null and name!=''">
+				AND PCT.name LIKE CONCAT('%', #{name}, '%')
+			</if>
+			<if test="listUrl!=null and listUrl!=''">
+				AND PCT.list_url LIKE CONCAT('%', #{listUrl}, '%')
+			</if>
+			<if test="detailUrl!=null and detailUrl!=''">
+				AND PCT.detail_url LIKE CONCAT('%', #{detailUrl}, '%')
+			</if>
+			<if test="orderNum!=null">
+				AND PCT.order_num=#{orderNum}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				PCT.id=#{id}, 
+		   </if>
+           <if test="name!=null">
+				PCT.name=#{name}, 
+		   </if>
+           <if test="listUrl!=null">
+				PCT.list_url=#{listUrl}, 
+		   </if>
+           <if test="detailUrl!=null">
+				PCT.detail_url=#{detailUrl}, 
+		   </if>
+           <if test="orderNum!=null">
+				PCT.order_num=#{orderNum}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE PCT FROM TJY_PAGE_CONTENT_TYPE PCT WHERE PCT.ID = #{id} 
+	</delete>
+	
+	<update id="disableById">
+	    UPDATE TJY_PAGE_CONTENT_TYPE PCT
+		SET 
+		PCT.STATUS = -1
+		WHERE PCT.ID = #{id}
+	</update>
+
+	<update id="update">
+		UPDATE TJY_PAGE_CONTENT_TYPE PCT
+		<include refid="dynamicSet" /> 
+	    WHERE PCT.ID = #{id}
+	</update>
+
+	<select id="load" resultMap="pageContentType">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_CONTENT_TYPE PCT
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TJY_PAGE_CONTENT_TYPE PCT
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="pageContentType">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_CONTENT_TYPE PCT
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultMap="pageContentType">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_CONTENT_TYPE PCT
+		<include refid="queryWhere" />
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="pageContentType">
+		SELECT <include refid="field"/>
+		FROM TJY_PAGE_CONTENT_TYPE PCT
+		WHERE PCT.ID = #{id}
+	</select>
+	
+	<select id="selectByParam" resultMap="pageContentType" parameterType="java.util.Map">
+		SELECT *
+		FROM TJY_PAGE_CONTENT_TYPE PCT
+    	<include refid="dynamicWhere" />
+    	order by PCT.order_num asc
+	</select>
+	
+</mapper>

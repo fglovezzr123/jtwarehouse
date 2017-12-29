@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.enterprise.service.dao.EntryQuickDetailBannerDao">
+
+	<resultMap id="quickDetailBanner" type="java.util.HashMap">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time"  jdbcType="DATE"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="imgPath" column="img_path" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="name" column="name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="link" column="link" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="quickDoorId" column="quick_door_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sortNum" column="sort_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<select id="selectByParam" resultMap="quickDetailBanner" parameterType="java.util.Map">
+		select t.*,e.quick_name quickName from qfy_quick_detail_banner t LEFT JOIN qfy_quick_entry e on t.quick_door_id = e.id where t.status = 0
+ 		<if test="name != null and name != ''">
+			AND	t.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+		</if>
+ 		<if test="quickDoorId != null and quickDoorId != ''">
+			AND	t.quick_door_id = #{quickDoorId,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+				AND t.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime,jdbcType=DATE},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND t.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime,jdbcType=DATE},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+		</if>
+		order by t.sort_num asc
+	</select>
+	<select id="selectAllQucikDoor" resultMap="quickDetailBanner" parameterType="java.util.Map">
+		select DISTINCT(b.quick_door_id) quickDoorId,e.quick_name quickName from qfy_quick_detail_banner b 
+		LEFT JOIN qfy_quick_entry e on b.quick_door_id = e.id 
+		where b.status = 0 order by sort_num asc
+	</select>
+	<select id="selectBannerByQdId" resultMap="quickDetailBanner" parameterType="java.util.Map">
+		SELECT
+			b.link jumpUrl,
+			b.img_path imgPath
+		FROM
+			qfy_quick_detail_banner b
+		WHERE
+			b.status = 0
+		<if test="quickDoorId != null and quickDoorId != ''">
+			AND	b.quick_door_id = #{quickDoorId,jdbcType=VARCHAR}
+		</if>
+		ORDER BY
+			b.sort_num ASC
+	</select>
+</mapper>

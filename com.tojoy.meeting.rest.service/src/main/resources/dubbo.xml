@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 消费者 应用信息 -->
+    <dubbo:application name="tojoy-meeting-provider"/>
+
+    <!-- 注册中心服务地址 group="meeting"  -->
+    <dubbo:registry   protocol="zookeeper" address="${dubbo.registry.address}" />
+    <!-- 
+	           消费者配置 10秒重试默认retries="2" 3次调用 -同步返回-启动不检查提供者
+	 -->
+	<dubbo:consumer   check="false"/>
+    <!-- 使用注解方式-->
+ 	<dubbo:annotation package="com.tojoy.meeting"/>
+
+    <!-- 服务消费者配置 -->
+    <!-- 会议 -->
+    <dubbo:reference id="meetingService" interface="com.tojoy.service.wx.api.IMeetingService"/>
+    <dubbo:reference id="meetingSignupService" interface="com.tojoy.service.wx.api.IMeetingSignupService"/>
+    <!-- 关注 -->
+    <dubbo:reference id="attentionService" interface="com.wing.socialcontact.service.wx.api.IAttentionService"/>
+    <dubbo:reference id="messageInfoService" interface="com.wing.socialcontact.service.wx.api.IMessageInfoService" />
+    <dubbo:reference id="wxUserService" interface="com.wing.socialcontact.service.wx.api.IWxUserService" />
+    <!-- 积分经验值 -->
+    <dubbo:reference id="userIntegralLog" interface="com.wing.socialcontact.service.wx.api.IUserIntegralLogService"/>
+    <dubbo:reference id="ICommentService" interface="com.wing.socialcontact.service.wx.api.ICommentService"/>
+    <dubbo:reference id="ICommentThumbupService" interface="com.wing.socialcontact.service.wx.api.ICommentThumbupService"/>
+
+    <dubbo:reference id="walletLogService" interface="com.wing.socialcontact.service.wx.api.IWalletLogService" />
+
+
+</beans>

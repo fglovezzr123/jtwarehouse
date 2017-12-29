@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zengmin
+	date	:	2017-08-08 08:56:15
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.SysBlacklistDao">
+
+	<resultMap id="sysBlacklist" type="com.wing.socialcontact.service.wx.bean.SysBlacklist">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="beginTime" column="begin_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="managerUser" column="manager_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerTime" column="manager_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastUser" column="last_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="lastTime" column="last_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<resultMap id="sysBlacklistGlobal" type="com.wing.socialcontact.service.wx.bean.SysBlacklist">
+		<result property="id" column="SB_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="SB_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="beginTime" column="SB_begin_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="SB_end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="managerUser" column="SB_manager_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="managerTime" column="SB_manager_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="lastUser" column="SB_last_user" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="lastTime" column="SB_last_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		SB.id, SB.user_id, SB.begin_time, SB.end_time, 
+		SB.manager_user, SB.manager_time, SB.last_user, SB.last_time
+	</sql>
+
+	<sql id="fieldGlobal">
+		SB.id SB_id, SB.user_id SB_user_id, 
+		SB.begin_time SB_begin_time, SB.end_time SB_end_time, 
+		SB.manager_user SB_manager_user, SB.manager_time SB_manager_time, 
+		SB.last_user SB_last_user, SB.last_time SB_last_time
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		SB.id id, SB.user_id userId, 
+		SB.begin_time beginTime, SB.end_time endTime, 
+		SB.manager_user managerUser, SB.manager_time managerTime, 
+		SB.last_user lastUser, SB.last_time lastTime
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND SB.id=#{id}
+		</if>
+		<if test="userId!=null and userId!=''">
+			AND SB.user_id=#{userId}
+		</if>
+		<if test="beginTime!=null">
+			AND SB.begin_time=#{beginTime}
+		</if>
+		<if test="endTime!=null">
+			AND SB.end_time=#{endTime}
+		</if>
+		<if test="managerUser!=null and managerUser!=''">
+			AND SB.manager_user=#{managerUser}
+		</if>
+		<if test="managerTime!=null">
+			AND SB.manager_time=#{managerTime}
+		</if>
+		<if test="lastUser!=null and lastUser!=''">
+			AND SB.last_user=#{lastUser}
+		</if>
+		<if test="lastTime!=null">
+			AND SB.last_time=#{lastTime}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND SB.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND SB.user_id LIKE CONCAT('%', #{userId}, '%')
+			</if>
+			<if test="beginTime!=null">
+				AND SB.begin_time=#{beginTime}
+			</if>
+			<if test="endTime!=null">
+				AND SB.end_time=#{endTime}
+			</if>
+			<if test="managerUser!=null and managerUser!=''">
+				AND SB.manager_user LIKE CONCAT('%', #{managerUser}, '%')
+			</if>
+			<if test="managerTime!=null">
+				AND SB.manager_time=#{managerTime}
+			</if>
+			<if test="lastUser!=null and lastUser!=''">
+				AND SB.last_user LIKE CONCAT('%', #{lastUser}, '%')
+			</if>
+			<if test="lastTime!=null">
+				AND SB.last_time=#{lastTime}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				SB.id=#{id}, 
+		   </if>
+           <if test="userId!=null">
+				SB.user_id=#{userId}, 
+		   </if>
+           <if test="beginTime!=null">
+				SB.begin_time=#{beginTime}, 
+		   </if>
+           <if test="endTime!=null">
+				SB.end_time=#{endTime}, 
+		   </if>
+           <if test="managerUser!=null">
+				SB.manager_user=#{managerUser}, 
+		   </if>
+           <if test="managerTime!=null">
+				SB.manager_time=#{managerTime}, 
+		   </if>
+           <if test="lastUser!=null">
+				SB.last_user=#{lastUser}, 
+		   </if>
+           <if test="lastTime!=null">
+				SB.last_time=#{lastTime}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+	<delete id="deleteById">
+		DELETE SB FROM mall.TJY_SYS_BLACKLIST SB WHERE SB.ID = #{id} 
+	</delete>
+	
+	<select id="load" resultMap="sysBlacklist">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM mall.TJY_SYS_BLACKLIST SB
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM mall.TJY_SYS_BLACKLIST SB
+		<include refid="dynamicWhere" />
+	</select>
+
+	<select id="list" resultMap="sysBlacklist">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM mall.TJY_SYS_BLACKLIST SB
+		<include refid="dynamicWhere" />
+		<include refid="orderby" />
+	</select>
+
+	<select id="query" resultType="java.util.HashMap">
+		SELECT <include refid="fieldWithAlias"/>
+		,U.nickname as nickName
+		,U.com_name as comName
+		,U.mobile as mobile
+		,SU.true_name as managerUserName
+		FROM mall.TJY_SYS_BLACKLIST SB LEFT JOIN TJY_USER U ON U.id=SB.user_id LEFT JOIN SY_USERS SU ON SU.id=SB.manager_user
+		WHERE 1=1
+		<if test="userName!=null">
+			AND U.nickname like CONCAT('%', #{userName}, '%')
+		</if>
+		<if test="mobile!=null">
+			AND U.mobile like CONCAT('%', #{mobile}, '%')
+		</if>
+		<if test="managerUserName!=null">
+			AND SU.true_name like CONCAT('%', #{managerUserName}, '%')
+		</if>
+		<include refid="orderby" />
+	</select>
+	
+	<select id="loadById" resultMap="sysBlacklist">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM mall.TJY_SYS_BLACKLIST SB
+		WHERE SB.ID = #{id}
+	</select>
+	
+	<select id="selectSysBlacklistByUserId" resultMap="sysBlacklist">
+		SELECT <include refid="fieldWithAlias"/>
+		FROM mall.TJY_SYS_BLACKLIST SB
+		WHERE SB.user_id = #{userId}
+		AND NOW() BETWEEN SB.begin_time and SB.end_time
+		ORDER BY SB.manager_time asc
+	</select>
+	
+</mapper>

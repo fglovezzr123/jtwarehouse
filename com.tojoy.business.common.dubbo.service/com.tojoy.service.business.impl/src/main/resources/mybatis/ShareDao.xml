@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tojoy.business.common.dao.ShareDao">
+
+	<insert id="insert" parameterType="com.tojoy.business.common.bean.Share">
+		INSERT INTO tjy_share_${keyWord} (id,
+		user_id,
+		fk_id,
+		create_time)
+		VALUES   (#{id},
+		#{userId},
+		#{fkId},
+		#{createTime})
+	</insert>
+
+</mapper>

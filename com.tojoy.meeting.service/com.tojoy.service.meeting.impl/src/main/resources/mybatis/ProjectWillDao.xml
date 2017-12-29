@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-03-26
+	version	:	1.0
+-->
+<mapper namespace="com.tojoy.service.wx.dao.ProjectWillDao">
+
+	<resultMap id="projectWill" type="com.tojoy.service.wx.bean.ProjectWill">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="prjId" column="prj_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="willType" column="will_type" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="willDesc" column="will_desc" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="linkman" column="linkman" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="linkphone" column="linkphone" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="titles" column="titles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userName" column="user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="mobile" column="mobile" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		pw.id, pw.prj_id, pw.user_id, pw.will_desc, pw.will_type,
+		pw.linkman, pw.linkphone, pw.status, pw.create_time, 
+		pw.create_user_id, pw.create_user_name, pw.deleted,
+		p.titles,
+	  	u.user_name,
+	  	u.mobile
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND pw.id=#{id}
+			</if>
+			<if test="prjId!=null and prjId!=''">
+				AND pw.prj_id=#{prjId}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND pw.user_id=#{userId}
+			</if>
+			<if test="willDesc!=null and willDesc!=''">
+				AND pw.will_desc=#{willDesc}
+			</if>
+			<if test="linkman!=null and linkman!=''">
+				AND pw.linkman=#{linkman}
+			</if>
+			<if test="linkphone!=null and linkphone!=''">
+				AND pw.linkphone=#{linkphone}
+			</if>
+			<if test="status!=null">
+				AND pw.status=#{status}
+			</if>
+			<if test="createTime!=null">
+				AND pw.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null">
+				AND pw.create_user_id=#{createUserId}
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND pw.create_user_name=#{createUserName}
+			</if>
+			<if test="deleted!=null">
+				AND pw.deleted=#{deleted}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectByParam" resultMap="projectWill" parameterType="java.util.Map">
+		select 
+			pw.id, 
+			pw.prj_id, 
+			pw.user_id, 
+			pw.will_desc, 
+			pw.linkman, 
+			pw.linkphone, 
+			pw.status, 
+			pw.create_time, 
+			pw.create_user_id, 
+			pw.create_user_name, 
+			pw.deleted,
+			p.titles,
+		  	u.nickname as user_name,
+		  	u.mobile as mobile,
+		  	u.com_name as comName,
+		  	lv.list_value as willTypeName
+		from
+				tjy_project_will pw
+			inner join tjy_project p on pw.prj_id = p.id
+			left join tjy_user u on pw.user_id=u.id
+			left join list_values lv on lv.id = pw.will_type
+		where	
+ 		 	p.id=ifnull(if(#{prjId}="0",p.id,#{prjId}),'-1')
+ 		    <if test="userName !=null and userName !=''">
+				AND u.nickname like concat('%',#{userName},'%')
+			</if>
+			<if test="mobile !=null and mobile !=''">
+				AND u.mobile like concat('%',#{mobile},'%')
+			</if>
+			<if test="createTime !=null and createTime !=''">
+				AND pw.create_time &gt;= STR_TO_DATE(concat(#{createTime},' 00:00:00'),'%Y-%m-%d %H:%i:%s')
+				AND pw.create_time &lt;= STR_TO_DATE(concat(#{createTime},' 23:59:59'),'%Y-%m-%d %H:%i:%s')
+			</if>
+ 		order by pw.create_time desc
+	</select>
+	
+	<select id="getById" resultMap="projectWill">
+		select 
+			pw.id, 
+			pw.prj_id, 
+			pw.user_id, 
+			pw.will_desc, 
+			pw.linkman, 
+			pw.linkphone, 
+			pw.status, 
+			pw.create_time, 
+			pw.create_user_id, 
+			pw.create_user_name, 
+			pw.deleted,
+			p.titles,
+		  	u.nickname as user_name,
+		  	u.mobile as mobile,
+		  	u.com_name as comName,
+		  	lv.list_value as willTypeName
+		from
+				tjy_project_will pw
+			inner join tjy_project p on pw.prj_id = p.id
+			left join tjy_user u on pw.user_id=u.id
+			left join list_values lv on lv.id = pw.will_type
+		where	
+ 		 	pw.id=#{id}
+	</select>
+	<update id="updateProjectWillStatus">
+		update tjy_project_will set status=#{status} where id=#{id}
+	</update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tojoy.service.console.dao.SyLoginLogDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+	    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+	    <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+	    <result column="ip_info_country" property="ipInfoCountry" jdbcType="VARCHAR" />
+	    <result column="ip_info_region" property="ipInfoRegion" jdbcType="VARCHAR" />
+	    <result column="ip_info_city" property="ipInfoCity" jdbcType="VARCHAR" />
+	    <result column="ip_info_isp" property="ipInfoIsp" jdbcType="VARCHAR" />
+	    <result column="login_type" property="loginType" jdbcType="VARCHAR" />
+	    <result column="login_desc" property="loginDesc" jdbcType="VARCHAR" />
+	</resultMap>
+	
+    <select id="selectForLogByParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+		SELECT *,u.user_name userName
+		FROM sy_login_log t 
+		left join sy_users u on t.user_id = u.id
+ 		WHERE 1=1
+    	<if test="userId != null and userId != ''">
+			AND	t.user_id = #{userId,jdbcType=VARCHAR}
+		</if>
+    	<if test="loginType != null and loginType != ''">
+			AND	t.login_type = #{loginType,jdbcType=VARCHAR}
+		</if>
+    	<if test="loginIp != null and loginIp != ''">
+			AND	t.login_ip like CONCAT('%',#{loginIp,jdbcType=VARCHAR},'%')
+		</if>
+    	<if test="startDate != null and startDate != ''">
+			 
+			<![CDATA[ AND UNIX_TIMESTAMP(t.login_time) >= #{startDate,jdbcType=BIGINT}]]> 
+		</if>
+    	<if test="endDate != null and endDate != ''">
+			<![CDATA[ AND UNIX_TIMESTAMP(t.login_time) <= #{endDate,jdbcType=BIGINT}]]> 
+			
+		</if>
+    	<if test="orderStr != null and orderStr != ''">
+			#{orderStr,jdbcType=VARCHAR}
+		</if>
+    	<if test="orderStr == null or orderStr == ''">
+			order by t.login_time desc
+		</if>
+		
+	</select>
+	
+	
+</mapper>

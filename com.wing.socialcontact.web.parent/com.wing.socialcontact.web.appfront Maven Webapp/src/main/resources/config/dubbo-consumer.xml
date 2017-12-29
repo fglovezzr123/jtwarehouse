@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+	<context:property-placeholder location="classpath:sysconfig.properties" />
+
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="tojoycloud.app.interface" />
+	<dubbo:consumer retries="0" timeout="12000" check="false" />
+
+	<!-- 使用zookeeper注册中心暴露发现服务地址 -->
+	<dubbo:registry protocol="${dubbo.consumer.registry.protocol}"
+		address="${dubbo.consumer.registry.address}" />
+
+	<dubbo:annotation />
+	<!-- 服务消费者配置 -->
+	<dubbo:reference id="wxUserService" interface="com.wing.socialcontact.service.wx.api.IWxUserService" />
+	<dubbo:reference id="tjyUserService" interface="com.wing.socialcontact.service.wx.api.ITjyUserService" />
+	<dubbo:reference id="userFavService" interface="com.wing.socialcontact.service.wx.api.IUserFavService" />
+	<dubbo:reference id="reconPhotosService" interface="com.wing.socialcontact.service.wx.api.IReconPhotosService" />
+	
+	<!-- 项目管理 -->
+	<dubbo:reference id="projectService" interface="com.wing.socialcontact.service.wx.api.IProjectService"/>
+	<dubbo:reference id="projectImagesService" interface="com.wing.socialcontact.service.wx.api.IProjectImagesService"/>
+	<dubbo:reference id="projectWillService" interface="com.wing.socialcontact.service.wx.api.IProjectWillService"/>
+	<dubbo:reference id="projectRecommendService" interface="com.wing.socialcontact.service.wx.api.IProjectRecommendService"/>
+	<!-- 文库类别管理 -->
+	<dubbo:reference id="libraryClassService" interface="com.wing.socialcontact.service.wx.api.ILibraryClassService"/>
+	<!-- 文库管理 -->
+	<dubbo:reference id="libraryService" interface="com.wing.socialcontact.service.wx.api.ILibraryService"/>
+	<!-- 【微信端】投资类别管理 -->
+	<dubbo:reference id="investmentClassService" interface="com.wing.socialcontact.service.wx.api.IInvestmentClassService"/>
+	<!-- 【微信端】投资顾问管理 -->
+	<dubbo:reference id="investmentIntentionService" interface="com.wing.socialcontact.service.wx.api.IInvestmentIntentionService"/>
+	<!-- 【微信端】投资管理 -->
+	<dubbo:reference id="investmentService" interface="com.wing.socialcontact.service.wx.api.IInvestmentService"/>
+
+	<dubbo:reference id="userService" interface="com.wing.socialcontact.sys.service.IUserService" />
+	
+	<dubbo:reference id="messageInfoService" interface="com.wing.socialcontact.service.wx.api.IMessageInfoService" />
+	<!-- 【微信端】用户勋章 - -->
+	<dubbo:reference id="honorService" interface="com.wing.socialcontact.service.wx.api.IHonorService" />
+	<dubbo:reference id="userHonorService" interface="com.wing.socialcontact.service.wx.api.IUserHonorService" />
+	<!-- 【微信端】用户印象 - -->
+	<dubbo:reference id="userFriendimpressService" interface="com.wing.socialcontact.service.wx.api.IUserFriendimpressService" />
+	<!-- 打招呼-->
+	<dubbo:reference id="userGreetingsService" interface="com.wing.socialcontact.service.wx.api.IUserGreetingsService" />
+	<!-- 最近访客-->
+	<dubbo:reference id="userLatestvistorService" interface="com.wing.socialcontact.service.wx.api.IUserLatestvistorService" />
+	<!-- 字典 -->
+	<dubbo:reference id="listValuesService" interface="com.wing.socialcontact.sys.service.IListValuesService" />
+	<!-- 地区 -->
+	<dubbo:reference id="districtService" interface="com.wing.socialcontact.sys.service.IDistrictService" />
+	
+	<!--IM-->
+	<dubbo:reference id="imFriendService" interface="com.wing.socialcontact.service.im.api.IImFriendService"/>
+	<dubbo:reference id="imFriendrequestService" interface="com.wing.socialcontact.service.im.api.IImFriendrequestService"/>
+	<dubbo:reference id="imFollowService" interface="com.wing.socialcontact.service.im.api.IImFollowService"/>
+	<dubbo:reference id="imGroupinfoService" interface="com.wing.socialcontact.service.im.api.IImGroupinfoService"/>
+	<dubbo:reference id="imGrouprequestService" interface="com.wing.socialcontact.service.im.api.IImGrouprequestService"/>
+	<dubbo:reference id="imGroupusersService" interface="com.wing.socialcontact.service.im.api.IImGroupusersService"/>
+	<dubbo:reference id="imGroupfavService" interface="com.wing.socialcontact.service.im.api.IImGroupfavService"/>
+	
+	<!--banner-->
+	<dubbo:reference id="bannerService" interface="com.wing.socialcontact.service.wx.api.IBannerService" />
+	<dubbo:reference id="newsClassService" interface="com.wing.socialcontact.service.wx.api.INewsClassService" />
+	<dubbo:reference id="newsService" interface="com.wing.socialcontact.service.wx.api.INewsService" />
+	<dubbo:reference id="topicService" interface="com.wing.socialcontact.service.wx.api.ITopicService" />
+	<dubbo:reference id="walletLogService" interface="com.wing.socialcontact.service.wx.api.IWalletLogService" />
+	<dubbo:reference id="voteService" interface="com.wing.socialcontact.service.wx.api.IVoteService" />
+<!--     <dubbo:reference id="reportService" interface="com.wing.socialcontact.service.wx.api.IReportService" /> -->
+	<dubbo:reference id="newsPayLogService" interface="com.wing.socialcontact.service.wx.api.INewsPayLogService" />
+	
+	<!-- 系统基本配置 -->
+	<dubbo:reference id="sysconfigService" interface="com.wing.socialcontact.service.wx.api.ISysconfigService"/>
+	<!-- 合作 -->
+	<dubbo:reference id="businessService" interface="com.wing.socialcontact.service.wx.api.IBusinessService"/>
+	<dubbo:reference id="businessClassService" interface="com.wing.socialcontact.service.wx.api.IBusinessClassService"/>
+	<dubbo:reference id="businessDisscussService" interface="com.wing.socialcontact.service.wx.api.IBusinessDisscussService"/>
+	<!-- 活动管理 -->
+	<dubbo:reference id="activityService" interface="com.wing.socialcontact.service.wx.api.IActivityService" />
+	<!--活动标签管理 -->
+	<dubbo:reference id="activityTagService" interface="com.wing.socialcontact.service.wx.api.IActivityTagService" />
+	<!-- 活动报名管理 -->
+	<dubbo:reference id="activityUserService" interface="com.wing.socialcontact.service.wx.api.IActivityUserService" />
+	<!-- 活动取消管理 -->
+	<dubbo:reference id="activityCancelService" interface="com.wing.socialcontact.service.wx.api.IActivityCancelService" />
+	<!-- 活动延期管理 -->
+	<dubbo:reference id="activityDelayService" interface="com.wing.socialcontact.service.wx.api.IActivityDelayService" />
+	
+	<!--动态管理 -->
+	<dubbo:reference id="dynamicService" interface="com.wing.socialcontact.service.wx.api.IDynamicService" />
+	<dubbo:reference id="dynamicPicService" interface="com.wing.socialcontact.service.wx.api.IDynamicPicService" />
+	<dubbo:reference id="dynamicPayLogService" interface="com.wing.socialcontact.service.wx.api.IDynamicPayLogService" />
+	<dubbo:reference id="dynamicGratuityLogService" interface="com.wing.socialcontact.service.wx.api.IDynamicGratuityLogService" />
+	<dubbo:reference id="dynamicOpLogService" interface="com.wing.socialcontact.service.wx.api.IDynamicOpLogService" />
+	<!-- 客服留言 -->
+	<dubbo:reference id="leaveMsgService" interface="com.wing.socialcontact.service.wx.api.ILeaveMsgService" />
+	
+	<!--诸葛解惑 -->
+	<dubbo:reference id="rewardClassService" interface="com.wing.socialcontact.service.wx.api.IRewardClassService"/>
+	<dubbo:reference id="rewardService" interface="com.wing.socialcontact.service.wx.api.IRewardService"/>
+	<dubbo:reference id="rewardAnswerService" interface="com.wing.socialcontact.service.wx.api.IRewardAnswerService"/>
+	<dubbo:reference id="rewardSetService" interface="com.wing.socialcontact.service.wx.api.IRewardSetService"/>
+	<dubbo:reference id="libraryLiveService" interface="com.wing.socialcontact.service.wx.api.ILibraryLiveService"/>
+	<dubbo:reference id="liveSignupService" interface="com.wing.socialcontact.service.wx.api.IliveSignupService"/>
+	<!-- 积分经验值 --> 
+	<dubbo:reference id="userEmpirical" interface="com.wing.socialcontact.service.wx.api.IUserEmpiricalService"/>
+	<dubbo:reference id="userEmpiricalLog" interface="com.wing.socialcontact.service.wx.api.IUserEmpiricalLogService"/>
+	<dubbo:reference id="userIntegralEmpirical" interface="com.wing.socialcontact.service.wx.api.IUserIntegralEmpiricalService"/>
+	<dubbo:reference id="userIntegral" interface="com.wing.socialcontact.service.wx.api.IUserIntegralService"/>
+	<dubbo:reference id="userIntegralLog" interface="com.wing.socialcontact.service.wx.api.IUserIntegralLogService"/>
+	
+	<!-- 首页弹出框管理 -->
+	<dubbo:reference id="indexAdService" interface="com.wing.socialcontact.service.wx.api.IIndexAdService"/>
+	<!-- 邀请好友记录 -->
+	<dubbo:reference id="inviteRecordService" interface="com.wing.socialcontact.service.wx.api.IInviteRecordService"/>
+	<!-- 聚合页配置 --> 
+	<dubbo:reference id="pageAggregateService" interface="com.wing.socialcontact.service.wx.api.IPageAggregateService"/>
+	<dubbo:reference id="pageColumnService" interface="com.wing.socialcontact.service.wx.api.IPageColumnService"/>
+	<!-- 优惠券-->
+	<dubbo:reference id="couponService" interface="com.wing.socialcontact.service.wx.api.ICouponService"/>
+	<dubbo:reference id="couponGenerateService" interface="com.wing.socialcontact.service.wx.api.ICouponGenerateService"/>
+	<dubbo:reference id="couponLogService" interface="com.wing.socialcontact.service.wx.api.ICouponLogService"/>
+	<!-- 系统黑名单 -->
+	<dubbo:reference id="sysBlacklistService" interface="com.wing.socialcontact.service.wx.api.ISysBlacklistService"/>
+	<dubbo:reference id="configService" interface="com.wing.socialcontact.service.wx.api.IConfigService"/>
+	<!-- 约见 -->
+	<dubbo:reference id="appointmentService" interface="com.wing.socialcontact.service.wx.api.IAppointmentService"/>
+	<dubbo:reference id="appointmentDetailsService" interface="com.wing.socialcontact.service.wx.api.IAppointmentDetailsService"/>
+	<dubbo:reference id="paymentAppointmentService" interface="com.wing.socialcontact.service.wx.api.IPaymentAppointmentService"/>
+	<!-- 个性定制 -->
+	<dubbo:reference id="personalCustomizationService" interface="com.wing.socialcontact.service.wx.api.IPersonalCustomizationService"/>
+	<!-- 个性定制意向客户 -->
+	<dubbo:reference id="personalCustomizationCustomerService" interface="com.wing.socialcontact.service.wx.api.IPersonalCustomizationCustomerService"/>
+	<!-- 项目超市 -->
+	<dubbo:reference id="projectSupermarketService" interface="com.wing.socialcontact.service.wx.api.IProjectSupermarketService"/>
+	<!-- 项目超市意向客户 -->
+	<dubbo:reference id="projectSupermarketCustomerService" interface="com.wing.socialcontact.service.wx.api.IProjectSupermarketCustomerService"/>
+	<!-- 用户拍照 -->
+	<dubbo:reference id="userPhotoService" interface="com.wing.socialcontact.service.wx.api.IUserPhotoService"/>
+	<!-- 文章操作日志 -->
+	<dubbo:reference id="libraryOpLogService" interface="com.wing.socialcontact.service.wx.api.ILibraryOpLogService"/>
+	<!-- 三维码 -->
+	<dubbo:reference id="threeDimensionalCodeService" interface="com.wing.socialcontact.service.wx.api.IThreeDimensionalCodeService"/>
+	<!-- 开屏广告 -->
+	<dubbo:reference id="openScreenAdvertis" interface="com.wing.socialcontact.service.wx.api.IOpenScreenAdvertisService"/>
+	<!-- 支付测试 -->
+	<dubbo:reference id="wxPayService" interface="com.tojoycloud.wechat.service.WxPayService" />
+	<!-- 通讯录 -->
+	<dubbo:reference interface="com.wing.socialcontact.service.wx.api.ITjyContactsService" id="tjyContactsService"/>
+	<!-- 约见付费版 -->
+	<dubbo:reference interface="com.tojoy.service.wx.api.IAppointmentPayService" id="appointmentPayService"/>
+	<!-- 订单 -->
+	<dubbo:reference interface="com.tojoy.service.wx.api.IOrderService" id="orderService"/>
+	<!-- 商品 -->
+	<dubbo:reference interface="com.tojoy.service.wx.api.IOrderItemService" id="orderItemService"/>
+	<!-- 设置平台收费比例及开关 -->
+	<dubbo:reference interface="com.wing.socialcontact.service.wx.api.IChargeSwitchService" id="chargeSwitchService" />
+	<!-- UCenter -->
+<!-- 	<dubbo:reference id="userService" interface="com.tojoycloud.ucenter.service.UserService"/> -->
+	
+</beans>

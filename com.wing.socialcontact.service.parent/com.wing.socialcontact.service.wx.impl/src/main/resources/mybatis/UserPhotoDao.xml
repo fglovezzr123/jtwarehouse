@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	wangyansheng
+	date	:	2017-11-27
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserPhotoDao">
+
+	<resultMap id="userPhoto" type="com.wing.socialcontact.service.wx.bean.UserPhoto">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="photoUrl" column="photo_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="trueName" column="true_name" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<sql id="field">
+         up.id,up.user_id,up.photo_url,up.status,up.create_time,up.create_user_id,up.update_time,up.update_user_id,up.deleted,u.true_name
+	</sql>
+
+	<sql id="dynamicWhere">
+		<where>
+			up.deleted= 0
+			<if test="userId!=null and userId!=''">
+				AND up.user_id = #{userId}
+			</if>
+			<if test="trueName!=null and trueName!=''">
+				AND u.true_name like concat('%',#{trueName},'%')
+			</if>
+			<if test="status!=null">
+				AND up.status = #{status}
+			</if>
+			<if test="createTime!=null">
+				AND up.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND up.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectByParam" resultMap="userPhoto" parameterType="java.util.Map">
+		select
+			<include refid="field"/>
+		from tjy_user_photo up
+		LEFT JOIN tjy_user u ON up.user_id = u.id
+ 		<include refid="dynamicWhere"/>
+		order by up.create_time desc
+	</select>
+
+	<select id="selectById" resultMap="userPhoto" parameterType="java.lang.String">
+		select
+		<include refid="field"/>
+		from tjy_user_photo up
+		LEFT JOIN tjy_user u ON up.user_id = u.id
+		where up.id = #{id}
+	</select>
+
+	<select id="selectByUserId" resultMap="userPhoto" parameterType="java.lang.String">
+		select
+		<include refid="field"/>
+		from tjy_user_photo up
+		LEFT JOIN tjy_user u ON up.user_id = u.id
+		where up.user_id = #{userId} limit 1
+	</select>
+
+</mapper>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	gaojun
+	date	:	2017-07-05 10:32:02
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.UserEmpiricalDao">
+
+	<resultMap id="userEmpirical" type="com.wing.socialcontact.service.wx.bean.UserEmpirical">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="level" column="level" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="levelNo" column="level_no" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalLow" column="empirical_low" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalHigh" column="empirical_high" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralTotal" column="integral_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="remark" column="remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalStatus" column="empirical_status" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="greetingsCount" column="greetings_count" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<resultMap id="userEmpiricalGlobal" type="com.wing.socialcontact.service.wx.bean.UserEmpirical">
+		<result property="id" column="UE_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="level" column="UE_level" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="levelNo" column="UE_level_no" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalLow" column="UE_empirical_low" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalHigh" column="UE_empirical_high" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="integralTotal" column="UE_integral_total" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="remark" column="UE_remark" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="UE_create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="UE_create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="UE_create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateTime" column="UE_update_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="updateUserId" column="UE_update_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="updateUserName" column="UE_update_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="UE_deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="empiricalStatus" column="UE_empirical_status" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="greetingsCount" column="UE_greetings_count" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	<sql id="field">
+		UE.id, UE.level, UE.level_no, UE.empirical_low, 
+		UE.empirical_high, UE.integral_total, UE.remark, UE.create_time, 
+		UE.create_user_id, UE.create_user_name, UE.update_time, UE.update_user_id, 
+		UE.update_user_name, UE.deleted, UE.empirical_status, UE.greetings_count
+	</sql>
+
+	<sql id="fieldGlobal">
+		UE.id UE_id, UE.level UE_level, 
+		UE.level_no UE_level_no, UE.empirical_low UE_empirical_low, 
+		UE.empirical_high UE_empirical_high, UE.integral_total UE_integral_total, 
+		UE.remark UE_remark, UE.create_time UE_create_time, 
+		UE.create_user_id UE_create_user_id, UE.create_user_name UE_create_user_name, 
+		UE.update_time UE_update_time, UE.update_user_id UE_update_user_id, 
+		UE.update_user_name UE_update_user_name, UE.deleted UE_deleted, 
+		UE.empirical_status UE_empirical_status, UE.greetings_count UE_greetings_count
+	</sql>
+	
+	<sql id="fieldWithAlias">
+		UE.id id, UE.level level, 
+		UE.level_no levelNo, UE.empirical_low empiricalLow, 
+		UE.empirical_high empiricalHigh, UE.integral_total integralTotal, 
+		UE.remark remark, UE.create_time createTime, 
+		UE.create_user_id createUserId, UE.create_user_name createUserName, 
+		UE.update_time updateTime, UE.update_user_id updateUserId, 
+		UE.update_user_name updateUserName, UE.deleted deleted, 
+		UE.empirical_status empiricalStatus, UE.greetings_count greetingsCount
+	</sql>
+	
+	<sql id="condition">
+		<if test="id!=null and id!=''">
+			AND UE.id=#{id}
+		</if>
+		<if test="level!=null and level!=''">
+			AND UE.level like CONCAT('%', #{level}, '%')
+		</if>
+		<if test="levelNo!=null">
+			AND UE.level_no=#{levelNo}
+		</if>
+		<if test="empiricalLow!=null">
+			AND UE.empirical_low=#{empiricalLow}
+		</if>
+		<if test="empiricalHigh!=null">
+			AND UE.empirical_high=#{empiricalHigh}
+		</if>
+		<if test="integralTotal!=null">
+			AND UE.integral_total=#{integralTotal}
+		</if>
+		<if test="remark!=null and remark!=''">
+			AND UE.remark=#{remark}
+		</if>
+		<if test="createTime!=null">
+			AND UE.create_time=#{createTime}
+		</if>
+		<if test="createUserId!=null and createUserId!=''">
+			AND UE.create_user_id=#{createUserId}
+		</if>
+		<if test="createUserName!=null and createUserName!=''">
+			AND UE.create_user_name=#{createUserName}
+		</if>
+		<if test="updateTime!=null">
+			AND UE.update_time=#{updateTime}
+		</if>
+		<if test="updateUserId!=null and updateUserId!=''">
+			AND UE.update_user_id=#{updateUserId}
+		</if>
+		<if test="updateUserName!=null and updateUserName!=''">
+			AND UE.update_user_name=#{updateUserName}
+		</if>
+		<if test="deleted!=null">
+			AND UE.deleted=#{deleted}
+		</if>
+		<if test="empiricalStatus!=null and empiricalStatus!=''">
+			AND UE.empirical_status=#{empiricalStatus}
+		</if>
+		<if test="greetingsCount!=null">
+			AND UE.greetings_count=#{greetingsCount}
+		</if>
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<include refid="condition"/>
+		</where>
+	</sql>
+	
+	<sql id="queryWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND UE.id LIKE CONCAT('%', #{id}, '%')
+			</if>
+			<if test="level!=null and level!=''">
+				AND UE.level LIKE CONCAT('%', #{level}, '%')
+			</if>
+			<if test="levelNo!=null">
+				AND UE.level_no=#{levelNo}
+			</if>
+			<if test="empiricalLow!=null">
+				AND UE.empirical_low=#{empiricalLow}
+			</if>
+			<if test="empiricalHigh!=null">
+				AND UE.empirical_high=#{empiricalHigh}
+			</if>
+			<if test="integralTotal!=null">
+				AND UE.integral_total=#{integralTotal}
+			</if>
+			<if test="remark!=null and remark!=''">
+				AND UE.remark LIKE CONCAT('%', #{remark}, '%')
+			</if>
+			<if test="createTime!=null">
+				AND UE.create_time=#{createTime}
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND UE.create_user_id LIKE CONCAT('%', #{createUserId}, '%')
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND UE.create_user_name LIKE CONCAT('%', #{createUserName}, '%')
+			</if>
+			<if test="updateTime!=null">
+				AND UE.update_time=#{updateTime}
+			</if>
+			<if test="updateUserId!=null and updateUserId!=''">
+				AND UE.update_user_id LIKE CONCAT('%', #{updateUserId}, '%')
+			</if>
+			<if test="updateUserName!=null and updateUserName!=''">
+				AND UE.update_user_name LIKE CONCAT('%', #{updateUserName}, '%')
+			</if>
+			<if test="deleted!=null">
+				AND UE.deleted=#{deleted}
+			</if>
+			<if test="empiricalStatus!=null and empiricalStatus!=''">
+				AND UE.empirical_status LIKE CONCAT('%', #{empiricalStatus}, '%')
+			</if>
+			<if test="greetingsCount!=null">
+				AND UE.greetings_count=#{greetingsCount}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="dynamicSet">
+		<set>
+           <if test="id!=null">
+				UE.id=#{id}, 
+		   </if>
+           <if test="level!=null">
+				UE.level=#{level}, 
+		   </if>
+           <if test="levelNo!=null">
+				UE.level_no=#{levelNo}, 
+		   </if>
+           <if test="empiricalLow!=null">
+				UE.empirical_low=#{empiricalLow}, 
+		   </if>
+           <if test="empiricalHigh!=null">
+				UE.empirical_high=#{empiricalHigh}, 
+		   </if>
+           <if test="integralTotal!=null">
+				UE.integral_total=#{integralTotal}, 
+		   </if>
+           <if test="remark!=null">
+				UE.remark=#{remark}, 
+		   </if>
+           <if test="createTime!=null">
+				UE.create_time=#{createTime}, 
+		   </if>
+           <if test="createUserId!=null">
+				UE.create_user_id=#{createUserId}, 
+		   </if>
+           <if test="createUserName!=null">
+				UE.create_user_name=#{createUserName}, 
+		   </if>
+           <if test="updateTime!=null">
+				UE.update_time=#{updateTime}, 
+		   </if>
+           <if test="updateUserId!=null">
+				UE.update_user_id=#{updateUserId}, 
+		   </if>
+           <if test="updateUserName!=null">
+				UE.update_user_name=#{updateUserName}, 
+		   </if>
+           <if test="deleted!=null">
+				UE.deleted=#{deleted}, 
+		   </if>
+           <if test="empiricalStatus!=null">
+				UE.empirical_status=#{empiricalStatus}, 
+		   </if>
+           <if test="greetingsCount!=null">
+				UE.greetings_count=#{greetingsCount}, 
+		   </if>
+		</set>
+	</sql>
+	
+	<sql id="orderby">
+		<if test="orderby != null">
+			ORDER BY ${orderby}
+		</if>
+	</sql>
+
+
+	
+	<select id="loadById" resultMap="userEmpirical">
+		SELECT <include refid="field"/>
+		FROM mall.TJY_USER_EMPIRICAL UE
+		WHERE UE.ID = #{id}
+	</select>
+	
+	
+	<select id="selectByParam" resultMap="userEmpirical" parameterType="java.util.Map">
+		SELECT *
+		FROM TJY_USER_EMPIRICAL UE 
+    	<include refid="dynamicWhere" />
+		order by UE.create_time asc
+	</select>
+	
+	<select id="selectByEmpirical" resultMap="userEmpirical">
+			SELECT *
+		FROM TJY_USER_EMPIRICAL UE
+		WHERE #{Empirical} between  UE.empirical_low and  UE.empirical_high
+	</select>
+	
+	<select id="selectBylevel" resultMap="userEmpirical">
+			SELECT *
+		FROM TJY_USER_EMPIRICAL UE
+		WHERE  UE.level=#{level}
+	</select>
+	
+</mapper>

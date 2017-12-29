@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tojoy.business.common.dao.ThumbUpDao">
+
+	<resultMap id="resultMap" type="com.tojoy.business.common.bean.ThumpUp">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="userId" column="user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+	</resultMap>
+	
+	<sql id="field">
+		c.id, c.user_id, c.fk_id,c.create_time
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND c.id=#{id}
+			</if>
+			<if test="userId!=null and userId!=''">
+				AND c.user_id=#{userId}
+			</if>
+			<if test="fkId!=null and fkId!=''">
+				AND c.fk_id=#{fkId}
+			</if>
+			<if test="createTime!=null">
+				AND c.create_time=#{createTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="com.tojoy.business.common.bean.ThumpUp">
+		INSERT INTO tjy_thumb_up_${keyWord} (id,
+		user_id,
+		fk_id,
+		create_time)
+		VALUES   (#{id},
+		#{userId},
+		#{fkId},
+		#{createTime})
+	</insert>
+
+	<delete id="delete" parameterType="com.tojoy.business.common.bean.ThumpUp">
+		DELETE FROM tjy_thumb_up_${keyWord} WHERE user_id = #{userId} and fk_id = #{fkId}
+	</delete>
+
+	<select id="queryByFkIdUserId" resultMap="resultMap" parameterType="com.tojoy.business.common.bean.ThumpUp">
+		SELECT
+		<include refid="field"/>
+		FROM tjy_thumb_up_${keyWord} c
+		<include refid="dynamicWhere"/>
+		limit 1
+	</select>
+
+	<select id="queryCount" resultType="Integer"  parameterType="com.tojoy.business.common.bean.ThumpUp">
+		SELECT
+		COUNT(c.id)
+		FROM tjy_thumb_up_${keyWord}  c
+		<include refid="dynamicWhere"/>
+	</select>
+
+</mapper>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-04-04 00:05:28
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.MeetingDao">
+
+	<resultMap id="meeting" type="com.wing.socialcontact.service.wx.bean.Meeting">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="titles" column="titles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="coverImg" column="cover_img" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="types" column="types" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="place" column="place" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="contents" column="contents" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="sponsor" column="sponsor" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="startTime" column="start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="startSignupTime" column="start_signup_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endSignupTime" column="end_signup_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="ticketPrice" column="ticket_price" javaType="Double" jdbcType="DOUBLE"></result>
+		<result property="liveUrl" column="live_url" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="investmentEnable" column="investment_enable" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="recommendEnable" column="recommend_enable" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="showEnable" column="show_enable" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="webinarId" column="webinar_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="webinarSubject" column="webinar_subject" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="upperlimit" column="upperlimit" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="sort" column="sort" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="coupon" column="coupon" javaType="Double" jdbcType="DOUBLE"></result>
+		<result property="province" column="province" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="city" column="city" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="county" column="county" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		m.id, m.titles, m.cover_img, m.types, m.contents,m.sponsor, m.end_signup_time,
+		m.place, m.start_time, m.end_time, m.start_signup_time,m.sort, 
+		m.ticket_price, m.live_url, m.status, m.recommend_enable,m.investment_enable, 
+		m.show_enable, m.create_time, m.create_user_id, m.create_user_name, 
+		m.deleted,m.webinar_id,m.webinar_subject,m.upperlimit,m.province,m.city,m.county
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND m.id=#{id}
+			</if>
+			<if test="titles!=null and titles!=''">
+				AND m.titles like CONCAT('%',#{titles},'%')
+			</if>
+			<if test="coverImg!=null and coverImg!=''">
+				AND m.cover_img=#{coverImg}
+			</if>
+			<if test="types!=null">
+				AND m.types=#{types}
+			</if>
+			<if test="place!=null and place!=''">
+				AND m.place=#{place}
+			</if>
+			<if test="startTime!=null">
+				AND m.start_time=#{startTime}
+			</if>
+			<if test="endTime!=null">
+				AND m.end_time=#{endTime}
+			</if>
+			<if test="startSignupTime !=null">
+				AND m.start_signup_time=#{startSignupTime}
+			</if>
+			<if test="endSignupTime !=null">
+				AND m.end_signup_time=#{endSignupTime}
+			</if>
+			<if test="ticketPrice!=null">
+				AND m.ticket_price=#{ticketPrice}
+			</if>
+			<if test="liveUrl!=null and liveUrl!=''">
+				AND m.live_url=#{liveUrl}
+			</if>
+			<if test="status!=null">
+				AND m.status=#{status}
+			</if>
+			<if test="recommendEnable!=null">
+				AND m.recommend_enable=#{recommendEnable}
+			</if>
+			<if test="investmentEnable!=null">
+				AND m.investment_enable=#{investmentEnable}
+			</if>
+			<if test="showEnable!=null">
+				AND m.show_enable=#{showEnable}
+			</if>
+			<if test="createTime!=null">
+				AND m.create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				AND m.create_time &lt; STR_TO_DATE(CONCAT(DATE_FORMAT(#{createTime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+			</if>
+			<if test="createUserId!=null and createUserId!=''">
+				AND m.create_user_id=#{createUserId}
+			</if>
+			<if test="createUserName!=null and createUserName!=''">
+				AND m.create_user_name=#{createUserName}
+			</if>
+			<if test="deleted!=null">
+				AND m.deleted=#{deleted}
+			</if>
+			
+			<if test="gtStartTime!=null">
+				AND m.start_time &gt; #{gtStartTime}
+			</if>
+			<if test="ltStartTime!=null">
+				AND m.start_time &lt; #{ltStartTime}
+			</if>
+			<if test="gtEndTime !=null">
+				AND m.end_time &gt; #{gtEndTime}
+			</if>
+			<if test="ltEndTime !=null">
+				AND m.end_time &lt; #{ltEndTime}
+			</if>
+			<if test="gtStartSignupTime !=null">
+				AND m.start_signup_time &gt; #{gtStartSignupTime}
+			</if>
+			<if test="ltStartSignupTime !=null">
+				AND m.start_signup_time &lt; #{ltStartSignupTime}
+			</if>
+			<if test="gtEndSignupTime !=null">
+				AND m.end_signup_time &gt; #{gtEndSignupTime}
+			</if>
+			<if test="ltEndSignupTime !=null">
+				AND m.end_signup_time &lt; #{ltEndSignupTime}
+			</if>
+			<if test="isSignuped !=null and isSignuped ==1">
+				AND (SELECT 1 from tjy_meeting_signup b where b.meeting_id=m.id and b.user_id=#{userId})
+			</if>
+			<if test="isAttentioned !=null and isAttentioned ==1">
+				AND (SELECT 1 from tjy_attention b where b.fk_id=m.id and b.user_id=#{userId})
+			</if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="meeting" parameterType="java.util.Map">
+		SELECT 
+			<include refid="field"/>
+		FROM tjy_meeting m
+ 		<include refid="dynamicWhere"/>
+ 		<choose>
+ 		<when test="orderBy !=null and orderBy != ''">
+ 		${orderBy}
+ 		</when>
+ 		<otherwise>
+ 		order by m.sort desc, m.create_time desc
+ 		</otherwise>
+ 		</choose>
+	</select>
+	<select id="selectMyCollectMeeting" resultMap="meeting" parameterType="java.util.Map">
+		SELECT 
+			<include refid="field"/>
+		FROM tjy_attention b
+		inner join tjy_meeting m  on  b.fk_id=m.id
+		where b.user_id=#{userId} 
+ 		<choose>
+ 		<when test="orderBy !=null and orderBy != ''">
+ 		${orderBy}
+ 		</when>
+ 		<otherwise>
+ 		order by m.sort desc,m.create_time desc
+ 		</otherwise>
+ 		</choose>
+	</select>
+	<select id="isWhitelist" resultType="int">
+		select count(*) from 
+		(select 1 as s from tjy_meeting_whitelist a 
+			where a.user_id=ifnull(#{userId},'-1') and a.meeting_id=ifnull(#{meetingId},'-1') 
+		union
+		select 1 as s from tjy_global_whitelist b 
+			where b.user_id=ifnull(#{userId},'-1') and b.types=1) c
+		
+	</select>
+</mapper>

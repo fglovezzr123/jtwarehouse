@@ -1,0 +1,98 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+   height:100%;
+   overflow:scroll;
+	  
+}
+.wrapper{
+
+      width:100%;
+      font-size:0.3rem;
+     
+    
+
+
+}
+.showB{
+      background:#ff811b;
+     
+      padding-top:0.05rem;
+      padding-bottom:0.05rem;
+
+      font-family:"微软雅黑";
+}
+.showB div{
+
+     width:25%;
+     height:0.53rem;
+     float:left;
+     color:white;
+     text-align:center;
+     line-height:0.53rem;
+     font-size:0.3rem;
+
+}
+.clear{
+
+clear:both;
+}
+.m-head{
+
+     background:#f3f4f6;
+     height:0.77rem;
+     color:#3b3b3b;
+     padding-left:0.4rem;
+     padding-right:0.4rem;   
+     line-height:0.77rem;
+}
+
+.m-head div:nth-child(1){
+     text-align:left;
+     float:left;
+     width:70%;
+}
+.m-head div:nth-child(2){
+     text-align:center;
+     float:right;
+     width:30%;
+}
+.blockss{
+      width:90%;
+      padding-left:5%;
+      padding-right:5%;
+      padding-top:0.25rem;
+      padding-bottom:0.25rem;
+}
+.blockss .dateC{
+    width:26%;
+    background:url(../img/icons/balance-icon.png)no-repeat center right;
+    background-size:0.72rem 0.72rem;
+}
+.blockss div:nth-child(2){
+   width:60%;
+   padding-left:10%;
+   color:#808080;
+}
+li span{
+      color:#ff811b;
+      font-size:0.34rem;
+}
+.blockss div{
+     float:left;
+}
+.soon{
+     height:0.9rem;
+     width:100%;
+     text-align:center;
+     color:white;
+     position:fixed;
+     left:0;
+     bottom:0;
+     line-height:0.9rem;
+     background:#ff811b;
+     font-size:0.3rem;
+}
+.dateC li{
+    color:#808080;
+}

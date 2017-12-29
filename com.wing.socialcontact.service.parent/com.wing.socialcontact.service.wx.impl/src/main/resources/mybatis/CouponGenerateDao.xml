@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	zhangfan
+	date	:	2017-07-20 11:00:18
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.CouponGenerateDao">
+
+	<resultMap id="couponGenerate" type="com.wing.socialcontact.service.wx.bean.CouponGenerate">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="batchNum" column="batch_num" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="couponName" column="coupon_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="startTime" column="start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="endTime" column="end_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="couponNum" column="coupon_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="receiveNum" column="receive_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="remainNum" column="remain_num" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createUserName" column="create_user_name" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="deleted" column="deleted" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="storeMobile" column="store_mobile" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		t.id id, t.fk_id fkId, 
+		t.batch_num batchNum, t.coupon_name couponName, 
+		t.start_time startTime, t.end_time endTime, 
+		t.coupon_num couponNum, t.receive_num receiveNum, 
+		t.remain_num remainNum, t.create_time createTime,t.store_mobile storeMobile,
+		t.create_user_id createUserId, t.create_user_name createUserName, 
+		t.deleted deleted
+	</sql>
+	<select id="selectByParam" resultType="java.util.HashMap" parameterType="java.util.Map">
+		SELECT  <include refid="field"/>,c.coupon_name cgName 
+		FROM tjy_coupon_generate t left join tjy_coupon c on t.fk_id = c.id
+ 		WHERE 1=1 
+ 		<if test="fkId!=null and fkId!=''">
+			AND t.fk_id=#{fkId}
+		</if>
+ 		<if test="batchNum!=null and batchNum!=''">
+				AND t.batch_num LIKE CONCAT('%', #{batchNum}, '%')
+		</if>
+		<if test="couponName!=null and couponName!=''">
+				AND c.coupon_name LIKE CONCAT('%', #{couponName}, '%')
+		</if>
+		<if test="startTime != null and startTime != '' and endTime !=null and endTime != '' ">
+        	AND t.create_time BETWEEN concat(#{startTime,jdbcType=VARCHAR},' 00:00:00') AND concat(#{endTime,jdbcType=VARCHAR},' 23:59:59') 
+        </if>
+        <if test="startTime != null and startTime != '' and (endTime==null or endTime== '') ">
+      		AND t.create_time &gt;= concat(#{startTime,jdbcType=VARCHAR},' 00:00:00')
+        </if>
+        <if test="(startTime == null or startTime == '') and endTime!=null and endTime!= '' ">
+      		AND t.create_time &lt;= concat(#{endTime,jdbcType=VARCHAR},' 23:59:59')
+        </if>
+        order by t.create_time desc 
+        <if test="start != null and size != null ">
+			 limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}  
+		</if>
+	</select>
+
+	<select id="selectDuplicate" resultMap="couponGenerate" parameterType="Object">
+		SELECT  <include refid="field"/>
+		FROM tjy_coupon_generate t
+ 		WHERE 1=1
+ 		<if test="fkId!=null and fkId!=''">
+			AND t.fk_id=#{fkId}
+		</if>
+ 		<if test="batchNum!=null and batchNum!=''">
+			AND t.batch_num LIKE CONCAT('%', #{batchNum}, '%')
+		</if>
+		<if test="startTime!=null and endTime!=null">
+			<![CDATA[
+			AND
+			(
+			(t.start_time >= CONCAT(DATE(#{startTime,jdbcType=TIMESTAMP}), ' 00:00:00') AND t.start_time<=CONCAT(DATE(#{endTime,jdbcType=TIMESTAMP}), ' 23:59:59'))
+			OR
+			(t.end_time >= CONCAT(DATE(#{startTime,jdbcType=TIMESTAMP}), ' 00:00:00') AND t.end_time<=CONCAT(DATE(#{endTime,jdbcType=TIMESTAMP}), ' 23:59:59'))
+			OR
+			(t.start_time >= CONCAT(DATE(#{startTime,jdbcType=TIMESTAMP}), ' 00:00:00') AND t.end_time<=CONCAT(DATE(#{endTime,jdbcType=TIMESTAMP}), ' 23:59:59'))
+			OR
+			(t.start_time <= CONCAT(DATE(#{startTime,jdbcType=TIMESTAMP}), ' 00:00:00') AND t.end_time>=CONCAT(DATE(#{endTime,jdbcType=TIMESTAMP}), ' 23:59:59'))
+			)
+			]]>
+		</if>
+	</select>
+
+	
+</mapper>

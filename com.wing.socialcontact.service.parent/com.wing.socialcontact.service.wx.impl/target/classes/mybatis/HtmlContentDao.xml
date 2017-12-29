@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	liangwj
+	date	:	2017-04-04 00:05:28
+	version	:	1.0
+-->
+<mapper namespace="com.wing.socialcontact.service.wx.dao.HtmlContentDao">
+
+	<resultMap id="htmlContent" type="com.wing.socialcontact.service.wx.bean.HtmlContent">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkid" column="fkid" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="types" column="types" javaType="Integer" jdbcType="INTEGER"></result>
+		<result property="contents" column="contents" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+	
+	<sql id="field">
+		HC.id, HC.fkid, HC.types, HC.contents
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="id!=null and id!=''">
+				AND HC.id=#{id}
+			</if>
+			<if test="fkid!=null and fkid!=''">
+				AND HC.fkid=#{fkid}
+			</if>
+			<if test="types!=null">
+				AND HC.types=#{types}
+			</if>
+			<if test="contents!=null and contents!=''">
+				AND HC.contents=#{contents}
+			</if>
+		</where>
+	</sql>
+	<select id="selectByParam" resultMap="htmlContent" parameterType="java.util.Map">
+		SELECT 
+			<include refid="field"/>
+		FROM TJY_HTML_CONTENT HC
+ 		<include refid="dynamicWhere"/>
+	</select>
+</mapper>

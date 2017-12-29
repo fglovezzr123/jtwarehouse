@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.springboot_dubbo_provider.mapper.UserInfoMapper">
+	
+	<select id="getUserInfoById" resultType="org.tojoycloud.dubbo.springboot_dubbo_api.entity.UserInfo">
+		select * from w_user where id = #{id}
+	</select>
+	
+	<insert id="batchInsertTwo" parameterType="java.util.List" >
+		insert into t_userinfo values 
+		<foreach collection="list" item="user" separator=",">
+		(#{user.id}, #{user.username}, #{user.password}, #{user.truename}, #{user.gender}, #{user.title}, #{user.birthday}, #{user.unit}, #{user.cellphone}, #{user.wxaccount}, #{user.registtype}, #{user.createtime})
+		</foreach>
+	</insert>
+</mapper>

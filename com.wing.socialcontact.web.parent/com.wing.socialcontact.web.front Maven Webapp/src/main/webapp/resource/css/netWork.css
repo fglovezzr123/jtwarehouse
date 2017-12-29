@@ -1,0 +1,269 @@
+/*@charset "utf-8";
+
+/*swipper*/
+/* #banner{
+	width: 100%;
+}
+.banner .banner_ul{
+	width: 100%;
+}
+.banner_ul img{
+	width: 100%;
+	height: 100%;
+}
+.banner .swiper-pagination-bullet{
+	background: #fff;
+	width: .20rem;
+	height: .20rem;
+	opacity: 1;
+}
+.banner .swiper-pagination-bullet-active {
+    background: #0f88eb;
+} */
+.imgBox{
+	width: 100%;
+	height: 1.76rem;
+	margin-bottom: .08rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background: #fff;
+}
+.imgBox img{
+	width: 1rem;
+	height: 1rem;
+}
+.tonghao{
+	width: 100%;
+	padding: 0.12rem 0.3rem;
+	box-sizing: border-box;
+	background:#fff;
+	
+}
+.tonghao .th{
+	display: flex;
+	height: .65rem;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+}
+.tonghao .th h2{
+	font-size: .30rem;
+	font-weight: 500;
+}
+.tonghao .th .th-a{
+	font-size: .24rem;
+	color: #666;
+}
+.tonghao .th .th-a .iconfont{
+	font-size: .24rem;
+	color: #666;
+}
+.tonghao .timgBox{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.tonghao .timgBox a{
+	width: 3.4rem;
+	height:3.4rem;
+	font-size: .30rem;
+	color: #fff;
+	position: relative;
+}
+.tonghao .timgBox a img{
+	width: 100%;
+    height: 100%;
+}
+.tonghao .timgBox a:nth-of-type(3){
+	margin-top: .1rem;
+}
+.tonghao .timgBox a:nth-of-type(4){
+	margin-top: .1rem;
+}
+.tonghao .timgBox a span{
+	position: absolute;
+	z-index: 2;
+	display:block;
+	width:100%;
+	top:45%;
+	text-align:center;
+	font-size: .30rem;
+}
+
+.jingxuan{
+	width: 100%;
+/* 	height: 2.6rem; */
+	background:#fff;
+	border-top:1px solid #e6e6e6
+	
+}
+ .th{
+	display: flex;
+	height: .65rem;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 0;
+	box-sizing: border-box;
+	background:#fff;
+	
+}
+ .th h2{
+	font-size: .30rem;
+	font-weight: 500;
+}
+ .th .th-a{
+	font-size: .24rem;
+	color: #666;
+}
+ .th .th-a .iconfont{
+	font-size: .24rem;
+	color: #666;
+}
+
+ .info-l{
+	width:100%;
+	height: 1rem;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+}
+.p-img{
+	width: .72rem;
+	height: .73rem;
+}
+ .info-l .person{
+	margin: 0 0 0 .20rem;
+	display: flex;
+	flex-direction: column;
+}
+.info-l .person .p-name{
+	font-size: .32rem;
+	font-weight: bold;
+	color: #666666;
+}
+.info-l .person .company{
+	font-size: .20rem;
+}
+.jingxuan .j-tit{
+	width: 100%;
+	font-size: .36rem;
+	font-weight: normal;
+	text-align: center;
+	line-height: .80rem;
+	font-weight:blod;
+}
+
+.jingxuan .t-info{
+	width: 100%;
+	height: .69rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+.jingxuan .t-info span{
+	flex: 1;
+	font-size: .24rem;
+	color: #666;
+	text-align: center;
+	text-indent:0.55rem;
+}
+.jingxuan .t-info span b{
+	font-weight:normal;
+}
+.jingxuan .t-info span:nth-child(1){
+	height:0.3rem;
+	background:url(../img/icons/booo1.png) no-repeat center left ;
+	background-size:0.3rem 0.3rem;
+	background-position-x:0.3rem
+}
+
+.jingxuan .t-info span:nth-child(2){
+	height:0.3rem;
+	background:url(../img/icons/booo.png) no-repeat center left ;
+	background-size:0.3rem 0.3rem;
+	background-position-x:0.5rem
+}
+
+.jingxuan .t-info span:nth-child(3){
+	height:0.3rem;
+	background:url(../img/icons/zhuge-a9.png) no-repeat center left ;
+	background-size:0.3rem 0.3rem;
+	background-position-x:0.5rem
+}
+.z-active{
+	width: 100%;
+	height: 3.1rem;
+	padding: 0 .30rem;
+	box-sizing: border-box;
+	background:#fff;
+	margin-top: .04rem;
+}
+.z-active .th{
+	display: flex;
+	height: .65rem;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 0;
+	box-sizing: border-box;
+}
+.z-active .th h2{
+	font-size: .30rem;
+	font-weight: 500;
+}
+.z-active .th .th-a{
+	font-size: .24rem;
+	color: #666;
+}
+.z-active .th .th-a .iconfont{
+	font-size: .24rem;
+	color: #666;
+}
+.z-active .timgBox{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.z-active .timgBox a{
+	width: 3.4rem;
+	height: 1.7rem;
+	font-size: .30rem;
+	color: #fff;
+	position: relative;
+	margin-top:.1rem;
+}
+.z-active .timgBox a img{
+	width: 100%;
+	height: 100%;
+}
+.z-active .timgBox a span{
+	position: absolute;
+	z-index: 2;
+	left: .20rem;
+	top: calc(50% - .30rem);
+	font-size: .30rem;
+}
+.z-active .timgBox a span:nth-of-type(2){
+	margin-top: .40rem;
+}
+#jxht{
+	margin-top:0.1rem;
+	padding: 0 .3rem;
+    background: #fff;
+    border-bottom:1px solid #e6e6e6;
+}
+.activityCover{
+	background: black;
+    width: 100%;
+    height:100%;
+    position: absolute;
+    opacity: 0.4;
+}
+.samehobbyCover{
+	background: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: 0.4;
+	
+}

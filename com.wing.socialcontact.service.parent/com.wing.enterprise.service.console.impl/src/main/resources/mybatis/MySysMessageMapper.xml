@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.enterprise.service.dao.MySysMessageDao">
+    
+	<resultMap id="myMsg" type="java.util.HashMap">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time"  jdbcType="DATE"></result>
+		<result property="createUserId" column="create_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="ssUserId" column="ss_user_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="content" column="content" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="status" column="status" javaType="Integer" jdbcType="INTEGER"></result>
+	</resultMap>
+	
+	
+	<select id="selectMyMessage" resultMap="myMsg" parameterType="java.util.Map">
+		select a.* from qfy_my_sys_message a where 1=1 
+ 		<if test="ssUserId != null and ssUserId != ''">
+			AND	a.ss_user_id = #{ssUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null and (status == 0 or status == 1)">
+			AND	a.status = #{status,jdbcType=INTEGER}
+		</if>
+		order by a.create_time desc
+	</select>
+	
+	<select id="selWillPushUser" resultMap="myMsg" parameterType="java.util.Map">
+		select t.* from tjy_im_token t
+	</select>
+	
+     <insert id ="insertMyMsgBatch" parameterType="java.util.List" >
+            INSERT INTO qfy_my_sys_message (
+            	id,
+				create_time,
+				create_user_id,
+				ss_user_id,
+				content,
+				status
+			) values
+            <foreach collection ="list" item="myMsg" index= "index" separator =",">
+              (
+              	#{myMsg.id},
+                #{myMsg.createTime},
+                #{myMsg.createUserId},
+                #{myMsg.ssUserId},
+                #{myMsg.content},
+                #{myMsg.status}
+              )
+            </foreach >
+     </insert >
+     <update id ="updateMyMsgBatch" parameterType="java.util.Map" >
+            UPDATE qfy_my_sys_message m
+			SET m.status = 1
+			WHERE
+				m.status = 0 
+			<if test="uids != null and uids != ''">
+				AND	m.ss_user_id = #{uids,jdbcType=VARCHAR}
+			</if>
+     </update >
+</mapper>
+

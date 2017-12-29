@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	author	:	wangyanshegn
+	date	:	2017-12-04 00:05:28
+	version	:	1.0
+-->
+<mapper namespace="com.tojoy.service.wx.dao.MeetingSuccessiveDao">
+
+	<resultMap id="meetingSuccessive" type="com.tojoy.service.wx.bean.MeetingSuccessive">
+		<result property="id" column="id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="fkId" column="fk_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="meetingId" column="meeting_id" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="createTime" column="create_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="titles" column="titles" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="startTime" column="start_time" javaType="Date" jdbcType="TIMESTAMP"></result>
+		<result property="place" column="place" javaType="String" jdbcType="VARCHAR"></result>
+		<result property="coverImg" column="cover_img" javaType="String" jdbcType="VARCHAR"></result>
+	</resultMap>
+
+	<select id="queryMeetingSuccessiveByMeetingId" resultMap="meetingSuccessive" parameterType="java.lang.String">
+		SELECT
+		s.id,s.fk_id,s.meeting_id,s.create_time,m.titles,m.cover_img,m.start_time,m.place
+		FROM tjy_meeting_successive s
+		LEFT JOIN tjy_meeting m ON s.meeting_id =  m.id
+	    where s.fk_id = #{meetingId}
+	    order by s.create_time asc
+	</select>
+
+	<delete id="deleteByMeetingId" parameterType="java.lang.String">
+		DELETE FROM tjy_meeting_successive WHERE fk_id = #{meetingId}
+	</delete>
+
+</mapper>

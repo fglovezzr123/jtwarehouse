@@ -1,0 +1,75 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{
+	 overflow:scroll;
+   height:100%;
+}
+.wrapper{
+      box-sizing:border-box;
+      width:100%;
+      padding-left:0.3rem;
+      padding-right:0.3rem;
+      font-size:0.3rem;
+      margin:0 auto;
+      padding-bottom:0.9rem;
+      margin-top: .24rem;
+      color:#3b3b3b;
+}
+h5{
+	text-align:center;
+	width:100%;
+	font-size:.36rem;
+	margin-bottom:0.24rem;
+}
+.wrapper p img{
+      width:100%;
+      margin-top:0.27rem;
+      margin-bottom:0.27rem;
+}
+.share{
+      width:100%;
+      height:0.9rem;   
+      line-height:0.9rem;
+      position:fixed;
+      bottom:0;
+      left:0;
+      background:white;
+      font-size:0.3rem;
+      text-align:center;
+     /*  box-shadow:0px 6px 4px 5px #808080 */
+}
+.share div{
+      font-size:0.30rem;
+      height:100%;
+      text-align:center;
+      float:left;
+}
+.share div:nth-child(1){
+    width:25%;
+    background:url(../img/icons/hollowStar.png) no-repeat center left;
+    background-size:0.4rem 0.4rem;
+    background-position-x:20%;
+}
+.share div:nth-child(2){
+    color:white;
+    background:#1087eb;
+    width:25%;
+}
+.share div:nth-child(3){
+    width:25%;
+}
+.share div:nth-child(4){
+	color:white;
+	background:#1087eb;
+    width:25%;
+}
+.clear{
+
+     clear:both;
+}
+.tips-s-img{position:fixed;z-index:999999; top:0; right:20px; background:url(../img/icons/tips_s_img.png) no-repeat; background-size:253px 312px; width:253px; height:312px; }
+
+/*	遮罩层	*/
+.com-backdrop-top{position:fixed;z-index:998;top:0;right:0;bottom:0;left:0;background-color:rgba(0,0,0,.5);}/*top页专用*/
+.com-backdrop{position:fixed;z-index:998;top:0;right:0;bottom:0;left:0;background-color:rgba(0,0,0,.5);}
+.share-tips{position:fixed;z-index:999; top:0; right:20px; background:url(../images/share_tips.png) no-repeat; background-size:209px 240px; width:209px; height:240px; }

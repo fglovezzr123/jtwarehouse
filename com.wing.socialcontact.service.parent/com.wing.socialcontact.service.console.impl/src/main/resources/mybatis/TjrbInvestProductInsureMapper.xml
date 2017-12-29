@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wing.socialcontact.sys.dao.TjrbInvestProductInsureDao">
+	<!-- 查询全部 -->	
+ 	<resultMap type="java.util.HashMap" id="tjrbInvestProductInsureMap">
+		<id column="id" property="id"></id>
+		<result column="product_status" property="productStatus"/>
+		<result column="product_detail" property="productDetail"/>
+		<result column="product_name" property="productName"/>
+		<result column="start_point" property="startPoint"/>
+		<result column="introduce" property="introduce"/>
+		<result column="invest_type" property="investType"/>
+		<result column="consultant" property="consultant"/>
+		<result column="org_name" property="orgName"/>
+		<result column="strengths1" property="strengths1"/>
+		<result column="strengths2" property="strengths2"/>
+		<result column="strengths3" property="strengths3"/>
+		<result column="strengths4" property="strengths4"/>
+		<result column="org_no" property="orgNo"/>
+		<result column="crowd_type" property="crowdType"/>
+		<result column="expected_return" property="expectedReturn"/>
+		<result column="update_date" property="updateDate"/>
+		<result column="create_date" property="createDate"/>
+		<result column="is_recommend" property="isRecommend"/>
+		<result column="is_show" property="isShow"/>
+	</resultMap>
+
+    <select id="selectByParam" resultMap="tjrbInvestProductInsureMap" parameterType="java.util.Map">
+		SELECT * FROM tjrb_invest_product_insure
+	</select>
+	
+</mapper>

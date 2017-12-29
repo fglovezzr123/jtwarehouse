@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+    	http://code.alibabatech.com/schema/dubbo
+    	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="${dubbo.application.name}" />
+
+	<!-- 注册中心暴露服务地址 -->
+	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
+	
+	
+	<!-- 只订阅  
+		【问题】为方便开发测试，经常会在线下共用一个所有服务可用的注册中心，这时，如果一个正在开发中的服务提供者注册，可能会影响消费者不能正常运行。
+		【解决】可以让服务提供者开发方，只订阅服务(开发的服务可能依赖其它服务)，而不注册正在开发的服务，通过直连测试正在开发的服务。
+	 -->
+	 <!--<dubbo:registry address="192.168.0.103:2181" register="false" /> -->
+
+	<!-- 协议端口 -->
+	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" />
+
+	<!-- 暴露服务    -->
+	<bean id="userInfoService"              class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.UserInfoServiceImpl" />
+	<bean id="bpPersonService"              class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.BpPersonServiceImpl" />
+	<bean id="bpPersonProjectService"       class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.BpPersonProjectServiceImpl" />
+	<bean id="financeProductService"        class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.FinanceProductServiceImpl" />
+	<bean id="financeProductStockService"   class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.FinanceProductStockServiceImpl" />
+	<bean id="financeTipsService"           class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.FinanceTipsServiceImpl" />
+	<bean id="financeWillService"           class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.FinanceWillServiceImpl" />
+	<bean id="investPersonService"          class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.InvestPersonServiceImpl" />
+	<bean id="investProductService"         class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.InvestProductServiceImpl" />
+	<bean id="investProductInsureService"   class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.InvestProductInsureServiceImpl" />
+	<bean id="investTipsService"            class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.InvestTipsServiceImpl" />
+	<bean id="investTypeService"            class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.InvestTypeServiceImpl" />
+	<bean id="investWillService"            class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.InvestWillServiceImpl" />
+	<bean id="orgService"                   class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.OrgServiceImpl" />
+	<bean id="orgConsultantService"         class="org.tojoycloud.dubbo.springboot_dubbo_provider.service.impl.OrgConsultantServiceImpl" />
+	
+	<!-- 
+		参考：http://dubbo.io/User+Guide-zh.htm#UserGuide-zh-%E9%85%8D%E7%BD%AE%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C
+		1、retries：重试次数（不包括第一次调用）
+		2、timeout：调用超时（毫秒）
+		3、mock:默认false，如果设为true，则使用缺省Mock类，即：接口名+Mock后缀，该mock类必须有一个无参构造函数，其只在出现非业务异常（如超时、网络异常等）时执行，mock类在远程调用后执行
+			         如果设置classes，表示明确指定mock类
+		4、stub：默认false，若true，则使用缺省代理类，即：接口名+Local后缀，服务接口客户端本地代理类名，用于在客户端执行本地逻辑，如本地缓存等，
+			        该本地代理类的构造函数必须允许传入远程代理对象，构造函数如：public XxxServiceLocal(XxxService xxxService)
+	 -->
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.UserInfoService" ref="userInfoService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.BpPersonService" ref="bpPersonService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.BpPersonProjectService" ref="bpPersonProjectService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.FinanceProductService" ref="financeProductService" retries="2" timeout="6000"/>
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.FinanceProductStockService" ref="financeProductStockService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.FinanceTipsService" ref="financeTipsService" retries="2" timeout="6000"/>
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.FinanceWillService" ref="financeWillService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.InvestPersonService" ref="investPersonService" retries="2" timeout="6000"/>
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.InvestProductService" ref="investProductService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.InvestProductInsureService" ref="investProductInsureService" retries="2" timeout="6000"/>
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.InvestTipsService" ref="investTipsService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.InvestTypeService" ref="investTypeService" retries="2" timeout="6000"/>
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.InvestWillService" ref="investWillService" retries="2" timeout="6000" mock="false" />
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.OrgService" ref="orgService" retries="2" timeout="6000"/>
+	<dubbo:service interface="org.tojoycloud.dubbo.springboot_dubbo_api.service.OrgConsultantService" ref="orgConsultantService" retries="2" timeout="6000" mock="false" />
+</beans>

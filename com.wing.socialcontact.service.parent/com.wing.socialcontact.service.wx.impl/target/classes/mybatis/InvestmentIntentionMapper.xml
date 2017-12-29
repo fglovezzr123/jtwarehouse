@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wing.socialcontact.service.wx.dao.InvestmentIntentionDao">
+    <resultMap id="BaseResultMap" type="java.util.HashMap" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="DATE" />
+	    <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+	    <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+	    <result column="update_time" property="updateTime" jdbcType="DATE" />
+	    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+	    <result column="message" property="message" jdbcType="VARCHAR" />
+	    <result column="answer" property="answer" jdbcType="VARCHAR" />
+	    <result column="class_name" property="className" jdbcType="VARCHAR" />
+	    <result column="phone" property="phone" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="position" property="position" jdbcType="DOUBLE" />
+	</resultMap>
+	 <select id="getintentionMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select *   from tjy_investment_intention  where 1=1 
+		<if test="status != null and status!= ''">
+			and status = #{status,jdbcType=INTEGER}
+		</if>
+		<if test="className != null and className != ''">
+			and class_name like CONCAT('%',#{className,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="stime != null ">
+			and   create_time &gt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{stime},'%Y%m%d'),'000000'),'%Y%m%d%H%i%s')
+				
+		</if>
+		<if test="etime != null ">
+			and   create_time &lt;= STR_TO_DATE(CONCAT(DATE_FORMAT(#{etime},'%Y%m%d'),'235959'),'%Y%m%d%H%i%s')
+		</if>
+		order by create_time desc
+	</select>
+	 <select id="getinvestmentList" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select *   from tjy_investment_intention  where 1=1 and create_user_id = #{userId,jdbcType=VARCHAR}
+		
+		order by create_time desc  limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+</mapper>

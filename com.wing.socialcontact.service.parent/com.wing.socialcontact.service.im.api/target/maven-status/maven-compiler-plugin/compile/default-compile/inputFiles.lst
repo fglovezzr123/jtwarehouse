@@ -1,0 +1,17 @@
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImFriendService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImToprelatService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImFollow.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImGroupinfo.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImGroupfavService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImGrouprequestService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/App.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImFriendrequestService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImFriendrequest.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImGroupfav.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImToprelat.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImGrouprequest.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImGroupinfoService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImFollowService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/api/IImGroupusersService.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImFriend.java
+/Users/fenggang/Documents/workspace/wjuxiang/rongba/com.wing.socialcontact.service.parent/com.wing.socialcontact.service.im.api/src/main/java/com/wing/socialcontact/service/im/bean/ImGroupusers.java

@@ -1,0 +1,94 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.tojoycloud.dubbo.rongba.provider.mapper.FinanceProductMapper">
+	
+	<sql id="financeProductColumns">
+		a.id AS "id",
+		a.product_status AS "product_status",
+		a.product_detail AS "product_detail",
+		a.product_name AS "product_name",
+		a.finance_type AS "finance_type",
+		a.finance_amount AS "finance_amount",
+		a.finance_period AS "finance_period",
+		a.introduce AS "introduce",
+		a.invest_type AS "invest_type",
+		a.consultant AS "consultant",
+		a.org_name AS "org_name",
+		a.org_no AS "org_no",
+		a.material AS "material",
+		a.conditions AS "conditions",
+		a.month_supply AS "month_supply",
+		a.interest AS "interest",
+		a.ratio AS "ratio",
+		a.is_show AS "is_show",
+		a.is_Recommend AS "is_Recommend",
+		a.bright1 AS "bright1",
+		a.bright2 AS "bright2",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate"
+	</sql>
+	
+	<sql id="financeProductJoins">
+	</sql>
+    
+	<select id="get" resultType="org.tojoycloud.dubbo.rongba.api.entity.FinanceProduct">
+		SELECT 
+			<include refid="financeProductColumns"/>
+		FROM tjrb_finance_product a
+		<include refid="financeProductJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="org.tojoycloud.dubbo.rongba.api.entity.FinanceProduct">
+		SELECT 
+			<include refid="financeProductColumns"/>
+		FROM tjrb_finance_product a
+		<include refid="financeProductJoins"/>
+		<where>
+			<if test="financeType != null">
+				AND a.finance_Type = #{financeType}
+			</if>
+			<if test="financeAmount != null">
+				AND a.finance_amount = #{financeAmount}
+			</if>
+			<if test="financeType != null">
+				AND a.finance_period = #{financePeriod}
+			</if>
+		</where>
+				ORDER BY a.id DESC
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO tjrb_finance_product(
+			ad_pic_url,
+			product_id,
+			ad_position,
+			create_date,
+			update_date
+		) VALUES (
+			#{adPicUrl},
+			#{productId},
+			#{adPosition},
+			#{createDate},
+			#{updateDate}		
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tjrb_finance_product SET 	
+			ad_pic_url = #{adPicUrl},
+			product_id = #{productId},
+			ad_position = #{adPosition},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tjrb_finance_product SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+</mapper>
